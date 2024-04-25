@@ -6,8 +6,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    services.xserver.enable = true;
     services.desktopManager.plasma6.enable = true;
-    services.xserver.displayManager.defaultSession = "plasma";
-    services.xserver.displayManager.sddm.wayland.enable = true;
+    services.displayManager.sddm.enable = true;
+    services.displayManager.sddm.wayland.enable = false;
+    services.displayManager.defaultSession = "plasma";
   };
 }
