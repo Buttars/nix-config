@@ -1,11 +1,11 @@
 { config, ... }: {
-  users.users.buttars = {
+  users.users.field-computer = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
     initialPassword = "a$$word";
   };
   
-  home-manager.users.buttars = { ... }: {
+  home-manager.users.field-computer = { ... }: {
     home.stateVersion = "22.05";
 
 

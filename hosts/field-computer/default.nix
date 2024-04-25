@@ -4,6 +4,7 @@
     modules = {
       hyprland.enable = false;
       zsh.enable = true;
+      kde.enable = true;
     };
   };
 

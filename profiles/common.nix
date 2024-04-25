@@ -15,7 +15,6 @@ in {
     gcc
   ];
 
-  #config.hostConfig.modules.zsh.enable = true;
   programs.zsh.enable = true;
 
   # TODO: Move this to modules

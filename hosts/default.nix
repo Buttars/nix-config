@@ -10,5 +10,6 @@ let
 in
 {
   vm = sys "x86_64-linux" [ ./vm ];
+  field-computer = sys "x86_64-linux" [ ./field-computer ];
 }
 
