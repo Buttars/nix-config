@@ -17,7 +17,6 @@
 
   networking = {
     hostName = "nixos-vm";
-    wireless.enable = false;
   };
 
   system.stateVersion = "22.05";

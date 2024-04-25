@@ -4,6 +4,7 @@ in {
   imports = [];
 
   environment.systemPackages = with pkgs; [
+    networkmanager
     neovim
     tmux
     tldr
@@ -30,5 +31,7 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
   };
+
+  networking.networkmanager.enable = true;
 
 }
