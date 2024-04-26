@@ -18,7 +18,7 @@
   ];
 
   networking = {
-    hostName = "nixos-vm";
+    hostName = "field-computer";
   };
 
   system.stateVersion = "22.05";
