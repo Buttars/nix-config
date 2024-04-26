@@ -6,10 +6,11 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
+    nixos-wsl.url = "github:nix-community/nixos-wsl";
 
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs: let
+  outputs = { self, nixpkgs, home-manager, nixos-wsl, ... } @ inputs: let
     hm = home-manager.nixosModules.home-manager;
   in {
     nixosModules =
@@ -27,7 +28,7 @@
       imports = builtins.attrValues self.nixosModules;
     };
 
-    nixosConfigurations = import ./hosts { inherit nixpkgs; nixosModule = self.nixosModule; inherit inputs; };
+    nixosConfigurations = import ./hosts { inherit nixpkgs; nixosModule = self.nixosModule; inherit inputs; inherit nixos-wsl; };
   };
 }
 

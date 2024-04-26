@@ -11,7 +11,6 @@
   imports = [
     ../../profiles/common.nix
     ./users
-    ./hardware-configuration.nix
   ];
 
   networking = {
