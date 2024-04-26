@@ -16,6 +16,8 @@ in {
     gcc
   ];
 
+  environment.variables.EDITOR = "nvim";
+
   programs.zsh.enable = true;
 
   # TODO: Move this to modules
