@@ -1,4 +1,4 @@
-{ nixpkgs, nixosModule, inputs, ... }@args:
+{ nixpkgs, nixosModule, inputs, nixos-wsl, ... }@args:
 
 let
   sys = system: mods: nixpkgs.lib.nixosSystem {
@@ -9,7 +9,8 @@ let
   };
 in
 {
-  vm = sys "x86_64-linux" [ ./vm ];
+  vm = sys "x86_64-linux" [ ./vm ../hardware/vm/hardware-configuration.nix ];
+  wsl = sys "x86_64-linux" [ ./vm ../hardware/wsl/hardware-configuration.nix nixos-wsl.nixosModules.wsl ];
   field-computer = sys "x86_64-linux" [ ./field-computer ];
 }
 
