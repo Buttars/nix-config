@@ -5,6 +5,8 @@
       hyprland.enable = false;
       zsh.enable = true;
       kde.enable = true;
+      alacritty.enable = true;
+      brave.enable = true;
     };
   };
 
