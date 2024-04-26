@@ -7,6 +7,7 @@ in {
     networkmanager
     neovim
     tmux
+    tmate
     tldr
     git
     lf
