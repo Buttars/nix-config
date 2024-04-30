@@ -20,5 +20,9 @@
       keyMode = "vi";
     };
 
+    programs.nvim = {
+      enable = true;
+    };
+
   };
 }
