@@ -1,4 +1,4 @@
-{ nixpkgs, nixosModule, inputs, nixos-wsl, ... }@args:
+{ nixpkgs, nixosModule, inputs, nixos-wsl, ... } @ args:
 
 let
   sys = system: mods: nixpkgs.lib.nixosSystem {
