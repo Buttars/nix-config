@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, ... }: {
   users.users.buttars = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
@@ -20,9 +20,11 @@
       keyMode = "vi";
     };
 
-    programs.nvim = {
+    programs.neovim = {
       enable = true;
     };
+
+    xdg.configFile."nvim/init.lua".source = ./config/nvim/init.lua;
 
   };
 }
