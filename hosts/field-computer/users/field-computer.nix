@@ -1,7 +1,7 @@
 { config, ... }: {
   users.users.field-computer = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "plugdev" ];
     initialPassword = "a$$word";
   };
   
