@@ -10,4 +10,7 @@
     multimon-ng
   ];
 
+
+  hardware.rtl-sdr.enable = true;
+
 }
