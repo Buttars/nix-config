@@ -13,6 +13,7 @@
 
   imports = [
     ../../profiles/common.nix
+    ../../profiles/sigint.nix
     ./users
     ./hardware-configuration.nix
   ];
