@@ -2,7 +2,6 @@
 {
   hostConfig = {
     modules = {
-      hyprland.enable = false;
       zsh.enable = true;
       kde.enable = true;
       alacritty.enable = true;
@@ -14,6 +13,8 @@
   imports = [
     ../../profiles/common.nix
     ../../profiles/sigint.nix
+    ../../profiles/audio.nix
+    ../../profiles/touch.nix
     ./users
     ./hardware-configuration.nix
   ];
