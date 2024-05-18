@@ -7,6 +7,7 @@ in {
     networkmanager
     nettools
     usbutils
+    lsof
     neovim
     tmux
     tmate
