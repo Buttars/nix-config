@@ -5,6 +5,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     networkmanager
+    nettools
     usbutils
     neovim
     tmux
