@@ -7,6 +7,10 @@
       kde.enable = true;
       alacritty.enable = true;
       brave.enable = true;
+      docker = {
+        enable = true;
+        btrfs = true;
+      };
     };
   };
 
