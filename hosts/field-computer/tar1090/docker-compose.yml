@@ -8,8 +8,7 @@ services:
     restart: always
     environment:
       - TZ=America/Denver
-      - BEASTHOST=readsb
-      - MLATHOST=adsbx
+      - BEASTHOST=127.0.0.1
       - LAT=-33.33333
       - LONG=111.11111
     volumes:
@@ -18,8 +17,7 @@ services:
       - /opt/adsb/tar1090/graphs1090:/var/lib/collectd
       - /proc/diskstats:/proc/diskstats:ro
     # - /run/airspy_adsb:/run/airspy_adsb
-    ports:
-      - 8078:80
+    network_mode: "host"
     tmpfs:
       - /run:exec,size=64M
       - /var/log
