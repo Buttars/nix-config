@@ -25,6 +25,10 @@
 
   networking = {
     hostName = "field-computer";
+    firewall = {
+      enabled = false;
+    };
+
   };
 
   system.stateVersion = "22.05";
