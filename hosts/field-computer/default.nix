@@ -8,7 +8,7 @@
       brave.enable = true;
       docker = {
         enable = true;
-        btrfs = true;
+        btrfs = false;
       };
     };
   };
