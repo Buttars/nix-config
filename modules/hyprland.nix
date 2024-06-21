@@ -14,6 +14,7 @@ in {
       grim
       slurp
       wl-clipboard
+      rofi
     ];
 
     xdg.portal = {
