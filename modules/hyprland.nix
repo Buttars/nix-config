@@ -7,9 +7,19 @@ in {
 
 
   config = lib.mkIf cfg.enable {
-    programs.hyprland = {
+    programs.hyprland.enable = true;
+    programs.xwayland.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      grim
+      slurp
+    ];
+
+    xdg.portal = {
       enable = true;
-      #package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      extraPortals = with pkgs; [
+	xdg-desktop-portal-hyprland
+      ];
     };
   };
 }

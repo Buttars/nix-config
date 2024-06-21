@@ -13,5 +13,6 @@ in
   wsl = sys "x86_64-linux" [ ./vm ../hardware/wsl/hardware-configuration.nix nixos-wsl.nixosModules.wsl ];
   field-computer = sys "x86_64-linux" [ ./field-computer ];
   laptop = sys "x86_64-linux" [ ./laptop ];
+  desktop = sys "x86_64-linux" [ ./desktop ];
 }
 

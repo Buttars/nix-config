@@ -1,0 +1,12 @@
+{
+  "ditem": {
+    "prefix": ["ditem", "\\ditem"],
+    "body": ["\\item[$1] $2"],
+    "description": "Add task with [] used with descriptions.",
+  },
+  "subsubsection": {
+    "prefix": ["subsub", "subsubsection", "\\subsub", "\\subsubsection"],
+    "body": ["\\subsubsection{$1}"],
+    "description": "Adds subsubsection{}",
+  }
+}

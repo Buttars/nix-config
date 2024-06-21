@@ -6,6 +6,7 @@ in {
   environment.systemPackages = with pkgs; [
     pipewire
     pavucontrol
+    wireplumber
   ];
 
   security.rtkit.enable = true;
