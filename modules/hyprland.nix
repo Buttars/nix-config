@@ -13,6 +13,7 @@ in {
     environment.systemPackages = with pkgs; [
       grim
       slurp
+      wl-clipboard
     ];
 
     xdg.portal = {
