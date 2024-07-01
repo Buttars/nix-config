@@ -7,15 +7,15 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
-
+    xremap-flake.url = "github:xremap/nix-flake";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-wsl, ... } @ inputs: let
-    hm = home-manager.nixosModules.home-manager;
+  outputs = { self, nixpkgs, home-manager, xremap-flake, nixos-wsl, ... } @ inputs: let
   in {
     nixosModules =
       {
         home-manager = home-manager.nixosModules.home-manager;
+	xremap = xremap-flake.nixosModules.xremap;
       } //
       nixpkgs.lib.mapAttrs'
         (name: type: {

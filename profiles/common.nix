@@ -18,6 +18,7 @@ in {
     nodejs
     cargo
     gcc
+    nerdfonts
   ];
 
   environment.variables.EDITOR = "nvim";
@@ -28,6 +29,10 @@ in {
   services.openssh = {
     enable = true;
   };
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+  ];
 
   security.sudo = {
     enable = true;

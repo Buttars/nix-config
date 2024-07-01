@@ -1,14 +1,16 @@
-{ config, ... }:
+{ config,pkgs, ... }:
 {
   hostConfig = {
     modules = {
       hyprland.enable = true;
       zsh.enable = true;
-      kde.enable = false;
       alacritty.enable = true;
       brave.enable = true;
       discord.enable = true;
       obsidian.enable = true;
+      docker.enable = true;
+      steam.enable = true;
+      vdhcoapp.enable = true;
     };
   };
 

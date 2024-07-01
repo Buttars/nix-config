@@ -14,7 +14,11 @@ in {
       grim
       slurp
       wl-clipboard
-      rofi
+      rofi-wayland
+      waybar
+      font-awesome
+      hyprpaper
+      xwaylandvideobridge
     ];
 
     xdg.portal = {
