@@ -1,0 +1,67 @@
+[colors.bright]
+black = "0x0C171B"
+blue = "0x192428"
+cyan = "0xE3E1E0"
+green = "0x101B1F"
+magenta = "0x212C30"
+red = "0xF16269"
+white = "0xEDEBEA"
+yellow = "0xEFEFEF"
+
+[colors.normal]
+black = "0x0E1116"
+blue = "0x61D0FF"
+cyan = "0x61D0FF"
+green = "0x7bff67"
+magenta = "0x8EFBEE"
+red = "0xFF3377"
+white = "0xD9D7D6"
+yellow = "0xFFFF00"
+
+[colors.primary]
+background = "0x0E1116"
+foreground = "0xD9D7D6"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 11
+
+[font.bold]
+family = "SauceCodePro Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "SauceCodePro Nerd Font"
+style = "Bold Italic"
+
+[font.normal]
+family = "SauceCodePro Nerd Font"
+style = "Bold"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "C"
+mods = "Alt"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Alt"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "Return"
+mods = "Control|Shift"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[window]
+dynamic_padding = false
+
+[window.padding]
+x = 14
+y = 10

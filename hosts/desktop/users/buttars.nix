@@ -14,30 +14,17 @@
     };
 
     home.file.".config/hypr".source = ../../../config/hypr;
+    home.file.".config/tmux".source = ../../../config/tmux;
+    home.file.".config/lf".source = ../../../config/lf;
+    home.file.".config/zsh".source = ../../../config/zsh;
+    home.file.".config/alacritty".source = ../../../config/alacritty;
+    home.file.".config/rofi".source = ../../../config/rofi;
+    home.file.".config/waybar".source = ../../../config/waybar;
+    home.file.".config/nvim".source = ../../../config/nvim;
 
     programs = {
       zsh.enable = true;
-      # neovim.enable = true;
     };
 
-    programs.tmux = {
-      enable = true;
-      shortcut = "Space";
-      keyMode = "vi";
-    };
-
-    wayland.windowManager.hyprland = {
-      enable = true;
-      settings = {
-        #"$mod" = "SUPER";
-        "$mod" = "MOD4";
-        bind = [
-	  "$mod, q, killactive"
-          "$mod, w, exec, $BROWSER"
-          "$mod, RETURN, exec, alacritty"
-        ];
-
-      };
-    };
   };
 }

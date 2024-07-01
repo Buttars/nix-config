@@ -10,6 +10,7 @@ in {
     environment.systemPackages = with pkgs; [
       discord
       vesktop
+      webcord
     ];
   };
 }
