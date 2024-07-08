@@ -15,9 +15,6 @@ in {
     git
     lf
     tree
-    nodejs
-    cargo
-    gcc
     nerdfonts
   ];
 
@@ -31,7 +28,7 @@ in {
   };
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+    (nerdfonts.override { fonts = [ "SourceCodePro" "Noto" "Inconsolata" "RobotoMono" ]; })
   ];
 
   security.sudo = {
