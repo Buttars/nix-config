@@ -1,67 +1,74 @@
-[colors.bright]
-black = "0x0C171B"
-blue = "0x192428"
-cyan = "0xE3E1E0"
-green = "0x101B1F"
-magenta = "0x212C30"
-red = "0xF16269"
-white = "0xEDEBEA"
-yellow = "0xEFEFEF"
+colors:
+  # Default colors
+  primary:
+    background: '0x0E1116'  # Terminal background color
+    foreground: '0xFFFFFF'  # Terminal text color - changed for better contrast
 
-[colors.normal]
-black = "0x0E1116"
-blue = "0x61D0FF"
-cyan = "0x61D0FF"
-green = "0x7bff67"
-magenta = "0x8EFBEE"
-red = "0xFF3377"
-white = "0xD9D7D6"
-yellow = "0xFFFF00"
+  # Normal colors normal:
+    black:   '0x0E1116'  # Normal black color (unchanged)
+    red:     '0xFF3377'  # Normal red color (unchanged)
+    green:   '0x7BFF67'  # Normal green color (unchanged)
+    yellow:  '0xFFFF00'  # Normal yellow color (unchanged)
+    blue:    '0x61D0FF'  # Normal blue color (unchanged)
+    magenta: '0xD184D6'  # Normal magenta color - increased brightness
+    cyan:    '0x61D0FF'  # Normal cyan color (unchanged)
+    white:   '0xE6E5E4'  # Normal white color - increased brightness
 
-[colors.primary]
-background = "0x0E1116"
-foreground = "0xD9D7D6"
+  # Bright colors
+  bright:
+    black:   '0x2E2E2E'  # Bright black color - increased brightness
+    red:     '0xFF6B8A'  # Bright red color - increased brightness
+    green:   '0xA3FF91'  # Bright green color - increased brightness
+    yellow:  '0xFFFF99'  # Bright yellow color - increased brightness
+    blue:    '0xA3E4FF'  # Bright blue color - increased brightness
+    magenta: '0xBAA4D9'  # Bright magenta color - increased brightness
+    cyan:    '0x99E6FF'  # Bright cyan color - increased brightness
+    white:   '0xFFFFFF'  # Bright white color - increased brightness
 
-[env]
-TERM = "xterm-256color"
+window:
+  # decorations: buttonless
+  dynamic_padding: false
+  padding:
+    x: 14
+    y: 10
 
-[font]
-size = 11
+font:
+  # size: 8.75
+  size: 11
+  # The normal (roman) font face to use.
+  normal:
+    family: SauceCodePro Nerd Font
+    # Style can be specified to pick a specific face.
+    style: Bold
 
-[font.bold]
-family = "SauceCodePro Nerd Font"
-style = "Bold"
+  # The bold font face
+  bold:
+    family: SauceCodePro Nerd Font
+    # Style can be specified to pick a specific face.
+    style: Bold
 
-[font.italic]
-family = "SauceCodePro Nerd Font"
-style = "Bold Italic"
+  # The italic font face
+  italic:
+    family: SauceCodePro Nerd Font
+    # Style can be specified to pick a specific face.
+    style: Bold Italic
 
-[font.normal]
-family = "SauceCodePro Nerd Font"
-style = "Bold"
+# background_opacity: 0.5
+scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  history: 10000
 
-[[keyboard.bindings]]
-action = "Copy"
-key = "C"
-mods = "Alt"
+  # Number of lines the viewport will move for every line scrolled when
+  # scrollback is enabled (history > 0).
+  multiplier: 3
 
-[[keyboard.bindings]]
-action = "Paste"
-key = "V"
-mods = "Alt"
+env:
+  TERM: xterm-256color
 
-[[keyboard.bindings]]
-action = "SpawnNewInstance"
-key = "Return"
-mods = "Control|Shift"
+key_bindings:
+  - { key: C, mods: Alt, action: Copy }
+  - { key: V, mods: Alt, action: Paste }
+  - { key: Return, mods: Control|Shift, action: SpawnNewInstance }
 
-[scrolling]
-history = 10000
-multiplier = 3
 
-[window]
-dynamic_padding = false
-
-[window.padding]
-x = 14
-y = 10
