@@ -1,74 +1,68 @@
-colors:
-  # Default colors
-  primary:
-    background: '0x0E1116'  # Terminal background color
-    foreground: '0xFFFFFF'  # Terminal text color - changed for better contrast
+[colors.bright]
+black = "0x2E2E2E"  # Adjusted for increased brightness
+blue = "0xA3E4FF"  # Bright blue color - increased brightness
+cyan = "0x99E6FF"  # Bright cyan color - increased brightness
+green = "0xA3FF91"  # Bright green color - increased brightness
+magenta = "0xBAA4D9"  # Bright magenta color - increased brightness
+red = "0xFF6B8A"  # Bright red color - increased brightness
+white = "0xFFFFFF"  # Adjusted white for better contrast
+yellow = "0xFFFF99"  # Bright yellow color - increased brightness
 
-  # Normal colors normal:
-    black:   '0x0E1116'  # Normal black color (unchanged)
-    red:     '0xFF3377'  # Normal red color (unchanged)
-    green:   '0x7BFF67'  # Normal green color (unchanged)
-    yellow:  '0xFFFF00'  # Normal yellow color (unchanged)
-    blue:    '0x61D0FF'  # Normal blue color (unchanged)
-    magenta: '0xD184D6'  # Normal magenta color - increased brightness
-    cyan:    '0x61D0FF'  # Normal cyan color (unchanged)
-    white:   '0xE6E5E4'  # Normal white color - increased brightness
+[colors.normal]
+black = "0x0C141D"  # Terminal background color
+blue = "0x61D0FF"  # Unchanged
+cyan = "0x8EFBEE"  # Unchanged
+green = "0x40CF84"  # Adjusted for readability
+magenta = "0xDE4F72"  # Adjusted for better contrast
+red = "0xFF3377"  # Unchanged
+white = "0xD9D7D6"  # Terminal text color
+yellow = "0xFFFF00"  # Unchanged
 
-  # Bright colors
-  bright:
-    black:   '0x2E2E2E'  # Bright black color - increased brightness
-    red:     '0xFF6B8A'  # Bright red color - increased brightness
-    green:   '0xA3FF91'  # Bright green color - increased brightness
-    yellow:  '0xFFFF99'  # Bright yellow color - increased brightness
-    blue:    '0xA3E4FF'  # Bright blue color - increased brightness
-    magenta: '0xBAA4D9'  # Bright magenta color - increased brightness
-    cyan:    '0x99E6FF'  # Bright cyan color - increased brightness
-    white:   '0xFFFFFF'  # Bright white color - increased brightness
+[colors.primary]
+background = "0x0C141D"  # Terminal background color
+foreground = "0xD9D7D6"  # Terminal text color
 
-window:
-  # decorations: buttonless
-  dynamic_padding: false
-  padding:
-    x: 14
-    y: 10
+[env]
+TERM = "xterm-256color"
 
-font:
-  # size: 8.75
-  size: 11
-  # The normal (roman) font face to use.
-  normal:
-    family: SauceCodePro Nerd Font
-    # Style can be specified to pick a specific face.
-    style: Bold
+[font]
+size = 11
 
-  # The bold font face
-  bold:
-    family: SauceCodePro Nerd Font
-    # Style can be specified to pick a specific face.
-    style: Bold
+[font.bold]
+family = "SauceCodePro Nerd Font"
+style = "Bold"
 
-  # The italic font face
-  italic:
-    family: SauceCodePro Nerd Font
-    # Style can be specified to pick a specific face.
-    style: Bold Italic
+[font.italic]
+family = "SauceCodePro Nerd Font"
+style = "Bold Italic"
 
-# background_opacity: 0.5
-scrolling:
-  # Maximum number of lines in the scrollback buffer.
-  # Specifying '0' will disable scrolling.
-  history: 10000
+[font.normal]
+family = "SauceCodePro Nerd Font"
+style = "Bold"
 
-  # Number of lines the viewport will move for every line scrolled when
-  # scrollback is enabled (history > 0).
-  multiplier: 3
+[[keyboard.bindings]]
+action = "Copy"
+key = "C"
+mods = "Alt"
 
-env:
-  TERM: xterm-256color
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Alt"
 
-key_bindings:
-  - { key: C, mods: Alt, action: Copy }
-  - { key: V, mods: Alt, action: Paste }
-  - { key: Return, mods: Control|Shift, action: SpawnNewInstance }
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "Return"
+mods = "Control|Shift"
 
+[scrolling]
+history = 10000
+multiplier = 3
+
+[window]
+dynamic_padding = false
+
+[window.padding]
+x = 14
+y = 10
 
