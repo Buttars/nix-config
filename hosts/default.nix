@@ -10,7 +10,7 @@ let
 in
 {
   vm = sys "x86_64-linux" [ ./vm ../hardware/vm/hardware-configuration.nix ];
-  wsl = sys "x86_64-linux" [ ./vm ../hardware/wsl/hardware-configuration.nix nixos-wsl.nixosModules.wsl ];
+  wsl = sys "x86_64-linux" [ ./vm ../hardware/wsl/hardware-configuration.nix nixos-wsl ];
   field-computer = sys "x86_64-linux" [ ./field-computer ];
   laptop = sys "x86_64-linux" [ ./laptop ];
   desktop = sys "x86_64-linux" [ ./desktop ];
