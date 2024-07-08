@@ -10,7 +10,16 @@
     xremap-flake.url = "github:xremap/nix-flake";
   };
 
-  outputs = { self, nixpkgs, home-manager, xremap-flake, nixos-wsl, ... } @ inputs: let
+  outputs = { self, nixpkgs, home-manager, xremap-flake, nixos-wsl, ... } @ inputs: let 
+    systems = [
+      "aarch64-linux"
+      "i686-linux"
+      "x86_64-linux"
+      "aarch64-darwin"
+      "x86_64-darwin"
+    ];
+
+    forAllSystems = nixpkgs.lib.genAttrs systems;
   in {
     nixosModules =
       {
@@ -29,6 +38,11 @@
     };
 
     nixosConfigurations = import ./hosts { inherit nixpkgs; nixosModule = self.nixosModule; inherit inputs; inherit nixos-wsl; };
+
+    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+
+    overlays = import ./overlays { inherit inputs; };
   };
+
 }
 
