@@ -1,4 +1,4 @@
-{ config,pkgs, ... }:
+{ config, pkgs, ... }:
 {
   hostConfig = {
     modules = {
@@ -11,6 +11,7 @@
       docker.enable = true;
       steam.enable = true;
       vdhcoapp.enable = true;
+      starship.enable = true;
     };
   };
 
