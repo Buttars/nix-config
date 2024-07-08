@@ -7,6 +7,7 @@ in {
     #pipewire
     pavucontrol
     pulsemixer
+    qpwgraph
  ];
 
   security.rtkit.enable = true;
