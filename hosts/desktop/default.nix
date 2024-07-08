@@ -18,6 +18,7 @@
   imports = [
     ../../profiles/common.nix
     ../../profiles/audio.nix
+    ../../profiles/programming.nix
     ./users
     ./hardware-configuration.nix
   ];
