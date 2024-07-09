@@ -12,6 +12,7 @@
       steam.enable = true;
       vdhcoapp.enable = true;
       starship.enable = true;
+      fastfetch.enable = true;
     };
   };
 
