@@ -27,7 +27,6 @@
     nixosModules =
       {
         home-manager = home-manager.nixosModules.home-manager;
-        nixos-wsl = nixos-wsl.nixosModules.wsl;
       } //
       nixpkgs.lib.mapAttrs'
         (name: type: {
