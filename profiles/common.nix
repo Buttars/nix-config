@@ -15,6 +15,8 @@ in {
     lf
     tree
     nerdfonts
+    grim
+    slurp
   ];
 
   environment.variables.EDITOR = "nvim";
