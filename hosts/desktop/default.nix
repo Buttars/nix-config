@@ -15,6 +15,7 @@
       fastfetch.enable = true;
       xremap.enable = true;
       spr.enable = true;
+      zoxide.enable = true;
     };
   };
 
