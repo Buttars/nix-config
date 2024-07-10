@@ -21,6 +21,13 @@
     home.file.".config/rofi".source = ../../../config/rofi;
     home.file.".config/waybar".source = ../../../config/waybar;
     home.file.".config/nvim".source = ../../../config/nvim;
+    home.file.".config/nixpkgs/config.nix" = {
+      text = ''
+        {
+          allowUnfree = true;
+        }
+      '';
+    };
 
     programs = {
       zsh.enable = true;
