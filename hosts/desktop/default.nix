@@ -14,6 +14,7 @@
       starship.enable = true;
       fastfetch.enable = true;
       xremap.enable = true;
+      spr.enable = true;
     };
   };
 
