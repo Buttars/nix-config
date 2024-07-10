@@ -5,6 +5,7 @@
     nodejs
     cargo
     gcc
+    git
   ];
 
 }

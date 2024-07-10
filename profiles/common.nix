@@ -12,7 +12,6 @@ in {
     tmux
     tmate
     tldr
-    git
     lf
     tree
     nerdfonts
