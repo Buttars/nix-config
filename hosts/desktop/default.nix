@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, xremap-flake, ... }:
 {
   hostConfig = {
     modules = {
@@ -13,9 +13,9 @@
       vdhcoapp.enable = true;
       starship.enable = true;
       fastfetch.enable = true;
+      xremap.enable = true;
     };
   };
-
 
   imports = [
     ../../profiles/common.nix

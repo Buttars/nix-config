@@ -20,11 +20,13 @@
     ];
 
     forAllSystems = nixpkgs.lib.genAttrs systems;
+
+    wsl = inputs.nixos-wsl;
+    xremap = inputs.xremap-flake.nixosModules.default;
   in {
     nixosModules =
       {
         home-manager = home-manager.nixosModules.home-manager;
-	xremap = xremap-flake.nixosModules.xremap;
         nixos-wsl = nixos-wsl.nixosModules.wsl;
       } //
       nixpkgs.lib.mapAttrs'
@@ -38,7 +40,7 @@
       imports = builtins.attrValues self.nixosModules;
     };
 
-    nixosConfigurations = import ./hosts { inherit nixpkgs; nixosModule = self.nixosModule; inherit inputs; inherit nixos-wsl; };
+    nixosConfigurations = import ./hosts { inherit nixpkgs; nixosModule = self.nixosModule; inherit inputs; inherit wsl; inherit xremap; };
 
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
