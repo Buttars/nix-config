@@ -35,9 +35,7 @@ in {
     wheelNeedsPassword = false;
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
+  nixpkgs.config.allowUnfree = true;
 
   i18n.defaultLocale = "en_US.UTF-8";
 
