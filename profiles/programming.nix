@@ -6,6 +6,7 @@
     cargo
     gcc
     git
+    delta
   ];
 
 }
