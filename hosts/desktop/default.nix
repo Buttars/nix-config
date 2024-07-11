@@ -16,6 +16,7 @@
       xremap.enable = true;
       spr.enable = true;
       zoxide.enable = true;
+      nvidia.enable = true;
     };
   };
 
