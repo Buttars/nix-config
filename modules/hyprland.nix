@@ -19,6 +19,7 @@ in {
       font-awesome
       hyprpaper
       xwaylandvideobridge
+      jq
     ];
 
     xdg.portal = {
