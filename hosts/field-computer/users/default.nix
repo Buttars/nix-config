@@ -7,6 +7,6 @@
   home-manager.useUserPackages = true;
 
   # TODO: Make this configurable
-  imports = [./field-computer.nix];
+  imports = [ ./field-computer.nix ];
 
 }

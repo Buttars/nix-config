@@ -1,6 +1,8 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
   cfg = config.hostConfig.modules.zsh;
-in {
+in
+{
   options.hostConfig.modules.zsh = {
     enable = lib.mkEnableOption "Enable zsh shell";
   };

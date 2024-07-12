@@ -1,7 +1,9 @@
-{ config, pkgs, ... }: let
+{ config, pkgs, ... }:
+let
   cfg = config.hostConfig.modules;
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   environment.systemPackages = with pkgs; [
     networkmanager

@@ -1,6 +1,8 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
   cfg = config.hostConfig.modules.xremap;
-in {
+in
+{
   options.hostConfig.modules.xremap = {
     enable = lib.mkEnableOption "Enable xremap";
   };
@@ -11,7 +13,7 @@ in {
     services.xremap.config.modmap = [
       {
         name = "Global";
-        remap = { 
+        remap = {
           "CapsLock" = {
             held = "WIN_L";
             alone = "ESC";

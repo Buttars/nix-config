@@ -1,6 +1,8 @@
-{ config, lib, pkgs, ... }: let
+{ config, lib, pkgs, ... }:
+let
   cfg = config.hostConfig.modules.obsidian;
-in {
+in
+{
   options.hostConfig.modules.obsidian = {
     enable = lib.mkEnableOption "Enable Obsidian";
   };

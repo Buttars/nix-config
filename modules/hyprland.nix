@@ -1,6 +1,8 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
   cfg = config.hostConfig.modules.hyprland;
-in {
+in
+{
   options.hostConfig.modules.hyprland = {
     enable = lib.mkEnableOption "Enable hyprland compositor";
   };
@@ -25,7 +27,7 @@ in {
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [
-	xdg-desktop-portal-hyprland
+        xdg-desktop-portal-hyprland
       ];
     };
   };

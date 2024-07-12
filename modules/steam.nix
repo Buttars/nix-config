@@ -1,6 +1,8 @@
-{ config, lib, pkgs, ... }: let
+{ config, lib, pkgs, ... }:
+let
   cfg = config.hostConfig.modules.steam;
-in {
+in
+{
   options.hostConfig.modules.steam = {
     enable = lib.mkEnableOption "Enable Steam";
   };

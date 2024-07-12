@@ -1,6 +1,8 @@
-{ config, lib, pkgs, ... }: let
+{ config, lib, pkgs, ... }:
+let
   cfg = config.hostConfig.modules.vdhcoapp;
-in {
+in
+{
   options.hostConfig.modules.vdhcoapp = {
     enable = lib.mkEnableOption "Enable Brave Browser";
   };

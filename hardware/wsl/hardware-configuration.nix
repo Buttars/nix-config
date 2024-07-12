@@ -1,6 +1,7 @@
-{ config, lib, pkgs, modulesPath, ... }: let
+{ config, lib, pkgs, modulesPath, ... }:
+let
 in {
-  imports = [];
+  imports = [ ];
 
   wsl.enable = true;
   wsl.defaultUser = "nixos";

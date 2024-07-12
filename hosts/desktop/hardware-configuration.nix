@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -17,19 +18,21 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/70137a23-3062-430a-a140-28f8372524ab";
+    {
+      device = "/dev/disk/by-uuid/70137a23-3062-430a-a140-28f8372524ab";
       fsType = "ext4";
     };
 
   boot.initrd.luks.devices."luks-086f29a0-f3eb-439f-8a4c-5043cc6d7eee".device = "/dev/disk/by-uuid/086f29a0-f3eb-439f-8a4c-5043cc6d7eee";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/93BE-09EB";
+    {
+      device = "/dev/disk/by-uuid/93BE-09EB";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ 
+    [
       # { device = "/dev/disk/by-uuid/fe4054aa-f331-4210-9664-ed458ea0d44a"; }
     ];
 

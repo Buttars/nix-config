@@ -1,6 +1,8 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
   cfg = config.hostConfig.modules.fastfetch;
-in {
+in
+{
   options.hostConfig.modules.fastfetch = {
     enable = lib.mkEnableOption "Enable fastfetch shell";
   };

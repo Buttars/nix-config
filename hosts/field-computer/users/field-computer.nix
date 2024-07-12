@@ -4,7 +4,7 @@
     extraGroups = [ "wheel" "networkmanager" "plugdev" "docker" ];
     initialPassword = "a$$word";
   };
-  
+
   home-manager.users.field-computer = { ... }: {
     home.stateVersion = "22.05";
 

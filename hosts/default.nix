@@ -4,7 +4,7 @@ let
   sys = system: mods: nixpkgs.lib.nixosSystem {
     inherit system;
     modules = [{ _module.args = inputs; } nixosModule] ++ mods;
-    extraModules = [];
+    extraModules = [ ];
     specialArgs = { inherit inputs; };
   };
 in

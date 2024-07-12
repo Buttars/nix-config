@@ -1,6 +1,8 @@
-{ config, lib, pkgs, ... }: let 
+{ config, lib, pkgs, ... }:
+let
   cfg = config.hostConfig.modules.alacritty;
-in {
+in
+{
 
   options.hostConfig.modules.alacritty = {
     enable = lib.mkEnableOption "Enable Alacritty terminal";

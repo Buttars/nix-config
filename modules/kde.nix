@@ -1,6 +1,8 @@
-{ config, lib, ... }: let 
+{ config, lib, ... }:
+let
   cfg = config.hostConfig.modules.kde;
-in {
+in
+{
   options.hostConfig.modules.kde = {
     enable = lib.mkEnableOption "Enable KDE desktop environemnt";
   };

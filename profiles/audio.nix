@@ -1,14 +1,16 @@
-{ config, pkgs, ... }: let
+{ config, pkgs, ... }:
+let
   cfg = config.hostConfig.modules;
-in {
-  imports = [];
+in
+{
+  imports = [ ];
 
   environment.systemPackages = with pkgs; [
     #pipewire
     pavucontrol
     pulsemixer
     qpwgraph
- ];
+  ];
 
   security.rtkit.enable = true;
   services.pipewire = {

@@ -1,6 +1,8 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, ... }:
+let
   cfg = config.hostConfig.modules.starship;
-in {
+in
+{
   options.hostConfig.modules.starship = {
     enable = lib.mkEnableOption "Enable starship prompt";
   };
@@ -9,8 +11,7 @@ in {
   config = lib.mkIf cfg.enable {
     programs.starship = {
       enable = true;
-      settings = {
-      };
+      settings = { };
     };
   };
 }

@@ -4,7 +4,7 @@
     extraGroups = [ "wheel" "networkmanager" ];
     initialPassword = "a$$word";
   };
-  
+
   home-manager.users.buttars = { ... }: {
     home.stateVersion = "22.05";
 
