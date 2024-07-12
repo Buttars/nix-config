@@ -27,11 +27,11 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.breakindent = true
 
 -- Configure Vim to use Spaces intead of Tabs, enables autoindent
-vim.opt.expandtab = true;
-vim.opt.tabstop = 2;
-vim.opt.softtabstop = 2;
-vim.opt.shiftwidth = 2;
-vim.autoindent = true;
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.autoindent = true
 
 -- Save undo history
 vim.opt.undofile = true
