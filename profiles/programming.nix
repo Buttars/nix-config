@@ -7,6 +7,7 @@
     gcc
     git
     delta
+    nixpkgs-fmt
   ];
 
 }
