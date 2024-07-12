@@ -20,6 +20,7 @@ in
     grim
     slurp
     unzip
+    killall
   ];
 
   environment.variables.EDITOR = "nvim";
