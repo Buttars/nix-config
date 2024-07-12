@@ -34,5 +34,8 @@
     hostName = "buttars-desktop";
   };
 
+  services.ntp.enable = true;
+  services.automatic-timezoned.enable = true;
+
   system.stateVersion = "22.05";
 }
