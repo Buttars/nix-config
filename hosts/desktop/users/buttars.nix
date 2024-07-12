@@ -17,6 +17,7 @@
     home.file.".config/tmux".source = ../../../config/tmux;
     home.file.".config/lf".source = ../../../config/lf;
     home.file.".config/zsh".source = ../../../config/zsh;
+    home.file.".zprofile".source = ../../../config/shell/profile;
     home.file.".config/alacritty".source = ../../../config/alacritty;
     home.file.".config/rofi".source = ../../../config/rofi;
     home.file.".config/waybar".source = ../../../config/waybar;
@@ -30,7 +31,7 @@
     };
 
     programs = {
-      zsh.enable = true;
+      zsh.enable = false;
     };
 
   };
