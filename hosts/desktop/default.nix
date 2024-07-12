@@ -20,6 +20,8 @@
     };
   };
 
+  programs.nix-ld.enable = true;
+
   imports = [
     ../../profiles/common.nix
     ../../profiles/audio.nix
