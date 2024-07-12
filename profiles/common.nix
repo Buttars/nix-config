@@ -17,6 +17,7 @@ in {
     nerdfonts
     grim
     slurp
+    unzip
   ];
 
   environment.variables.EDITOR = "nvim";
