@@ -4,7 +4,7 @@ let
 in
 {
   options.hostConfig.modules.obsidian = {
-    enable = lib.mkEnableOption "Enable Obsidian";
+    enable = lib.mkEnableOption "Enable Obsidian note taking app";
   };
 
 
