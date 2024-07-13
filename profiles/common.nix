@@ -22,6 +22,12 @@ in
     slurp
     unzip
     killall
+    rsync
+    mpv
+    nsxiv
+    dosfstools
+    ffmpeg
+    zathura
   ];
 
   environment.variables.EDITOR = "nvim";
