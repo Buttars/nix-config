@@ -9,8 +9,10 @@ in
 
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ ];
-
     programs.steam.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      mangohud
+    ];
   };
 }
