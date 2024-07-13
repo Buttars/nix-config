@@ -27,8 +27,7 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && setsid shortcuts >/dev/null 2>&1
 
 # Adds `~/.local/bin` to $PATH
-# TODO: Look into renabling this
-#export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
+export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 
 # Start graphical server on user's current tty if not already running.
 # [ "$(tty)" = "/dev/tty1" ] && [ -x "$(command -v startx)" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"

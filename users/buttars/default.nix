@@ -13,6 +13,8 @@
       BROWSER = "brave";
     };
 
+    home.file.".local/bin/lfub".source = bin/lfub;
+
     home.file.".config/nvim" =
       {
         source = config/nvim;
