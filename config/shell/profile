@@ -3,23 +3,6 @@
 # Runs on login
 # Stores environment variable
 
-# Setup homebrew
-[ -s "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# Linux gnu binaries
-BREW_BIN="/opt/homebrew/bin/brew"
-if [ -f "/usr/local/bin/brew" ]; then
-    BREW_BIN="/usr/local/bin/brew"
-fi
-
-if type "${BREW_BIN}" &> /dev/null; then
-    export BREW_PREFIX="$("${BREW_BIN}" --prefix)"
-    for bindir in "${BREW_PREFIX}/opt/"*"/libexec/gnubin"; do export PATH=$bindir:$PATH; done
-    for bindir in "${BREW_PREFIX}/opt/"*"/bin"; do export PATH=$bindir:$PATH; done
-    for mandir in "${BREW_PREFIX}/opt/"*"/libexec/gnuman"; do export MANPATH=$mandir:$MANPATH; done
-    for mandir in "${BREW_PREFIX}/opt/"*"/share/man/man1"; do export MANPATH=$mandir:$MANPATH; done
-fi
-
 # Setup thefuck
 [ -x "$(command -v thefuck)" ] && eval $(thefuck --alias)
 
@@ -38,26 +21,18 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export INPUTRC="$XDG_CONFIG_HOME/shell/inputrc"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-export NVM_DIR="$HOME/.local/bin/nvm"
-export XINITRC="$XDG_CONFIG_HOME/x11/xinitrc"
+#export NVM_DIR="$HOME/.local/bin/nvm"
+# export XINITRC="$XDG_CONFIG_HOME/x11/xinitrc"
 
 [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && setsid shortcuts >/dev/null 2>&1
 
-# Setup nvm
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # Adds `~/.local/bin` to $PATH
-export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
-[ -x "$(command -v yarn)" ] && export PATH="$PATH:$(yarn global bin)"
-
-
-# Angular Autocomplete
-[ -x "$(command -v ng)" ] && source <(ng completion script)
+# TODO: Look into renabling this
+#export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 
 # Start graphical server on user's current tty if not already running.
-[ "$(tty)" = "/dev/tty1" ] && [ -x "$(command -v startx)" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
-[ "$(tty)" = "/dev/tty2" ] && [ -x "$(command -v Hyprland)" ] && ! pidof -s Hyprland >/dev/null 2>&1 && exec Hyprland
+# [ "$(tty)" = "/dev/tty1" ] && [ -x "$(command -v startx)" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
+[ "$(tty)" = "/dev/tty1" ] && [ -x "$(command -v Hyprland)" ] && ! pidof -s Hyprland >/dev/null 2>&1 && exec Hyprland
 
 # if [ "$TMUX" = "" ]; then tmux; fi
 # if [ -z "$TMUX" ]; then tmux attach -t TMUX || tmux new -s TMUX; fi
