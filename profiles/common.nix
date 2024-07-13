@@ -15,6 +15,7 @@ in
     tmate
     tldr
     lf
+    ueberzug
     tree
     nerdfonts
     grim
