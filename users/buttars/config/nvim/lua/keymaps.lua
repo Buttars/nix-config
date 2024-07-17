@@ -79,6 +79,9 @@ vim.keymap.set('n', '<leader>oi', ':ObsidianTemplate<CR>', { noremap = true, sil
 -- vim.keymap.set('n', '<leader>oe', ':ObsidianExportPDF<CR>', { noremap = true, silent = true })
 
 -- Telescope Integration
-vim.keymap.set('n', '<leader>of', ':Telescope find_files cwd=~/path/to/obsidian/vault<CR>', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<leader>of', ':Telescope find_files cwd=~/path/to/obsidian/vault<CR>', { noremap = true, silent = true })
+
+-- ZenMode
+vim.keymap.set('n', '<leader>z', ':ZenMode<CR>', { noremap = true, silent = true })
 
 -- vim: ts=2 sts=2 sw=2 et
