@@ -31,6 +31,9 @@ in
     dosfstools
     ffmpeg
     zathura
+    fzf
+    bc
+    bat
   ];
 
   environment.variables.EDITOR = "nvim";
