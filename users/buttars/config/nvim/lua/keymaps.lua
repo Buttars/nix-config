@@ -48,4 +48,37 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Obsidian Keybinds
+-- General Navigation
+-- vim.keymap.set('n', '<leader>op', ':ObsidianPanelToggle<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>od', ':ObsidianToday<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ow', ':ObsidianWeek<CR>', { noremap = true, silent = true })
+
+-- Creating and Managing Notes
+vim.keymap.set('n', '<leader>on', ':ObsidianNew<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>os', ':ObsidianSearch<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ol', ':ObsidianLink<CR>', { noremap = true, silent = true })
+
+-- Backlink Navigation
+vim.keymap.set('n', '<leader>ob', ':ObsidianBacklinks<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>of', ':ObsidianFollowLink<CR>', { noremap = true, silent = true })
+
+-- Tags and Metadata
+vim.keymap.set('n', '<leader>ot', ':ObsidianTag<CR>', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<leader>ov', ':ObsidianViewTags<CR>', { noremap = true, silent = true })
+
+-- Templates and Snippets
+vim.keymap.set('n', '<leader>oi', ':ObsidianTemplate<CR>', { noremap = true, silent = true })
+
+-- Task Management
+-- vim.keymap.set('n', '<leader>ox', ':ObsidianToggleTask<CR>', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<leader>oa', ':ObsidianTasks<CR>', { noremap = true, silent = true })
+
+-- Advanced Features
+-- vim.keymap.set('n', '<leader>os', ':ObsidianSync<CR>', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<leader>oe', ':ObsidianExportPDF<CR>', { noremap = true, silent = true })
+
+-- Telescope Integration
+vim.keymap.set('n', '<leader>of', ':Telescope find_files cwd=~/path/to/obsidian/vault<CR>', { noremap = true, silent = true })
+
 -- vim: ts=2 sts=2 sw=2 et
