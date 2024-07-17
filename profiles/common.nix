@@ -6,6 +6,8 @@ in
   imports = [ ];
 
   environment.systemPackages = with pkgs; [
+    xdg-utils
+    wget
     networkmanager
     nettools
     usbutils
@@ -15,6 +17,7 @@ in
     tmate
     tldr
     lf
+    file
     ueberzug
     tree
     nerdfonts

@@ -8,6 +8,10 @@
     git
     delta
     nixpkgs-fmt
+    gnumake
+    ripgrep
+    python3
+    julia
   ];
 
 }
