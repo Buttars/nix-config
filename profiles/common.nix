@@ -34,6 +34,7 @@ in
     fzf
     bc
     bat
+    rustdesk
   ];
 
   environment.variables.EDITOR = "nvim";
