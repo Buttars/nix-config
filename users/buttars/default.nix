@@ -21,6 +21,12 @@
         recursive = true;
       };
 
+    home.file.".config/shell" =
+      {
+        source = config/shell;
+        recursive = true;
+      };
+
     home.file.".config/hypr".source = config/hypr;
     home.file.".config/tmux".source = config/tmux;
     home.file.".config/lf".source = config/lf;
