@@ -12,6 +12,8 @@
     ripgrep
     python3
     julia
+    devpod
+    direnv
   ];
 
 }
