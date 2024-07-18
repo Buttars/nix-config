@@ -35,6 +35,7 @@ in
     bc
     bat
     rustdesk
+    pandoc
   ];
 
   environment.variables.EDITOR = "nvim";
