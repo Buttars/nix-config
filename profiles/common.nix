@@ -36,6 +36,7 @@ in
     bat
     rustdesk
     pandoc
+    sshfs
   ];
 
   environment.variables.EDITOR = "nvim";
