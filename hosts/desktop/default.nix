@@ -26,6 +26,7 @@
     ../../profiles/common.nix
     ../../profiles/audio.nix
     ../../profiles/programming.nix
+    ../../profiles/zsa.nix
     ./users
     ./hardware-configuration.nix
   ];
