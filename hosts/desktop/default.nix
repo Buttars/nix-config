@@ -27,6 +27,7 @@
     ../../profiles/audio.nix
     ../../profiles/programming.nix
     ../../profiles/zsa.nix
+    ../../profiles/tui-file-manager.nix
     ./users
     ./hardware-configuration.nix
   ];

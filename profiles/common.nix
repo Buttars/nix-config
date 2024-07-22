@@ -16,9 +16,6 @@ in
     tmux
     tmate
     tldr
-    lf
-    file
-    ueberzug
     tree
     nerdfonts
     grim
@@ -26,14 +23,9 @@ in
     unzip
     killall
     rsync
-    mpv
-    nsxiv
-    feh
     dosfstools
     ffmpeg
-    zathura
     fzf
-    bc
     bat
     rustdesk
     pandoc
