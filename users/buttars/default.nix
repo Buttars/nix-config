@@ -1,7 +1,7 @@
 { config, lib, home-manager, ... }: {
   users.users.buttars = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" ];
     initialPassword = "a$$word";
   };
 
@@ -11,6 +11,7 @@
 
     home.sessionVariables = {
       BROWSER = "brave";
+      EDITOR = "nvim";
     };
 
     home.file.".local/bin/lfub".source = bin/lfub;
