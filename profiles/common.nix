@@ -28,6 +28,7 @@ in
     rsync
     mpv
     nsxiv
+    feh
     dosfstools
     ffmpeg
     zathura
