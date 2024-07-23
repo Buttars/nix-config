@@ -1,13 +1,22 @@
-{ config, lib, home-manager, ... }: {
-  users.users.buttars = {
+{ config, lib, pkgs, home-manager, ... }:
+let
+  username = "buttars";
+in
+{
+  users.users.${username} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "docker" ];
     initialPassword = "a$$word";
   };
 
-
-  home-manager.users.buttars = { config, ... }: {
+  home-manager.users.${username} = { config, ... }: {
     home.stateVersion = "22.05";
+
+    imports = [
+      ../../home-manager/cowsay.nix
+      ../../home-manager/alacritty.nix
+      ../../home-manager/element-desktop.nix
+    ];
 
     home.sessionVariables = {
       BROWSER = "brave";
