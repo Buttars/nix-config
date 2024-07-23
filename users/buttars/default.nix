@@ -23,8 +23,8 @@ in
       EDITOR = "nvim";
     };
 
-    home.file.".local/bin/lfub".source = bin/lfub;
-    home.file.".local/bin/rotdir".source = bin/rotdir;
+    home.file.".local/bin/lfub". source = bin/lfub;
+    home.file.".local/bin/rotdir". source = bin/rotdir;
 
     home.file.".config/nvim" =
       {
