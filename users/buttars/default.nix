@@ -53,10 +53,5 @@ in
         }
       '';
     };
-
-    programs = {
-      zsh.enable = false;
-    };
-
   };
 }
