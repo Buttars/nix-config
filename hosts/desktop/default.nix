@@ -4,7 +4,7 @@
     modules = {
       hyprland.enable = true;
       zsh.enable = true;
-      alacritty.enable = true;
+      alacritty.enable = false;
       brave.enable = true;
       discord.enable = true;
       obsidian.enable = true;
