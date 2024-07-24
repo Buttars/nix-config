@@ -15,7 +15,8 @@
         # List packages installed in system profile. To search by name, run:
         # $ nix-env -qaP | grep wget
         environment.systemPackages = with pkgs; [
-	  neovim
+          neovim
+          fd
           gotop
           sshfs
           fuse
@@ -25,6 +26,7 @@
           gnumake
           unzip
           ripgrep
+          luajitPackages.luarocks-nix
         ];
 
         users.users."landon.buttars" = {
