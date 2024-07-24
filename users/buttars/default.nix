@@ -1,4 +1,4 @@
-{ config, lib, pkgs, home-manager, ... }:
+{ config, lib, pkgs, home-manager, dotfiles, ... }:
 let
   username = "buttars";
 in
@@ -8,6 +8,8 @@ in
     extraGroups = [ "wheel" "networkmanager" "docker" ];
     initialPassword = "a$$word";
   };
+
+  home-manager.backupFileExtension = "backup";
 
   home-manager.users.${username} = { config, ... }: {
     home.stateVersion = "22.05";
@@ -28,24 +30,24 @@ in
 
     home.file.".config/nvim" =
       {
-        source = config/nvim;
+        source = "${dotfiles}/.config/nvim";
         recursive = true;
       };
 
     home.file.".config/shell" =
       {
-        source = config/shell;
+        source = "${dotfiles}/.config/shell";
         recursive = true;
       };
 
-    home.file.".config/hypr".source = config/hypr;
-    home.file.".config/tmux".source = config/tmux;
-    home.file.".config/lf".source = config/lf;
-    home.file.".config/zsh".source = config/zsh;
-    home.file.".config/alacritty".source = config/alacritty;
-    home.file.".config/rofi".source = config/rofi;
-    home.file.".config/waybar".source = config/waybar;
-    home.file.".zprofile".source = config/shell/profile;
+    home.file.".config/hypr".source = "${dotfiles}/.config/hypr";
+    home.file.".config/tmux".source = "${dotfiles}/.config/tmux";
+    home.file.".config/lf".source = "${dotfiles}/.config/lf";
+    home.file.".config/zsh".source = "${dotfiles}/.config/zsh";
+    home.file.".config/alacritty".source = "${dotfiles}/.config/alacritty";
+    home.file.".config/rofi".source = "${dotfiles}/.config/rofi";
+    home.file.".config/waybar".source = "${dotfiles}/.config/waybar";
+    home.file.".zprofile".source = "${dotfiles}/.config/shell/profile";
     home.file.".config/nixpkgs/config.nix" = {
       text = ''
         {

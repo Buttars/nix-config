@@ -40,6 +40,22 @@
         "type": "github"
       }
     },
+    "dotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1721853558,
+        "narHash": "sha256-Isq+0rnULAC2rCmW/qdxkbH98SemIlFuj57o1hdNim4=",
+        "ref": "refs/heads/main",
+        "rev": "5e91f220412c07d2559ede701a7da16dd7b8ec45",
+        "revCount": 17,
+        "type": "git",
+        "url": "https://github.com/Buttars/.dotfiles.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/Buttars/.dotfiles.git"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -450,6 +466,7 @@
     },
     "root": {
       "inputs": {
+        "dotfiles": "dotfiles",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixos-wsl": "nixos-wsl",

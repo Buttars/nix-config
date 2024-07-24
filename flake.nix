@@ -8,9 +8,14 @@
     flake-utils.url = "github:numtide/flake-utils";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     xremap-flake.url = "github:xremap/nix-flake";
+    dotfiles = {
+      flake = false;
+      url = "https://github.com/Buttars/.dotfiles.git";
+      type = "git";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, xremap-flake, nixos-wsl, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, xremap-flake, nixos-wsl, dotfiles, ... } @ inputs:
     let
       systems = [
         "aarch64-linux"
