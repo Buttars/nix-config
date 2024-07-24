@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# kill if already running
-killall -9 pipewire pipewire-pulse wireplumber kdeconnect-indicator
-
-pipewire &
-pipewire-pulse &
-wireplumber &
-kdeconnect-indicator &
