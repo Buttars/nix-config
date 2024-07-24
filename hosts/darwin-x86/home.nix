@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, dotfiles, ... }:
 {
   home.packages = with pkgs; [
     wget
@@ -10,7 +10,7 @@
 
   home.file.".config/nvim" =
     {
-      source = ../users/buttars/config/nvim;
+      source = "${dotfiles}/.config/nvim";
       recursive = true;
     };
 

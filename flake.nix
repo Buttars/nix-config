@@ -8,6 +8,8 @@
     flake-utils.url = "github:numtide/flake-utils";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     xremap-flake.url = "github:xremap/nix-flake";
+    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
     dotfiles = {
       flake = false;
       url = "https://github.com/Buttars/.dotfiles.git";
@@ -15,7 +17,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, xremap-flake, nixos-wsl, dotfiles, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, xremap-flake, nixos-wsl, dotfiles, ... } @ inputs:
     let
       systems = [
         "aarch64-linux"
@@ -31,6 +33,20 @@
       xremap = inputs.xremap-flake.nixosModules.default;
     in
     {
+      darwinConfigurations."pro" = darwin.lib.darwinSystem
+        {
+          system = "x86_64-darwin";
+          modules = [
+            ./hosts/darwin-x86/configuration.nix
+            inputs.home-manager.darwinModules.home-manager
+            ({ config, pkgs, ... }: {
+              nixpkgs.overlays = [
+                darwin.overlays.default
+              ];
+            })
+          ];
+        };
+
       nixosModules =
         {
           home-manager = home-manager.nixosModules.home-manager;
@@ -46,7 +62,10 @@
         imports = builtins.attrValues self.nixosModules;
       };
 
-      nixosConfigurations = import ./hosts { inherit nixpkgs; nixosModule = self.nixosModule; inherit inputs; inherit wsl; inherit xremap; };
+      nixosConfigurations = import ./hosts {
+        inherit nixpkgs;
+        nixosModule = self.nixosModule; inherit inputs; inherit wsl; inherit xremap; inherit home-manager;
+      };
 
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
