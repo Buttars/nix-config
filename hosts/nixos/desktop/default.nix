@@ -23,11 +23,11 @@
   programs.nix-ld.enable = true;
 
   imports = [
-    ../../profiles/common.nix
-    ../../profiles/audio.nix
-    ../../profiles/programming.nix
-    ../../profiles/zsa.nix
-    ../../profiles/tui-file-manager.nix
+    ../../../profiles/common.nix
+    ../../../profiles/audio.nix
+    ../../../profiles/programming.nix
+    ../../../profiles/zsa.nix
+    ../../../profiles/tui-file-manager.nix
     ./users
     ./hardware-configuration.nix
   ];

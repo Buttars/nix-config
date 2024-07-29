@@ -15,10 +15,10 @@
 
 
   imports = [
-    ../../profiles/common.nix
-    ../../profiles/sigint.nix
-    ../../profiles/audio.nix
-    ../../profiles/touch.nix
+    ../../../profiles/common.nix
+    ../../../profiles/sigint.nix
+    ../../../profiles/audio.nix
+    ../../../profiles/touch.nix
     ./users
     ./hardware-configuration.nix
   ];

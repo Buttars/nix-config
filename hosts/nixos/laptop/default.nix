@@ -12,9 +12,9 @@
 
 
   imports = [
-    ../../profiles/common.nix
-    ../../profiles/sigint.nix
-    ../../profiles/programming.nix
+    ../../../profiles/common.nix
+    ../../../profiles/sigint.nix
+    ../../../profiles/programming.nix
     ./users
     ./hardware-configuration.nix
   ];
