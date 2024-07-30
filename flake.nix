@@ -36,6 +36,7 @@
       darwinConfigurations."pro" = darwin.lib.darwinSystem
         {
           system = "x86_64-darwin";
+          specialArgs = { inherit dotfiles; };
           modules = [
             ./hosts/darwin-x86/configuration.nix
             inputs.home-manager.darwinModules.home-manager

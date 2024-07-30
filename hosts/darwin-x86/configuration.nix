@@ -1,7 +1,9 @@
-{ pkgs, home-manager, dotfiles, rev, ... }: {
+{ pkgs, dotfiles, ... }:
+{
 
-
-  imports = [ ./system.nix ];
+  imports = [
+    ./system.nix
+  ];
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -23,6 +25,8 @@
   users.users."landon.buttars" = {
     home = "/Users/landon.buttars";
   };
+
+  home-manager.users."landon.buttars" = import ./home.nix { inherit pkgs dotfiles; };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
