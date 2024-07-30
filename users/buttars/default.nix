@@ -1,4 +1,4 @@
-{ config, lib, pkgs, home-manager, dotfiles, ... }:
+{ pkgs, dotfiles, ... }:
 let
   username = "buttars";
 in
