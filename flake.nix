@@ -63,8 +63,8 @@
       };
 
       nixosConfigurations = import ./hosts {
-        inherit nixpkgs;
-        nixosModule = self.nixosModule; inherit inputs; inherit wsl; inherit xremap; inherit home-manager;
+        inherit nixpkgs inputs wsl xremap home-manager;
+        nixosModule = self.nixosModule;
       };
 
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
