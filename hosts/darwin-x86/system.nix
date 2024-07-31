@@ -11,7 +11,7 @@
 
   system.defaults.dock = {
     autohide = true;
-    orientation = "right";
+    orientation = "bottom";
     showhidden = true;
     mru-spaces = false;
   };
