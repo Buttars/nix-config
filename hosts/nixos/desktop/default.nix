@@ -1,4 +1,4 @@
-{ config, pkgs, xremap-flake, ... }:
+{ ... }:
 {
   hostConfig = {
     modules = {
