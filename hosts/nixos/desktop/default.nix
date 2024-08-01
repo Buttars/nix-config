@@ -28,6 +28,7 @@
     ../../../profiles/programming.nix
     ../../../profiles/zsa.nix
     ../../../profiles/tui-file-manager.nix
+    ../../../profiles/password-management.nix
     ../../../profiles/virtualization.nix
     ./users
     ./hardware-configuration.nix
