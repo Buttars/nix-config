@@ -11,9 +11,11 @@
     gnumake
     ripgrep
     python3
-    julia
     devpod
-  ];
+  ] ++
+  (pkgs.lib.optionals
+    pkgs.stdenv.isLinux
+    [ julia ]);
 
   programs.direnv.enable = true;
 }
