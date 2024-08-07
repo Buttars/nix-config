@@ -5,7 +5,7 @@ let
     inherit system;
     modules = [{ _module.args = inputs; } nixosModule] ++ mods;
     extraModules = [ ];
-    specialArgs = { inherit inputs superfile; };
+    specialArgs = { inherit inputs system superfile; };
   };
 in
 {

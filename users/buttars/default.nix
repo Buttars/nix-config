@@ -28,6 +28,13 @@ in
     home.file.".local/bin/lfub". source = bin/lfub;
     home.file.".local/bin/rotdir". source = bin/rotdir;
 
+    home.file.".config/superfile" =
+      {
+        source = "${dotfiles}/.config/superfile";
+        recursive = true;
+      };
+
+
     home.file.".config/nvim" =
       {
         source = "${dotfiles}/.config/nvim";
