@@ -14,6 +14,7 @@ in
     lsof
     neovim
     tmux
+    sesh
     tmate
     tldr
     tree
