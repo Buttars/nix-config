@@ -13,7 +13,7 @@
     python3
     julia
     devpod
-    direnv
   ];
 
+  programs.direnv.enable = true;
 }
