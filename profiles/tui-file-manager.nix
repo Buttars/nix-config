@@ -1,4 +1,4 @@
-{ pkgs, inputs, system, superfile, ... }: {
+{ pkgs, system, superfile, ... }: {
   imports = [ ];
 
   environment.systemPackages = with pkgs; [
