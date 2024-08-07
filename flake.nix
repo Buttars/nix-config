@@ -10,6 +10,7 @@
     xremap-flake.url = "github:xremap/nix-flake";
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
+    superfile.url = "github:yorukot/superfile";
     dotfiles = {
       flake = false;
       url = "https://github.com/Buttars/.dotfiles.git";
@@ -31,6 +32,7 @@
 
       wsl = inputs.nixos-wsl;
       xremap = inputs.xremap-flake.nixosModules.default;
+      superfile = forAllSystems (system: inputs.superfile.packages.${system}.default);
     in
     {
       darwinConfigurations."pro" = darwin.lib.darwinSystem
@@ -64,7 +66,7 @@
       };
 
       nixosConfigurations = import ./hosts {
-        inherit nixpkgs inputs wsl xremap home-manager;
+        inherit nixpkgs inputs wsl xremap home-manager superfile;
         nixosModule = self.nixosModule;
       };
 

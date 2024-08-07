@@ -1,11 +1,11 @@
-{ nixpkgs, nixosModule, inputs, wsl, xremap, ... } @ args:
+{ nixpkgs, nixosModule, inputs, wsl, xremap, superfile, ... } @ args:
 
 let
   sys = system: mods: nixpkgs.lib.nixosSystem {
     inherit system;
     modules = [{ _module.args = inputs; } nixosModule] ++ mods;
     extraModules = [ ];
-    specialArgs = { inherit inputs; };
+    specialArgs = { inherit inputs superfile; };
   };
 in
 {
