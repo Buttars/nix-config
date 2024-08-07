@@ -3,6 +3,7 @@
 
   imports = [
     ./system.nix
+    ../../profiles/programming.nix
   ];
 
   # List packages installed in system profile. To search by name, run:
