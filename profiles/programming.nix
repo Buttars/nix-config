@@ -16,7 +16,7 @@
   ] ++
   (pkgs.lib.optionals
     pkgs.stdenv.isLinux
-    [ julia ]);
+    [ /* julia */ ]);
 
   programs.direnv.enable = true;
 }
