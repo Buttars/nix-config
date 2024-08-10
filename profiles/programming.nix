@@ -12,6 +12,7 @@
     ripgrep
     python3
     devpod
+    go
   ] ++
   (pkgs.lib.optionals
     pkgs.stdenv.isLinux
