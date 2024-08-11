@@ -18,6 +18,8 @@ in
       ../../home-manager/cowsay.nix
       ../../home-manager/alacritty.nix
       ../../home-manager/element-desktop.nix
+      # ../../home-manager/tui-task-management.nix
+      ../../home-manager/gimp.nix
     ];
 
     home.sessionVariables = {
