@@ -30,6 +30,7 @@
     ../../../profiles/tui-file-manager.nix
     ../../../profiles/password-management.nix
     ../../../profiles/virtualization.nix
+    ../../../profiles/tui-task-manager.nix
     ./users
     ./hardware-configuration.nix
   ];
