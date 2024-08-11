@@ -12,6 +12,7 @@ in
     nettools
     usbutils
     lsof
+    bat
     neovim
     tmux
     sesh
