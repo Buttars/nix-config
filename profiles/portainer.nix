@@ -18,6 +18,7 @@ in
   config = lib.mkMerge [
     {
       virtualisation.podman.enable = true;
+      hostConfig.modules.docker.enable = true;
     }
 
     (lib.mkIf
