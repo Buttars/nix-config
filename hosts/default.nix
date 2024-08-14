@@ -3,7 +3,7 @@
 let
   sys = system: mods: nixpkgs.lib.nixosSystem {
     inherit system;
-    modules = [{ _module.args = inputs; } nixosModule] ++ mods;
+    modules = [{ _module.args = inputs; } nixosModule ../profiles/common.nix] ++ mods;
     extraModules = [ ];
     specialArgs = { inherit inputs system superfile; };
   };

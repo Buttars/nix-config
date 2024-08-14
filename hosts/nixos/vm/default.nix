@@ -9,7 +9,6 @@
 
 
   imports = [
-    ../../../profiles/common.nix
     ../../../profiles/programming.nix
     ./users
   ];
