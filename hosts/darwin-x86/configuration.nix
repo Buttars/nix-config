@@ -4,6 +4,7 @@
   imports = [
     ./system.nix
     ../../profiles/programming.nix
+    ../../profiles/terminal-gui.nix
   ];
 
   # List packages installed in system profile. To search by name, run:
