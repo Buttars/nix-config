@@ -7,7 +7,6 @@ in
     modules = {
       zsh.enable = true;
       docker.enable = true;
-      xremap.enable = false;
     };
     profiles = {
       portainer = {
@@ -29,6 +28,20 @@ in
 
   networking = {
     hostName = "portainer";
+    interfaces = {
+      ens18 = {
+        useDHCP = false;
+        ipv4.addresses = [
+          {
+            address = "10.0.1.2";
+            prefixLength = 16;
+          }
+        ];
+      };
+    };
+    dhcpcd.enable = false;
+    defaultGateway = "10.0.0.1";
+    nameservers = [ "1.1.1.1" "8.8.8.8" ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -61,4 +74,19 @@ in
     };
 
   system.stateVersion = "22.05";
+
+  fileSystems = {
+    "/home/portainer/portainer" = {
+      device = "/dev/sdb1";
+      fsType = "btrfs";
+    };
+
+    "/var/lib/docker/volumes" = {
+      depends = [ "/home/portainer/portainer" ];
+      device = "/home/portainer/portainer/docker-volumes";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+  };
+
 }
