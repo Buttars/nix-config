@@ -11,7 +11,7 @@ in
     profiles = {
       portainer = {
         enable = true;
-        pathToData = "/home/portainer/portainer/data/";
+        pathToData = "/home/portainer/portainer/portainer/data/";
       };
     };
   };
@@ -28,9 +28,9 @@ in
 
   networking = {
     hostName = "portainer";
+    firewall.enable = false;
     interfaces = {
       ens18 = {
-        useDHCP = false;
         ipv4.addresses = [
           {
             address = "10.0.1.2";
@@ -39,7 +39,6 @@ in
         ];
       };
     };
-    dhcpcd.enable = false;
     defaultGateway = "10.0.0.1";
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
   };
@@ -77,7 +76,12 @@ in
 
   fileSystems = {
     "/home/portainer/portainer" = {
-      device = "/dev/sdb1";
+      device = "/dev/disk/by-label/portainer";
+      fsType = "btrfs";
+    };
+
+    "/home/portainer/portainer/nextcloud" = {
+      device = "/dev/disk/by-label/nextcloud-data";
       fsType = "btrfs";
     };
 
