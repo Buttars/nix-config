@@ -14,6 +14,7 @@ in
   field-computer = sys "x86_64-linux" [ ./nixos/field-computer ];
   laptop = sys "x86_64-linux" [ ./nixos/laptop ];
   desktop = sys "x86_64-linux" [ ./nixos/desktop xremap ];
-  portainer = sys "x86_64-linux" [ ./nixos/portainer ];
+  portainer-servus = sys "x86_64-linux" [ ./nixos/portainer ];
+  portainer-veritas = sys "x86_64-linux" [ ./nixos/portainer ];
 }
 
