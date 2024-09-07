@@ -13,7 +13,7 @@ in
   wsl = sys "x86_64-linux" [ ./nixos/vm ../hardware/wsl/hardware-configuration.nix wsl ];
   field-computer = sys "x86_64-linux" [ ./nixos/field-computer ];
   laptop = sys "x86_64-linux" [ ./nixos/laptop ];
-  desktop = sys "x86_64-linux" [ ./nixos/desktop xremap ];
+  desktop = sys "x86_64-linux" [ ./nixos/desktop ];
   portainer = sys "x86_64-linux" [ ./nixos/portainer ];
 }
 
