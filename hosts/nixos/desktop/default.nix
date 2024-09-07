@@ -2,7 +2,6 @@
 {
   hostConfig = {
     modules = {
-      hyprland.enable = true;
       zsh.enable = true;
       alacritty.enable = false;
       brave.enable = true;
@@ -20,6 +19,7 @@
     };
 
     profiles = {
+      hyprland.enable = true;
       audio.enable = true;
     };
   };
@@ -35,6 +35,7 @@
     ../../../profiles/virtualization.nix
     ../../../profiles/tui-task-manager.nix
     ../../../profiles/syncthing.nix
+    ../../../profiles/hyprland-desktop.nix
     ./users
     ./hardware-configuration.nix
   ];
