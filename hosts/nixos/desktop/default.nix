@@ -18,6 +18,10 @@
       zoxide.enable = true;
       nvidia.enable = true;
     };
+
+    profiles = {
+      audio.enable = true;
+    };
   };
 
   programs.nix-ld.enable = true;
