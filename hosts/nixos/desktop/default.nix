@@ -30,6 +30,7 @@
     ../../../profiles/password-management.nix
     ../../../profiles/virtualization.nix
     ../../../profiles/tui-task-manager.nix
+    ../../../profiles/syncthing.nix
     ./users
     ./hardware-configuration.nix
   ];
