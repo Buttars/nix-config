@@ -23,6 +23,8 @@ in
       xwaylandvideobridge
       jq
       dunst
+      wlogout
+      hyprlock
     ];
 
     xdg.portal = {

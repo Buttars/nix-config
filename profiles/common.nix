@@ -3,35 +3,54 @@ let
   cfg = config.hostConfig.modules;
 in
 {
-  imports = [ ];
 
   environment.systemPackages = with pkgs; [
-    xdg-utils
-    wget
-    networkmanager
-    nettools
-    usbutils
+    # System Utilities
+    dosfstools
+    killall
     lsof
-    bat
-    neovim
-    tmux
-    sesh
-    tmate
+    rsync
+    gnused
+    sshfs
     tldr
     tree
+    unzip
+    usbutils
+    wget
+    xdg-utils
+
+    # Networking & Connectivity
+    nettools
+    networkmanager
+    rustdesk
+    sshfs
+
+    # Text Editors & Terminal Tools
+    bat
+    fzf
+    neovim
+    pandoc
+    sesh
+    tmate
+    tmux
+
+    # Fonts & Appearance
     nerdfonts
+    nwg-look
+
+    # Media Tools
+    ffmpeg
+
+    # Screen & Clipboard Utilities
+    cliphist
     grim
     slurp
-    unzip
-    killall
-    rsync
-    dosfstools
-    ffmpeg
-    fzf
-    bat
-    rustdesk
-    pandoc
-    sshfs
+
+    # Miscellaneous Tools
+    fastfetch
+    figlet
+    gum
+    jq
   ];
 
   environment.variables.EDITOR = "nvim";
