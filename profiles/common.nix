@@ -12,6 +12,7 @@ in
     rsync
     gnused
     sshfs
+    sshs
     tldr
     tree
     unzip
