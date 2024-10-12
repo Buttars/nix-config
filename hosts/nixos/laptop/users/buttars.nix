@@ -1,4 +1,5 @@
 { config, ... }: {
+  imports = [ ../../../../users/buttars ];
   users.users.buttars = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
