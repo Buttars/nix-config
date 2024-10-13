@@ -78,6 +78,11 @@ in
 
   networking.networkmanager.enable = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
