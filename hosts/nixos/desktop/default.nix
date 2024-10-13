@@ -45,12 +45,16 @@
     "vfio_pci"
     "vfio"
     "vfio_iommu_type1"
-
-    "nvidia"
-    "nvidia_modeset"
-    "nvidia_uvm"
-    "nvidia_drm"
   ];
+
+  boot.kernelParams = [
+    "intel_iommu=on"
+    "iommu=pt"
+    "vfio-pci.ids=\"10de:2782,10de:22bc\""
+  ];
+
+  systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 buttars kvm -" ];
+
 
   networking = {
     hostName = "buttars-desktop";
