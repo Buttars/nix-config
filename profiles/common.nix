@@ -78,7 +78,7 @@ in
 
   networking.networkmanager.enable = true;
 
-  gc = {
+  nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 30d";
