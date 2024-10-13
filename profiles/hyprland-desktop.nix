@@ -13,18 +13,21 @@ in
     programs.xwayland.enable = true;
 
     environment.systemPackages = with pkgs; [
-      grim
-      slurp
-      wl-clipboard
-      rofi-wayland
-      waybar
-      font-awesome
-      hyprpaper
-      xwaylandvideobridge
-      jq
+      bibata-cursors
       dunst
-      wlogout
+      font-awesome
+      glib
+      grim
       hyprlock
+      hyprpaper
+      jq
+      rofi-wayland
+      slurp
+      waybar
+      waypaper
+      wl-clipboard
+      wlogout
+      xwaylandvideobridge
     ];
 
     xdg.portal = {
