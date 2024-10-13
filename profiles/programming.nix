@@ -13,6 +13,7 @@
     python3
     devpod
     go
+    lazydocker
   ] ++
   (pkgs.lib.optionals
     pkgs.stdenv.isLinux
