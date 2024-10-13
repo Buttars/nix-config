@@ -1,15 +1,17 @@
-{ config, ... }:
+{ ... }:
 {
   hostConfig = {
     modules = {
       hyprland.enable = false;
       zsh.enable = true;
     };
+    profiles = {
+      programming.enable = true;
+    };
   };
 
 
   imports = [
-    ../../../profiles/programming.nix
     ./users
   ];
 

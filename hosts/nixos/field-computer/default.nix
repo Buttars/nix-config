@@ -1,4 +1,4 @@
-{ config, ... }:
+{ ... }:
 {
   hostConfig = {
     modules = {
@@ -11,13 +11,15 @@
         btrfs = false;
       };
     };
+    profiles = {
+      audio.enable = true;
+      sigint.enable = true;
+      touch.enable = true;
+    };
   };
 
 
   imports = [
-    ../../../profiles/sigint.nix
-    ./../../profiles/audio.nix
-    ../../../profiles/touch.nix
     ./users
     ./hardware-configuration.nix
   ];

@@ -1,10 +1,20 @@
-{ config, pkgs, ... }: {
-  imports = [ ];
+{ config, lib, pkgs, ... }:
+let
+  cfg = config.hostConfig.profiles.zsa;
+in
+{
+  options.hostConfig.profiles.zsa = {
+    enable = lib.mkEnableOption "Enable zsa profile";
+  };
 
-  hardware.keyboard.zsa.enable = true;
+  config = lib.mkIf cfg.enable {
+    
 
-  environment.systemPackages = with pkgs; [
-    wally-cli
-  ];
+    hardware.keyboard.zsa.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      wally-cli
+    ];
+  };
 
 }

@@ -21,21 +21,19 @@
     profiles = {
       hyprland.enable = true;
       audio.enable = true;
+      password-management.enable = true;
+      programming.enable = true;
+      syncthing.enable = true;
+      tui-file-manager.enable = true;
+      tui-task-manager.enable = true;
+      virtualization.enable = true;
+      zsa.enable = true;
     };
   };
 
   programs.nix-ld.enable = true;
 
   imports = [
-    ../../../profiles/audio.nix
-    ../../../profiles/programming.nix
-    ../../../profiles/zsa.nix
-    ../../../profiles/tui-file-manager.nix
-    ../../../profiles/password-management.nix
-    ../../../profiles/virtualization.nix
-    ../../../profiles/tui-task-manager.nix
-    ../../../profiles/syncthing.nix
-    ../../../profiles/hyprland-desktop.nix
     ./users
     ./hardware-configuration.nix
   ];

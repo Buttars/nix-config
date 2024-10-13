@@ -13,6 +13,8 @@ in
         enable = true;
         pathToData = "/home/portainer/portainer/portainer/data/";
       };
+      server.enable = true;
+      virtualization.enable = true;
     };
   };
 
@@ -20,8 +22,6 @@ in
 
   imports = [
     ../../../profiles/common.nix
-    ../../../profiles/virtualization.nix
-    ../../../profiles/server.nix
     ../../../profiles/portainer.nix
     ./hardware-configuration.nix
   ];

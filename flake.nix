@@ -59,7 +59,13 @@
             name = nixpkgs.lib.removeSuffix ".nix" name;
             value = import (./modules + "/${name}");
           })
-          (builtins.readDir ./modules);
+          (builtins.readDir ./modules) //
+        nixpkgs.lib.mapAttrs'
+          (name: type: {
+            name = nixpkgs.lib.removeSuffix ".nix" name;
+            value = import (./profiles + "/${name}");
+          })
+          (builtins.readDir ./profiles);
 
       nixosModule = {
         imports = builtins.attrValues self.nixosModules;

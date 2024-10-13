@@ -3,8 +3,6 @@ let
   cfg = config.hostConfig.profiles.portainer;
 in
 {
-
-
   options.hostConfig.profiles.portainer = {
     enable = lib.mkEnableOption "Enable containerized portainer service";
     pathToData = lib.mkOption {

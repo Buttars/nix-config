@@ -1,7 +1,4 @@
-{ config, pkgs, ... }:
-let
-  cfg = config.hostConfig.modules;
-in
+{ pkgs, ... }:
 {
 
   environment.systemPackages = with pkgs; [
