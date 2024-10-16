@@ -14,7 +14,7 @@ in
 
     environment.systemPackages = with pkgs; [
       bibata-cursors
-      dunst
+      swaynotificationcenter
       font-awesome
       glib
       grim
@@ -28,6 +28,7 @@ in
       wl-clipboard
       wlogout
       xwaylandvideobridge
+      nautilus
     ];
 
     xdg.portal = {
