@@ -13,6 +13,11 @@
       source = "${dotfiles}/.config/nvim";
       recursive = true;
     };
+  home.file.".config/tmux" =
+    {
+      source = "${dotfiles}/.config/tmux";
+      recursive = true;
+    };
 
   home.stateVersion = "23.05";
 
