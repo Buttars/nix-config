@@ -3,26 +3,36 @@
 
   imports = [
     ./system.nix
-    ../../profiles/programming.nix
-    ../../profiles/terminal-gui.nix
   ];
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    neovim
-    fd
-    gotop
-    sshfs
-    fuse
-    nettools
-    cargo
     #libgcc
+    cargo
+    delta
+    devpod
+    fd
+    fuse
+    gcc
+    git
     gnumake
-    unzip
-    ripgrep
+    go
+    gotop
+    lazydocker
     luajitPackages.luarocks-nix
+    neovim
+    nettools
+    nixpkgs-fmt
+    nodejs
+    python3
+    ripgrep
+    sshfs
+    tmux
+    unzip
   ];
+
+  programs.direnv.enable = true;
 
   users.users."landon.buttars" = {
     home = "/Users/landon.buttars";
