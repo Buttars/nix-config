@@ -11,18 +11,18 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       atac
-      nodejs
       cargo
+      delta
+      devpod
       gcc
       git
-      delta
-      nixpkgs-fmt
       gnumake
-      ripgrep
-      python3
-      devpod
       go
       lazydocker
+      nixpkgs-fmt
+      nodejs
+      python3
+      ripgrep
     ] ++
     (pkgs.lib.optionals
       pkgs.stdenv.isLinux
