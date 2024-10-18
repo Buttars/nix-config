@@ -14,6 +14,7 @@ in
       cargo
       delta
       devpod
+      dig
       gcc
       git
       gnumake
