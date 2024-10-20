@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   host = {
     modules = {
@@ -17,7 +17,6 @@
       zoxide.enable = true;
       nvidia.enable = true;
     };
-
     profiles = {
       hyprland.enable = true;
       audio.enable = true;
@@ -29,6 +28,7 @@
       virtualization.enable = true;
       zsa.enable = true;
     };
+    packages = with pkgs; [ ];
   };
 
   programs.nix-ld.enable = true;
