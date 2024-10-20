@@ -1,9 +1,9 @@
 { config, lib, ... }:
 let
-  cfg = config.hostConfig.profiles.portainer;
+  cfg = config.host.profiles.portainer;
 in
 {
-  options.hostConfig.profiles.portainer = {
+  options.host.profiles.portainer = {
     enable = lib.mkEnableOption "Enable containerized portainer service";
     pathToData = lib.mkOption {
       type = lib.types.str;
@@ -16,7 +16,7 @@ in
   config = lib.mkMerge [
     {
       virtualisation.podman.enable = true;
-      hostConfig.modules.docker.enable = true;
+      host.modules.docker.enable = true;
     }
 
     (lib.mkIf

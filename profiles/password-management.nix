@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.profiles.password-management;
+  cfg = config.host.profiles.password-management;
 in
 {
-  options.hostConfig.profiles.password-management = {
+  options.host.profiles.password-management = {
     enable = lib.mkEnableOption "Enable password management software";
   };
 

@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.modules.spr;
+  cfg = config.host.modules.spr;
 in
 {
-  options.hostConfig.modules.spr = {
+  options.host.modules.spr = {
     enable = lib.mkEnableOption "Enable spr for git";
   };
 

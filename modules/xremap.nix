@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }:
 let
-  cfg = config.hostConfig.modules.xremap;
+  cfg = config.host.modules.xremap;
 in
 {
-  options.hostConfig.modules.xremap = {
+  options.host.modules.xremap = {
     enable = lib.mkEnableOption "Enable xremap";
   };
 

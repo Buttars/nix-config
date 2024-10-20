@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.modules.docker;
+  cfg = config.host.modules.docker;
 in
 {
-  options.hostConfig.modules.docker = {
+  options.host.modules.docker = {
     enable = lib.mkEnableOption "Enable Docker virutalization";
     btrfs = lib.mkEnableOption "Enable btrfs support for docker";
   };

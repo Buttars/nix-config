@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.profiles.sigint;
+  cfg = config.host.profiles.sigint;
 in
 {
-  options.hostConfig.profiles.sigint = {
+  options.host.profiles.sigint = {
     enable = lib.mkEnableOption "Enable sigint profile";
   };
 

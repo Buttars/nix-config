@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.modules.obsidian;
+  cfg = config.host.modules.obsidian;
 in
 {
-  options.hostConfig.modules.obsidian = {
+  options.host.modules.obsidian = {
     enable = lib.mkEnableOption "Enable Obsidian note taking app";
   };
 

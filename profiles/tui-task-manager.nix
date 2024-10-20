@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.profiles.tui-task-manager;
+  cfg = config.host.profiles.tui-task-manager;
 in
 {
-  options.hostConfig.profiles.tui-task-manager = {
+  options.host.profiles.tui-task-manager = {
     enable = lib.mkEnableOption "Enable tui-task-manager profile";
   };
 

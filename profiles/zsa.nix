@@ -1,14 +1,14 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.profiles.zsa;
+  cfg = config.host.profiles.zsa;
 in
 {
-  options.hostConfig.profiles.zsa = {
+  options.host.profiles.zsa = {
     enable = lib.mkEnableOption "Enable zsa profile";
   };
 
   config = lib.mkIf cfg.enable {
-    
+
 
     hardware.keyboard.zsa.enable = true;
 

@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.modules.nvidia;
+  cfg = config.host.modules.nvidia;
 in
 {
-  options.hostConfig.modules.nvidia = {
+  options.host.modules.nvidia = {
     enable = lib.mkEnableOption "Enable nvidia drivers";
   };
 

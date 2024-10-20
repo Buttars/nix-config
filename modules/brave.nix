@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.modules.brave;
+  cfg = config.host.modules.brave;
 in
 {
-  options.hostConfig.modules.brave = {
+  options.host.modules.brave = {
     enable = lib.mkEnableOption "Enable Brave Browser";
   };
 

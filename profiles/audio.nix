@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.profiles.audio;
+  cfg = config.host.profiles.audio;
 in
 {
-  options.hostConfig.profiles.audio = {
+  options.host.profiles.audio = {
     enable = lib.mkEnableOption "Enable device audio";
   };
 

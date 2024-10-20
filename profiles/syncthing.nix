@@ -1,9 +1,9 @@
 { config, lib, ... }:
 let
-  cfg = config.hostConfig.profiles.syncthing;
+  cfg = config.host.profiles.syncthing;
 in
 {
-  options.hostConfig.profiles.syncthing = {
+  options.host.profiles.syncthing = {
     enable = lib.mkEnableOption "Enable syncthing profile";
   };
 

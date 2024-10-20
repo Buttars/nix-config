@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.modules.discord;
+  cfg = config.host.modules.discord;
 in
 {
-  options.hostConfig.modules.discord = {
+  options.host.modules.discord = {
     enable = lib.mkEnableOption "Enable Discord";
   };
 

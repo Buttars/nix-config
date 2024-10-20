@@ -1,6 +1,6 @@
 { ... }:
 {
-  hostConfig = {
+  host = {
     modules = {
       zsh.enable = true;
       kde.enable = true;

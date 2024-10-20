@@ -1,9 +1,9 @@
 { config, lib, pkgs, system, ... }:
 let
-  cfg = config.hostConfig.profiles.tui-file-manager;
+  cfg = config.host.profiles.tui-file-manager;
 in
 {
-  options.hostConfig.profiles.tui-file-manager = {
+  options.host.profiles.tui-file-manager = {
     enable = lib.mkEnableOption "Enable tui-file-manager profile";
   };
 

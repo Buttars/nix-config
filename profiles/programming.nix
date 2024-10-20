@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.profiles.programming;
+  cfg = config.host.profiles.programming;
 in
 
 {
-  options.hostConfig.profiles.programming = {
+  options.host.profiles.programming = {
     enable = lib.mkEnableOption "Enable programming profile.";
   };
 

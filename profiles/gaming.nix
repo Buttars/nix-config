@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.profiles.gaming;
+  cfg = config.host.profiles.gaming;
 in
 {
-  options.hostConfig.profiles.gaming = {
+  options.host.profiles.gaming = {
     enable = lib.mkEnableOption "Enable gaming profiles.";
   };
 

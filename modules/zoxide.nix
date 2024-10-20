@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.modules.zoxide;
+  cfg = config.host.modules.zoxide;
 in
 {
-  options.hostConfig.modules.zoxide = {
+  options.host.modules.zoxide = {
     enable = lib.mkEnableOption "Enable zoxide";
   };
 

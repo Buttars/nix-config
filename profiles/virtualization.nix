@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.profiles.virtualization;
+  cfg = config.host.profiles.virtualization;
 in
 {
-  options.hostConfig.profiles.virtualization = {
+  options.host.profiles.virtualization = {
     enable = lib.mkEnableOption "Enable virtualization profile";
   };
 

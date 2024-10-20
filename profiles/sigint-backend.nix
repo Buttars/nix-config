@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.profiles.sigint-backend;
+  cfg = config.host.profiles.sigint-backend;
 in
 {
-  options.hostConfig.profiles.sigint-backend = {
+  options.host.profiles.sigint-backend = {
     enable = lib.mkEnableOption "Enable sigint-backend profile";
   };
 

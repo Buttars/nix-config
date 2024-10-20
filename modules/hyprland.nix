@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }:
 let
-  cfg = config.hostConfig.modules.hyprland;
+  cfg = config.host.modules.hyprland;
 in
 {
-  options.hostConfig.modules.hyprland = {
+  options.host.modules.hyprland = {
     enable = lib.mkEnableOption "Enable hyprland compositor";
   };
 

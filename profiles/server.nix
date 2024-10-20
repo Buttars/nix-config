@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.hostConfig.profiles.server;
+  cfg = config.host.profiles.server;
 in
 {
-  options.hostConfig.profiles.server = {
+  options.host.profiles.server = {
     enable = lib.mkEnableOption "Enable server profile";
   };
 
