@@ -12,9 +12,6 @@ in
   };
 
   config = lib.mkIf (cfg.packages != [ ]) {
-    environment.systemPackages = lib.mkMerge [
-      config.environment.systemPackages
-      cfg.packages
-    ];
+    environment.systemPackages = cfg.packages;
   };
 }
