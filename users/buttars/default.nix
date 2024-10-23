@@ -14,12 +14,15 @@ in
   home-manager.users.${username} = { config, ... }: {
     home.stateVersion = "24.05";
 
+    home.packages = with pkgs; [
+      cowsay
+      alacritty
+      element-desktop
+      gimp
+    ];
+
     imports = [
-      ../../home-manager/cowsay.nix
-      ../../home-manager/alacritty.nix
-      ../../home-manager/element-desktop.nix
       # ../../home-manager/tui-task-management.nix
-      ../../home-manager/gimp.nix
     ];
 
     home.sessionVariables = {
