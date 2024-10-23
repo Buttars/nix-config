@@ -33,6 +33,8 @@
       wsl = inputs.nixos-wsl;
       xremap = inputs.xremap-flake.nixosModules.default;
       superfile = forAllSystems (system: inputs.superfile.packages.${system}.default);
+
+      stateVersion = "24.04";
     in
     {
       darwinConfigurations."pro" = darwin.lib.darwinSystem
@@ -75,7 +77,7 @@
       };
 
       nixosConfigurations = import ./hosts {
-        inherit nixpkgs inputs wsl xremap home-manager superfile;
+        inherit nixpkgs inputs stateVersion wsl xremap home-manager superfile;
         nixosModule = self.nixosModule;
       };
 
