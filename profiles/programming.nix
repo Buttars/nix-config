@@ -22,6 +22,7 @@ in
       lazydocker
       nixpkgs-fmt
       nodejs
+      pnpm
       python3
       ripgrep
     ] ++
