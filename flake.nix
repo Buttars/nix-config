@@ -46,6 +46,9 @@
             ({ config, pkgs, ... }: {
               nixpkgs.overlays = [
                 darwin.overlays.default
+                outputs.overlays.additions
+                outputs.overlays.modifications
+                outputs.overlays.unstable-packages
               ];
             })
           ];
