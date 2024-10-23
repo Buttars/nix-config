@@ -33,7 +33,6 @@
       wsl = inputs.nixos-wsl;
       xremap = inputs.xremap-flake.nixosModules.default;
       superfile = forAllSystems (system: inputs.superfile.packages.${system}.default);
-      inherit (self) outputs;
     in
     {
       darwinConfigurations."pro" = darwin.lib.darwinSystem
@@ -46,9 +45,9 @@
             ({ config, pkgs, ... }: {
               nixpkgs.overlays = [
                 darwin.overlays.default
-                outputs.overlays.additions
-                outputs.overlays.modifications
-                outputs.overlays.unstable-packages
+                inputs.self.overlays.additions
+                inputs.self.overlays.modifications
+                inputs.self.overlays.unstable-packages
               ];
             })
           ];
@@ -76,7 +75,7 @@
       };
 
       nixosConfigurations = import ./hosts {
-        inherit nixpkgs inputs outputs wsl xremap home-manager superfile;
+        inherit nixpkgs inputs wsl xremap home-manager superfile;
         nixosModule = self.nixosModule;
       };
 
