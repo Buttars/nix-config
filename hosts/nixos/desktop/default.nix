@@ -5,8 +5,6 @@
       zsh.enable = true;
       docker.enable = true;
       steam.enable = true;
-      starship.enable = true;
-      xremap.enable = true;
       nvidia.enable = true;
     };
     profiles = {
