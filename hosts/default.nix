@@ -1,9 +1,22 @@
-{ nixpkgs, nixosModule, inputs, wsl, xremap, superfile, ... } @ args:
-
+{ nixpkgs, nixosModule, inputs, outputs, wsl, xremap, superfile, ... } @ args:
 let
   sys = system: mods: nixpkgs.lib.nixosSystem {
     inherit system;
-    modules = [{ _module.args = inputs; } nixosModule ../profiles/common.nix xremap] ++ mods;
+    modules = [
+      {
+        _module.args = inputs;
+        nixpkgs = {
+          overlays = [
+            outputs.overlays.additions
+            outputs.overlays.modifications
+            outputs.overlays.unstable-packages
+          ];
+        };
+      }
+      nixosModule
+      ../profiles/common.nix
+      xremap
+    ] ++ mods;
     extraModules = [ ];
     specialArgs = { inherit inputs system superfile; };
   };

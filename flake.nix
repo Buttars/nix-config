@@ -33,6 +33,7 @@
       wsl = inputs.nixos-wsl;
       xremap = inputs.xremap-flake.nixosModules.default;
       superfile = forAllSystems (system: inputs.superfile.packages.${system}.default);
+      inherit (self) outputs;
     in
     {
       darwinConfigurations."pro" = darwin.lib.darwinSystem
@@ -72,7 +73,7 @@
       };
 
       nixosConfigurations = import ./hosts {
-        inherit nixpkgs inputs wsl xremap home-manager superfile;
+        inherit nixpkgs inputs outputs wsl xremap home-manager superfile;
         nixosModule = self.nixosModule;
       };
 
