@@ -30,42 +30,27 @@ in
       EDITOR = "nvim";
     };
 
-    home.file.".local/bin/lfub". source = bin/lfub;
-    home.file.".local/bin/rotdir". source = bin/rotdir;
-
-    home.file.".config/superfile" =
-      {
-        source = "${dotfiles}/.config/superfile";
-        recursive = true;
+    home.file = {
+      ".local/bin/lfub". source = bin/lfub;
+      ".local/bin/rotdir". source = bin/rotdir;
+      ".config/superfile" = { source = "${dotfiles}/.config/superfile"; recursive = true; };
+      ".config/nvim" = { source = "${dotfiles}/.config/nvim"; recursive = true; };
+      ".config/shell" = { source = "${dotfiles}/.config/shell"; recursive = true; };
+      ".config/hypr".source = "${dotfiles}/.config/hypr";
+      ".config/tmux".source = "${dotfiles}/.config/tmux";
+      ".config/lf".source = "${dotfiles}/.config/lf";
+      ".config/zsh".source = "${dotfiles}/.config/zsh";
+      ".config/alacritty".source = "${dotfiles}/.config/alacritty";
+      ".config/rofi".source = "${dotfiles}/.config/rofi";
+      ".config/waybar".source = "${dotfiles}/.config/waybar";
+      ".zprofile".source = "${dotfiles}/.config/shell/profile";
+      ".config/nixpkgs/config.nix" = {
+        text = ''
+          {
+            allowUnfree = true;
+          }
+        '';
       };
-
-
-    home.file.".config/nvim" =
-      {
-        source = "${dotfiles}/.config/nvim";
-        recursive = true;
-      };
-
-    home.file.".config/shell" =
-      {
-        source = "${dotfiles}/.config/shell";
-        recursive = true;
-      };
-
-    home.file.".config/hypr".source = "${dotfiles}/.config/hypr";
-    home.file.".config/tmux".source = "${dotfiles}/.config/tmux";
-    home.file.".config/lf".source = "${dotfiles}/.config/lf";
-    home.file.".config/zsh".source = "${dotfiles}/.config/zsh";
-    home.file.".config/alacritty".source = "${dotfiles}/.config/alacritty";
-    home.file.".config/rofi".source = "${dotfiles}/.config/rofi";
-    home.file.".config/waybar".source = "${dotfiles}/.config/waybar";
-    home.file.".zprofile".source = "${dotfiles}/.config/shell/profile";
-    home.file.".config/nixpkgs/config.nix" = {
-      text = ''
-        {
-          allowUnfree = true;
-        }
-      '';
     };
   };
 }
