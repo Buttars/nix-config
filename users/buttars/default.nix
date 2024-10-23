@@ -12,7 +12,7 @@ in
   home-manager.backupFileExtension = "backup";
 
   home-manager.users.${username} = { config, ... }: {
-    home.stateVersion = "22.05";
+    home.stateVersion = "24.05";
 
     imports = [
       ../../home-manager/cowsay.nix

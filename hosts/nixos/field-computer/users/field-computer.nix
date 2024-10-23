@@ -6,7 +6,7 @@
   };
 
   home-manager.users.field-computer = { ... }: {
-    home.stateVersion = "22.05";
+    home.stateVersion = "24.05";
 
 
     programs = {

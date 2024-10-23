@@ -54,7 +54,7 @@ in
   };
 
   home-manager.users.${username} = { config, ... }: {
-    home.stateVersion = "22.05";
+    home.stateVersion = "24.05";
 
     home.file.".config/nvim" = {
       source = "${dotfiles}/.config/nvim";
@@ -72,7 +72,7 @@ in
       passwordAuthentication = true;
     };
 
-  system.stateVersion = "22.05";
+  system.stateVersion = "24.05";
 
   fileSystems = {
     "/home/portainer/portainer" = {
