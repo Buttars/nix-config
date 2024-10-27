@@ -8,8 +8,8 @@
       nvidia.enable = true;
     };
     profiles = {
-      hyprland.enable = true;
       audio.enable = true;
+      hyprland.enable = true;
       password-management.enable = true;
       programming.enable = true;
       syncthing.enable = true;

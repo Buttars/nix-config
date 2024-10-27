@@ -14,21 +14,21 @@ in
 
     environment.systemPackages = with pkgs; [
       bibata-cursors
-      swaynotificationcenter
       font-awesome
       glib
       grim
       hyprlock
       hyprpaper
       jq
+      nautilus
       rofi-wayland
       slurp
+      swaynotificationcenter
       waybar
       waypaper
       wl-clipboard
       wlogout
       xwaylandvideobridge
-      nautilus
     ];
 
     xdg.portal = {
