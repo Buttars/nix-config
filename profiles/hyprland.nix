@@ -29,6 +29,7 @@ in
       wl-clipboard
       wlogout
       xwaylandvideobridge
+      hyprlock
     ];
 
     xdg.portal = {
