@@ -13,6 +13,7 @@ in
       atac
       cargo
       delta
+      devenv
       devpod
       dig
       gcc
