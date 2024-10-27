@@ -9,6 +9,7 @@
     };
     profiles = {
       audio.enable = true;
+      gtk.enable = true;
       hyprland.enable = true;
       password-management.enable = true;
       programming.enable = true;
