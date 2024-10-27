@@ -33,6 +33,7 @@
     tmux
 
     # Fonts & Appearance
+    commit-mono
     nerdfonts
     nwg-look
 
@@ -61,7 +62,7 @@
   };
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "SourceCodePro" "Noto" "Inconsolata" "RobotoMono" ]; })
+    (nerdfonts.override { fonts = [ "SourceCodePro" "Noto" "Inconsolata" "RobotoMono" "CommitMono" ]; })
   ];
 
   security.sudo = {
