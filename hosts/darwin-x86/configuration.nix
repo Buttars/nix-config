@@ -12,6 +12,7 @@
     bat
     cargo
     delta
+    devenv
     devpod
     fd
     fuse
