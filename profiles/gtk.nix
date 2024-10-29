@@ -15,6 +15,7 @@ in
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
+      nwg-look
       papirus-icon-theme
       bibata-cursors
     ];
