@@ -9,6 +9,7 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     #libgcc
+    bat
     cargo
     delta
     devpod
