@@ -19,6 +19,7 @@ in
       grim
       hyprlock
       hyprpaper
+      hyprpicker
       jq
       nautilus
       rofi-wayland
@@ -29,7 +30,6 @@ in
       wl-clipboard
       wlogout
       xwaylandvideobridge
-      hyprlock
     ];
 
     xdg.portal = {
