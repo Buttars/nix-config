@@ -59,11 +59,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1730600078,
-        "narHash": "sha256-BoyFmE59HDF3uybBySsWVoyjNuHvz3Wv8row/mSb958=",
+        "lastModified": 1730963783,
+        "narHash": "sha256-I5l9aMkCQi0CHCrE4tol+31z74ZfnYDaeGoK1Bi9Qrk=",
         "owner": "lnl7",
         "repo": "nix-darwin",
-        "rev": "4652874d014b82cb746173ffc64f6a70044daa7e",
+        "rev": "158198a6e3690facf15718b24571789c0756d43a",
         "type": "github"
       },
       "original": {
@@ -94,11 +94,11 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1730183687,
-        "narHash": "sha256-9NKu72B7sOzaw61MhHprqYIAMxpALKL5C15GUK/SD3o=",
+        "lastModified": 1730964637,
+        "narHash": "sha256-GB8hZ0DNak5ewaq4AbrrhmHjFTZusFf4+SHxbj4tl1w=",
         "ref": "refs/heads/main",
-        "rev": "d853855f120aa29c6c9adcabd6889bd3b182e2f1",
-        "revCount": 67,
+        "rev": "296be4ae3a2da6ba84b16360551dfd9e91384d05",
+        "revCount": 72,
         "type": "git",
         "url": "https://github.com/Buttars/.dotfiles.git"
       },
@@ -243,11 +243,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1730490306,
-        "narHash": "sha256-AvCVDswOUM9D368HxYD25RsSKp+5o0L0/JHADjLoD38=",
+        "lastModified": 1730837930,
+        "narHash": "sha256-0kZL4m+bKBJUBQse0HanewWO0g8hDdCvBhudzxgehqc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1743615b61c7285976f85b303a36cdf88a556503",
+        "rev": "2f607e07f3ac7e53541120536708e824acccfaa8",
         "type": "github"
       },
       "original": {
@@ -496,11 +496,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1730531603,
-        "narHash": "sha256-Dqg6si5CqIzm87sp57j5nTaeBbWhHFaVyG7V6L8k3lY=",
+        "lastModified": 1730785428,
+        "narHash": "sha256-Zwl8YgTVJTEum+L+0zVAWvXAGbWAuXHax3KzuejaDyo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7ffd9ae656aec493492b44d0ddfb28e79a1ea25d",
+        "rev": "4aa36568d413aca0ea84a1684d2d46f55dbabad7",
         "type": "github"
       },
       "original": {
