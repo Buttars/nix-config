@@ -85,8 +85,8 @@
   ];
 
   # services.ntp.enable = true;
-  services.automatic-timezoned.enable = true;
-  services.timesyncd.enable = true;
+  # services.automatic-timezoned.enable = true;
+  # services.timesyncd.enable = true;
 
   time.timeZone = "America/Denver";
 
