@@ -7,6 +7,6 @@
   home-manager.useUserPackages = true;
 
   # TODO: Make this configurable
-  imports = [ ./buttars.nix ];
+  imports = [ ../../../../users/buttars ];
 
 }
