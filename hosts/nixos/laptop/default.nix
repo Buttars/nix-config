@@ -3,18 +3,8 @@
   host = {
     modules = {
       zsh.enable = true;
-      alacritty.enable = false;
-      brave.enable = true;
-      discord.enable = true;
-      obsidian.enable = true;
       docker.enable = true;
       steam.enable = true;
-      vdhcoapp.enable = true;
-      starship.enable = true;
-      fastfetch.enable = true;
-      xremap.enable = true;
-      spr.enable = true;
-      zoxide.enable = true;
       nvidia.enable = true;
     };
 
@@ -29,6 +19,19 @@
       virtualization.enable = true;
       zsa.enable = true;
     };
+    packages = with pkgs; [
+      alacritty
+      brave
+      discord
+      fastfetch
+      obsidian
+      spr
+      vdhcoapp
+      vesktop
+      webcord
+      zoxide
+      bluetuith
+    ];
   };
 
   programs.nix-ld.enable = true;
