@@ -40,6 +40,8 @@
 
   programs.nix-ld.enable = true;
 
+  nix.settings.trusted-users = [ "root" "@wheel" ];
+
   imports = [
     ./users
     ./hardware-configuration.nix
