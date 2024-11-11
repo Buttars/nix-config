@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.host.profiles.gtk;
+  cfg = config.host.profiles.desktop-theming;
 in
 {
-  options.host.profiles.gtk = {
-    enable = lib.mkEnableOption "Enable gtk theming.";
+  options.host.profiles.desktop-theming = {
+    enable = lib.mkEnableOption "Enable desktop theming.";
   };
 
   config = lib.mkIf cfg.enable {
