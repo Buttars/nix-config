@@ -53,8 +53,11 @@
     "vfio-pci.ids=\"10de:2782,10de:22bc\""
   ];
 
-  systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 buttars kvm -" ];
-
+  systemd.tmpfiles.rules = [
+    "f /dev/shm/looking-glass 0660 buttars kvm -"
+    "d /run/postgresql 0755 postgres postgres -"
+    "d /var/lib/postgresql 0755 postgres postgres -"
+  ];
 
   networking = {
     hostName = "buttars-desktop";
