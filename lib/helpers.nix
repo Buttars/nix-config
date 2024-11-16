@@ -1,4 +1,4 @@
-{ inputs, stateVersion, ... }: {
+{ inputs, nixosModule, stateVersion, ... }: {
   mkHome =
     { hostname, username ? "buttars", platform ? "x86_64-linux" }:
     inputs.home-manager.lib.homeManagerConfiguration {
@@ -15,6 +15,21 @@
     };
 
   mkNixos = { hostname, username ? "buttars", platform ? "x86_64-linux", modules ? [ ] }: inputs.nixpkgs.lib.nixosSystem {
+    modules = [
+      {
+        _module.args = inputs;
+        nixpkgs = {
+          overlays = [
+            inputs.self.overlays.additions
+            inputs.self.overlays.modifications
+            inputs.self.overlays.unstable-packages
+          ];
+        };
+      }
+      nixosModule
+      ../profiles/common.nix
+    ] ++ modules;
+    extraModules = [ ];
     specialArgs = {
       inherit
         inputs
@@ -23,8 +38,6 @@
         username
         stateVersion;
     };
-
-    modules = [ ../hosts/nixos ] ++ modules;
   };
 
   forAllSystems = inputs.nixpkgs.lib.getAttrs [

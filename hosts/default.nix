@@ -19,7 +19,7 @@ let
     extraModules = [ ];
     specialArgs = { inherit inputs system; };
   };
-  helper = import ../lib/helpers.nix { inherit inputs stateVersion; };
+  helper = import ../lib/helpers.nix { inherit inputs nixosModule stateVersion; };
 in
 {
   vm = sys "x86_64-linux" [ ./nixos/vm ../hardware/vm/hardware-configuration.nix ];
@@ -31,7 +31,7 @@ in
   desktop-experimental = helper.mkNixos {
     hostname = "buttars-desktop";
     username = "buttars";
-    modules = [./nixos/buttars-desktop];
+    modules = [./nixos/desktop];
   };
 }
 
