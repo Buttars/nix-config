@@ -28,9 +28,10 @@ in
   laptop = sys "x86_64-linux" [ ./nixos/laptop ];
   desktop = sys "x86_64-linux" [ ./nixos/desktop ];
   portainer = sys "x86_64-linux" [ ./nixos/portainer ];
-  test = helper.mkNixos {
+  desktop-experimental = helper.mkNixos {
     hostname = "buttars-desktop";
     username = "buttars";
+    modules = [./nixos/buttars-desktop];
   };
 }
 
