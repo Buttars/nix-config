@@ -10,7 +10,8 @@
     xremap-flake.url = "github:xremap/nix-flake";
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    superfile.url = "github:yorukot/superfile";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     dotfiles = {
       flake = false;
       url = "https://github.com/Buttars/.dotfiles.git";
@@ -18,7 +19,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, xremap-flake, nixos-wsl, dotfiles, ... } @ inputs:
+  outputs = { self, nixpkgs, darwin, nixos-wsl, dotfiles, ... } @ inputs:
     let
       systems = [
         "aarch64-linux"
@@ -29,10 +30,6 @@
       ];
 
       forAllSystems = nixpkgs.lib.genAttrs systems;
-
-      wsl = inputs.nixos-wsl;
-      xremap = inputs.xremap-flake.nixosModules.default;
-      superfile = forAllSystems (system: inputs.superfile.packages.${system}.default);
 
       stateVersion = "24.04";
     in
@@ -57,7 +54,10 @@
 
       nixosModules =
         {
-          home-manager = home-manager.nixosModules.home-manager;
+          home-manager = inputs.home-manager.nixosModules.home-manager;
+          xremap = inputs.xremap-flake.nixosModules.default;
+          sops-nix = inputs.sops-nix.nixosModules.sops;
+          wsl = inputs.nixos-wsl.nixosModules.default;
         } //
         nixpkgs.lib.mapAttrs'
           (name: type: {
@@ -77,7 +77,7 @@
       };
 
       nixosConfigurations = import ./hosts {
-        inherit nixpkgs inputs stateVersion wsl xremap home-manager superfile;
+        inherit nixpkgs inputs stateVersion;
         nixosModule = self.nixosModule;
       };
 

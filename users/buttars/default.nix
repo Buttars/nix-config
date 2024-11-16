@@ -33,7 +33,6 @@ in
     home.file = {
       ".local/bin/lfub". source = bin/lfub;
       ".local/bin/rotdir". source = bin/rotdir;
-      ".config/superfile" = { source = "${dotfiles}/.config/superfile"; recursive = true; };
       ".config/nvim" = { source = "${dotfiles}/.config/nvim"; recursive = true; };
       ".config/shell" = { source = "${dotfiles}/.config/shell"; recursive = true; };
       ".config/hypr".source = "${dotfiles}/.config/hypr";

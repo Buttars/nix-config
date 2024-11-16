@@ -1,4 +1,4 @@
-{ nixpkgs, nixosModule, inputs, stateVersion, wsl, xremap, superfile, ... }:
+{ nixpkgs, nixosModule, inputs, stateVersion, ... }:
 let
   sys = system: mods: nixpkgs.lib.nixosSystem {
     inherit system;
@@ -15,16 +15,15 @@ let
       }
       nixosModule
       ../profiles/common.nix
-      xremap
     ] ++ mods;
     extraModules = [ ];
-    specialArgs = { inherit inputs system superfile; };
+    specialArgs = { inherit inputs system; };
   };
   helper = import ../lib/helpers.nix { inherit inputs stateVersion; };
 in
 {
   vm = sys "x86_64-linux" [ ./nixos/vm ../hardware/vm/hardware-configuration.nix ];
-  wsl = sys "x86_64-linux" [ ./nixos/vm ../hardware/wsl/hardware-configuration.nix wsl ];
+  wsl = sys "x86_64-linux" [ ./nixos/vm ../hardware/wsl/hardware-configuration.nix];
   field-computer = sys "x86_64-linux" [ ./nixos/field-computer ];
   laptop = sys "x86_64-linux" [ ./nixos/laptop ];
   desktop = sys "x86_64-linux" [ ./nixos/desktop ];

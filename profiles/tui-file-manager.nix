@@ -1,4 +1,4 @@
-{ config, lib, pkgs, system, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.host.profiles.tui-file-manager;
 in
@@ -10,7 +10,6 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       lf
-      superfile
       feh
       nsxiv
       zathura
