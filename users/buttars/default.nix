@@ -41,6 +41,7 @@ in
       ".config/lf".source = "${dotfiles}/.config/lf";
       ".config/zsh".source = "${dotfiles}/.config/zsh";
       ".config/alacritty".source = "${dotfiles}/.config/alacritty";
+      ".config/kitty".source = "${dotfiles}/.config/kitty";
       ".config/rofi".source = "${dotfiles}/.config/rofi";
       ".config/waybar".source = "${dotfiles}/.config/waybar";
       ".zprofile".source = "${dotfiles}/.config/shell/profile";
