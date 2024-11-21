@@ -33,5 +33,19 @@ in
     username = "buttars";
     modules = [./nixos/desktop];
   };
+  karaoke = helper.mkNixos {
+    hostname = "karaoke";
+    platform = "aarch64-linux";
+    username = "karaoke";
+    modules = [
+      {
+        nixpkgs.buildPlatform = "x86_64-linux";
+        nixpkgs.hostPlatform = "aarch64-linux";
+      }
+      ./nixos/karaoke
+      inputs.nixos-hardware.nixosModules.raspberry-pi-4
+      "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+    ];
+  };
 }
 

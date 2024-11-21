@@ -17,7 +17,7 @@ in
     };
     user = lib.mkOption {
       type = lib.types.str;
-      default = "your-user";
+      default = "pikaraoke";
       description = "User to run the PiKaraoke service.";
     };
   };

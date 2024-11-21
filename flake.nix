@@ -3,15 +3,26 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
     flake-utils.url = "github:numtide/flake-utils";
+
     nixos-wsl.url = "github:nix-community/nixos-wsl";
+
     xremap-flake.url = "github:xremap/nix-flake";
+
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
     dotfiles = {
       flake = false;
       url = "https://github.com/Buttars/.dotfiles.git";
@@ -58,6 +69,7 @@
           xremap = inputs.xremap-flake.nixosModules.default;
           sops-nix = inputs.sops-nix.nixosModules.sops;
           wsl = inputs.nixos-wsl.nixosModules.default;
+          disko = inputs.disko.nixosModules.disko;
         } //
         nixpkgs.lib.mapAttrs'
           (name: type: {

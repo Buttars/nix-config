@@ -14,7 +14,12 @@
       modules = [ ../home-manager ];
     };
 
-  mkNixos = { hostname, username ? "buttars", platform ? "x86_64-linux", modules ? [ ] }: inputs.nixpkgs.lib.nixosSystem {
+  mkNixos = { 
+    hostname, username ? "buttars",
+    platform ? "x86_64-linux",
+    modules ? [ ],
+    systemConfiguration ? inputs.nixpkgs.lib.nixosSystem
+  }: systemConfiguration {
     modules = [
       {
         _module.args = inputs;
@@ -27,9 +32,9 @@
         };
       }
       nixosModule
+      ../hosts/nixos/default.nix
       ../profiles/common.nix
     ] ++ modules;
-    extraModules = [ ];
     specialArgs = {
       inherit
         inputs

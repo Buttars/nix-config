@@ -5,11 +5,11 @@
   ];
 
   boot = {
-    consoleLogLevel = lib.mkDefault 0;
+    # consoleLogLevel = lib.mkDefault 0;
     initrd.verbose = false;
     kernelModules = [ "vhost_vsock" ];
     kernelParams = [ "udev.log_priority=3" ];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
     loader = {
       efi.canTouchEfiVariables = true;
       systemd-boot.configurationLimit = 10;
