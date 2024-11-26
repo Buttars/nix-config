@@ -65,6 +65,7 @@
         nix-path = config.nix.nixPath;
         trusted-users = [
           "root"
+          "buttars"
           "${username}" # TODO: Find way to make this multi-user compatible
         ];
         warn-dirty = false;
