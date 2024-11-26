@@ -66,5 +66,4 @@
   services.ntp.enable = true;
   services.automatic-timezoned.enable = true;
 
-  system.stateVersion = "24.05";
 }
