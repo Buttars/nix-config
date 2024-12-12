@@ -5,7 +5,7 @@
   ];
 
   boot = {
-    # consoleLogLevel = lib.mkDefault 0;
+    consoleLogLevel = lib.mkDefault 0;
     initrd.verbose = false;
     kernelModules = [ "vhost_vsock" ];
     kernelParams = [ "udev.log_priority=3" ];
@@ -31,7 +31,20 @@
       with pkgs;
       lib.mkForce [
         coreutils-full
-        micro
+        neovim
+        killall
+        lsof
+        rsync
+        gnused
+        tldr
+        tree
+        unzip
+        usbutils
+        wget
+        nettools
+        fzf
+        tmux
+        jq
       ];
 
     variables = {
@@ -65,14 +78,26 @@
         nix-path = config.nix.nixPath;
         trusted-users = [
           "root"
-          "buttars"
-          "${username}" # TODO: Find way to make this multi-user compatible
+          "${username}"
         ];
         warn-dirty = false;
+        substituters = [
+          "https://hyprland.cachix.org"
+          "https://nix-community.cachix.org"
+        ];
+        trusted-public-keys = [
+          "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
       };
       channel.enable = false;
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 30d";
+      };
     };
 
   programs = {
@@ -85,10 +110,19 @@
     };
   };
 
-  services = { };
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;
+  };
+
+  services = {
+    openssh.enable = true;
+  };
 
   system = {
     inherit stateVersion;
   };
+
+  i18n.defaultLocale = "en_US.UTF-8";
 
 }

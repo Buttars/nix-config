@@ -25,7 +25,6 @@ in
     xdg = {
       enable = isLinux;
       userDirs = {
-        # Do not create XDG directories for LIMA; it is confusing
         enable = isLinux;
         createDirectories = lib.mkDefault true;
         extraConfig = {
