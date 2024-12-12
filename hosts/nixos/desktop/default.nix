@@ -22,7 +22,7 @@
     packages = with pkgs; [
       alacritty
       brave
-      discord
+      discord-canary
       fastfetch
       obsidian
       spr
