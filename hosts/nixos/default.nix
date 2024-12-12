@@ -36,6 +36,7 @@
         lsof
         rsync
         gnused
+        git
         tldr
         tree
         unzip
