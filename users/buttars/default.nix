@@ -5,7 +5,7 @@ in
 {
   users.users.${username} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "postgres" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "postgres" "adbusers" ];
     initialPassword = "a$$word";
   };
 
