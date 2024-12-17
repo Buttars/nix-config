@@ -22,7 +22,6 @@
 
     # Fonts & Appearance
     commit-mono
-    nerdfonts
     nwg-look
 
     # Media Tools
@@ -43,7 +42,11 @@
 
 
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "SourceCodePro" "Noto" "Inconsolata" "RobotoMono" "CommitMono" ]; })
+    nerd-fonts.sauce-code-pro
+    nerd-fonts.noto
+    nerd-fonts.inconsolata
+    nerd-fonts.roboto-mono
+    nerd-fonts.commit-mono
   ];
 
   networking.networkmanager.enable = true;

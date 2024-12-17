@@ -42,7 +42,7 @@
 
       forAllSystems = nixpkgs.lib.genAttrs systems;
 
-      stateVersion = "24.04";
+      stateVersion = "24.11";
     in
     {
       darwinConfigurations."pro" = darwin.lib.darwinSystem
