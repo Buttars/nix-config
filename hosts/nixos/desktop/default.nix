@@ -7,18 +7,6 @@
       steam.enable = true;
       nvidia.enable = true;
     };
-    profiles = {
-      audio.enable = true;
-      desktop-theming.enable = true;
-      hyprland.enable = true;
-      password-management.enable = true;
-      programming.enable = true;
-      syncthing.enable = true;
-      tui-file-manager.enable = true;
-      tui-task-manager.enable = true;
-      virtualization.enable = true;
-      zsa.enable = true;
-    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -41,6 +29,17 @@
   ];
 
   imports = [
+    ../common/optional/audio.nix
+    ../common/optional/desktop-theming.nix
+    ../common/optional/hyprland.nix
+    ../common/optional/password-management.nix
+    ../common/optional/programming.nix
+    ../common/optional/syncthing.nix
+    ../common/optional/terminal-emulator.nix
+    ../common/optional/tui-file-manager.nix
+    ../common/optional/tui-task-manager.nix
+    ../common/optional/virtualization.nix
+    ../common/optional/zsa.nix
     ./users
     ./hardware-configuration.nix
   ];

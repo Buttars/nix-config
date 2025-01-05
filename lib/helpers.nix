@@ -32,8 +32,7 @@
         };
       }
       nixosModule
-      ../hosts/nixos/default.nix
-      ../profiles/common.nix
+      ../hosts/nixos/common/core/default.nix
     ] ++ modules;
     specialArgs = {
       inherit

@@ -12,14 +12,14 @@
       };
     };
     profiles = {
-      audio.enable = true;
-      sigint.enable = true;
-      touch.enable = true;
     };
   };
 
 
   imports = [
+    ../common/optional/audio.nix
+    ../common/optional/sigint.nix
+    ../common/optional/touch.nix
     ./users
     ./hardware-configuration.nix
   ];

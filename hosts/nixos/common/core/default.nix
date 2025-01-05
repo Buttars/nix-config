@@ -1,8 +1,4 @@
-{ config, hostname, username, inputs, lib, pkgs, platform, stateVersion, ... }: {
-  imports = [
-    ./${hostname}
-    ../../profiles/common.nix
-  ];
+{ config, username, inputs, lib, pkgs, platform, stateVersion, ... }: {
 
   boot = {
     consoleLogLevel = lib.mkDefault 0;
@@ -127,3 +123,4 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
 }
+

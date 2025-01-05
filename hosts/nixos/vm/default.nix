@@ -5,13 +5,11 @@
       hyprland.enable = false;
       zsh.enable = true;
     };
-    profiles = {
-      programming.enable = true;
-    };
   };
 
 
   imports = [
+    ../common/optional/programming.nix
     ./users
   ];
 

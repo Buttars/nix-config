@@ -1,8 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, ... }: {
   host = {
-    profiles = {
-      audio.enable = true;
-    };
     modules = {
       pikaraoke = {
         enable = true;

@@ -9,15 +9,6 @@
     };
 
     profiles = {
-      hyprland.enable = true;
-      audio.enable = true;
-      password-management.enable = true;
-      programming.enable = true;
-      syncthing.enable = true;
-      tui-file-manager.enable = true;
-      tui-task-manager.enable = true;
-      virtualization.enable = true;
-      zsa.enable = true;
     };
   };
 
@@ -44,6 +35,15 @@
   nix.settings.trusted-users = [ "root" "@wheel" ];
 
   imports = [
+    ../common/optional/hyprland.nix
+    ../common/optional/audio.nix
+    ../common/optional/password-management.nix
+    ../common/optional/programming.nix
+    ../common/optional/syncthing.nix
+    ../common/optional/tui-file-manager.nix
+    ../common/optional/tui-task-manager.nix
+    ../common/optional/virtualization.nix
+    ../common/optional/zsa.nix
     ./users
     ./hardware-configuration.nix
   ];
