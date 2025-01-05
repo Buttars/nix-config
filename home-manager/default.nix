@@ -12,8 +12,6 @@ in
       else
         "/home/${username}";
 
-    packages = with pkgs; [ ];
-
     services = {
       gpg-agent = lib.mkIf isLinux {
         enable = isLinux;

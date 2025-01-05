@@ -9,11 +9,12 @@
         autoStart = true;
       };
     };
-    packages = with pkgs; [
-      # libraspberrypi
-      # raspberrypi-eeprom
-    ];
   };
+
+  environment.systemPackages = with pkgs; [
+    # libraspberrypi
+    # raspberrypi-eeprom
+  ];
 
   imports = [
     ./hardware-configuration.nix

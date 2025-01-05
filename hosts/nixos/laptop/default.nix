@@ -19,20 +19,21 @@
       virtualization.enable = true;
       zsa.enable = true;
     };
-    packages = with pkgs; [
-      alacritty
-      brave
-      discord
-      fastfetch
-      obsidian
-      spr
-      vdhcoapp
-      vesktop
-      webcord
-      zoxide
-      bluetuith
-    ];
   };
+
+  environment.systemPackages = with pkgs; [
+    alacritty
+    brave
+    discord
+    fastfetch
+    obsidian
+    spr
+    vdhcoapp
+    vesktop
+    webcord
+    zoxide
+    bluetuith
+  ];
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;

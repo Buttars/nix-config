@@ -19,25 +19,26 @@
       virtualization.enable = true;
       zsa.enable = true;
     };
-    packages = with pkgs; [
-      alacritty
-      brave
-      discord-canary
-      fastfetch
-      obsidian
-      spr
-      vdhcoapp
-      vesktop
-      webcord
-      zoxide
-    ];
   };
+
+  environment.systemPackages = with pkgs; [
+    alacritty
+    brave
+    discord-canary
+    fastfetch
+    obsidian
+    spr
+    vdhcoapp
+    vesktop
+    webcord
+    zoxide
+  ];
+
+  programs.nix-ld.enable = true;
 
   services.udev.packages = [
     pkgs.android-udev-rules
   ];
-
-  programs.nix-ld.enable = true;
 
   imports = [
     ./users
