@@ -36,6 +36,15 @@
 
   programs.direnv.enable = true;
 
+  fonts.packages = with pkgs; [
+    nerd-fonts.sauce-code-pro
+    nerd-fonts.noto
+    nerd-fonts.inconsolata
+    nerd-fonts.roboto-mono
+    nerd-fonts.commit-mono
+    # (nerdfonts.override { fonts = [ "SourceCodePro" "Noto" "Inconsolata" "RobotoMono" "CommitMono" ]; })
+  ];
+
   users.users."landon.buttars" = {
     home = "/Users/landon.buttars";
   };
