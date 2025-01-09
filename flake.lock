@@ -114,11 +114,11 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1734402496,
-        "narHash": "sha256-pp3WZwTL/Fv1pDOApeuyEtR06IcguDl4uRNwDVglmr8=",
+        "lastModified": 1736396122,
+        "narHash": "sha256-QNa9GyoXS26XSZh4uFjg9cJaW4dZGJzAIVy6TarvsOg=",
         "ref": "refs/heads/main",
-        "rev": "96c7c4d761887446cf7b34bbde51d085b4836232",
-        "revCount": 95,
+        "rev": "5bf648f6d78b679d02d38ef10ef8f9cace590d8a",
+        "revCount": 96,
         "type": "git",
         "url": "https://github.com/Buttars/.dotfiles.git"
       },
