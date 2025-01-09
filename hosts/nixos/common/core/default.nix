@@ -42,6 +42,8 @@
         fzf
         tmux
         jq
+        fd
+        sesh
       ];
 
     variables = {

@@ -2,7 +2,6 @@
 {
   host = {
     modules = {
-      zsh.enable = true;
       docker.enable = true;
       steam.enable = true;
       nvidia.enable = true;

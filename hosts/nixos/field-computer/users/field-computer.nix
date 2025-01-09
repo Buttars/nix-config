@@ -10,7 +10,6 @@
 
 
     programs = {
-      zsh.enable = true;
       # neovim.enable = true;
     };
 

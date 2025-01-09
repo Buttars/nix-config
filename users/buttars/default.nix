@@ -1,4 +1,4 @@
-{ pkgs, dotfiles, ... }:
+{ pkgs, dotfiles, stateVersion, ... }:
 let
   username = "buttars";
 in
@@ -7,12 +7,41 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "postgres" "adbusers" ];
     initialPassword = "a$$word";
+    useDefaultShell = true;
   };
 
   home-manager.backupFileExtension = "backup";
 
   home-manager.users.${username} = { config, ... }: {
-    home.stateVersion = "24.05";
+
+    programs.starship.enable = true;
+    programs.fish = {
+      enable = true;
+
+      shellInit = ''
+        set fish_greeting
+
+        source ~/.config/fish/conf.d/paths.fish
+        source ~/.config/fish/conf.d/aliases.fish
+      '';
+
+      loginShellInit = ''
+        source ~/.config/fish/conf.d/start-graphical-session.fish
+      '';
+
+      interactiveShellInit = ''
+        # Initialize Starship prompt
+        source ~/.config/fish/conf.d/starship.fish
+
+        # Source sesh configuration
+        source ~/.config/fish/conf.d/sesh.fish
+      '';
+
+      shellInitLast = ''
+        # Setup thefuck
+        source ~/.config/fish/conf.d/thefuck.fish
+      '';
+    };
 
     home.packages = with pkgs; [
       cowsay
@@ -35,6 +64,7 @@ in
       ".local/bin/rotdir". source = bin/rotdir;
       ".config/nvim" = { source = "${dotfiles}/.config/nvim"; recursive = true; };
       ".config/shell" = { source = "${dotfiles}/.config/shell"; recursive = true; };
+      ".config/fish" = { source = "${dotfiles}/.config/fish"; recursive = true; };
       ".config/hypr".source = "${dotfiles}/.config/hypr";
       ".config/tmux".source = "${dotfiles}/.config/tmux";
       ".config/lf".source = "${dotfiles}/.config/lf";
@@ -52,5 +82,7 @@ in
         '';
       };
     };
+
+    home.stateVersion = stateVersion;
   };
 }

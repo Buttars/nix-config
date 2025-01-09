@@ -2,7 +2,6 @@
 {
   host = {
     modules = {
-      zsh.enable = true;
       kde.enable = true;
       alacritty.enable = true;
       brave.enable = true;

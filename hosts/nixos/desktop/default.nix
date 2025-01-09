@@ -2,7 +2,6 @@
 {
   host = {
     modules = {
-      zsh.enable = true;
       docker.enable = true;
       steam.enable = true;
       nvidia.enable = true;
@@ -40,6 +39,7 @@
     ../common/optional/tui-task-manager.nix
     ../common/optional/virtualization.nix
     ../common/optional/zsa.nix
+    ../common/optional/fish.nix
     ./users
     ./hardware-configuration.nix
   ];

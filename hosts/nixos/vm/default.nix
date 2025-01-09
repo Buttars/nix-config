@@ -3,7 +3,6 @@
   host = {
     modules = {
       hyprland.enable = false;
-      zsh.enable = true;
     };
   };
 

@@ -5,7 +5,6 @@ in
 {
   host = {
     modules = {
-      zsh.enable = true;
       docker.enable = true;
     };
     profiles = {
