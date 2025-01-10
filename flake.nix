@@ -12,7 +12,7 @@
 
     nixos-wsl.url = "github:nix-community/nixos-wsl";
 
-    xremap-flake.url = "github:xremap/nix-flake";
+    # xremap-flake.url = "github:xremap/nix-flake";
 
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -56,7 +56,7 @@
       nixosModules =
         {
           home-manager = inputs.home-manager.nixosModules.home-manager;
-          xremap = inputs.xremap-flake.nixosModules.default;
+          # xremap = inputs.xremap-flake.nixosModules.default;
           sops-nix = inputs.sops-nix.nixosModules.sops;
           wsl = inputs.nixos-wsl.nixosModules.default;
           disko = inputs.disko.nixosModules.disko;
@@ -72,7 +72,7 @@
         imports = builtins.attrValues self.nixosModules;
       };
 
-      nixosConfigurations = import ./hosts {
+      nixosConfigurations = import ./hosts/nixos {
         inherit nixpkgs inputs stateVersion;
         nixosModule = self.nixosModule;
       };
