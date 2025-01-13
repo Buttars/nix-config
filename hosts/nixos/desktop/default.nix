@@ -19,6 +19,8 @@
     vesktop
     webcord
     zoxide
+    prismlauncher
+    gamemode
   ];
 
   programs.nix-ld.enable = true;
