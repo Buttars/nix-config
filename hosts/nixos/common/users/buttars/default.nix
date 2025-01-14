@@ -5,5 +5,7 @@
     extraGroups = ["wheel" "networkmanager"];
   };
 
+  environment.systemPackages = [ pkgs.home-manager ];
+
   home-manager.users.buttars = import ../../../../../home/buttars/${config.networking.hostName};
 }
