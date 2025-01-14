@@ -7,5 +7,5 @@
 
   environment.systemPackages = [ pkgs.home-manager ];
 
-  home-manager.users.buttars = import ../../../../../home/buttars/${config.networking.hostName};
+  home-manager.users.buttars = import ../../../../../home/buttars/${config.networking.hostName}.nix;
 }
