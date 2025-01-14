@@ -1,3 +1,6 @@
 {...} : {
-  imports = [ ./common ];
+  imports = [ 
+    ./common
+    ./features/cli
+  ];
 }
