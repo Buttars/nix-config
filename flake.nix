@@ -78,6 +78,7 @@
       };
 
       packages = inputs.flake-utils.lib.eachDefaultSystem(system: import ./pkgs nixpkgs.legacyPackages.${system});
+      devShells = inputs.flake-utils.lib.eachDefaultSystem (system: import ./shell.nix nixpkgs.legacyPackages.${system});
 
       overlays = import ./overlays { inherit inputs; };
     };
