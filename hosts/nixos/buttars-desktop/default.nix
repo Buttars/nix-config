@@ -4,6 +4,8 @@
 
     ../common/core
     ../common/users/buttars
+
+    ../common/optionals/systemd-boot.nix
   ];
 
   networking = {
