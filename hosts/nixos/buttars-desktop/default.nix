@@ -12,7 +12,6 @@
 
   networking = {
     hostName = "buttars-desktop";
-    useDHCP = true;
     networkmanager.enable = true;
   };
 }
