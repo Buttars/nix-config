@@ -20,26 +20,15 @@ in
 
       shellInit = ''
         set fish_greeting
-
-        source ~/.config/fish/conf.d/paths.fish
-        source ~/.config/fish/conf.d/aliases.fish
       '';
 
       loginShellInit = ''
-        source ~/.config/fish/conf.d/start-graphical-session.fish
       '';
 
       interactiveShellInit = ''
-        # Initialize Starship prompt
-        source ~/.config/fish/conf.d/starship.fish
-
-        # Source sesh configuration
-        source ~/.config/fish/conf.d/sesh.fish
       '';
 
       shellInitLast = ''
-        # Setup thefuck
-        source ~/.config/fish/conf.d/thefuck.fish
       '';
     };
 
