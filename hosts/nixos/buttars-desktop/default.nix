@@ -14,4 +14,6 @@
     hostName = "buttars-desktop";
     networkmanager.enable = true;
   };
+
+  system.stateVersion = "24.11";
 }
