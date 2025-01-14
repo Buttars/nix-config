@@ -6,6 +6,7 @@
     ../common/users/buttars
 
     ../common/optionals/systemd-boot.nix
+    ../common/optionals/gamemode.nix
   ];
 
   networking = {
