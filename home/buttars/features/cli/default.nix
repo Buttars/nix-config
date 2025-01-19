@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ ... }: {
   imports = [
     ./bat.nix
     ./bash.nix
@@ -7,7 +7,5 @@
     ./fzf.nix
     ./starship.nix
   ];
-  home.packages = with pkgs; [
-    keepassxc
-  ];
+
 }
