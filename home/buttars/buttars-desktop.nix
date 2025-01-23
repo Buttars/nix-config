@@ -1,5 +1,5 @@
-{...} : {
-  imports = [ 
+{ ... }: {
+  imports = [
     ./common
     ./features/cli
     ./features/desktop/hyprland

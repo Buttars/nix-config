@@ -1,5 +1,7 @@
 { ... }: {
-  imports = [./dotfiles.nix];
+  imports = [
+    ./dotfiles.nix
+  ];
 
   home.stateVersion = "24.11";
 }

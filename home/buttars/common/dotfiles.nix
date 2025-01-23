@@ -1,7 +1,9 @@
-{ dotfiles, ... }: {
+{ inputs, ... }: let 
+  dotfiles = inputs.dotfiles;
+in{
   home.file = {
-    ".local/bin/lfub". source = bin/lfub;
-    ".local/bin/rotdir". source = bin/rotdir;
+    # ".local/bin/lfub". source = bin/lfub;
+    # ".local/bin/rotdir". source = bin/rotdir;
     ".config/nvim" = { source = "${dotfiles}/.config/nvim"; recursive = true; };
     ".config/shell" = { source = "${dotfiles}/.config/shell"; recursive = true; };
     ".config/fish" = { source = "${dotfiles}/.config/fish"; recursive = true; };
