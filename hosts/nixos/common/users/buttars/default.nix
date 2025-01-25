@@ -1,8 +1,17 @@
-{ inputs, pkgs, config, ... }: {
+{
+  inputs,
+  pkgs,
+  config,
+  ...
+}:
+{
   users.users.buttars = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = ["wheel" "networkmanager"];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
   };
 
   environment.systemPackages = [ pkgs.home-manager ];

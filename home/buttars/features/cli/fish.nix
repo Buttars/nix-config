@@ -1,18 +1,16 @@
-{ ... }: {
+{ ... }:
+{
   programs.fish = {
     enable = true;
 
     shellInit = ''
-        set fish_greeting
+      set fish_greeting
     '';
 
-    loginShellInit = ''
-    '';
+    loginShellInit = '''';
 
-    interactiveShellInit = ''
-    '';
+    interactiveShellInit = '''';
 
-    shellInitLast = ''
-    '';
+    shellInitLast = '''';
   };
 }

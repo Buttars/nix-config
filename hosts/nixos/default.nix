@@ -1,6 +1,13 @@
-{ inputs, nixosModule, stateVersion, ... }: let 
+{
+  inputs,
+  nixosModule,
+  stateVersion,
+  ...
+}:
+let
   helper = import ../../libs/helpers.nix { inherit inputs nixosModule stateVersion; };
-in {
+in
+{
   buttars-desktop = helper.mkNixos {
     hostname = "buttars-desktop";
     modules = [ ./buttars-desktop ];
