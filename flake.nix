@@ -81,6 +81,8 @@
       devShells = inputs.flake-utils.lib.eachDefaultSystem (system: import ./shell.nix nixpkgs.legacyPackages.${system});
 
       overlays = import ./overlays { inherit inputs; };
+
+      formatter = inputs.flake-utils.eachDefaultSystem(system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
     };
 
 }
