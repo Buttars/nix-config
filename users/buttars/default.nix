@@ -37,6 +37,7 @@ in
       alacritty
       element-desktop
       gimp
+      gh
     ];
 
     imports = [
