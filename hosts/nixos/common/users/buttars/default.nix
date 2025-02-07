@@ -14,6 +14,10 @@
     ];
   };
 
+  openssh.authorizedKeys.keys = [
+    (builtin.readFile ./keys/id_ed25519.pub)
+  ];
+
   environment.systemPackages = [ pkgs.home-manager ];
 
   home-manager.extraSpecialArgs = {
