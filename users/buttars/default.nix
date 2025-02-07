@@ -39,6 +39,7 @@ in
       element-desktop
       gimp
       gh
+      borgbackup
     ];
 
     imports = [
