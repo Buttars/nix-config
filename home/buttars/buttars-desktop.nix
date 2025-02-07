@@ -6,5 +6,6 @@
     ./features/desktop/hyprland
     ./features/desktop/common/keepassxc.nix
     ./features/desktop/common/element-desktop.nix
+    ./features/sops.nix
   ];
 }
