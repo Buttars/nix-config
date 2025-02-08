@@ -11,6 +11,7 @@
     ../common/optionals/zsa.nix
     ../common/optionals/syncthing.nix
     ../common/optionals/audio.nix
+    ../common/optionals/virtualization.nix
   ];
 
   networking = {
