@@ -10,6 +10,7 @@
     ../common/optionals/gamemode.nix
     ../common/optionals/zsa.nix
     ../common/optionals/syncthing.nix
+    ../common/optionals/audio.nix
   ];
 
   networking = {
