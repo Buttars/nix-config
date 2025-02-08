@@ -9,6 +9,7 @@
     ../common/optionals/systemd-boot.nix
     ../common/optionals/gamemode.nix
     ../common/optionals/zsa.nix
+    ../common/optionals/syncthing.nix
   ];
 
   networking = {
