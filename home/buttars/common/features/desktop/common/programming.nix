@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  environment.systemPackages =
+  home.packages  =
     with pkgs;
     [
       atac
