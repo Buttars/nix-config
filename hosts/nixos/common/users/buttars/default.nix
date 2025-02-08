@@ -1,9 +1,13 @@
 {
   inputs,
   pkgs,
+  lib,
   config,
   ...
 }:
+let
+  ifGroupsExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
+in
 {
   # Decrypt buttars-password to /run/secrets-for-users/ so it can be used to create the user
   sops.secrets.buttars-password.neededForUsers = true;
@@ -13,9 +17,15 @@
     isNormalUser = true;
     hashedPasswordFile = config.sops.secrets.buttars-password.path;
     shell = pkgs.fish;
-    extraGroups = [
+    extraGroups = lib.flatten [
       "wheel"
-      "networkmanager"
+      (ifGroupsExist [
+        "networkmanager"
+        "docker"
+        "libvirtd"
+        "postgres"
+        "adbusers"
+      ])
     ];
 
     openssh.authorizedKeys.keys = [
