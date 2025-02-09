@@ -1,4 +1,5 @@
-{ lib, config, ... }: {
+{ lib, config, ... }:
+{
   services.syncthing = {
     enable = true;
     settings.gui = {

@@ -33,7 +33,6 @@ in
     ];
   };
 
-
   environment.systemPackages = [ pkgs.home-manager ];
 
   home-manager.extraSpecialArgs = {
