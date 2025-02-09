@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  home.packages  =
+  home.packages =
     with pkgs;
     [
       atac
@@ -20,11 +20,9 @@
       python3
       ripgrep
     ]
-    ++ (pkgs.lib.optionals pkgs.stdenv.isLinux
-      [
-        # julia
-      ]
-    );
+    ++ (pkgs.lib.optionals pkgs.stdenv.isLinux [
+      # julia
+    ]);
 
   programs.direnv.enable = true;
 }

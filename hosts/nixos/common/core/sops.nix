@@ -1,4 +1,5 @@
-{ inputs, config, ... }: {
+{ inputs, config, ... }:
+{
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
@@ -13,6 +14,5 @@
       generateKey = true;
     };
   };
-
 
 }
