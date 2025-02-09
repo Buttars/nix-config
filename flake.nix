@@ -83,15 +83,19 @@
       packages = inputs.flake-utils.lib.eachDefaultSystem (
         system: import ./pkgs nixpkgs.legacyPackages.${system}
       );
+
       devShells = inputs.flake-utils.lib.eachDefaultSystem (
         system: import ./shell.nix nixpkgs.legacyPackages.${system}
       );
 
       overlays = import ./overlays { inherit inputs; };
 
-      formatter = inputs.flake-utils.eachDefaultSystem (
-        system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
-      );
+      # TODO: Figure out why flake-utils eachDefaultSystem does not return the expected an attribute set of systems.
+      # formatter = inputs.flake-utils.lib.eachDefaultSystem (
+      #   system: nixpkgs.legacyPackages."${system}".nixfmt-rfc-style
+      # );
+
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
     };
 
 }
