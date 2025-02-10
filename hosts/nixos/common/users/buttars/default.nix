@@ -10,12 +10,12 @@ let
 in
 {
   # Decrypt buttars-password to /run/secrets-for-users/ so it can be used to create the user
-  sops.secrets.buttars-password.neededForUsers = true;
-  users.mutableUsers = false;
+  #sops.secrets.buttars-password.neededForUsers = true;
+  #users.mutableUsers = false;
 
   users.users.buttars = {
     isNormalUser = true;
-    hashedPasswordFile = config.sops.secrets.buttars-password.path;
+    #hashedPasswordFile = config.sops.secrets.buttars-password.path;
     shell = pkgs.fish;
     extraGroups = lib.flatten [
       "wheel"
@@ -34,6 +34,8 @@ in
   };
 
   environment.systemPackages = [ pkgs.home-manager ];
+
+  home-manager.backupFileExtension = "backup";
 
   home-manager.extraSpecialArgs = {
     inherit inputs;
