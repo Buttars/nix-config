@@ -7,6 +7,9 @@
     ./fish.nix
     ./fzf.nix
     ./starship.nix
+    ./nvim.nix
+    ./tmux.nix
+    ./sesh.nix
   ];
 
 }

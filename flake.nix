@@ -66,10 +66,12 @@
           wsl = inputs.nixos-wsl.nixosModules.default;
           disko = inputs.disko.nixosModules.disko;
         }
-        // nixpkgs.lib.mapAttrs' (name: type: {
-          name = nixpkgs.lib.removeSuffix ".nix" name;
-          value = import (./modules + "/${name}");
-        }) (builtins.readDir ./modules);
+        // nixpkgs.lib.mapAttrs'
+          (name: type: {
+            name = nixpkgs.lib.removeSuffix ".nix" name;
+            value = import (./modules + "/${name}");
+          })
+          (builtins.readDir ./modules);
 
       nixosModule = {
         imports = builtins.attrValues self.nixosModules;
@@ -84,9 +86,11 @@
         system: import ./pkgs nixpkgs.legacyPackages.${system}
       );
 
-      devShells = inputs.flake-utils.lib.eachDefaultSystem (
-        system: import ./shell.nix nixpkgs.legacyPackages.${system}
-      );
+      # devShells = inputs.flake-utils.lib.eachDefaultSystem (
+      #   system: import ./shell.nix nixpkgs.legacyPackages.${system}
+      # );
+
+      devShells.x86_64-linux = import ./shell.nix nixpkgs.legacyPackages.x86_64-linux;
 
       overlays = import ./overlays { inherit inputs; };
 
