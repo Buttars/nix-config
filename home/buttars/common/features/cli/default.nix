@@ -10,6 +10,7 @@
     ./nvim.nix
     ./tmux.nix
     ./sesh.nix
+    ./zoxide.nix
   ];
 
 }
