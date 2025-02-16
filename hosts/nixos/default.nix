@@ -12,4 +12,9 @@ in
     hostname = "buttars-desktop";
     modules = [ ./buttars-desktop ];
   };
+
+  buttars-laptop = helper.mkNixos {
+    hostname = "buttars-laptop";
+    modules = [ ./buttars-laptop ];
+  };
 }
