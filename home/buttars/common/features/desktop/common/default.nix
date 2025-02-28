@@ -5,5 +5,6 @@
     ./keepassxc.nix
     ./programming.nix
     ./terminal-emulator.nix
+    ./discord.nix
   ];
 }
