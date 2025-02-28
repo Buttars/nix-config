@@ -11,6 +11,7 @@
     ./tmux.nix
     ./sesh.nix
     ./zoxide.nix
+    ./gh.nix
   ];
 
 }
