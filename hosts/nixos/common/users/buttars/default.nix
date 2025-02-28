@@ -41,5 +41,7 @@ in
     inherit inputs;
   };
 
+  home-manager.useGlobalPkgs = true;
+
   home-manager.users.buttars = import ../../../../../home/buttars/${config.networking.hostName}.nix;
 }
