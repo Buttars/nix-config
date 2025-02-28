@@ -13,5 +13,11 @@
     nerd-fonts.inconsolata
     nerd-fonts.roboto-mono
     nerd-fonts.commit-mono
+
+    dejavu_fonts
+    noto-fonts
+    cantarell-fonts
+    inter
+    inter-nerdfont
   ];
 }
