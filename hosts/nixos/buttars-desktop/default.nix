@@ -13,8 +13,9 @@
     ../common/optionals/nvidia.nix
     ../common/optionals/fonts.nix
     ../common/optionals/gaming
-    ../common/optionals/theming.nix
   ];
+
+  programs.dconf.enable = true;
 
   networking = {
     hostName = "buttars-desktop";

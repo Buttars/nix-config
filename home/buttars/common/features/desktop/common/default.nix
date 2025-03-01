@@ -6,5 +6,6 @@
     ./programming.nix
     ./terminal-emulator.nix
     ./discord.nix
+    ./theming.nix
   ];
 }
