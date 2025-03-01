@@ -1,29 +1,23 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    arc-theme
     libsForQt5.qt5ct
     qt6ct
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-emoji
     nwg-look
-    papirus-icon-theme
-    bibata-cursors
   ];
 
-  environment.variables = {
-    GTK_THEME = "Arc-Dark";
-    QT_QPA_PLATFORMTHEME = "qt5ct";
-    QT_STYLE_OVERRIDE = "gtk2";
-    GDK_DPI_SCALE = "1";
-    GTK_DPI_SCALE = "1";
-    QT_FONT_DPI = "81";
-    GDK_SCALE = "1";
-    QT_SCALE_FACTOR = "1";
-    XCURSOR_THEME = "Bibata-Modern-Ice";
-    XCURSOR_SIZE = "20";
-    GTK_ICON_THEME = "Papirus-Dark";
-  };
+  qt.enable = true;
+  qt.platformTheme.name = "gtk";
+  qt.style.name = "adwaita-dark";
+
+  gtk.enable = true;
+  gtk.cursorTheme.package = pkgs.bibata-cursors;
+  gtk.cursorTheme.name = "Bibata-Modern-Ice";
+
+  gtk.theme.package = pkgs.arc-theme;
+  gtk.theme.name = "Arc-Dark";
+
+  gtk.iconTheme.package = pkgs.papirus-icon-theme;
+  gtk.iconTheme.name = "Papirus-Dark";
 }
 
