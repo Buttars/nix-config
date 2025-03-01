@@ -13,6 +13,7 @@
     ../common/optionals/nvidia.nix
     ../common/optionals/fonts.nix
     ../common/optionals/gaming
+    ../common/optionals/theming.nix
   ];
 
   networking = {
