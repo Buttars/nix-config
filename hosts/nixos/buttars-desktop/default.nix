@@ -1,4 +1,4 @@
-{ ... }:
+{ hostname, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -18,7 +18,7 @@
   programs.dconf.enable = true;
 
   networking = {
-    hostName = "buttars-desktop";
+    hostName = hostname;
     networkmanager.enable = true;
     firewall.enable = false;
   };
