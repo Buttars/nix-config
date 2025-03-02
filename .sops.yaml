@@ -2,7 +2,7 @@ keys:
   - &users:
     - &buttars age1w0rz632jqm9r3t4xwfwljrfx86gxuvln6nldyktmxf9ulmdrm4hsxf2gaz
   - &hosts:
-    - &buttars-desktop age1ljtf4ryc0wf08psfqjcv2vsge9leqanvu8cgpeccthqrwlnrmvpqmmxa0h
+    - &buttars-desktop age15xfwqkhld5ldyjvnakdkye8wz3wjlf55ps22dhal0jvhtplmvs5sdq2nn7
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
