@@ -1,4 +1,4 @@
-{ ... }:
+{ hostname, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -17,10 +17,8 @@
   ];
 
   networking = {
-    hostName = "buttars-laptop";
+    hostName = hostname;
     networkmanager.enable = true;
     firewall.enable = false;
   };
-
-  system.stateVersion = "24.11";
 }
