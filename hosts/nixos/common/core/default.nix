@@ -4,7 +4,7 @@
     ./locale.nix
     ./nix-ld.nix
     ./nix.nix
-    #./sops.nix
+    ./sops.nix
     ./fish.nix
   ];
 
