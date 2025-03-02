@@ -5,14 +5,14 @@
 
     ../common/users/buttars
 
-    ../common/optionals/systemd-boot.nix
-    ../common/optionals/zsa.nix
-    ../common/optionals/syncthing.nix
-    ../common/optionals/audio.nix
-    ../common/optionals/virtualization.nix
-    ../common/optionals/nvidia.nix
-    ../common/optionals/fonts.nix
-    ../common/optionals/gaming
+    ../common/features/systemd-boot.nix
+    ../common/features/zsa.nix
+    ../common/features/syncthing.nix
+    ../common/features/audio.nix
+    ../common/features/virtualization.nix
+    ../common/features/nvidia.nix
+    ../common/features/fonts.nix
+    ../common/features/gaming
   ];
 
   programs.dconf.enable = true;
