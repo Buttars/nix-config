@@ -42,7 +42,7 @@
           dotfiles = inputs.dotfiles;
         };
         modules = [
-          ./hosts/darwin-x86/configuration.nix
+          ./hosts/darwin/N4FQ62JR/configuration.nix
           inputs.home-manager.darwinModules.home-manager
           (
             { config, pkgs, ... }:
