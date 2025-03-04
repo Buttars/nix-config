@@ -91,6 +91,7 @@
       # );
 
       devShells.x86_64-linux = import ./shell.nix nixpkgs.legacyPackages.x86_64-linux;
+      devShells.x86_64-darwin = import ./shell.nix nixpkgs.legacyPackages.x86_64-darwin;
 
       overlays = import ./overlays { inherit inputs; };
 
