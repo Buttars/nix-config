@@ -23,6 +23,6 @@
     waypaper
     wl-clipboard
     wlogout
-    xwaylandvideobridge
+    kdePackages.xwaylandvideobridge
   ];
 }
