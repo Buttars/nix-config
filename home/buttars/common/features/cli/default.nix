@@ -12,6 +12,7 @@
     ./sesh.nix
     ./zoxide.nix
     ./gh.nix
+    ./tldr.nix
   ];
 
 }
