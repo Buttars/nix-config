@@ -13,6 +13,7 @@
     ./zoxide.nix
     ./gh.nix
     ./tldr.nix
+    ./git.nix
   ];
 
 }
