@@ -1,7 +1,12 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./dotfiles.nix
+  ];
+
+  home.packages = with pkgs; [
+    zip
+    unzip
   ];
 
   home.sessionVariables = {
