@@ -1,8 +1,7 @@
-{
-  inputs,
-  nixosModule,
-  stateVersion,
-  ...
+{ inputs
+, nixosModule
+, stateVersion
+, ...
 }:
 let
   helper = import ../../libs/helpers.nix { inherit inputs nixosModule stateVersion; };
@@ -16,5 +15,10 @@ in
   buttars-laptop = helper.mkNixos {
     hostname = "buttars-laptop";
     modules = [ ./buttars-laptop ];
+  };
+
+  servus = helper.mkNixos {
+    hostname = "servus";
+    modules = [ ./servus ];
   };
 }
