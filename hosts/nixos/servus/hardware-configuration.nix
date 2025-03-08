@@ -5,7 +5,7 @@
     (../common/disks/btrfs-disk.nix)
     {
       _module.args = {
-        disk = "/dev/disk/by-uuid/f23bedc1-9d8d-4158-9a16-ee9f83d2a155";
+        disk = "/dev/sda";
         withSwap = true;
         swapSize = 32;
       };
