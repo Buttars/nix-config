@@ -2,7 +2,7 @@
 {
   imports = lib.flatten [
     inputs.disko.nixosModules.disko
-    (../common/disks/btrfs-disk.nix)
+    ../common/disks/btrfs-disk.nix
     {
       _module.args = {
         disk = "/dev/sda";
@@ -17,9 +17,15 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+    timeout = 3;
+  };
+
+  boot.initrd = {
+    systemd.enable = true;
+  };
 
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
