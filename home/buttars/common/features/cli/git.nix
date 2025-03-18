@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ../../../../common/git.nix
+    ../../../../common/core/git.nix
   ];
 
   programs.git = {
