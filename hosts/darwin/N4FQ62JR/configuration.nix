@@ -73,6 +73,6 @@
   system.stateVersion = 5;
 
   # The platform the configuration will be used on.
-  # nixpkgs.hostPlatform = "x86_64-darwin";
+  nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true;
 }
