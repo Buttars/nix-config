@@ -39,6 +39,7 @@
       darwinConfigurations."pro" = inputs.darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         specialArgs = {
+          inherit inputs;
           dotfiles = inputs.dotfiles;
         };
         modules = [
