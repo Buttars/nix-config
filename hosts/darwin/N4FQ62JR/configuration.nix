@@ -2,6 +2,7 @@
 {
 
   imports = [
+    ../../common/core
     ../common/users/landon.buttars
     ./system.nix
   ];
