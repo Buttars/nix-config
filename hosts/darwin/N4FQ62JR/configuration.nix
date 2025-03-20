@@ -4,6 +4,7 @@
   imports = [
     ../../common/core
     ../common/users/landon.buttars
+    ../common/features/yabai.nix
     ./system.nix
   ];
 
