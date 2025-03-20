@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ../../../common/core
     ./dotfiles.nix
   ];
 
