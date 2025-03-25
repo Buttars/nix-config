@@ -36,5 +36,5 @@ in
 
   home-manager.useGlobalPkgs = true;
 
-  # home-manager.users.servus = import ../../../../../home/servus/${config.networking.hostName}.nix;
+  home-manager.users.servus = import ../../../../../home/servus/${config.networking.hostName}.nix;
 }
