@@ -55,6 +55,8 @@
           platform
           stateVersion
           ;
+
+        lib = inputs.nixpkgs.lib.extend (self: super: { custom = import ./libs { inherit (inputs.pkgs) lib; }; });
       };
     };
 }
