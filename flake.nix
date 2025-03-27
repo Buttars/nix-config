@@ -37,7 +37,7 @@
     in
     {
       darwinConfigurations."pro" = inputs.darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
+        system = "aarch64-darwin";
         specialArgs = {
           inherit inputs;
           dotfiles = inputs.dotfiles;
@@ -93,6 +93,7 @@
 
       devShells.x86_64-linux = import ./shell.nix nixpkgs.legacyPackages.x86_64-linux;
       devShells.x86_64-darwin = import ./shell.nix nixpkgs.legacyPackages.x86_64-darwin;
+      devShells.aarch64-darwin = import ./shell.nix nixpkgs.legacyPackages.aarch64-darwin;
 
       overlays = import ./overlays { inherit inputs; };
 
