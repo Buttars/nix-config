@@ -7,6 +7,7 @@
     tldr
     tmux
     zoxide
+    yazi
   ];
 
   programs.fzf = {
