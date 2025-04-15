@@ -27,7 +27,13 @@
       url = "https://github.com/Buttars/.dotfiles";
       type = "git";
       ref = "main";
-      submodules = true;
+      submodules = false;
+      flake = false;
+    };
+
+    neovim-config = {
+      url = "https://github.com/Buttars/kickstart-modular.nvim.git";
+      type = "git";
       flake = false;
     };
   };
