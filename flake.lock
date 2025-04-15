@@ -44,17 +44,20 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1741840739,
-        "narHash": "sha256-89UbAhLpIXnF2wQCi73Z/SLuqpjxPwG/c7O6yk4SFy4=",
-        "ref": "refs/heads/main",
-        "rev": "1556187afb6f127002a63a9d2585da4a43583b35",
-        "revCount": 108,
+        "lastModified": 1744703376,
+        "narHash": "sha256-1PwNrc0P9Fdg6wiL14TDlui+2LmJgrVQJN3BWd6VHmA=",
+        "ref": "main",
+        "rev": "2fcbc6026ad6a16a97d66550b83cb05260260f57",
+        "revCount": 112,
+        "submodules": true,
         "type": "git",
-        "url": "https://github.com/Buttars/.dotfiles.git"
+        "url": "https://github.com/Buttars/.dotfiles"
       },
       "original": {
+        "ref": "main",
+        "submodules": true,
         "type": "git",
-        "url": "https://github.com/Buttars/.dotfiles.git"
+        "url": "https://github.com/Buttars/.dotfiles"
       }
     },
     "flake-compat": {
