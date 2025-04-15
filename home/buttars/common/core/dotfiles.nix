@@ -1,13 +1,14 @@
 { inputs, ... }:
 let
   dotfiles = inputs.dotfiles;
+  neovim-config = inputs.neovim-config;
 in
 {
   home.file = {
     # ".local/bin/lfub". source = bin/lfub;
     # ".local/bin/rotdir". source = bin/rotdir;
     ".config/nvim" = {
-      source = "${dotfiles}/.config/nvim";
+      source = "${neovim-config}";
       recursive = true;
     };
     ".config/shell" = {

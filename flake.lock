@@ -45,17 +45,17 @@
       "flake": false,
       "locked": {
         "lastModified": 1744703376,
-        "narHash": "sha256-1PwNrc0P9Fdg6wiL14TDlui+2LmJgrVQJN3BWd6VHmA=",
+        "narHash": "sha256-uD809XKNUEOLWcwjhaBc5uFladbEnU5zb0MfWinZ6tg=",
         "ref": "main",
         "rev": "2fcbc6026ad6a16a97d66550b83cb05260260f57",
         "revCount": 112,
-        "submodules": true,
+        "submodules": false,
         "type": "git",
         "url": "https://github.com/Buttars/.dotfiles"
       },
       "original": {
         "ref": "main",
-        "submodules": true,
+        "submodules": false,
         "type": "git",
         "url": "https://github.com/Buttars/.dotfiles"
       }
@@ -112,6 +112,22 @@
         "owner": "nix-community",
         "repo": "home-manager",
         "type": "github"
+      }
+    },
+    "neovim-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1744703250,
+        "narHash": "sha256-mb6iH00keEa2UUPXY151cUoYSHsOuWtiqoY1nKbuOIA=",
+        "ref": "refs/heads/master",
+        "rev": "2ad59d1b3c7a72808e8e05536d8ff9c227dc0b00",
+        "revCount": 461,
+        "type": "git",
+        "url": "https://github.com/Buttars/kickstart-modular.nvim.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/Buttars/kickstart-modular.nvim.git"
       }
     },
     "nixos-hardware": {
@@ -187,6 +203,7 @@
         "dotfiles": "dotfiles",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "neovim-config": "neovim-config",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
