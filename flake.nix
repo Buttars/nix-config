@@ -24,9 +24,11 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     dotfiles = {
-      flake = false;
-      url = "https://github.com/Buttars/.dotfiles.git";
+      url = "https://github.com/Buttars/.dotfiles";
       type = "git";
+      ref = "main";
+      submodules = true;
+      flake = false;
     };
   };
 
