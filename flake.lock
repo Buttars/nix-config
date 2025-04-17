@@ -117,11 +117,11 @@
     "neovim-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1744703250,
-        "narHash": "sha256-mb6iH00keEa2UUPXY151cUoYSHsOuWtiqoY1nKbuOIA=",
+        "lastModified": 1744869584,
+        "narHash": "sha256-D8JP14afFkIUJ3KXtOXuH3pLUzuQ5mOsgmiQ3T1xPE0=",
         "ref": "refs/heads/master",
-        "rev": "2ad59d1b3c7a72808e8e05536d8ff9c227dc0b00",
-        "revCount": 461,
+        "rev": "957e992b86ba130f4bdbb5e83d9bac456cd2508f",
+        "revCount": 464,
         "type": "git",
         "url": "https://github.com/Buttars/kickstart-modular.nvim.git"
       },
