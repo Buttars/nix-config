@@ -1,7 +1,10 @@
 { ... }:
+let
+  common = toString ../../../../common;
+in
 {
   imports = [
-    ./fish.nix
+    "${common}/features/cli/fish.nix"
     ./starship.nix
     ./git.nix
   ];
