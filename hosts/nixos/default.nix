@@ -19,6 +19,7 @@ in
 
   servus = helper.mkNixos {
     hostname = "servus";
+    username = "servus";
     modules = [ ./servus ];
   };
 }

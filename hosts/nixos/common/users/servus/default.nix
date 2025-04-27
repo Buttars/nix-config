@@ -12,7 +12,7 @@ in
   #sops.secrets.buttars-password.neededForUsers = true;
   #users.mutableUsers = false;
 
-  users.users.buttars = {
+  users.users.servus = {
     isNormalUser = true;
     #hashedPasswordFile = config.sops.secrets.buttars-password.path;
     shell = pkgs.fish;
@@ -42,5 +42,5 @@ in
 
   home-manager.useGlobalPkgs = true;
 
-  home-manager.users.buttars = import ../../../../../home/servus/${config.networking.hostName}.nix;
+  home-manager.users.servus = import ../../../../../home/servus/${config.networking.hostName}.nix;
 }
