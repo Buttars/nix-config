@@ -6,7 +6,6 @@
     hostName = hostname;
     networkmanager.enable = true;
     firewall.enable = true;
-
     interfaces = {
       ens18 = {
         ipv4.addresses = [
@@ -17,8 +16,11 @@
         ];
       };
     };
-
     defaultGateway = "10.0.0.1";
     nameservers = [ "10.0.1.2" ];
+  };
+
+  services.openssh = {
+    enable = true;
   };
 }
