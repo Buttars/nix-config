@@ -2,9 +2,13 @@
 
   imports = [
     ./hardware-configuration.nix
+
     ../common/users/servus
+
     ./nfs-mounts.nix
     ./virtualisation.nix
+    ./tor-relay.nix
+
     ../common/services/home-assistant.nix
   ];
 
