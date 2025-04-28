@@ -5,7 +5,13 @@
     ../common/users/servus
     ./nfs-mounts.nix
     ./virtualisation.nix
+    ../common/services/home-assistant.nix
   ];
+
+  home-assistant = {
+    nfsAddress = "10.0.0.5";
+    nfsExposedPath = "/mnt/veritas/cognito/services/home-assistant";
+  };
 
   networking = {
     hostName = hostname;
