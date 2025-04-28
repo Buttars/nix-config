@@ -5,7 +5,7 @@ in
 {
   users.users."landon.buttars" = {
     home = "/Users/landon.buttars/";
-    shell = pkgs.fish;
+    # shell = pkgs.fish;
     # openssh.authorizedKeys.keys = [
     #   (builtins.readFile ./keys/id_ed25519.pub)
     # ];
