@@ -13,6 +13,7 @@
     ../common/features/nvidia.nix
     ../common/features/fonts.nix
     ../common/features/gaming
+    ../common/features/nfs-utils.nix
   ];
 
   programs.dconf.enable = true;
