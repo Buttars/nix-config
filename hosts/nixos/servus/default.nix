@@ -5,7 +5,7 @@
   networking = {
     hostName = hostname;
     networkmanager.enable = true;
-    firewall.enable = true;
+    firewall.enable = false;
     interfaces = {
       ens18 = {
         ipv4.addresses = [
