@@ -44,7 +44,7 @@
       stateVersion = "24.11";
     in
     {
-      darwinConfigurations."N4FQ62JR" = inputs.darwin.lib.darwinSystem {
+      darwinConfigurations."N4FQ62JR4D" = inputs.darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
           inherit inputs;
