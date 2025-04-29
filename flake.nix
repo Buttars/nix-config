@@ -92,11 +92,14 @@
         nixosModule = self.nixosModule;
       };
 
-      # packages = inputs.flake-utils.lib.eachDefaultSystem (
-      #   system: import ./pkgs nixpkgs.legacyPackages.${system}
-      # );
-
-      # packages.x86_64-linux.default = import ./pkgs nixpkgs.legacyPackages.x86_64-linux;
+      packages = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems (system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+        in
+        import ./pkgs { inherit pkgs; }
+      );
 
       # devShells = inputs.flake-utils.lib.eachDefaultSystem (
       #   system: import ./shell.nix nixpkgs.legacyPackages.${system}
