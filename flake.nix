@@ -27,6 +27,7 @@
       url = "https://github.com/Buttars/.dotfiles";
       type = "git";
       ref = "main";
+      rev = "94661c4849a6c340a1ca2f9b51506905326e3de5";
       submodules = false;
       flake = false;
     };
@@ -91,9 +92,11 @@
         nixosModule = self.nixosModule;
       };
 
-      packages = inputs.flake-utils.lib.eachDefaultSystem (
-        system: import ./pkgs nixpkgs.legacyPackages.${system}
-      );
+      # packages = inputs.flake-utils.lib.eachDefaultSystem (
+      #   system: import ./pkgs nixpkgs.legacyPackages.${system}
+      # );
+
+      # packages.x86_64-linux.default = import ./pkgs nixpkgs.legacyPackages.x86_64-linux;
 
       # devShells = inputs.flake-utils.lib.eachDefaultSystem (
       #   system: import ./shell.nix nixpkgs.legacyPackages.${system}
