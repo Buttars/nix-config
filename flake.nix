@@ -102,18 +102,16 @@
       #   system: import ./shell.nix nixpkgs.legacyPackages.${system}
       # );
 
-      devShells.x86_64-linux = import ./shell.nix nixpkgs.legacyPackages.x86_64-linux;
-      devShells.x86_64-darwin = import ./shell.nix nixpkgs.legacyPackages.x86_64-darwin;
-      devShells.aarch64-darwin = import ./shell.nix nixpkgs.legacyPackages.aarch64-darwin;
+      devShells = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems (system:
+        (import ./shell.nix) nixpkgs.legacyPackages.${system}
+      );
 
       overlays = import ./overlays { inherit inputs; };
 
-      # TODO: Figure out why flake-utils eachDefaultSystem does not return the expected an attribute set of systems.
-      # formatter = inputs.flake-utils.lib.eachDefaultSystem (
-      #   system: nixpkgs.legacyPackages."${system}".nixfmt-rfc-style
-      # );
+      formatter = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems (system:
+        nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
+      );
 
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
     };
 
 }
