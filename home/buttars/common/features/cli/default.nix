@@ -6,6 +6,7 @@ in
   imports = [
     "${common}/features/cli/fish.nix"
     ./git.nix
+    ./tmux.nix
   ];
 
   programs.starship.enable = true;
