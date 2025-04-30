@@ -16,7 +16,7 @@ in
       recursive = true;
     };
 
-    ".config/hypr".source = "${dotfiles}/.config/hypr";
+    # ".config/hypr".source = "${dotfiles}/.config/hypr";
     ".config/lf".source = "${dotfiles}/.config/lf";
     ".config/zsh".source = "${dotfiles}/.config/zsh";
     ".config/alacritty".source = "${dotfiles}/.config/alacritty";
