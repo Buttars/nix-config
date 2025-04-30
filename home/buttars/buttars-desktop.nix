@@ -3,6 +3,7 @@
   imports = [
     ./common/core
     ./common/features/cli
+    ./common/features/shell/fish
     ./common/features/desktop/common
     ./common/features/desktop/hyprland
     #./common/features/sops.nix
