@@ -5,8 +5,6 @@ let
   mountUnit = builtins.replaceStrings [ "/" "-" "." ] [ "\\x2f" "\\x2d" "\\x2e" ] mountPath + ".mount";
   defaultNfsOptions = [ "defaults" "noatime" "nfsvers=4" "hard" "timeo=600" "auto" "_netdev" "nofail" ];
 
-  containerBackend = config.virtualisation.oci-containers.backend or "podman";
-  containerServiceName = "${containerBackend}-${containerName}";
 in
 {
   options.home-assistant.enable = lib.mkEnableOption "Home Assistant container with NFS mount";
@@ -24,30 +22,35 @@ in
     apply = v: assert v != null; v;
   };
 
-  config = lib.mkIf config.home-assistant.enable {
-    fileSystems."/srv/services/home-assistant" = {
-      device = "${config.home-assistant.nfsAddress}:${config.home-assistant.nfsExposedPath}";
-      fsType = "nfs";
-      options = defaultNfsOptions;
-    };
+  config = lib.mkIf config.home-assistant.enable (
+    let
+      containerBackend = config.virtualisation.oci-containers.backend or "podman";
+      containerServiceName = "${containerBackend}-${containerName}";
+    in
+    {
+      fileSystems."/srv/services/home-assistant" = {
+        device = "${config.home-assistant.nfsAddress}:${config.home-assistant.nfsExposedPath}";
+        fsType = "nfs";
+        options = defaultNfsOptions;
+      };
 
-    virtualisation.oci-containers.containers.home-assistant = {
-      image = "ghcr.io/home-assistant/home-assistant:stable";
-      ports = [ ];
-      volumes = [
-        "/srv/services/home-assistant:/config"
-      ];
-      extraOptions = [
-        "--network=host"
-        "--privileged"
-      ];
-    };
+      virtualisation.oci-containers.containers.home-assistant = {
+        image = "ghcr.io/home-assistant/home-assistant:stable";
+        ports = [ ];
+        volumes = [
+          "/srv/services/home-assistant:/config"
+        ];
+        extraOptions = [
+          "--network=host"
+          "--privileged"
+        ];
+      };
 
-    systemd.services.${containerServiceName} = {
-      overrideStrategy = "asDropin";
-      after = [ "network-online.target" mountUnit ];
-      requires = [ mountUnit ];
-    };
-
-  };
+      systemd.services.${containerServiceName} = {
+        overrideStrategy = "asDropin";
+        after = [ "network-online.target" mountUnit ];
+        requires = [ mountUnit ];
+      };
+    }
+  );
 }
