@@ -4,6 +4,9 @@ let
   mountPath = "/srv/services/${containerName}";
   mountUnit = builtins.replaceStrings [ "/" "-" "." ] [ "\\x2f" "\\x2d" "\\x2e" ] mountPath + ".mount";
   defaultNfsOptions = [ "defaults" "noatime" "nfsvers=4" "hard" "timeo=600" "auto" "_netdev" "nofail" ];
+
+  containerBackend = config.virtualisation.oci-containers.backend or "podman";
+  containerServiceName = "${containerBackend}-${containerName}";
 in
 {
   options.home-assistant.enable = lib.mkEnableOption "Home Assistant container with NFS mount";
@@ -40,7 +43,8 @@ in
       ];
     };
 
-    systemd.services."oci-${containerName}" = {
+    systemd.services.${containerServiceName} = {
+      overrideStrategy = "asDropin";
       after = [ "network-online.target" mountUnit ];
       requires = [ mountUnit ];
     };
