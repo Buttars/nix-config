@@ -23,6 +23,8 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
+    stylix.url = "github:danth/stylix";
+
     dotfiles = {
       url = "https://github.com/Buttars/.dotfiles";
       type = "git";
@@ -75,6 +77,7 @@
           sops-nix = inputs.sops-nix.nixosModules.sops;
           wsl = inputs.nixos-wsl.nixosModules.default;
           disko = inputs.disko.nixosModules.disko;
+          stylex = inputs.stylix.nixosModules.stylix;
         }
         // nixpkgs.lib.mapAttrs'
           (name: type: {
