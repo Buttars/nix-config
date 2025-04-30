@@ -1,10 +1,6 @@
 { lib, config, pkgs, ... }:
 let
-  containerName = "home-assistant";
-  mountPath = "/srv/services/${containerName}";
-  mountUnit = builtins.replaceStrings [ "/" "-" "." ] [ "\\x2f" "\\x2d" "\\x2e" ] mountPath + ".mount";
   defaultNfsOptions = [ "defaults" "noatime" "nfsvers=4" "hard" "timeo=600" "auto" "_netdev" "nofail" ];
-
 in
 {
   options.home-assistant.enable = lib.mkEnableOption "Home Assistant container with NFS mount";
@@ -22,11 +18,7 @@ in
     apply = v: assert v != null; v;
   };
 
-  config = lib.mkIf config.home-assistant.enable (
-    let
-      containerBackend = config.virtualisation.oci-containers.backend or "podman";
-      containerServiceName = "${containerBackend}-${containerName}";
-    in
+  config = lib.mkIf config.home-assistant.enable
     {
       fileSystems."/srv/services/home-assistant" = {
         device = "${config.home-assistant.nfsAddress}:${config.home-assistant.nfsExposedPath}";
@@ -45,12 +37,5 @@ in
           "--privileged"
         ];
       };
-
-      systemd.services.${containerServiceName} = {
-        overrideStrategy = "asDropin";
-        after = [ "network-online.target" mountUnit ];
-        requires = [ mountUnit ];
-      };
-    }
-  );
+    };
 }
