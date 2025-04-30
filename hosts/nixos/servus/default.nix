@@ -13,6 +13,7 @@
   ];
 
   home-assistant = {
+    enable = true;
     nfsAddress = "10.0.0.5";
     nfsExposedPath = "/mnt/veritas/cognito/services/home-assistant";
   };
