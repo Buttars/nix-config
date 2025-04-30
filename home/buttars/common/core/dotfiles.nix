@@ -15,10 +15,7 @@ in
       source = "${dotfiles}/.config/shell";
       recursive = true;
     };
-    ".config/fish" = {
-      source = "${dotfiles}/.config/fish";
-      recursive = true;
-    };
+
     ".config/hypr".source = "${dotfiles}/.config/hypr";
     ".config/tmux".source = "${dotfiles}/.config/tmux";
     ".config/lf".source = "${dotfiles}/.config/lf";
