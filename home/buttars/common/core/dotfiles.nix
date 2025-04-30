@@ -17,7 +17,6 @@ in
     };
 
     ".config/hypr".source = "${dotfiles}/.config/hypr";
-    ".config/tmux".source = "${dotfiles}/.config/tmux";
     ".config/lf".source = "${dotfiles}/.config/lf";
     ".config/zsh".source = "${dotfiles}/.config/zsh";
     ".config/alacritty".source = "${dotfiles}/.config/alacritty";
