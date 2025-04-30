@@ -40,12 +40,12 @@
 
     sansSerif = {
       package = pkgs.inter-nerdfont;
-      name = "DejaVu Sans";
+      name = "Inter NerdFont";
     };
 
     monospace = {
       package = pkgs.nerd-fonts.commit-mono;
-      name = "DejaVu Sans Mono";
+      name = "Commit Mono NerdFont";
     };
 
     emoji = {
