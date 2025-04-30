@@ -1,7 +1,16 @@
 { ... }:
 let
   nfsProvider = "10.0.0.5";
-  defaultNfsOptions = [ "defaults" "noatime" "nfsvers=4" "hard" "timeo=600" "auto" "_netdev" "nofail" ];
+  defaultNfsOptions = [
+    "defaults"
+    "noatime"
+    "nfsvers=4"
+    "hard"
+    "timeo=600"
+    "auto"
+    "_netdev"
+    "nofail"
+  ];
 in
 {
   fileSystems."/srv/services" = {
