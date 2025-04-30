@@ -8,9 +8,16 @@
     ./nfs-mounts.nix
     ./virtualisation.nix
     ./tor-relay.nix
+    ./qbittorrent.nix
 
     ../common/services/home-assistant.nix
   ];
+
+  qbittorrent = {
+    enable = true;
+    nfsAddress = "10.0.0.5";
+    nfsExposedPath = "/mnt/veritas/cognito/services/qbittorrent";
+  };
 
   home-assistant = {
     enable = true;
