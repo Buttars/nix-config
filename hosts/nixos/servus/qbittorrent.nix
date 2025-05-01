@@ -18,28 +18,26 @@ in
   };
 
   config = lib.mkIf config.qbittorrent.enable {
-    # Mount NFS share
     fileSystems."/srv/services/qbittorrent" = {
       device = "${config.qbittorrent.nfsAddress}:${config.qbittorrent.nfsExposedPath}";
       fsType = "nfs";
       options = defaultNfsOptions;
     };
 
-    # OCI container for qBittorrent
     virtualisation.oci-containers.containers.qbittorrent = {
       image = "lscr.io/linuxserver/qbittorrent:latest";
       ports = [
-        "8080:8080/tcp" # Web UI
-        "6881:6881/tcp" # BitTorrent TCP
-        "6881:6881/udp" # BitTorrent UDP
+        "8080:8080/tcp"
+        "6881:6881/tcp"
+        "6881:6881/udp"
       ];
       volumes = [
         "/srv/services/qbittorrent/downloads:/downloads"
         "/srv/services/qbittorrent/config:/config"
       ];
       environment = {
-        PUID = "1000"; # Replace with your user’s UID
-        PGID = "1000"; # Replace with your user’s GID
+        PUID = "1000";
+        PGID = "1000";
         UMASK = "002";
         TZ = "America/Chicago";
       };
@@ -51,7 +49,6 @@ in
       ];
     };
 
-    # Ensure the container starts only after NFS mount is ready
     systemd.services."docker-qbittorrent".after = [ "srv-services-qbittorrent.mount" ];
     systemd.services."docker-qbittorrent".requires = [ "srv-services-qbittorrent.mount" ];
   };
