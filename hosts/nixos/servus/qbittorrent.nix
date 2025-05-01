@@ -44,9 +44,10 @@ in
         TZ = "America/Chicago";
       };
       extraOptions = [
-        "--cap-drop=ALL"
-        "--read-only"
-        "--tmpfs=/tmp"
+        "--cap-add=CHOWN"
+        "--cap-add=SETUID"
+        "--cap-add=SETGID"
+        "--userns=host"
       ];
     };
 
