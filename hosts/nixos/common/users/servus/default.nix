@@ -32,7 +32,7 @@ in
     ];
   };
 
-  environment.systemPackages = [ pkgs.home-manager ];
+  environment.systemPackages = with pkgs; [ home-manager lsof ];
 
   home-manager.backupFileExtension = "backup";
 
