@@ -1,4 +1,4 @@
-{ hostname, config, ... }: {
+{ pkgs, hostname, config, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -34,6 +34,15 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+    ];
+  };
+
 
   services.openssh = {
     enable = true;
