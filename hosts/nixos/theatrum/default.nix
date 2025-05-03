@@ -40,6 +40,7 @@
     driSupport32Bit = true;
     extraPackages = with pkgs; [
       nvidia-vaapi-driver
+      linuxPackages.nvidia_x11
     ];
   };
 
