@@ -22,4 +22,10 @@ in
     username = "servus";
     modules = [ ./servus ];
   };
+
+  theatrum = helper.mkNixos {
+    hostname = "theatrum";
+    username = "theatrum";
+    modules = [ ./theatrum ];
+  };
 }
