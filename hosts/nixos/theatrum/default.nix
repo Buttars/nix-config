@@ -29,21 +29,23 @@
     nameservers = [ "10.0.1.2" ];
   };
 
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   hardware.nvidia = {
     modesetting.enable = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+    open = false;
   };
 
   hardware.opengl = {
     enable = true;
-    driSupport32Bit = true;
     extraPackages = with pkgs; [
+      config.boot.kernelPackages.nvidiaPackages.stable
       nvidia-vaapi-driver
-      linuxPackages.nvidia_x11
     ];
   };
-
 
   services.openssh = {
     enable = true;
