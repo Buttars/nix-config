@@ -10,6 +10,7 @@
     ./tor-relay.nix
     ./qbittorrent.nix
     ./gluetun-dynamic-port-forwarder.nix
+    ./torrent-media-management.nix
 
     ../common/services/gluetun.nix
     ../common/services/home-assistant.nix
