@@ -29,6 +29,12 @@
     nameservers = [ "10.0.1.2" ];
   };
 
+  hardware.nvidia = {
+    modesetting.enable = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
   services.openssh = {
     enable = true;
   };
