@@ -11,7 +11,6 @@
     ./qbittorrent.nix
     ./gluetun-dynamic-port-forwarder.nix
     ./torrent-media-management.nix
-    ./jellyfin.nix
 
     ../common/services/gluetun.nix
     ../common/services/home-assistant.nix
