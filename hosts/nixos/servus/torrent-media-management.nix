@@ -13,4 +13,6 @@
     enable = true;
     dataDir = "/srv/services/sonarr";
   };
+
+  services.prowlarr.enable = true;
 }
