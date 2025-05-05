@@ -11,5 +11,7 @@
     enable = true;
   };
 
+  services.jellyseerr.enable = true;
+
   services.prowlarr.enable = true;
 }
