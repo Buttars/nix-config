@@ -19,22 +19,9 @@ let
 
 in
 {
-  fileSystems."/srv/services" = {
-    device = "${nfsProvider}:/mnt/veritas/cognito/services";
+  fileSystems."/srv" = {
+    device = "${nfsProvider}:/mnt/veritas/cognito";
     fsType = "nfs";
     options = defaultNfsOptions;
   };
-
-  fileSystems."/srv/media" = {
-    device = "${nfsProvider}:/mnt/veritas/cognito/media";
-    fsType = "nfs";
-    options = defaultNfsOptions;
-  };
-
-  fileSystems."/srv/frigate" = {
-    device = "${nfsProvider}:/mnt/veritas/cognito/frigate";
-    fsType = "nfs";
-    options = defaultNfsOptions;
-  };
-
 }
