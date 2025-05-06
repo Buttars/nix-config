@@ -2,6 +2,7 @@
   programs.git = {
     enable = true;
     delta.enable = true;
+    lfs.enable = true;
     extraConfig = {
       log.decorate = "short";
       log.abbrevCommit = "true";
