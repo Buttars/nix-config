@@ -9,6 +9,7 @@
     tmux
     zoxide
     yazi
+    wikiman
   ];
 
   programs.fzf = {
