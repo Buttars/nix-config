@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   programs.fish.shellInit = ''
     set -Ux XDG_CONFIG_HOME $HOME/.config
@@ -7,7 +7,7 @@
     set -Ux INPUTRC $XDG_CONFIG_HOME/shell/inputrc
   '';
 
-  home.sessionVariables = {
+  home.sessionVariables = lib.mkDefault {
     EDITOR = "nvim";
     TERMINAL = "kitty";
     BROWSER = "brave";

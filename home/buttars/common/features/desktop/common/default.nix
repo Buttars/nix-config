@@ -7,5 +7,6 @@
     ./terminal-emulator.nix
     ./discord.nix
     ./theming.nix
+    ../../../../../common/features/xdg.nix
   ];
 }
