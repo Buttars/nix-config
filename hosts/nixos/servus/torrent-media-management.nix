@@ -14,4 +14,6 @@
   services.jellyseerr.enable = true;
 
   services.prowlarr.enable = true;
+
+  services.jackett.enable = true;
 }
