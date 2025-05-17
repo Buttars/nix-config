@@ -1,0 +1,3 @@
+{
+  services.monero.enable = true;
+}
