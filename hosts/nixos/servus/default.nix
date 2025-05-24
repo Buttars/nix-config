@@ -12,7 +12,6 @@
     ./gluetun-dynamic-port-forwarder.nix
     ./torrent-media-management.nix
     ./monero.nix
-    ./tailscale.nix
 
     ../common/services/gluetun.nix
     ../common/services/home-assistant.nix
