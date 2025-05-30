@@ -1,5 +1,7 @@
 { lib, ... }:
 {
+  programs.fish.interactiveShellInit = ''
+    source $HOME/.config/sops-nix/secrets/rendered/neovim-avante.env
   '';
 
   home.sessionVariables = lib.mkDefault {
