@@ -44,7 +44,7 @@
   outputs =
     { self, nixpkgs, ... }@inputs:
     let
-      stateVersion = "24.11";
+      stateVersion = "25.05";
     in
     {
       darwinConfigurations."N4FQ62JR4D" = inputs.darwin.lib.darwinSystem {
