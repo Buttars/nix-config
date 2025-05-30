@@ -13,4 +13,8 @@
     firefox
   ];
 
+  home.sessionVariales = {
+    AVANTE_PROVIDER = "copilot";
+  };
+
 }
