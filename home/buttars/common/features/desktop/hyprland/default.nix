@@ -43,7 +43,6 @@ in
       exec-once = [
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "swaync"
-        "hyprpaper"
         "waybar"
         "xremap ~/.config/xremap/xremap.config"
         "xwaylandvideobridge"
@@ -204,6 +203,19 @@ in
         "float,class:^(xdg-desktop-portal-gnome)$"
         "float,class:^(transmission-gtk)$"
         "float,class:^(xdg-desktop-portal-gtk)$"
+      ];
+    };
+  };
+
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      preload = [
+        "~/.config/hypr/wallpaper.jpg"
+      ];
+
+      wallpaper = [
+        ",~/.config/hypr/wallpaper.jpg"
       ];
     };
   };
