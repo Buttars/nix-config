@@ -13,6 +13,8 @@ in
     hyprpaper
     hyprpicker
     jq
+    kdePackages.xwaylandvideobridge
+    libnotify
     nautilus
     rofi-wayland
     slurp
@@ -21,7 +23,6 @@ in
     waypaper
     wl-clipboard
     wlogout
-    kdePackages.xwaylandvideobridge
   ];
 
   wayland.windowManager.hyprland = {
