@@ -115,28 +115,46 @@ in
 
 
       "$mod" = "SUPER";
+
+      # TODO: Add colorpicker bindings
+
       bind = [
+        # Launchers
         "$mod, RETURN, exec, kitty"
-        "$mod SHIFT, q, exec, sysact"
         "$mod, w, exec, exec $BROWSER"
         "$mod SHIFT, w, exec, kitty -e sudo nmtui"
-        "$mod, e, exec, kitty -e neomutt"
-        "$mod SHIFT, e, exec, kitty -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook"
-        "$mod, r, exec, kitty -e lfub"
         "$mod SHIFT, r, exec, kitty -e htop"
         "$mod, d, exec, rofi -show drun & sleep 0.2; hyprctl dispatch focuswindow \"\\^(Rofi)\""
-        "$mod SHIFT, d, exec, passmenu"
-        "$mod, c, exec, kitty -e profanity"
+
+        # "$mod SHIFT, d, exec, passmenu"
+        # TODO: Update this to use keepasscli
+
         "$mod, n, exec, kitty -e nvim -c VimwikiIndex"
+        # TODO: Fix Vimwiki command
+
         "$mod SHIFT, n, exec, kitty -e newsboat"
+        # TODO: Add newsboat to installed packages
+
         "$mod, m, exec, kitty -e ncmpcpp"
+        # TODO: Add ncmcpp to installed packages
+
         "$mod SHIFT, m, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        "$mod SHIFT, Print, exec, aimpick"
+
         "$mod, Scroll_Lock, exec, killall screenkey || screenkey &"
+        # TODO: Add screenkey to installed packages
+
+        # TODO: Add more screenshot capabilities
         "$mod SHIFT, s, exec, grim -g \"$(slurp -d)\" - | wl-copy"
+        "$mod CTRL, s, exec, grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%s).png - | tee >(wl-copy) > /dev/null && notify-send 'Screenshot taken!'"
+
         "$mod, l, exec, hyprlock"
+        # TODO: Reenable when suspend is fixed
+        # "$mod SHIFT, l, exec, hyprlock && systemctl suspend"
+
         "$mod, q, killactive,"
         "$mod SUPER_SHIFT, BACKSPACE, exit"
+
+        # Layout / Window control
         "$mod, f, fullscreenstate, 2 0"
         "$mod SHIFT, f, fullscreen, 1"
         "$mod SHIFT, space, togglefloating, 0"
@@ -144,39 +162,72 @@ in
         "$mod, k, cyclenext, prev"
         "$mod SHIFT, j, layoutmsg, swapnext"
         "$mod SHIFT, k, layoutmsg, swapprev"
-        "$mod, t, layoutmsg, orientationleft"
-        "$mod SHIFT, t, layoutmsg, orientationbottom"
-        "$mod, y, layoutmsg, orientationcenter"
         "$mod, space, layoutmsg, swapwithmaster master"
-        "$mod SHIFT, left, execr, hyprctl dispatch focusmonitor -1"
-        "$mod SHIFT, right, execr, hyprctl dispatch focusmonitor +1"
-        "$mod, 1, execr, hyprctl dispatch workspace \"$activeMonitorId\"1"
-        "$mod, 2, execr, hyprctl dispatch workspace \"$activeMonitorId\"2"
-        "$mod, 3, execr, hyprctl dispatch workspace \"$activeMonitorId\"3"
-        "$mod, 4, execr, hyprctl dispatch workspace \"$activeMonitorId\"4"
-        "$mod, 5, execr, hyprctl dispatch workspace \"$activeMonitorId\"5"
-        "$mod, 6, execr, hyprctl dispatch workspace \"$activeMonitorId\"6"
-        "$mod, 7, execr, hyprctl dispatch workspace \"$activeMonitorId\"7"
-        "$mod, 8, execr, hyprctl dispatch workspace \"$activeMonitorId\"8"
-        "$mod, 9, execr, hyprctl dispatch workspace \"$activeMonitorId\"9"
-        "$mod SHIFT, 1, execr, hyprctl dispatch movetoworkspace \"$activeMonitorId\"1"
-        "$mod SHIFT, 2, execr, hyprctl dispatch movetoworkspace \"$activeMonitorId\"2"
-        "$mod SHIFT, 3, execr, hyprctl dispatch movetoworkspace \"$activeMonitorId\"3"
-        "$mod SHIFT, 4, execr, hyprctl dispatch movetoworkspace \"$activeMonitorId\"4"
-        "$mod SHIFT, 5, execr, hyprctl dispatch movetoworkspace \"$activeMonitorId\"5"
-        "$mod SHIFT, 6, execr, hyprctl dispatch movetoworkspace \"$activeMonitorId\"6"
-        "$mod SHIFT, 7, execr, hyprctl dispatch movetoworkspace \"$activeMonitorId\"7"
-        "$mod SHIFT, 8, execr, hyprctl dispatch movetoworkspace \"$activeMonitorId\"8"
-        "$mod SHIFT, 9, execr, hyprctl dispatch movetoworkspace \"$activeMonitorId\"9"
-        "$mod CTRL, right, execr, hyprctl dispatch movewindow mon:+1"
-        "$mod CTRL, left, execr, hyprctl dispatch movewindow mon:-1"
-        "$mod, right, resizeactive, 100 0"
-        "$mod, left, resizeactive, -100 0"
-        "$mod, down, resizeactive, 0 100"
-        "$mod, up, resizeactive, 0 -100"
-        "$mod, Tab, workspace, m+1"
-        "$mod SHIFT, Tab, workspace, m-1"
-      ];
+
+        # TODO: Layout binds
+        "$mod, a, layoutmsg, addmaster"
+        "$mod SHIFT, a, layoutmsg, removemaster"
+
+        "$mod, z, layoutmsg, setmasterfactor 0.05"
+        "$mod SHIFT, z, layoutmsg, setmasterfactor -0.05"
+
+        "$mod, o, layoutmsg, togglesplit"
+        "$mod, t, layoutmsg, orientationleft"
+        "$mod, b, layoutmsg, orientationbottom"
+        "$mod, c, layoutmsg, orientationcenter"
+
+
+        # Monitor navigation and movement
+        "$mod, left, execr, hyprctl dispatch focusmonitor -1"
+        "$mod, right, execr, hyprctl dispatch focusmonitor +1"
+        "$mod SHIFT, right, execr, hyprctl dispatch movewindow mon:+1"
+        "$mod SHIFT, left, execr, hyprctl dispatch movewindow mon:-1"
+
+        # Resize windows
+        "$mod CTRL, h, resizeactive, -100 0"
+        "$mod CTRL, l, resizeactive, 100 0"
+        "$mod CTRL, j, resizeactive, 0 100"
+        "$mod CTRL, k, resizeactive, 0 -100"
+
+        # Workspace cycling with fallback
+        "$mod, Tab, exec, hyprctl dispatch workspace m+1 || hyprctl dispatch workspace 1"
+        "$mod SHIFT, Tab, exec, hyprctl dispatch workspace m-1 || hyprctl dispatch workspace 9"
+
+        # Scratchpad terminal
+        "$mod, grave, togglespecialworkspace, term"
+        "$mod SHIFT, grave, movetoworkspacesilent, special:term"
+
+        # Volume & brightness
+        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86MonBrightnessUp, exec, brightnessctl set +10%"
+        ", XF86MonBrightnessDown, exec, brightnessctl set 10%-"
+
+        # Notification control
+        "$mod, c, exec, makoctl dismiss"
+        "$mod SHIFT, c, exec, makoctl dismiss -a"
+
+        # Debug/dev tools
+        "$mod SHIFT, x, exec, kitty -e journalctl -f"
+        "$mod SHIFT, e, exec, kitty -e nvim"
+      ]
+      ++ (
+        builtins.concatLists (
+          builtins.genList
+            (i:
+              let
+                ws = toString (i + 1);
+                cmd = "hyprctl dispatch workspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
+                moveCmd = "hyprctl dispatch movetoworkspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
+              in
+              [
+                "$mod, ${ws}, execr, ${cmd}"
+                "$mod SHIFT, ${ws}, execr, ${moveCmd}"
+              ]
+            ) 9
+        )
+      );
 
       bindm = [
         "$mod, mouse:272, movewindow"
