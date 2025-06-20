@@ -12,9 +12,10 @@
   ];
 
   home.sessionVariables = {
-    GDK_SCALE = "2";
+    GDK_SCALE = ".7";
     GDK_DPI_SCALE = "0.5"; # Optional fine-tuning
-    XCURSOR_SIZE = "48"; # Larger cursor to match scale
+    XCURSOR_SIZE = "20"; # Larger cursor to match scale
+    OZONE_PLATFORM = "wayland";
   };
 
 }
