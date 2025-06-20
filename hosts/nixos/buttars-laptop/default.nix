@@ -10,6 +10,7 @@
     ../common/features/zsa.nix
     ../common/features/syncthing.nix
     ../common/features/audio.nix
+    ../common/features/nvidia.nix
     ../common/features/fonts.nix
   ];
 
