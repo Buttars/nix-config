@@ -72,11 +72,6 @@
         bind g new-window -n '' lazygit
         bind G new-window -n '' gh dash
         bind-key u new-window -n '🛠️ devenv' -c '#{pane_current_path}' 'nix develop --accept-flake-config --no-pure-eval --command devenv up'
-        bind-key o source-file ~/.config/tmux/open_devenv_windows.tmux
-        bind-key O if-shell 'tmux list-windows | grep -q "📜 nvim"' 'kill-window -t "📜 nvim"' \;\
-                     if-shell 'tmux list-windows | grep -q "🛠️ devenv"' 'kill-window -t "🛠️ devenv"' \;\
-                     if-shell 'tmux list-windows | grep -q "🛢️ lazysql"' 'kill-window -t "🛢️ lazysql"' \;\
-                     if-shell 'tmux list-windows | grep -q "🌐 atac"' 'kill-window -t "🌐 atac"'
 
         ##### ─── Copy Mode ────────────────────────────────
         bind-key -T copy-mode-vi 'C-h' select-pane -L
