@@ -13,7 +13,6 @@ in
     hyprpaper
     hyprpicker
     jq
-    kdePackages.xwaylandvideobridge
     libnotify
     nautilus
     rofi-wayland
@@ -23,6 +22,7 @@ in
     waypaper
     wl-clipboard
     wlogout
+    xdg-desktop-portal-hyprland
   ];
 
   wayland.windowManager.hyprland = {
@@ -46,7 +46,6 @@ in
         "swaync"
         "waybar"
         "xremap ~/.config/xremap/xremap.config"
-        "xwaylandvideobridge"
         "sh ~/.config/hypr/portal-launch.sh"
         "sh ~/.config/hypr/initalize-workspaces.sh"
       ];
