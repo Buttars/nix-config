@@ -41,9 +41,20 @@
     };
   };
 
-  outputs =
-    { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
+      systems = flake-utils.lib.defaultSystems;
+
+      forEachSystem = f:
+        nixpkgs.lib.genAttrs systems (system: f pkgsFor.${system});
+
+      pkgsFor = nixpkgs.lib.genAttrs systems (system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        }
+      );
+
       stateVersion = "25.05";
     in
     {
@@ -95,24 +106,15 @@
         nixosModule = self.nixosModule;
       };
 
-      packages = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems (system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-          };
-        in
-        import ./pkgs { inherit pkgs; }
-      );
-
-      # devShells = inputs.flake-utils.lib.eachDefaultSystem (
-      #   system: import ./shell.nix nixpkgs.legacyPackages.${system}
-      # );
-
-      devShells = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems (system:
-        (import ./shell.nix) nixpkgs.legacyPackages.${system}
-      );
-
       overlays = import ./overlays { inherit inputs; };
+
+      packages = forEachSystem (pkgs:
+        pkgs.callPackage ./pkgs { inherit pkgs; }
+      );
+
+      devShells = forEachSystem (pkgs:
+        import ./shell.nix pkgs
+      );
 
       formatter = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems (system:
         nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
