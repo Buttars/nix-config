@@ -1,6 +1,8 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    discord-canary
+    (discord.override {
+      withVencord = true;
+    })
   ];
 }
