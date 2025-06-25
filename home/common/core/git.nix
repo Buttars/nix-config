@@ -9,6 +9,7 @@
       log.format = "oneline";
       format.pretty = "oneline";
       push.autoSetupRemote = true;
+      pull.rebase = true;
     };
   };
 }
