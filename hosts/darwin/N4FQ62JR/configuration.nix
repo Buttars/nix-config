@@ -5,7 +5,6 @@
     ../../common/core
     ../common/users/landon.buttars
     ../common/features/yabai.nix
-    ../common/features/aerospace.nix
     ./system.nix
   ];
 
