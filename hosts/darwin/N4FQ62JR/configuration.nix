@@ -8,6 +8,10 @@
     ./system.nix
   ];
 
+  environment.systemPackages = with pkgs; [
+    nodejs
+  ];
+
   nix.channel.enable = false;
 
   nix.settings.trusted-users = [
