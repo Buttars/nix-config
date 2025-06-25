@@ -5,6 +5,7 @@
     ../../common/core
     ../common/users/landon.buttars
     ../common/features/yabai.nix
+    ../common/features/aerospace.nix
     ./system.nix
   ];
 
@@ -20,6 +21,8 @@
   nix.optimise.automatic = false;
 
   nix.enable = false;
+
+  system.primaryUser = "landon.buttars";
 
   # Used for backwards compatibility, please read the changelog before changing.
   system.stateVersion = 5;
