@@ -13,7 +13,7 @@
     firefox
   ];
 
-  home.sessionVariales = {
+  home.sessionVariables = {
     AVANTE_PROVIDER = "copilot";
   };
 
