@@ -5,11 +5,14 @@ in
 {
   users.users."landon.buttars" = {
     home = "/Users/landon.buttars/";
+    shell = pkgs.zsh;
     # shell = pkgs.fish;
     # openssh.authorizedKeys.keys = [
     #   (builtins.readFile ./keys/id_ed25519.pub)
     # ];
   };
+
+  programs.zsh.enable = true;
 
   environment.systemPackages = [ pkgs.home-manager ];
 
