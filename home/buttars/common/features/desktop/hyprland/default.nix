@@ -36,7 +36,7 @@ in
         "WLR_NO_HARDWARE_CURSORS,1"
       ];
 
-      monitor = [
+      monitor = lib.mkDefault [
         "DP-3, 3840x2160@60, 0x0, 1"
         "DP-1, 1920x1080@144, 3840x0, 1"
       ];
