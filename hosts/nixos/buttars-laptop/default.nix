@@ -3,7 +3,6 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../common/core
     ../common/users/buttars
 
     ../common/features/systemd-boot.nix
