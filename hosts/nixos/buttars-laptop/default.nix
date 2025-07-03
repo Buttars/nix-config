@@ -14,6 +14,10 @@
     ../common/features/fonts.nix
   ];
 
+  programs.dconf.enable = true;
+
+  programs.hyprland.enable = true;
+
   networking = {
     hostName = hostname;
     networkmanager.enable = true;
