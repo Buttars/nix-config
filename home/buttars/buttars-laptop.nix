@@ -6,7 +6,7 @@
     ./common/features/shell/fish
     ./common/features/desktop/common
     ./common/features/desktop/hyprland
-    #./common/features/sops.nix
+    ./common/features/sops.nix
     ./common/features/desktop/common/browser.nix
     ./common/features/services/syncthing.nix
   ];
