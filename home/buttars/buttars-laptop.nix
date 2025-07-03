@@ -13,9 +13,12 @@
 
   home.sessionVariables = {
     GDK_SCALE = ".7";
-    GDK_DPI_SCALE = "0.5"; # Optional fine-tuning
+    GDK_DPI_SCALE = "0.25"; # Optional fine-tuning
     XCURSOR_SIZE = "20"; # Larger cursor to match scale
-    OZONE_PLATFORM = "wayland";
+    ELECTROL_OZONE_PLATFORM = "wayland";
   };
 
+  wayland.windowManager.hyprland.settings.monitor = [
+    "eDP-1, 1920x1080@60, 0x0, 1"
+  ];
 }
