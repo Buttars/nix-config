@@ -8,6 +8,8 @@
     ../common/features/aws.nix
   ];
 
+  programs.zsh.enable = true;
+
   home.packages = with pkgs; [
     google-chrome
     firefox
