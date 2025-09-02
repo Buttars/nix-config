@@ -20,6 +20,12 @@ in
           check-further-callbacks = false;
         }
         {
+          "if".app-name-regex-substring = "Microsoft Outlook";
+          "if".window-title-regex-substring = "Reminder";
+          run = [ "layout floating" ];
+          check-further-callbacks = false;
+        }
+        {
           run = "layout tiling";
           check-further-callbacks = true;
         }
@@ -33,12 +39,36 @@ in
         let
           makeFocusCommand = direction: "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction}";
           makeSwapCommand = direction: "swap ${direction} --wrap-around";
+
+          getFocusedWorkspace = ''
+            aerospace list-workspaces --focused 2>/dev/null | head -1
+          '';
+
+          getActiveMonitorId = ''
+            aerospace list-monitors --focused --format "%{monitor-id}" 2>/dev/null | head -1
+          '';
+
+          switchWorkspace = workspaceIndex: ''
+            exec-and-forget bash -lc '
+              monitorId=$(${getActiveMonitorId})
+              targetWorkspace="''${monitorId}${toString workspaceIndex}"
+              aerospace summon-workspace "$targetWorkspace"
+            '
+          '';
+
+          moveWindowToWorkspace = workspaceIndex: ''
+            exec-and-forget bash -lc '
+              monitorId=$(${getActiveMonitorId})
+              targetWorkspace="''${monitorId}${toString workspaceIndex}"
+              aerospace move-node-to-workspace "$targetWorkspace"
+            '
+          '';
         in
         {
           # Launchers
           "${super}-enter" = ''exec-and-forget open -a "Kitty"'';
           "${super}-shift-q" = "exec-and-forget sysact";
-          # "${super}-w"     = ''exec-and-forget open -a "Google Chrome"'';
+          "${super}-w" = ''exec-and-forget open -a "Google Chrome"'';
           "${super}-r" = ''exec-and-forget open -a "Kitty" --args -e lfub'';
           "${super}-shift-r" = ''exec-and-forget open -a "Kitty" --args -e htop'';
           "${super}-n" = ''exec-and-forget open -a "Kitty" --args -e nvim -c VimwikiIndex'';
@@ -49,6 +79,7 @@ in
           # "${super}-j" = "focus down";
           # "${super}-k" = "focus up";
           # "${super}-l" = "focus right";
+          # TODO: Unbind unused movement keys i.e. super-h and super-l
           "${super}-j" = makeFocusCommand "dfs-next";
           "${super}-k" = makeFocusCommand "dfs-prev";
           "${super}-shift-j" = makeSwapCommand "dfs-next";
@@ -71,28 +102,6 @@ in
           "${super}-shift-left" = "focus-monitor --wrap-around left";
           "${super}-shift-right" = "focus-monitor --wrap-around right";
 
-          # Workspaces 1..9
-          "${super}-1" = "workspace 1";
-          "${super}-2" = "workspace 2";
-          "${super}-3" = "workspace 3";
-          "${super}-4" = "workspace 4";
-          "${super}-5" = "workspace 5";
-          "${super}-6" = "workspace 6";
-          "${super}-7" = "workspace 7";
-          "${super}-8" = "workspace 8";
-          "${super}-9" = "workspace 9";
-
-          # Move to workspace
-          "${super}-shift-1" = "move-node-to-workspace 1";
-          "${super}-shift-2" = "move-node-to-workspace 2";
-          "${super}-shift-3" = "move-node-to-workspace 3";
-          "${super}-shift-4" = "move-node-to-workspace 4";
-          "${super}-shift-5" = "move-node-to-workspace 5";
-          "${super}-shift-6" = "move-node-to-workspace 6";
-          "${super}-shift-7" = "move-node-to-workspace 7";
-          "${super}-shift-8" = "move-node-to-workspace 8";
-          "${super}-shift-9" = "move-node-to-workspace 9";
-
           # Move window to monitor
           "${super}-ctrl-j" = "move-node-to-monitor right";
           "${super}-ctrl-k" = "move-node-to-monitor left";
@@ -103,7 +112,14 @@ in
           "${super}-left" = "resize width -100";
           "${super}-down" = "resize height +100";
           "${super}-up" = "resize height -100";
-        };
+        } // builtins.foldl'
+          (acc: s: acc // s)
+          { }
+          (builtins.genList
+            (i: {
+              "${super}-${toString (i + 1)}" = switchWorkspace (i + 1);
+              "${super}-shift-${toString (i + 1)}" = [ (moveWindowToWorkspace (i + 1)) (switchWorkspace (i + 1)) ];
+            }) 9);
     };
   };
 }
