@@ -5,6 +5,7 @@
     ../../common/core
     ../common/users/landon.buttars
     ../common/features/aerospace.nix
+    ../common/features/autoraise.nix
     ./system.nix
   ];
 
