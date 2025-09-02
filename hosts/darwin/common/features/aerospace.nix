@@ -35,6 +35,22 @@ in
         inherit-env-vars = true;
       };
 
+
+      "workspace-to-monitor-force-assignment" =
+        builtins.listToAttrs
+          (
+            builtins.concatLists (
+              builtins.genList
+                (i:
+                  [{
+                    name = builtins.toString (i + 1);
+                    value = builtins.genList (j: builtins.toString ((i + 1) * 10 + (j + 1))) 9;
+                  }]
+                )
+                9
+            )
+          );
+
       mode.main.binding =
         let
           makeFocusCommand = direction: "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction}";
@@ -112,6 +128,7 @@ in
           "${super}-left" = "resize width -100";
           "${super}-down" = "resize height +100";
           "${super}-up" = "resize height -100";
+
         } // builtins.foldl'
           (acc: s: acc // s)
           { }
