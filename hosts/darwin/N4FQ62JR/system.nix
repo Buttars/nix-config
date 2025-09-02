@@ -34,4 +34,7 @@
   };
 
   system.defaults.LaunchServices.LSQuarantine = false;
+
+  # NOTE: This is preferred when using Aerospace window manager
+  system.defaults.spaces.spans-displays = false;
 }
