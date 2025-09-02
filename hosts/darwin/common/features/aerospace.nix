@@ -15,13 +15,13 @@ in
       # Make all windows tile (no floating) by default
       "on-window-detected" = [
         {
-          run = "layout tiling";
-          check-further-callbacks = true;
+          "if".app-name-regex-substring = "kuandoHUB";
+          run = [ "layout floating" ];
+          check-further-callbacks = false;
         }
         {
-          "if".app-name-regex-substring = "kuandoHUB";
-          run = [ "layout floating" "minimize" ];
-          check-further-callbacks = false;
+          run = "layout tiling";
+          check-further-callbacks = true;
         }
       ];
 
@@ -31,11 +31,8 @@ in
 
       mode.main.binding =
         let
-          boundaries = "--boundaries workspace --boundaries-action wrap-around-the-workspace";
-          focus-next = "focus ${boundaries} dfs-next";
-          focus-prev = "focus ${boundaries} dfs-prev";
-          swap-next = "swap dfs-next --wrap-around";
-          swap-prev = "swap dfs-prev --wrap-around";
+          makeFocusCommand = direction: "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction}";
+          makeSwapCommand = direction: "swap ${direction} --wrap-around";
         in
         {
           # Launchers
@@ -52,10 +49,10 @@ in
           # "${super}-j" = "focus down";
           # "${super}-k" = "focus up";
           # "${super}-l" = "focus right";
-          "${super}-j" = focus-next;
-          "${super}-k" = focus-prev;
-          "${super}-shift-j" = swap-next;
-          "${super}-shift-k" = swap-prev;
+          "${super}-j" = makeFocusCommand "dfs-next";
+          "${super}-k" = makeFocusCommand "dfs-prev";
+          "${super}-shift-j" = makeSwapCommand "dfs-next";
+          "${super}-shift-k" = makeSwapCommand "dfs-prev";
 
 
 
