@@ -51,6 +51,15 @@ in
             )
           );
 
+      "gaps" = {
+        inner.vertical = 10;
+        inner.horizontal = 10;
+        outer.left = 10;
+        outer.bottom = 10;
+        outer.top = 10;
+        outer.right = 10;
+      };
+
       mode.main.binding =
         let
           makeFocusCommand = direction: "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction}";
