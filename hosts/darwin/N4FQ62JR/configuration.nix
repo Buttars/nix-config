@@ -6,6 +6,7 @@
     ../common/users/landon.buttars
     ../common/features/aerospace.nix
     ../common/features/autoraise.nix
+    ../common/features/jankborders.nix
     ./system.nix
   ];
 
