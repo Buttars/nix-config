@@ -64,6 +64,7 @@ in
         let
           makeFocusCommand = direction: "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction} --ignore-floating";
           makeSwapCommand = direction: "swap ${direction} --wrap-around";
+          makeMoveNodeToMonitorCommand = direction: "move-node-to-monitor ${direction} --wrap-around --focus-follows-window";
 
           getFocusedWorkspace = ''
             aerospace list-workspaces --focused 2>/dev/null | head -1
@@ -128,8 +129,8 @@ in
           "${super}-shift-right" = "focus-monitor --wrap-around right";
 
           # Move window to monitor
-          "${super}-ctrl-j" = "move-node-to-monitor right";
-          "${super}-ctrl-k" = "move-node-to-monitor left";
+          "${super}-ctrl-j" = makeMoveNodeToMonitorCommand "next";
+          "${super}-ctrl-k" = makeMoveNodeToMonitorCommand "prev";
 
           # TODO: Add resize mode
           # Resize (arrow keys)
