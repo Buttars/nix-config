@@ -62,7 +62,7 @@ in
 
       mode.main.binding =
         let
-          makeFocusCommand = direction: "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction}";
+          makeFocusCommand = direction: "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction} --ignore-floating";
           makeSwapCommand = direction: "swap ${direction} --wrap-around";
 
           getFocusedWorkspace = ''
