@@ -12,24 +12,35 @@ in
       default-root-container-layout = "tiles";
       default-root-container-orientation = "horizontal";
 
-      # Make all windows tile (no floating) by default
-      "on-window-detected" = [
-        {
-          "if".app-name-regex-substring = "kuandoHUB";
-          run = [ "layout floating" ];
-          check-further-callbacks = false;
-        }
-        {
-          "if".app-name-regex-substring = "Microsoft Outlook";
-          "if".window-title-regex-substring = "Reminder";
-          run = [ "layout floating" ];
-          check-further-callbacks = false;
-        }
-        {
-          run = "layout tiling";
-          check-further-callbacks = true;
-        }
-      ];
+      "on-window-detected" =
+        let
+          floatingAppIds = [
+            "com.plenom.kuandoHUB"
+            "com.cisco.secureclient.gui"
+            "com.zscaler.zscaler"
+          ];
+        in
+        [
+          {
+            "if".app-id = "com.microsoft.Outlook";
+            "if".window-title-regex-substring = "Reminder";
+            run = [ "layout floating" ];
+            check-further-callbacks = false;
+          }
+        ]
+        ++ (builtins.map
+          (id: {
+            "if".app-id = id;
+            run = [ "layout floating" ];
+            check-further-callbacks = false;
+          })
+          floatingAppIds)
+        ++ [
+          {
+            run = "layout tiling";
+            check-further-callbacks = true;
+          }
+        ];
 
       exec = {
         inherit-env-vars = true;
@@ -62,9 +73,17 @@ in
 
       mode.main.binding =
         let
-          makeFocusCommand = direction: "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction} --ignore-floating";
-          makeSwapCommand = direction: "swap ${direction} --wrap-around";
-          makeMoveNodeToMonitorCommand = direction: "move-node-to-monitor ${direction} --wrap-around --focus-follows-window";
+          makeFocusCommand = direction: "
+            focus --boundaries
+            workspace --boundaries-action
+            wrap-around-the-workspace ${direction} --ignore-floating
+          ";
+          makeSwapCommand = direction: "
+            swap ${direction} --wrap-around
+          ";
+          makeMoveNodeToMonitorCommand = direction: "
+            move-node-to-monitor ${direction} --wrap-around --focus-follows-window
+          ";
 
           getFocusedWorkspace = ''
             aerospace list-workspaces --focused 2>/dev/null | head -1
@@ -74,21 +93,6 @@ in
             aerospace list-monitors --focused --format "%{monitor-id}" 2>/dev/null | head -1
           '';
 
-          switchWorkspace = workspaceIndex: ''
-            exec-and-forget bash -lc '
-              monitorId=$(${getActiveMonitorId})
-              targetWorkspace="''${monitorId}${toString workspaceIndex}"
-              aerospace summon-workspace "$targetWorkspace"
-            '
-          '';
-
-          moveWindowToWorkspace = workspaceIndex: ''
-            exec-and-forget bash -lc '
-              monitorId=$(${getActiveMonitorId})
-              targetWorkspace="''${monitorId}${toString workspaceIndex}"
-              aerospace move-node-to-workspace "$targetWorkspace"
-            '
-          '';
         in
         {
           # Launchers
@@ -116,6 +120,7 @@ in
           # Window lifecycle
           "${super}-q" = "close";
           "${super}-f" = "fullscreen";
+          "${super}-space" = "layout floating tiling";
           # Disabling macos-native-fullscreen because it causes issues when separate spaces are disabled
           # It's buggy and doesn't always work as expected anyway
           # "${super}-shift-f" = "macos-native-fullscreen";
@@ -143,10 +148,29 @@ in
           (acc: s: acc // s)
           { }
           (builtins.genList
-            (i: {
-              "${super}-${toString (i + 1)}" = switchWorkspace (i + 1);
-              "${super}-shift-${toString (i + 1)}" = [ (moveWindowToWorkspace (i + 1)) (switchWorkspace (i + 1)) ];
-            }) 9);
+            (i:
+              let
+                switchWorkspace = workspaceIndex: ''
+                  exec-and-forget bash -lc '
+                    monitorId=$(${getActiveMonitorId})
+                    targetWorkspace="''${monitorId}${toString workspaceIndex}"
+                    aerospace summon-workspace "$targetWorkspace"
+                  '
+                '';
+
+                moveWindowToWorkspace = workspaceIndex: ''
+                  exec-and-forget bash -lc '
+                    monitorId=$(${getActiveMonitorId})
+                    targetWorkspace="''${monitorId}${toString workspaceIndex}"
+                    aerospace move-node-to-workspace "$targetWorkspace"
+                    aerospace summon-workspace "$targetWorkspace"
+                  '
+                '';
+              in
+              {
+                "${super}-${toString (i + 1)}" = switchWorkspace (i + 1);
+                "${super}-shift-${toString (i + 1)}" = moveWindowToWorkspace (i + 1);
+              }) 9);
     };
   };
 }
