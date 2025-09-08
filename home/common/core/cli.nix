@@ -2,14 +2,16 @@
   home.packages = with pkgs; [
     bat
     gh
-    sshs
+    htop
     neovim
     sesh
+    sshs
     tldr
     tmux
-    zoxide
-    yazi
+    watch
     wikiman
+    yazi
+    zoxide
   ];
 
   programs.fzf = {
