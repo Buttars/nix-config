@@ -48,19 +48,20 @@ in
 
 
       "workspace-to-monitor-force-assignment" =
-        builtins.listToAttrs
-          (
-            builtins.concatLists (
-              builtins.genList
-                (i:
-                  [{
-                    name = builtins.toString (i + 1);
-                    value = builtins.genList (j: builtins.toString ((i + 1) * 10 + (j + 1))) 9;
-                  }]
-                )
-                9
-            )
-          );
+        builtins.listToAttrs (
+          builtins.concatLists (
+            builtins.genList
+              (i:
+                builtins.genList
+                  (j: {
+                    name = builtins.toString (((i + 1) * 10) + (j + 1));
+                    value = builtins.toString (i + 1);
+                  })
+                  9
+              )
+              9
+          )
+        );
 
       "gaps" = {
         inner.vertical = 10;
