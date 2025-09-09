@@ -77,7 +77,7 @@ in
           '';
 
           getActiveMonitorId = ''
-            aerospace list-monitors --focused --format "%{monitor-id}" 2>/dev/null | head -1
+            aerospace list-monitors --focused --format "%{ monitor-id }" 2>/dev/null | head -1
           '';
 
         in
@@ -92,10 +92,6 @@ in
           "${super}-shift-s" = ''exec-and-forget bash -lc "screencapture -i -c"'';
 
           # Window focus (hjkl)
-          # "${super}-h" = "focus left";
-          # "${super}-j" = "focus down";
-          # "${super}-k" = "focus up";
-          # "${super}-l" = "focus right";
           # TODO: Unbind unused movement keys i.e. super-h and super-l
           "${super}-j" = makeFocusCommand "dfs-next";
           "${super}-k" = makeFocusCommand "dfs-prev";
