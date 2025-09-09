@@ -13,29 +13,15 @@ in
       default-root-container-orientation = "horizontal";
 
       "on-window-detected" =
-        let
-          floatingAppIds = [
-            "com.plenom.kuandoHUB"
-            "com.cisco.secureclient.gui"
-            "com.zscaler.zscaler"
-          ];
-        in
         [
           {
-            "if".app-id = "com.microsoft.Outlook";
+            "if".app-name-regex-substring = "(Microsoft Outlook|CalendarAgent|kuandoHUB)";
             "if".window-title-regex-substring = "Reminder";
-            run = [ "layout floating" ];
+            run = [
+              "layout floating"
+            ];
             check-further-callbacks = false;
           }
-        ]
-        ++ (builtins.map
-          (id: {
-            "if".app-id = id;
-            run = [ "layout floating" ];
-            check-further-callbacks = false;
-          })
-          floatingAppIds)
-        ++ [
           {
             run = "layout tiling";
             check-further-callbacks = true;
