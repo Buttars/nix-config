@@ -76,10 +76,6 @@ in
             aerospace list-workspaces --focused 2>/dev/null | head -1
           '';
 
-          getActiveMonitorId = ''
-            aerospace list-monitors --focused --format "%{monitor-id}" 2>/dev/null | head -1
-          '';
-
         in
         {
           # Launchers
@@ -133,6 +129,10 @@ in
           (builtins.genList
             (i:
               let
+                getActiveMonitorId = ''
+                  aerospace list-monitors --focused --format "%{monitor-id}" 2>/dev/null | head -1
+                '';
+
                 switchWorkspace = workspaceIndex: ''
                   exec-and-forget bash -lc '
                     monitorId=$(${getActiveMonitorId})
