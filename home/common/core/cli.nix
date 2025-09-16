@@ -10,7 +10,6 @@
     tmux
     watch
     wikiman
-    yazi
     zoxide
   ];
 
