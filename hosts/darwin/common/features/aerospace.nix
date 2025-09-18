@@ -60,22 +60,9 @@ in
 
       mode.main.binding =
         let
-          makeFocusCommand = direction: "
-            focus --boundaries
-            workspace --boundaries-action
-            wrap-around-the-workspace ${direction} --ignore-floating
-          ";
-          makeSwapCommand = direction: "
-            swap ${direction} --wrap-around
-          ";
-          makeMoveNodeToMonitorCommand = direction: "
-            move-node-to-monitor ${direction} --wrap-around --focus-follows-window
-          ";
-
-          getFocusedWorkspace = ''
-            aerospace list-workspaces --focused 2>/dev/null | head -1
-          '';
-
+          makeFocusCommand = direction: "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction} --ignore-floating";
+          makeSwapCommand = direction: "swap ${direction} --wrap-around";
+          makeMoveNodeToMonitorCommand = direction: "move-node-to-monitor ${direction} --wrap-around --focus-follows-window";
         in
         {
           # Launchers
