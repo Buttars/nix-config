@@ -18,10 +18,6 @@ in
 
   home-manager.backupFileExtension = "backup";
 
-  home-manager.extraSpecialArgs = {
-    inherit inputs;
-  };
-
   home-manager.useGlobalPkgs = true;
 
   home-manager.users."landon.buttars" = import ../../../../../home/wgu/N4FQ62JR4D.nix;
