@@ -61,12 +61,17 @@
       darwinConfigurations."N4FQ62JR4D" = inputs.darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
-          inherit inputs;
+          inherit inputs stateVersion;
           dotfiles = inputs.dotfiles;
         };
         modules = [
           ./hosts/darwin/N4FQ62JR/configuration.nix
           inputs.home-manager.darwinModules.home-manager
+          ({ inputs, stateVersion, ... }: {
+            home-manager.extraSpecialArgs = {
+              inherit inputs stateVersion;
+            };
+          })
           (
             { config, pkgs, ... }:
             {
@@ -82,20 +87,20 @@
       };
 
       nixosModules =
-        {
-          home-manager = inputs.home-manager.nixosModules.home-manager;
-          # xremap = inputs.xremap-flake.nixosModules.default;
-          sops-nix = inputs.sops-nix.nixosModules.sops;
-          wsl = inputs.nixos-wsl.nixosModules.default;
-          disko = inputs.disko.nixosModules.disko;
-          stylex = inputs.stylix.nixosModules.stylix;
-        }
+        [
+          inputs.home-manager.nixosModules.home-manager
+          # inputs.xremap-flake.nixosModules.default
+          inputs.sops-nix.nixosModules.sops
+          inputs.nixos-wsl.nixosModules.default
+          inputs.disko.nixosModules.disko
+          inputs.stylix.nixosModules.stylix
+        ]
         // nixpkgs.lib.mapAttrs'
-          (name: type: {
-            name = nixpkgs.lib.removeSuffix ".nix" name;
-            value = import (./modules + "/${name}");
-          })
-          (builtins.readDir ./modules);
+          (name: type: import (./modules + "/${name}"))
+          (builtins.readDir ./modules)
+        // {
+          home-manager.extraSpecialArgs = { inherit inputs stateVersion; };
+        };
 
       nixosModule = {
         imports = builtins.attrValues self.nixosModules;
