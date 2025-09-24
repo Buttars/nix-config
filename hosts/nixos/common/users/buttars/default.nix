@@ -3,6 +3,7 @@
   pkgs,
   lib,
   config,
+  stateVersion,
   ...
 }:
 let
@@ -38,7 +39,7 @@ in
   home-manager.backupFileExtension = "backup";
 
   home-manager.extraSpecialArgs = {
-    inherit inputs;
+    inherit inputs stateVersion;
   };
 
   home-manager.useGlobalPkgs = true;
