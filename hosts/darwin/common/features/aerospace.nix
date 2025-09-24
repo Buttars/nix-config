@@ -15,11 +15,14 @@ in
       "on-window-detected" =
         [
           {
-            "if".app-name-regex-substring = "(Microsoft Outlook|CalendarAgent|kuandoHUB)";
+            "if".app-name-regex-substring = "Microsoft Outlook";
             "if".window-title-regex-substring = "Reminder";
-            run = [
-              "layout floating"
-            ];
+            run = [ "layout floating" ];
+            check-further-callbacks = false;
+          }
+          {
+            "if".app-name-regex-substring = "(CalendarAgent|kuandoHUB|Cisco Secure Client)";
+            run = [ "layout floating" ];
             check-further-callbacks = false;
           }
           {
