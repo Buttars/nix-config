@@ -17,6 +17,7 @@
 
   home.sessionVariables = {
     AVANTE_PROVIDER = "copilot";
+    AMAZONQ_START_URL = "https://wgu.awsapps.com/start";
   };
 
 }
