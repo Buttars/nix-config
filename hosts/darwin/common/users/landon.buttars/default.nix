@@ -4,7 +4,7 @@ let
 in
 {
   users.users."landon.buttars" = {
-    home = "/Users/landon.buttars/";
+    home = "/Users/landon.buttars";
     shell = pkgs.zsh;
     # shell = pkgs.fish;
     # openssh.authorizedKeys.keys = [
