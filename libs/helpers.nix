@@ -90,7 +90,7 @@ mkUser =
           stateVersion
           ;
 
-        lib = inputs.nixpkgs.lib.extend (self: super: { custom = import ../libs { inherit (inputs.pkgs) lib; }; });
+        lib = inputs.nixpkgs.lib.extend (self: super: { custom = import ../libs { inherit (inputs.nixpkgs) lib; }; });
       };
     };
 }
