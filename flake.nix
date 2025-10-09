@@ -23,7 +23,8 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:nix-community/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     dotfiles = {
       url = "https://github.com/Buttars/.dotfiles";
@@ -93,7 +94,7 @@
           sops-nix = inputs.sops-nix.nixosModules.sops;
           wsl = inputs.nixos-wsl.nixosModules.default;
           disko = inputs.disko.nixosModules.disko;
-          stylex = inputs.stylix.nixosModules.stylix;
+          stylix = inputs.stylix.nixosModules.stylix;
         }
         // nixpkgs.lib.mapAttrs'
           (name: type: {
