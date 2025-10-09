@@ -3,8 +3,6 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../common/users/servus
-
     ./nfs-mounts.nix
     ./virtualisation.nix
     ./tor-relay.nix
