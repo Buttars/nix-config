@@ -15,7 +15,7 @@ in
     jq
     libnotify
     nautilus
-    rofi-wayland
+    rofi
     slurp
     swaynotificationcenter
     waybar
