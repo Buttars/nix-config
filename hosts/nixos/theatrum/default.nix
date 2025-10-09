@@ -3,8 +3,6 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../common/users/theatrum
-
     ../servus/nfs-mounts.nix
     ../servus/virtualisation.nix
 
