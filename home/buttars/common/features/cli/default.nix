@@ -16,12 +16,4 @@ in
     enableFishIntegration = lib.mkIf config.programs.fish.enable true;
   };
 
-  programs.thefuck = {
-    enable = true;
-    enableFishIntegration = lib.mkIf config.programs.fish.enable true;
-  };
-
-
-
-
 }
