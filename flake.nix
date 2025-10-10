@@ -8,11 +8,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    flake-utils.url = "github:numtide/flake-utils";
-
     nixos-wsl.url = "github:nix-community/nixos-wsl";
-
-    # xremap-flake.url = "github:xremap/nix-flake";
 
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -40,89 +36,93 @@
       type = "git";
       flake = false;
     };
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
-    let
-      systems = flake-utils.lib.defaultSystems;
+  outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
 
-      forEachSystem = f:
-        nixpkgs.lib.genAttrs systems (system: f pkgsFor.${system});
+      _module.args = {
+        stateVersion = "25.05";
+      };
 
-      pkgsFor = nixpkgs.lib.genAttrs systems (system:
-        import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        }
-      );
-
-      stateVersion = "25.05";
-    in
-    {
-      darwinConfigurations."N4FQ62JR4D" = inputs.darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = {
-          inherit inputs stateVersion;
-          dotfiles = inputs.dotfiles;
+      perSystem = { system, lib, ... }:
+        let
+          overlays = import ./overlays { inherit inputs; };
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [
+              (inputs.darwin.overlays.default or (_: _: {}))
+              overlays.additions
+              overlays.modifications
+              overlays.unstable-packages
+            ];
+          };
+        in {
+          _module.args.pkgs = pkgs;
+          packages = import ./pkgs { inherit pkgs; };
+          devShells = import ./shell.nix pkgs;
+          formatter = pkgs.nixfmt-rfc-style;
         };
-        modules = [
-          ./hosts/darwin/N4FQ62JR/configuration.nix
-          inputs.home-manager.darwinModules.home-manager
-          ({ inputs, stateVersion, ... }: {
-            home-manager.extraSpecialArgs = {
-              inherit inputs stateVersion;
-            };
-          })
-          (
-            { config, pkgs, ... }:
-            {
+
+      flake = {
+        overlays = import ./overlays { inherit inputs; };
+
+        nixosModules = {
+          home-manager = inputs.home-manager.nixosModules.home-manager;
+          sops-nix    = inputs.sops-nix.nixosModules.sops;
+          wsl         = inputs.nixos-wsl.nixosModules.default;
+          disko       = inputs.disko.nixosModules.disko;
+          stylix      = inputs.stylix.nixosModules.stylix;
+        } 
+        // nixpkgs.lib.mapAttrs'
+            (name: _type: {
+              name = nixpkgs.lib.removeSuffix ".nix" name;
+              value = import (./modules + "/${name}");
+            })
+            (builtins.readDir ./modules);
+
+        nixosModule = {
+          imports = builtins.attrValues self.nixosModules;
+        };
+
+        nixosConfigurations =
+          import ./hosts/nixos {
+            inherit nixpkgs inputs;
+            inherit (self) nixosModule;
+            stateVersion = "25.05";
+          };
+
+        darwinConfigurations."N4FQ62JR4D" = inputs.darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = {
+            inherit inputs;
+            stateVersion = "25.05";
+            dotfiles = inputs.dotfiles;
+          };
+          modules = [
+            ./hosts/darwin/N4FQ62JR/configuration.nix
+            inputs.home-manager.darwinModules.home-manager
+            ({ inputs, stateVersion, ... }: {
+              home-manager.extraSpecialArgs = {
+                inherit inputs stateVersion;
+              };
+            })
+            ({ pkgs, ... }: {
               nixpkgs.overlays = [
                 inputs.darwin.overlays.default
               ];
-            }
-          )
-        ];
+            })
+          ];
+        };
       };
-
-      nixosModules =
-        {
-          home-manager = inputs.home-manager.nixosModules.home-manager;
-          # xremap = inputs.xremap-flake.nixosModules.default;
-          sops-nix = inputs.sops-nix.nixosModules.sops;
-          wsl = inputs.nixos-wsl.nixosModules.default;
-          disko = inputs.disko.nixosModules.disko;
-          stylix = inputs.stylix.nixosModules.stylix;
-        }
-        // nixpkgs.lib.mapAttrs'
-          (name: type: {
-            name = nixpkgs.lib.removeSuffix ".nix" name;
-            value = import (./modules + "/${name}");
-          })
-          (builtins.readDir ./modules);
-
-      nixosModule = {
-        imports = builtins.attrValues self.nixosModules;
-      };
-
-      nixosConfigurations = import ./hosts/nixos {
-        inherit nixpkgs inputs stateVersion;
-        nixosModule = self.nixosModule;
-      };
-
-      overlays = import ./overlays { inherit inputs; };
-
-      packages = forEachSystem (pkgs:
-        pkgs.callPackage ./pkgs { inherit pkgs; }
-      );
-
-      devShells = forEachSystem (pkgs:
-        import ./shell.nix pkgs
-      );
-
-      formatter = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems (system:
-        nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
-      );
-
     };
-
 }
