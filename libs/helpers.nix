@@ -71,13 +71,6 @@ mkUser =
       modules = [
         {
           _module.args = inputs;
-          nixpkgs = {
-            overlays = [
-              inputs.self.overlays.additions
-              inputs.self.overlays.modifications
-              inputs.self.overlays.unstable-packages
-            ];
-          };
         }
         nixosModule
         ../hosts/nixos/common/core/default.nix
