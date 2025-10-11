@@ -7,7 +7,7 @@
   sops = {
     age.keyFile = "/home/buttars/.config/sops/age/keys.txt";
 
-    defaultSopsFile = ../../../../secrets.yaml;
+    defaultSopsFile = ../../../secrets.yaml;
     validateSopsFiles = false;
 
     secrets = {

@@ -5,12 +5,12 @@
 
     ../common/users/buttars
 
-    ../common/features/systemd-boot.nix
-    ../common/features/zsa.nix
-    ../common/features/syncthing.nix
-    ../common/features/audio.nix
-    ../common/features/nvidia.nix
-    ../common/features/fonts.nix
+    ../../common/features/nixos/systemd-boot.nix
+    ../../common/features/nixos/zsa.nix
+    ../../common/features/nixos/syncthing.nix
+    ../../common/features/nixos/audio.nix
+    ../../common/features/nixos/nvidia.nix
+    ../../common/features/nixos/fonts.nix
   ];
 
   programs.dconf.enable = true;

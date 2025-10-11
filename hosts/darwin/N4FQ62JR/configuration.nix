@@ -1,12 +1,12 @@
-{ pkgs, dotfiles, ... }:
+{ lib, pkgs, dotfiles, ... }:
 {
 
   imports = [
     ../../common/core
-    ../common/users/landon.buttars
-    ../common/features/aerospace.nix
-    ../common/features/autoraise.nix
-    ../common/features/jankborders.nix
+    ../users/landon.buttars
+    ../../common/features/darwin/aerospace.nix
+    ../../common/features/darwin/autoraise.nix
+    ../../common/features/darwin/jankborders.nix
     ./system.nix
   ];
 

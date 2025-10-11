@@ -1,11 +1,11 @@
 { pkgs, ... }:
 {
   imports = [
-    ./common/core
-    ../common/features/programming.nix
-    ../common/features/terminal-emulator.nix
-    ../common/features/taskwarrior.nix
-    ../common/features/aws.nix
+    ./core
+    ../features/programming.nix
+    ../features/terminal-emulator.nix
+    ../features/taskwarrior.nix
+    ../features/aws.nix
   ];
 
   programs.zsh.enable = true;

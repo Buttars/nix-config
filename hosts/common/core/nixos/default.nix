@@ -1,7 +1,8 @@
+# Core functionality for every nixos host
 { stateVersion, ... }:
 {
   imports = [
-    ../../../common/core
+    ../../core
     ./locale.nix
     ./nix-ld.nix
     ./sops.nix

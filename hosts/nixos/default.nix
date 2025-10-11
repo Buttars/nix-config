@@ -8,7 +8,7 @@ let
   buttarsUser = 
   helper.mkUser {
     username = "buttars";
-    authorizedKeyPath = ../nixos/common/users/buttars/keys/id_ed25519.pub;
+    authorizedKeyPath = ../common/users/buttars/keys/id_ed25519.pub;
     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "postgres" "adbusers" ];
   };
 
@@ -37,7 +37,7 @@ in
       ./servus 
       (helper.mkUser {
         username = "servus";
-        authorizedKeyPath = ../nixos/common/users/buttars/keys/id_ed25519.pub;
+        authorizedKeyPath = ../common/users/buttars/keys/id_ed25519.pub;
         extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "postgres" "adbusers" ];
       })
     ];
@@ -50,7 +50,7 @@ in
       ./theatrum 
       (helper.mkUser {
         username = "theatrum";
-        authorizedKeyPath = ../nixos/common/users/buttars/keys/id_ed25519.pub;
+        authorizedKeyPath = ../common/users/buttars/keys/id_ed25519.pub;
         extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "postgres" "adbusers" ];
       })
     ];
