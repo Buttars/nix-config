@@ -1,10 +1,7 @@
 { lib, config, ... }:
-let
-  common = toString ../../../../common;
-in
 {
   imports = [
-    "${common}/features/cli/fish.nix"
+    (lib.custom.relativeToRoot "home/features/cli/fish.nix")
     ./git.nix
     ./tmux.nix
   ];

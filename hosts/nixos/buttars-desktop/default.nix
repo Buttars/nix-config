@@ -3,15 +3,15 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../common/features/systemd-boot.nix
-    ../common/features/zsa.nix
-    ../common/features/syncthing.nix
-    ../common/features/audio.nix
-    ../common/features/virtualization.nix
-    ../common/features/nvidia.nix
-    ../common/features/fonts.nix
-    ../common/features/gaming
-    ../common/features/nfs-utils.nix
+    ../../common/features/nixos/systemd-boot.nix
+    ../../common/features/nixos/zsa.nix
+    ../../common/features/nixos/syncthing.nix
+    ../../common/features/nixos/audio.nix
+    ../../common/features/nixos/virtualization.nix
+    ../../common/features/nixos/nvidia.nix
+    ../../common/features/nixos/fonts.nix
+    ../../common/features/nixos/gaming
+    ../../common/features/nixos/nfs-utils.nix
   ];
 
   stylix.enable = true;

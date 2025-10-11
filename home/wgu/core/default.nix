@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ../../../common/core
+    ../../core
     ./dotfiles.nix
     ./git.nix
   ];

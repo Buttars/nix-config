@@ -73,7 +73,7 @@ mkUser =
           _module.args = inputs;
         }
         nixosModule
-        ../hosts/nixos/common/core/default.nix
+        ../hosts/common/core/nixos
       ] ++ modules;
       specialArgs = {
         inherit

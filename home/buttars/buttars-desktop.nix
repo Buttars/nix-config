@@ -1,13 +1,13 @@
 { ... }:
 {
   imports = [
-    ./common/core
-    ./common/features/cli
-    ./common/features/shell/fish
-    ./common/features/desktop/common
-    ./common/features/desktop/hyprland
-    ./common/features/sops.nix
-    ./common/features/desktop/common/browser.nix
-    ./common/features/services/syncthing.nix
+    ./core
+    ./features/cli
+    ./features/shell/fish
+    ./features/desktop
+    ./features/desktop/hyprland
+    ./features/sops.nix
+    ./features/desktop/browser.nix
+    ./features/services/syncthing.nix
   ];
 }

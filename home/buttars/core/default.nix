@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ../../../common/core
+    ../../core
     ./dotfiles.nix
     ../features/shell/fish
   ];
