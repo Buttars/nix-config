@@ -7,10 +7,17 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
-    gtk3 = if final.system == "aarch64-darwin" || final.system == "x86_64-darwin" then 
-      (import ./gtk3-sincos-patch) prev
-    else 
-      prev.gtk3;
+    awscli2 =
+      if final.system == "aarch64-darwin" || final.system == "x86_64-darwin" then
+        inputs.nixpkgs-awscli2.legacyPackages.${final.system}.awscli2
+      else
+        prev.awscli2;
+
+    gtk3 =
+      if final.system == "aarch64-darwin" || final.system == "x86_64-darwin" then
+        (import ./gtk3-sincos-patch) prev
+      else
+        prev.gtk3;
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
