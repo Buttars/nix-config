@@ -12,7 +12,7 @@
 
   home.packages = with pkgs; [
     google-chrome
-    firefox
+    # firefox
   ];
 
   home.sessionVariables = {
