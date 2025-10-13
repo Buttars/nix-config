@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   services.jellyfin = {
     enable = true;
     dataDir = "/srv/services/jellyfin/data";

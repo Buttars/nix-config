@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   environment.systemPackages = with pkgs; [
     noto-fonts
@@ -7,7 +8,6 @@
 
     font-manager
   ];
-
 
   fonts.packages = with pkgs; [
     nerd-fonts.sauce-code-pro

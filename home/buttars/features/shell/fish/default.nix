@@ -10,4 +10,3 @@
 
   programs.fish.enable = true;
 }
-

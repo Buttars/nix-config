@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   services.jankyborders = {
     enable = true;
     active_color = "0xff1ecbe1";

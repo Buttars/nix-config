@@ -14,5 +14,3 @@
 
   programs.direnv.enable = true;
 }
-
-
