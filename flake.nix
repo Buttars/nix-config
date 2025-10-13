@@ -44,14 +44,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      ...
+    }@inputs:
     let
       systems = flake-utils.lib.defaultSystems;
 
-      forEachSystem = f:
-        nixpkgs.lib.genAttrs systems (system: f pkgsFor.${system});
+      forEachSystem = f: nixpkgs.lib.genAttrs systems (system: f pkgsFor.${system});
 
-      pkgsFor = nixpkgs.lib.genAttrs systems (system:
+      pkgsFor = nixpkgs.lib.genAttrs systems (
+        system:
         import nixpkgs {
           inherit system;
           config.allowUnfree = true;
@@ -70,11 +76,14 @@
         modules = [
           ./hosts/darwin/N4FQ62JR/configuration.nix
           inputs.home-manager.darwinModules.home-manager
-          ({ inputs, stateVersion, ... }: {
-            home-manager.extraSpecialArgs = {
-              inherit inputs stateVersion;
-            };
-          })
+          (
+            { inputs, stateVersion, ... }:
+            {
+              home-manager.extraSpecialArgs = {
+                inherit inputs stateVersion;
+              };
+            }
+          )
           (
             { config, pkgs, ... }:
             {
@@ -86,21 +95,18 @@
         ];
       };
 
-      nixosModules =
-        {
-          home-manager = inputs.home-manager.nixosModules.home-manager;
-          # xremap = inputs.xremap-flake.nixosModules.default;
-          sops-nix = inputs.sops-nix.nixosModules.sops;
-          wsl = inputs.nixos-wsl.nixosModules.default;
-          disko = inputs.disko.nixosModules.disko;
-          stylix = inputs.stylix.nixosModules.stylix;
-        }
-        // nixpkgs.lib.mapAttrs'
-          (name: type: {
-            name = nixpkgs.lib.removeSuffix ".nix" name;
-            value = import (./modules + "/${name}");
-          })
-          (builtins.readDir ./modules);
+      nixosModules = {
+        home-manager = inputs.home-manager.nixosModules.home-manager;
+        # xremap = inputs.xremap-flake.nixosModules.default;
+        sops-nix = inputs.sops-nix.nixosModules.sops;
+        wsl = inputs.nixos-wsl.nixosModules.default;
+        disko = inputs.disko.nixosModules.disko;
+        stylix = inputs.stylix.nixosModules.stylix;
+      }
+      // nixpkgs.lib.mapAttrs' (name: type: {
+        name = nixpkgs.lib.removeSuffix ".nix" name;
+        value = import (./modules + "/${name}");
+      }) (builtins.readDir ./modules);
 
       nixosModule = {
         imports = builtins.attrValues self.nixosModules;
@@ -113,16 +119,12 @@
 
       overlays = import ./overlays { inherit inputs; };
 
-      packages = forEachSystem (pkgs:
-        pkgs.callPackage ./pkgs { inherit pkgs; }
-      );
+      packages = forEachSystem (pkgs: pkgs.callPackage ./pkgs { inherit pkgs; });
 
-      devShells = forEachSystem (pkgs:
-        import ./shell.nix pkgs
-      );
+      devShells = forEachSystem (pkgs: import ./shell.nix pkgs);
 
-      formatter = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems (system:
-        nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
+      formatter = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems (
+        system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
       );
 
     };

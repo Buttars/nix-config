@@ -12,45 +12,39 @@ in
       default-root-container-layout = "tiles";
       default-root-container-orientation = "horizontal";
 
-      "on-window-detected" =
-        [
-          {
-            "if".app-name-regex-substring = "Microsoft Outlook";
-            "if".window-title-regex-substring = "Reminder";
-            run = [ "layout floating" ];
-            check-further-callbacks = false;
-          }
-          {
-            "if".app-name-regex-substring = "(CalendarAgent|kuandoHUB|Cisco Secure Client)";
-            run = [ "layout floating" ];
-            check-further-callbacks = false;
-          }
-          {
-            run = "layout tiling";
-            check-further-callbacks = true;
-          }
-        ];
+      "on-window-detected" = [
+        {
+          "if".app-name-regex-substring = "Microsoft Outlook";
+          "if".window-title-regex-substring = "Reminder";
+          run = [ "layout floating" ];
+          check-further-callbacks = false;
+        }
+        {
+          "if".app-name-regex-substring = "(CalendarAgent|kuandoHUB|Cisco Secure Client)";
+          run = [ "layout floating" ];
+          check-further-callbacks = false;
+        }
+        {
+          run = "layout tiling";
+          check-further-callbacks = true;
+        }
+      ];
 
       exec = {
         inherit-env-vars = true;
       };
 
-
-      "workspace-to-monitor-force-assignment" =
-        builtins.listToAttrs (
-          builtins.concatLists (
-            builtins.genList
-              (i:
-                builtins.genList
-                  (j: {
-                    name = builtins.toString (((i + 1) * 10) + (j + 1));
-                    value = builtins.toString (i + 1);
-                  })
-                  9
-              )
-              9
-          )
-        );
+      "workspace-to-monitor-force-assignment" = builtins.listToAttrs (
+        builtins.concatLists (
+          builtins.genList (
+            i:
+            builtins.genList (j: {
+              name = builtins.toString (((i + 1) * 10) + (j + 1));
+              value = builtins.toString (i + 1);
+            }) 9
+          ) 9
+        )
+      );
 
       "gaps" = {
         inner.vertical = 10;
@@ -63,9 +57,12 @@ in
 
       mode.main.binding =
         let
-          makeFocusCommand = direction: "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction} --ignore-floating";
+          makeFocusCommand =
+            direction:
+            "focus --boundaries workspace --boundaries-action wrap-around-the-workspace ${direction} --ignore-floating";
           makeSwapCommand = direction: "swap ${direction} --wrap-around";
-          makeMoveNodeToMonitorCommand = direction: "move-node-to-monitor ${direction} --wrap-around --focus-follows-window";
+          makeMoveNodeToMonitorCommand =
+            direction: "move-node-to-monitor ${direction} --wrap-around --focus-follows-window";
         in
         {
           # Launchers
@@ -83,8 +80,6 @@ in
           "${super}-k" = makeFocusCommand "dfs-prev";
           "${super}-shift-j" = makeSwapCommand "dfs-next";
           "${super}-shift-k" = makeSwapCommand "dfs-prev";
-
-
 
           # Window lifecycle
           "${super}-q" = "close";
@@ -113,37 +108,38 @@ in
           "${super}-down" = "resize height +100";
           "${super}-up" = "resize height -100";
 
-        } // builtins.foldl'
-          (acc: s: acc // s)
-          { }
-          (builtins.genList
-            (i:
-              let
-                getActiveMonitorId = ''
-                  aerospace list-monitors --focused --format "%{monitor-id}" 2>/dev/null | head -1
-                '';
+        }
+        // builtins.foldl' (acc: s: acc // s) { } (
+          builtins.genList (
+            i:
+            let
+              getActiveMonitorId = ''
+                aerospace list-monitors --focused --format "%{monitor-id}" 2>/dev/null | head -1
+              '';
 
-                switchWorkspace = workspaceIndex: ''
-                  exec-and-forget bash -lc '
-                    monitorId=$(${getActiveMonitorId})
-                    targetWorkspace="''${monitorId}${toString workspaceIndex}"
-                    aerospace summon-workspace "$targetWorkspace"
-                  '
-                '';
+              switchWorkspace = workspaceIndex: ''
+                exec-and-forget bash -lc '
+                  monitorId=$(${getActiveMonitorId})
+                  targetWorkspace="''${monitorId}${toString workspaceIndex}"
+                  aerospace summon-workspace "$targetWorkspace"
+                '
+              '';
 
-                moveWindowToWorkspace = workspaceIndex: ''
-                  exec-and-forget bash -lc '
-                    monitorId=$(${getActiveMonitorId})
-                    targetWorkspace="''${monitorId}${toString workspaceIndex}"
-                    aerospace move-node-to-workspace "$targetWorkspace"
-                    aerospace summon-workspace "$targetWorkspace"
-                  '
-                '';
-              in
-              {
-                "${super}-${toString (i + 1)}" = switchWorkspace (i + 1);
-                "${super}-shift-${toString (i + 1)}" = moveWindowToWorkspace (i + 1);
-              }) 9);
+              moveWindowToWorkspace = workspaceIndex: ''
+                exec-and-forget bash -lc '
+                  monitorId=$(${getActiveMonitorId})
+                  targetWorkspace="''${monitorId}${toString workspaceIndex}"
+                  aerospace move-node-to-workspace "$targetWorkspace"
+                  aerospace summon-workspace "$targetWorkspace"
+                '
+              '';
+            in
+            {
+              "${super}-${toString (i + 1)}" = switchWorkspace (i + 1);
+              "${super}-shift-${toString (i + 1)}" = moveWindowToWorkspace (i + 1);
+            }
+          ) 9
+        );
     };
   };
 }

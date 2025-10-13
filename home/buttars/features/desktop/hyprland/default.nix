@@ -1,4 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 let
   hyprConfig = "${inputs.dotfiles}/.config/hypr";
 in
@@ -113,7 +119,6 @@ in
 
       gestures.workspace_swipe = false;
 
-
       "$mod" = "SUPER";
 
       # TODO: Add colorpicker bindings
@@ -176,7 +181,6 @@ in
         "$mod, b, layoutmsg, orientationbottom"
         "$mod, c, layoutmsg, orientationcenter"
 
-
         # Monitor navigation and movement
         "$mod, left, execr, hyprctl dispatch focusmonitor -1"
         "$mod, right, execr, hyprctl dispatch focusmonitor +1"
@@ -212,22 +216,20 @@ in
         "$mod SHIFT, x, exec, kitty -e journalctl -f"
         "$mod SHIFT, e, exec, kitty -e nvim"
       ]
-      ++ (
-        builtins.concatLists (
-          builtins.genList
-            (i:
-              let
-                ws = toString (i + 1);
-                cmd = "hyprctl dispatch workspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
-                moveCmd = "hyprctl dispatch movetoworkspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
-              in
-              [
-                "$mod, ${ws}, execr, ${cmd}"
-                "$mod SHIFT, ${ws}, execr, ${moveCmd}"
-              ]
-            ) 9
-        )
-      );
+      ++ (builtins.concatLists (
+        builtins.genList (
+          i:
+          let
+            ws = toString (i + 1);
+            cmd = "hyprctl dispatch workspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
+            moveCmd = "hyprctl dispatch movetoworkspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
+          in
+          [
+            "$mod, ${ws}, execr, ${cmd}"
+            "$mod SHIFT, ${ws}, execr, ${moveCmd}"
+          ]
+        ) 9
+      ));
 
       bindm = [
         "$mod, mouse:272, movewindow"
@@ -290,4 +292,3 @@ in
     ".config/hypr/wallpaper.jpg".source = "${hyprConfig}/wallpaper.jpg";
   };
 }
-

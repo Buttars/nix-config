@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.gluetun;
 in
@@ -21,7 +26,11 @@ in
     ports = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
-      example = [ "8080:8080/tcp" "6881:6881/udp" "61474:61474/tcp" ];
+      example = [
+        "8080:8080/tcp"
+        "6881:6881/udp"
+        "61474:61474/tcp"
+      ];
       description = "List of ports to expose from the Gluetun container.";
     };
   };

@@ -1,4 +1,5 @@
-{ hostname, config, ... }: {
+{ hostname, config, ... }:
+{
 
   imports = [
     ./hardware-configuration.nix
@@ -14,7 +15,6 @@
     ../common/services/gluetun.nix
     ../common/services/home-assistant.nix
   ];
-
 
   sops.secrets."gluetun_env" = { };
 

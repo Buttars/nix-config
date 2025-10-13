@@ -1,4 +1,10 @@
-{ pkgs, hostname, config, ... }: {
+{
+  pkgs,
+  hostname,
+  config,
+  ...
+}:
+{
 
   imports = [
     ./hardware-configuration.nix
@@ -26,7 +32,6 @@
     defaultGateway = "10.0.0.1";
     nameservers = [ "10.0.1.2" ];
   };
-
 
   services.xserver.videoDrivers = [ "nvidia" ];
 

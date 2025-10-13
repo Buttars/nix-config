@@ -1,7 +1,21 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.qbittorrent;
-  defaultNfsOptions = [ "defaults" "noatime" "nfsvers=4" "hard" "timeo=600" "auto" "_netdev" "nofail" ];
+  defaultNfsOptions = [
+    "defaults"
+    "noatime"
+    "nfsvers=4"
+    "hard"
+    "timeo=600"
+    "auto"
+    "_netdev"
+    "nofail"
+  ];
 in
 {
   options.qbittorrent = {
@@ -10,13 +24,19 @@ in
     nfsAddress = lib.mkOption {
       type = lib.types.str;
       description = "Required NFS server address.";
-      apply = v: assert v != ""; v;
+      apply =
+        v:
+        assert v != "";
+        v;
     };
 
     nfsExposedPath = lib.mkOption {
       type = lib.types.str;
       description = "Required NFS export path.";
-      apply = v: assert v != ""; v;
+      apply =
+        v:
+        assert v != "";
+        v;
     };
 
     gluetun = {
@@ -34,7 +54,10 @@ in
         envFile = lib.mkOption {
           type = lib.types.path;
           description = "Path to decrypted env file for the port manager.";
-          apply = v: assert v != null; v;
+          apply =
+            v:
+            assert v != null;
+            v;
         };
       };
     };
@@ -93,9 +116,15 @@ in
 
       # Helpful warning
       {
-        warnings = lib.mkIf (cfg.gluetun.enable && !(config.virtualisation.oci-containers.containers ? ${cfg.gluetun.containerName})) [
-          "qbittorrent.gluetun.enable is true, but no container named '${cfg.gluetun.containerName}' is defined. Make sure to import and enable it."
-        ];
+        warnings =
+          lib.mkIf
+            (
+              cfg.gluetun.enable
+              && !(config.virtualisation.oci-containers.containers ? ${cfg.gluetun.containerName})
+            )
+            [
+              "qbittorrent.gluetun.enable is true, but no container named '${cfg.gluetun.containerName}' is defined. Make sure to import and enable it."
+            ];
       }
 
       # Mount dependency and partOf groupings
