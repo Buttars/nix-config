@@ -1,12 +1,17 @@
 { 
   inputs,
   lib,
+  pkgs,
   ...
 }:
 let
   flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
 in
 {
+  environment.systemPackages = with pkgs; [
+    nixfmt-rfc-style
+  ];
+
   nix = {
     settings = {
       extra-substituters = lib.mkAfter [
