@@ -3,17 +3,24 @@
   home.packages = with pkgs; [
     bat
     btop
+    diffnav
     eza
     fd
     gh
+    gh-dash
     htop
+    intelli-shell
     neovim
+    nix-search-tv
+    process-compose
     sesh
     sshs
     tldr
     tmux
+    trashy
     watch
     wikiman
+    yazi
     zoxide
   ];
 
