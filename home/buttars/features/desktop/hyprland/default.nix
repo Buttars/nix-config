@@ -117,8 +117,6 @@ in
         preserve_split = true;
       };
 
-      gestures.workspace_swipe = false;
-
       "$mod" = "SUPER";
 
       # TODO: Add colorpicker bindings
