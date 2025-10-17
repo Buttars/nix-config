@@ -32,7 +32,7 @@
       url = "https://github.com/Buttars/.dotfiles";
       type = "git";
       ref = "main";
-      rev = "934e7a4df85550fef247b86211d5421144695e32";
+      rev = "4a89c405b3e2aae0697ed019c16a79dd96fc8e5b";
       submodules = false;
       flake = false;
     };
