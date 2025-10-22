@@ -1,28 +1,32 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    bat
-    btop
-    diffnav
-    eza
-    fd
-    gh
-    gh-dash
-    htop
-    intelli-shell
-    neovim
-    nix-search-tv
-    process-compose
-    sesh
-    sshs
-    tldr
-    tmux
-    trashy
-    watch
-    wikiman
-    yazi
-    zoxide
-  ];
+  home.packages =
+    with pkgs;
+    [
+      bat
+      btop
+      diffnav
+      eza
+      fd
+      gh
+      gh-dash
+      htop
+      intelli-shell
+      neovim
+      nix-search-tv
+      process-compose
+      sesh
+      sshs
+      tldr
+      tmux
+      watch
+      wikiman
+      yazi
+      zoxide
+    ]
+    ++ lib.optionals pkg.stdenv.isLinux [
+      trashy
+    ];
 
   programs.fzf = {
     enable = true;
