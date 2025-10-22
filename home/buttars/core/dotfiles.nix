@@ -5,8 +5,6 @@ let
 in
 {
   home.file = {
-    # ".local/bin/lfub". source = bin/lfub;
-    # ".local/bin/rotdir". source = bin/rotdir;
     ".config/nvim" = {
       source = "${neovim-config}";
       recursive = true;
