@@ -1,14 +1,14 @@
-{ inputs, ... }:
+{ inputs, config, ... }:
 let
   dotfiles = inputs.dotfiles;
-  neovim-config = inputs.neovim-config;
 in
 {
   home.file = {
     ".config/nvim" = {
-      source = "${neovim-config}";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/.config/nvim";
       recursive = true;
     };
+
     ".config/shell" = {
       source = "${dotfiles}/.config/shell";
       recursive = true;
