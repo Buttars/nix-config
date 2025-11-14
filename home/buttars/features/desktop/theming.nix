@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     libsForQt5.qt5ct
-    qt6ct
+    qt6Packages.qt6ct
     nwg-look
   ];
 
