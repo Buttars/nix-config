@@ -15,6 +15,8 @@
 
   environment.systemPackages = with pkgs; [
     nodejs
+    uv
+    minikube
   ];
 
   nix.channel.enable = false;
