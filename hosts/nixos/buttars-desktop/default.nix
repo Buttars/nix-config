@@ -1,4 +1,4 @@
-{ hostname, ... }:
+{ ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -32,7 +32,6 @@
   programs.hyprland.enable = true;
 
   networking = {
-    hostName = hostname;
     networkmanager.enable = true;
     firewall.enable = false;
   };

@@ -16,7 +16,6 @@
       extraSpecialArgs = {
         inherit
           inputs
-          hostname
           platform
           username
           stateVersion
@@ -82,12 +81,12 @@
         }
         nixosModule
         ../hosts/common/core/nixos
+        { networking.hostName = hostname; }
       ]
       ++ modules;
       specialArgs = {
         inherit
           inputs
-          hostname
           platform
           stateVersion
           ;
