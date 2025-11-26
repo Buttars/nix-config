@@ -6,4 +6,5 @@
 }:
 rec {
   # example = pkgs.callPackage ./example { };
+  pixelon = pkgs.callPackage ./pixelon.nix { };
 }

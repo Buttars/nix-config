@@ -21,5 +21,6 @@
     cantarell-fonts
     inter
     inter-nerdfont
+    pixelon
   ];
 }

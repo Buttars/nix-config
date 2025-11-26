@@ -63,6 +63,9 @@
         ];
 
         flake = {
+
+          outputsBuilder = flake-parts.lib.mkPerSystemOutputs;
+
           darwinConfigurations."N4FQ62JR4D" = inputs.darwin.lib.darwinSystem {
             system = "aarch64-darwin";
             specialArgs = {
@@ -129,6 +132,7 @@
             ...
           }:
           {
+            _module.args = { inherit system; };
             packages = pkgs.callPackage ./pkgs { inherit pkgs; };
             devShells = import ./shell.nix { inherit pkgs; };
             formatter = pkgs.nixfmt-rfc-style;
