@@ -59,10 +59,12 @@
         openssh.authorizedKeys.keys = [ (builtins.readFile authorizedKeyPath) ];
       };
 
-      home-manager.useGlobalPkgs = true;
-      home-manager.backupFileExtension = "backup";
-      home-manager.extraSpecialArgs = { inherit inputs stateVersion; };
-      home-manager.users.${username} = import resolvedHomeFile;
+      home-manager = {
+        useGlobalPkgs = true;
+        backupFileExtension = "backup";
+        extraSpecialArgs = { inherit inputs stateVersion; };
+        users.${username} = import resolvedHomeFile;
+      };
     };
 
   mkNixos =
