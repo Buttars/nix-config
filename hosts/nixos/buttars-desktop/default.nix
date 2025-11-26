@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, config, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -26,6 +26,46 @@
       base0E = "#DE4F72";
     };
   };
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.hyprland}/bin/Hyprland --config /etc/greetd/hyprland.conf";
+      };
+    };
+  };
+
+  users.users.greeter = {
+    isSystemUser = true;
+    group = "greeter";
+    shell = pkgs.bash;
+  };
+
+  users.groups.greeter = { };
+
+  environment.etc."greetd/environments".text = ''
+    Hyprland
+  '';
+
+  # TODO: Figure out how to configure the cursor to match the users home configuration.
+  environment.etc."greetd/hyprland.conf".text =
+    let
+      hypr = config.programs.hyprland.package;
+      bash = "${pkgs.bash}/bin/bash";
+      gtkgreet = "${pkgs.gtkgreet}/bin/gtkgreet";
+      hyprctl = "${hypr}/bin/hyprctl";
+    in
+    ''
+      monitor = ,preferred,auto,auto
+
+      env = XCURSOR_SIZE,20
+      env = XCURSOR_THEME,Bibata-Modern-Ice
+      env = XDG_SESSION_TYPE,wayland
+      env = WLR_NO_HARDWARE_CURSORS,1
+
+      exec-once = ${bash} -c '${gtkgreet} -l; ${hyprctl} dispatch exit'
+    '';
 
   programs.dconf.enable = true;
 
