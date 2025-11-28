@@ -20,47 +20,47 @@
   gtk.iconTheme.package = pkgs.papirus-icon-theme;
   gtk.iconTheme.name = "Papirus-Dark";
 
-  stylix.enable = true;
+  # stylix.enable = true;
   # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rebecca.yaml";
 
-  stylix = {
-    base16Scheme = builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/scottmckendry/cyberdream.nvim/main/extras/base16/cyberdream.yaml";
-      sha256 = "1bfi479g7v5cz41d2s0lbjlqmfzaah68cj1065zzsqksx3n63znf";
-    };
-    override = {
-      base00 = "#0F0F11";
-      base0E = "#DE4F72";
-    };
-  };
+  # stylix = {
+  #   base16Scheme = builtins.fetchurl {
+  #     url = "https://raw.githubusercontent.com/scottmckendry/cyberdream.nvim/main/extras/base16/cyberdream.yaml";
+  #     sha256 = "1bfi479g7v5cz41d2s0lbjlqmfzaah68cj1065zzsqksx3n63znf";
+  #   };
+  #   override = {
+  #     base00 = "#0F0F11";
+  #     base0E = "#DE4F72";
+  #   };
+  # };
 
-  stylix.fonts = {
-    serif = {
-      package = pkgs.dejavu_fonts;
-      name = "DejaVu Serif";
-    };
-
-    sansSerif = {
-      package = pkgs.inter-nerdfont;
-      name = "Inter NerdFont";
-    };
-
-    monospace = {
-      package = pkgs.nerd-fonts.commit-mono;
-      name = "Commit Mono NerdFont";
-    };
-
-    emoji = {
-      package = pkgs.noto-fonts-color-emoji;
-      name = "Noto Color Emoji";
-    };
-
-    sizes = {
-      applications = 10;
-      desktop = 10;
-      popups = 10;
-      terminal = 10;
-    };
-
-  };
+  # stylix.fonts = {
+  #   serif = {
+  #     package = pkgs.dejavu_fonts;
+  #     name = "DejaVu Serif";
+  #   };
+  #
+  #   sansSerif = {
+  #     package = pkgs.inter-nerdfont;
+  #     name = "Inter NerdFont";
+  #   };
+  #
+  #   monospace = {
+  #     package = pkgs.nerd-fonts.commit-mono;
+  #     name = "Commit Mono NerdFont";
+  #   };
+  #
+  #   emoji = {
+  #     package = pkgs.noto-fonts-color-emoji;
+  #     name = "Noto Color Emoji";
+  #   };
+  #
+  #   sizes = {
+  #     applications = 10;
+  #     desktop = 10;
+  #     popups = 10;
+  #     terminal = 10;
+  #   };
+  #
+  # };
 }
