@@ -33,13 +33,13 @@ in
       ens18 = {
         ipv4.addresses = [
           {
-            address = "10.0.1.3";
-            prefixLength = 16;
+            address = "10.0.40.3";
+            prefixLength = 24;
           }
         ];
       };
     };
-    defaultGateway = "10.0.0.1";
+    defaultGateway = "10.0.40.1";
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
   };
 
@@ -62,6 +62,14 @@ in
     };
 
     home.file.".config/tmux".source = "${dotfiles}/.config/tmux";
+  };
+
+  fileSystems."/home/portainer/portainer/portainer" = {
+    device = "/dev/disk/by-label/portainer";
+  };
+
+  fileSystems."/home/portainer/portainer/nextcloud-data" = {
+    device = "/dev/disk/by-label/nextcloud-data";
   };
 
   services.ntp.enable = true;

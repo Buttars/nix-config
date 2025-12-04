@@ -14,11 +14,11 @@
   boot.extraModulePackages = [ ];
 
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.device = "/dev/sdb";
   boot.loader.grub.useOSProber = true;
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f23bedc1-9d8d-4158-9a16-ee9f83d2a155";
+    { device = "/dev/disk/by-uuid/4177098c-c6ee-4b4d-b06f-62367a70cd8d";
       fsType = "ext4";
     };
 
@@ -33,3 +33,4 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
+
