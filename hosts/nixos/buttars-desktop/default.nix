@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -14,9 +14,10 @@
     ../../common/features/nixos/nfs-utils.nix
   ];
 
-  stylix.enable = true;
-  stylix.autoEnable = false;
   stylix = {
+    enable = true;
+    autoEnable = false;
+
     base16Scheme = builtins.fetchurl {
       url = "https://raw.githubusercontent.com/scottmckendry/cyberdream.nvim/main/extras/base16/cyberdream.yaml";
       sha256 = "1bfi479g7v5cz41d2s0lbjlqmfzaah68cj1065zzsqksx3n63znf";
@@ -27,45 +28,15 @@
     };
   };
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.hyprland}/bin/Hyprland --config /etc/greetd/hyprland.conf";
-      };
-    };
+  services = {
+    displayManager.sddm.enable = true;
+    displayManager.sddm.wayland.enable = true;
+    xserver.enable = true;
   };
 
-  users.users.greeter = {
-    isSystemUser = true;
-    group = "greeter";
-    shell = pkgs.bash;
-  };
+  users.users.buttars.extraGroups = [ "docker" ];
 
-  users.groups.greeter = { };
-
-  environment.etc."greetd/environments".text = ''
-    Hyprland
-  '';
-
-  # TODO: Figure out how to configure the cursor to match the users home configuration.
-  environment.etc."greetd/hyprland.conf".text =
-    let
-      hypr = config.programs.hyprland.package;
-      bash = "${pkgs.bash}/bin/bash";
-      gtkgreet = "${pkgs.gtkgreet}/bin/gtkgreet";
-      hyprctl = "${hypr}/bin/hyprctl";
-    in
-    ''
-      monitor = ,preferred,auto,auto
-
-      env = XCURSOR_SIZE,20
-      env = XCURSOR_THEME,Bibata-Modern-Ice
-      env = XDG_SESSION_TYPE,wayland
-      env = WLR_NO_HARDWARE_CURSORS,1
-
-      exec-once = ${bash} -c '${gtkgreet} -l; ${hyprctl} dispatch exit'
-    '';
+  virtualisation.docker.storageDriver = "btrfs";
 
   programs.dconf.enable = true;
 
