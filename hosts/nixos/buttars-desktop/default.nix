@@ -8,11 +8,17 @@
     ../../common/features/nixos/syncthing.nix
     ../../common/features/nixos/audio.nix
     ../../common/features/nixos/virtualization.nix
+    ../../common/features/nixos/docker.nix
     ../../common/features/nixos/nvidia.nix
     ../../common/features/nixos/fonts.nix
     ../../common/features/nixos/gaming
     ../../common/features/nixos/nfs-utils.nix
   ];
+
+  # TODO: Configure this dynamically with the feature
+  virtualisation.docker.daemon.settings = {
+    storage-driver = "btrfs";
+  };
 
   stylix.enable = true;
   stylix.autoEnable = false;
