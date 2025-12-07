@@ -10,6 +10,10 @@ in
 {
   environment.systemPackages = with pkgs; [
     nixfmt-rfc-style
+    lsof
+    tree
+    coreutils
+    traceroute
   ];
 
   nix = {
