@@ -76,4 +76,19 @@ in
       })
     ];
   };
+
+  atlas = helper.mkNixos {
+    hostname = "atlas";
+    username = "atlas";
+    modules = [
+      ./atlas
+      (helper.mkUser {
+        username = "atlas";
+        extraGroups = [
+          "wheel"
+          "networkmanager"
+        ];
+      })
+    ];
+  };
 }
