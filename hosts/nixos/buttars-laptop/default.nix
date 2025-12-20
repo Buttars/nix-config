@@ -3,8 +3,6 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../common/users/buttars
-
     ../../common/features/nixos/systemd-boot.nix
     ../../common/features/nixos/zsa.nix
     ../../common/features/nixos/syncthing.nix
