@@ -3,10 +3,11 @@ keys:
     - &buttars age1w0rz632jqm9r3t4xwfwljrfx86gxuvln6nldyktmxf9ulmdrm4hsxf2gaz
   - &hosts:
     - &buttars-desktop age15xfwqkhld5ldyjvnakdkye8wz3wjlf55ps22dhal0jvhtplmvs5sdq2nn7
+    - &buttars-laptop age1zctvzl4e4drvsghm02plglkhmyl0lu0r6vz69dmj6ycv368lcd6q8vn722
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
       - age:
-        - *buttars
-        - *buttars-desktop
-
+          - *buttars
+          - *buttars-desktop
+          - *buttars-laptop
