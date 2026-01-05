@@ -17,6 +17,8 @@
     nodejs
     uv
     minikube
+    colima
+    docker
   ];
 
   nix.channel.enable = false;

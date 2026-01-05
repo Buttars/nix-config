@@ -4,5 +4,6 @@
     neovim
     # pngpaste
     imagemagick
+    statix
   ];
 }

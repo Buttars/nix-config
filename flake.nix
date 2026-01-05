@@ -84,6 +84,15 @@
                 }
               )
               (
+               { ... }:
+               {
+                home-manager.sharedModules = 
+                  nixpkgs.lib.map (name: (./modules/darwin + "/${name}"))
+                    (nixpkgs.lib.filter (name: nixpkgs.lib.hasSuffix ".nix" name)
+                    (nixpkgs.lib.attrNames (builtins.builtins.readDir ./modules/darwin)));
+               }
+              )
+              (
                 { config, pkgs, ... }:
                 {
                   nixpkgs.overlays = [
@@ -91,7 +100,7 @@
                   ];
                 }
               )
-            ];
+              ];
           };
 
           nixosModules = {

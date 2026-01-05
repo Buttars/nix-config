@@ -6,9 +6,19 @@
     ../features/terminal-emulator.nix
     ../features/taskwarrior.nix
     ../features/aws.nix
+    ../features/programming/npm.nix
   ];
 
   programs.zsh.enable = true;
+
+  progrmas.npm = {
+    enable = true;
+    enableXdgSupport = true;
+    settings = {
+
+    };
+    extraConfig = '''';
+  };
 
   home.packages = with pkgs; [
     gleam
