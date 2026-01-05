@@ -1,4 +1,9 @@
-{ inputs, config, ... }:
+{
+  lib,
+  inputs,
+  config,
+  ...
+}:
 let
   dotfiles = inputs.dotfiles;
 in
@@ -12,6 +17,11 @@ in
       source = "${dotfiles}/.config/shell";
       recursive = true;
     };
+
+    ".config/direnv/direnv.toml".text = lib.mkIf config.programs.direnv.enable ''
+      [global]
+      hide_env_diff = true
+    '';
 
     # ".config/hypr".source = "${dotfiles}/.config/hypr";
     ".config/lf".source = "${dotfiles}/.config/lf";
