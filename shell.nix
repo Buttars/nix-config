@@ -1,11 +1,11 @@
 {
-  pkgs ? import <nixpkgs> { },
+  pkgs,
   ...
 }:
 {
-  default = pkgs.mkShell {
-    NIX_CONFIG = "extra-experimental-features = nix-command flakes ca-derivations";
-    nativeBuildInputs = with pkgs; [
+  default = {
+    env.NIX_CONFIG = "extra-experimental-features = nix-command flakes ca-derivations";
+    packages = with pkgs; [
       nix
       home-manager
       git

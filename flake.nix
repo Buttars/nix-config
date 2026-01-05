@@ -10,6 +10,8 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
+    devenv.url = "github:cachix/devenv";
+
     nixos-wsl.url = "github:nix-community/nixos-wsl";
 
     # xremap-flake.url = "github:xremap/nix-flake";
@@ -60,6 +62,7 @@
         imports = [
           # Optional: use external flake logic, e.g.
           # inputs.foo.flakeModules.default
+          inputs.devenv.flakeModule
         ];
 
         flake = {
@@ -116,10 +119,7 @@
           overlays = import ./overlays { inherit inputs; };
         };
 
-        systems = [
-          "x86_64-linux"
-          "aarch64-darwin"
-        ];
+        systems = nixpkgs.lib.systems.flakeExposed;
 
         perSystem =
           {
@@ -130,7 +130,7 @@
           }:
           {
             packages = pkgs.callPackage ./pkgs { inherit pkgs; };
-            devShells = import ./shell.nix { inherit pkgs; };
+            devenv.shells = import ./shell.nix { inherit pkgs; };
             formatter = pkgs.nixfmt-rfc-style;
           };
       }
