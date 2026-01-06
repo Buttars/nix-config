@@ -8,13 +8,17 @@ let
   flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
 in
 {
-  environment.systemPackages = with pkgs; [
-    nixfmt-rfc-style
-    lsof
-    tree
-    coreutils
-    traceroute
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+      nixfmt-rfc-style
+      lsof
+      tree
+      coreutils
+    ]
+    ++ lib.optionals pkgs.stdenv.isLinux [
+      traceroute
+    ];
 
   nix = {
     settings = {
