@@ -1,6 +1,11 @@
-{ inputs, config, ... }:
+{
+  lib,
+  inputs,
+  config,
+  ...
+}:
 let
-  dotfiles = inputs.dotfiles;
+  inherit (inputs) dotfiles;
 in
 {
   home.file = {
@@ -17,6 +22,12 @@ in
       source = "${dotfiles}/.config/fish";
       recursive = true;
     };
+
+    ".config/direnv/direnv.toml".text = lib.mkIf config.programs.direnv.enable ''
+      [global]
+      hide_env_diff = true
+    '';
+
     ".config/tmux".source = "${dotfiles}/.config/tmux";
     ".config/lf".source = "${dotfiles}/.config/lf";
     ".config/zsh".source = "${dotfiles}/.config/zsh";
