@@ -4,6 +4,7 @@ keys:
     - &landon-buttars age1ry7vx3wta86009kenncr8fat85h2yqn4wytkapf6fwp6w2naf96q3qzy59
   - &hosts:
     - &buttars-desktop age10w02unkvvka427edd04fk2jtz6axelus6ehhd8axr4rnqvnsrstqd2gqpq
+    - &buttars-laptop age1tn6dq7s4ruxk403g98989erd23ev4tdvvz5fucnu6cqucx7my3ks7ytjy3
     - &landon-buttars-wgu age15tkxx8e9h29vn9u3rs6y00pty3tjprsrxl6kmp3nvesklz86eqrq5k2yme
 creation_rules:
   - path_regex: secrets.yaml$
@@ -11,5 +12,6 @@ creation_rules:
       - age:
           - *buttars
           - *buttars-desktop
+          - *buttars-laptop
           - *landon-buttars
           - *landon-buttars-wgu
