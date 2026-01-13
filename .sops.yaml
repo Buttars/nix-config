@@ -1,17 +1,24 @@
 keys:
-  - &users:
-    - &buttars age1thkm674pc4k2znvjavmquvjprej0xj4fpsk82a9ecc5u69d8q4gq59060q
-    - &landon-buttars age1ry7vx3wta86009kenncr8fat85h2yqn4wytkapf6fwp6w2naf96q3qzy59
-  - &hosts:
-    - &buttars-desktop age10w02unkvvka427edd04fk2jtz6axelus6ehhd8axr4rnqvnsrstqd2gqpq
-    - &buttars-laptop age1tn6dq7s4ruxk403g98989erd23ev4tdvvz5fucnu6cqucx7my3ks7ytjy3
-    - &landon-buttars-wgu age15tkxx8e9h29vn9u3rs6y00pty3tjprsrxl6kmp3nvesklz86eqrq5k2yme
+  - users:
+      - buttars:
+          default: &buttars_default age1thkm674pc4k2znvjavmquvjprej0xj4fpsk82a9ecc5u69d8q4gq59060q
+          buttars-desktop: &buttars_buttars-desktop age1thkm674pc4k2znvjavmquvjprej0xj4fpsk82a9ecc5u69d8q4gq59060q
+          buttars-laptop: &buttars_buttars-laptop age1thkm674pc4k2znvjavmquvjprej0xj4fpsk82a9ecc5u69d8q4gq59060q
+      - landon-buttars:
+          default: &wgu_default age1ry7vx3wta86009kenncr8fat85h2yqn4wytkapf6fwp6w2naf96q3qzy59
+  - hosts:
+      - &buttars-desktop age10w02unkvvka427edd04fk2jtz6axelus6ehhd8axr4rnqvnsrstqd2gqpq
+      - &buttars-laptop age1tn6dq7s4ruxk403g98989erd23ev4tdvvz5fucnu6cqucx7my3ks7ytjy3
+      - &landon-buttars-wgu age15tkxx8e9h29vn9u3rs6y00pty3tjprsrxl6kmp3nvesklz86eqrq5k2yme
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:
       - age:
-          - *buttars
+          # Users
+          - *buttars_buttars-desktop
+          - *buttars_buttars-laptop
+          - *wgu_default
+          # Hosts
           - *buttars-desktop
           - *buttars-laptop
-          - *landon-buttars
           - *landon-buttars-wgu
