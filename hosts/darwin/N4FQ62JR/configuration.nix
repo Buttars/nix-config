@@ -17,6 +17,8 @@
     nodejs
     uv
     minikube
+    docker
+    podman
   ];
 
   nix.channel.enable = false;

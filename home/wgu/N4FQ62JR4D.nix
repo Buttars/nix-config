@@ -14,6 +14,8 @@
     gleam
     erlang
     google-chrome
+    colima
+    git-worktree-switcher
     # firefox
     (pkgs.python3.withPackages (
       ps: with ps; [
@@ -23,7 +25,6 @@
         pandas
       ]
     ))
-    git-worktree-switcher
   ];
 
   home.sessionVariables = {
