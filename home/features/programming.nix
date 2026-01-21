@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     atac
+    compose2nix
     delta
     devenv
     devpod
