@@ -23,6 +23,7 @@
         pandas
       ]
     ))
+    git-worktree-switcher
   ];
 
   home.sessionVariables = {
