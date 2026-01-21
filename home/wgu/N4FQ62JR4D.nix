@@ -15,6 +15,14 @@
     erlang
     google-chrome
     # firefox
+    (pkgs.python3.withPackages (
+      ps: with ps; [
+        jupyterlab
+        ipykernel
+        numpy
+        pandas
+      ]
+    ))
   ];
 
   home.sessionVariables = {
