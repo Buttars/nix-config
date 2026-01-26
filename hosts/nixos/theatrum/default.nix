@@ -17,18 +17,8 @@
   networking = {
     networkmanager.enable = true;
     firewall.enable = false;
-    interfaces = {
-      ens18 = {
-        ipv4.addresses = [
-          {
-            address = "10.0.1.5";
-            prefixLength = 16;
-          }
-        ];
-      };
-    };
-    defaultGateway = "10.0.0.1";
-    nameservers = [ "10.0.1.2" ];
+    defaultGateway = "10.0.40.1";
+    nameservers = [ "10.0.40.1" ];
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
