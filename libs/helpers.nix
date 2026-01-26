@@ -31,6 +31,7 @@
       extraGroups ? [ "wheel" ],
       shellPkg ? null,
       authorizedKeyPath ? ./keys/id_ed25519.pub,
+      hashedPassword ? null,
     }:
     {
       inputs,
@@ -56,6 +57,7 @@
         shell = resolvedShell;
         extraGroups = lib.flatten [ (ifGroupsExist extraGroups) ];
         openssh.authorizedKeys.keys = [ (builtins.readFile authorizedKeyPath) ];
+        hashedPassword = hashedPassword;
       };
 
       home-manager = {
