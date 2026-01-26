@@ -2,12 +2,12 @@
 {
   imports = lib.flatten [
     inputs.disko.nixosModules.disko
-    ../common/disks/btrfs-disk.nix
+    ../../common/disks/btrfs-disk.nix
     {
       _module.args = {
         disk = "/dev/sda";
         withSwap = true;
-        swapSize = 32;
+        swapSize = "32";
       };
     }
   ];
