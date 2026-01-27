@@ -28,7 +28,7 @@
   ];
 
   home.sessionVariables = {
-    AVANTE_PROVIDER = "copilot";
+    AVANTE_PROVIDER = "openai";
     AMAZONQ_START_URL = "https://wgu.awsapps.com/start";
   };
 
