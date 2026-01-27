@@ -66,14 +66,14 @@
         ];
 
         flake = {
-          darwinConfigurations."N4FQ62JR4D" = inputs.darwin.lib.darwinSystem {
+          darwinConfigurations."DRHCDGTHGJ" = inputs.darwin.lib.darwinSystem {
             system = "aarch64-darwin";
             specialArgs = {
               inherit inputs stateVersion;
               inherit (inputs) dotfiles;
             };
             modules = [
-              ./hosts/darwin/N4FQ62JR/configuration.nix
+              ./hosts/darwin/DRHCDGTHGJ/configuration.nix
               inputs.home-manager.darwinModules.home-manager
               (
                 { inputs, stateVersion, ... }:
