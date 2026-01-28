@@ -57,6 +57,7 @@
       }:
       let
         stateVersion = "25.11";
+        lib = nixpkgs.lib.extend (final: prev: import ./libs { lib = prev; });
       in
       {
         imports = [
@@ -69,7 +70,7 @@
           darwinConfigurations."DRHCDGTHGJ" = inputs.darwin.lib.darwinSystem {
             system = "aarch64-darwin";
             specialArgs = {
-              inherit inputs stateVersion;
+              inherit inputs stateVersion lib;
               inherit (inputs) dotfiles;
             };
             modules = [
@@ -112,7 +113,12 @@
           };
 
           nixosConfigurations = import ./hosts/nixos {
-            inherit nixpkgs inputs stateVersion;
+            inherit
+              nixpkgs
+              inputs
+              stateVersion
+              lib
+              ;
             inherit (self) nixosModule;
           };
 
