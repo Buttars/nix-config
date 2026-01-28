@@ -9,6 +9,7 @@
       nix
       home-manager
       git
+      just
 
       sops
       ssh-to-age
