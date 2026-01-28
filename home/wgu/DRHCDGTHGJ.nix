@@ -27,6 +27,35 @@
     ))
   ];
 
+  programs.ssh = {
+    enable = true;
+
+    matchBlocks = {
+      "github.com-buttars" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/id_ed25519_personal";
+        identitiesOnly = true;
+      };
+
+      # Default GitHub = work
+      "github.com" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/id_ed25519";
+        identitiesOnly = true;
+      };
+    };
+
+    extraConfig = ''
+      Host *
+        AddKeysToAgent yes
+        UseKeychain yes
+        ServerAliveInterval 30
+        ServerAliveCountMax 3
+    '';
+  };
+
   home.sessionVariables = {
     AVANTE_PROVIDER = "openai";
     AMAZONQ_START_URL = "https://wgu.awsapps.com/start";
