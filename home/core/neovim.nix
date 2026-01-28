@@ -5,5 +5,6 @@
     # pngpaste
     imagemagick
     statix
+    opencode
   ];
 }
