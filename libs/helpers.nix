@@ -21,7 +21,10 @@
           stateVersion
           ;
       };
-      modules = [ ../home-manager ];
+      modules = [
+        ../home-manager
+        { dotfiles.mutable = true; }
+      ];
     };
 
   mkUser =

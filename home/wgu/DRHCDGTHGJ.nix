@@ -1,7 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   imports = [
     ./core
+    ../../home-manager
+    { dotfiles.path = "${config.home.homeDirectory}/nix-config/master/dotfiles"; }
     ../features/programming.nix
     ../features/terminal-emulator.nix
     ../features/taskwarrior.nix

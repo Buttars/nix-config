@@ -9,10 +9,18 @@ let
 in
 {
   home.file = {
-    ".config/nvim" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/.config/nvim";
-      recursive = true;
-    };
+    ".config/nvim" =
+      let
+        filePath = "${config.dotfiles.path}/.config/nvim";
+      in
+      {
+        source =
+          if !config.dotfiles.mutable then
+            lib.relativeToRoot "./dotfiles/.config/nvim"
+          else
+            config.lib.file.mkOutOfStoreSymlink filePath;
+        recursive = true;
+      };
 
     ".config/shell" = {
       source = "${dotfiles}/.config/shell";
