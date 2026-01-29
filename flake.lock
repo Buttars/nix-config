@@ -122,6 +122,21 @@
         "type": "github"
       }
     },
+    "den": {
+      "locked": {
+        "lastModified": 1769615995,
+        "narHash": "sha256-gHyikqj94VY23fOs/moRY5zY+Fpz4y6UCy2i9IFDTHA=",
+        "owner": "vic",
+        "repo": "den",
+        "rev": "55771740849e7713ea9934cb26efa29daf23feca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "den",
+        "type": "github"
+      }
+    },
     "devenv": {
       "inputs": {
         "cachix": "cachix",
@@ -199,6 +214,21 @@
       "original": {
         "owner": "rafaelmardojai",
         "repo": "firefox-gnome-theme",
+        "type": "github"
+      }
+    },
+    "flake-aspects": {
+      "locked": {
+        "lastModified": 1769707457,
+        "narHash": "sha256-ZynGUl/lSfkjWvh7OmgJ2a7oEJkZvrHBgnWJ/kJMF2c=",
+        "owner": "vic",
+        "repo": "flake-aspects",
+        "rev": "e0cf6b892a52d7ef09074d968c70cd08dc0716ae",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "flake-aspects",
         "type": "github"
       }
     },
@@ -637,9 +667,11 @@
     "root": {
       "inputs": {
         "darwin": "darwin",
+        "den": "den",
         "devenv": "devenv",
         "disko": "disko",
         "dotfiles": "dotfiles",
+        "flake-aspects": "flake-aspects",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
