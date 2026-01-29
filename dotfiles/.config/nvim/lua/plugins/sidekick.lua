@@ -8,7 +8,7 @@ return {
     cli = {
       mux = {
         backend = "tmux",
-        enabled = true,
+        enabled = false,
       },
       tools = {
         crush = {
