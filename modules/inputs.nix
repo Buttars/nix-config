@@ -5,7 +5,6 @@
   ];
   flake-file = {
     inputs = {
-      flake-file.url = "github:vic/flake-file";
       nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
       nixos-hardware.url = "github:NixOS/nixos-hardware";
 
