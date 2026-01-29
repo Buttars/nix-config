@@ -13,6 +13,9 @@ update:
 update-input:
   nix flake update $(i)
 
+write-flake:
+  nix run .#write-flake
+
 history:
   nix profile history --profile /nix/var/nix/profiles/system
 
