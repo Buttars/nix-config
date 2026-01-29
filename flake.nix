@@ -10,6 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:lnl7/nix-darwin/master";
     };
+    den.url = "github:vic/den";
     devenv.url = "github:cachix/devenv";
     disko = {
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,6 +24,7 @@
       type = "git";
       url = "https://github.com/Buttars/.dotfiles";
     };
+    flake-aspects.url = "github:vic/flake-aspects";
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
