@@ -65,6 +65,7 @@
   home.sessionVariables = {
     AVANTE_PROVIDER = "openai";
     AMAZONQ_START_URL = "https://wgu.awsapps.com/start";
+    NODE_TLS_REJECT_UNAUTHORIZED = 0;
   };
 
 }
