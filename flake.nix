@@ -35,6 +35,11 @@
       url = "github:nix-community/home-manager";
     };
     import-tree.url = "github:vic/import-tree";
+    mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
+    nix2container = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nlewo/nix2container";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";

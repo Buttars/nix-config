@@ -37,25 +37,25 @@ in
     ];
   };
 
-  servus = helper.mkNixos {
-    hostname = "servus";
-    username = "servus";
-    modules = [
-      ./servus
-      (helper.mkUser {
-        username = "servus";
-        authorizedKeyPath = ../common/users/buttars/keys/id_ed25519.pub;
-        extraGroups = [
-          "wheel"
-          "networkmanager"
-          "docker"
-          "libvirtd"
-          "postgres"
-          "adbusers"
-        ];
-      })
-    ];
-  };
+  # servus = helper.mkNixos {
+  #   hostname = "servus";
+  #   username = "servus";
+  #   modules = [
+  #     ./servus
+  #     (helper.mkUser {
+  #       username = "servus";
+  #       authorizedKeyPath = ../common/users/buttars/keys/id_ed25519.pub;
+  #       extraGroups = [
+  #         "wheel"
+  #         "networkmanager"
+  #         "docker"
+  #         "libvirtd"
+  #         "postgres"
+  #         "adbusers"
+  #       ];
+  #     })
+  #   ];
+  # };
 
   theatrum = helper.mkNixos {
     hostname = "theatrum";

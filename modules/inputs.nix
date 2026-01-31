@@ -30,6 +30,11 @@
 
       nixpkgs-awscli2.url = "github:nixos/nixpkgs/de74240d03acfd332c99dce42fc93239dcaa9cdf";
 
+      # NOTE: These are needed for devenv for some reason...
+      nix2container.url = "github:nlewo/nix2container";
+      nix2container.inputs.nixpkgs.follows = "nixpkgs";
+      mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
+
       dotfiles = {
         url = "https://github.com/Buttars/.dotfiles";
         type = "git";
