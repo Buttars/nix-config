@@ -24,6 +24,11 @@ return {
           -- opencode uses <c-p> for its own functionality, so we override the default
           keys = { prompt = { "<a-p>", "prompt" } },
         },
+        amazonq = {
+          cmd = { "amazon-q" },
+          env = { AMAZONQ_START_URL = vim.env.AMAZONQ_START_URL or "https://view.awsapps.com/start" },
+          keys = { prompt = { "<a-q>", "prompt" } },
+        },
       },
     },
   },

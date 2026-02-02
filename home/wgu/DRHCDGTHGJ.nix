@@ -3,7 +3,10 @@
   imports = [
     ./core
     ../../home-manager
-    { dotfiles.path = "${config.home.homeDirectory}/nix-config/master/dotfiles"; }
+    {
+      dotfiles.mutable = true;
+      dotfiles.path = "${config.home.homeDirectory}/nix-config/master/dotfiles";
+    }
     ../features/programming.nix
     ../features/terminal-emulator.nix
     ../features/taskwarrior.nix
@@ -18,6 +21,7 @@
     google-chrome
     colima
     git-worktree-switcher
+    amazon-q-cli
     # firefox
     (pkgs.python3.withPackages (
       ps: with ps; [
