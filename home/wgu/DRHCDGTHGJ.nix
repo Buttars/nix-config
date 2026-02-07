@@ -18,7 +18,7 @@
   home.packages = with pkgs; [
     gleam
     erlang
-    google-chrome
+    # google-chrome
     colima
     git-worktree-switcher
     amazon-q-cli

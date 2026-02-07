@@ -1,8 +1,8 @@
 { inputs, den, ... }:
 {
+  _module.args.__findFile = den.lib.__findFile;
   imports = [
-    (inputs.den.namespace "hosts" false)
-    (inputs.den.namespace "users" false)
-    (inputs.den.namespace "shared" false)
+    (inputs.den.namespace "features" false)
+    (inputs.den.namespace "infra" false)
   ];
 }
