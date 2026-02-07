@@ -1,4 +1,5 @@
-{ stateVersion, pkgs, ... }: {
+{ stateVersion, pkgs, ... }:
+{
   imports = [
     ./cli.nix
     ./git.nix
