@@ -1,4 +1,4 @@
 { ... }:
 {
-  imports = [ ./dotfiles.nix ];
+  imports = [ ../modules/dotfiles.nix ];
 }

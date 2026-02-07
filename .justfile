@@ -13,6 +13,9 @@ update:
 update-input:
   nix flake update $(i)
 
+check:
+  nix flake check . --impure
+
 write-flake:
   nix run .#write-flake
 

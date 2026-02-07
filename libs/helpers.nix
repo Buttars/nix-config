@@ -13,6 +13,8 @@
     }:
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${platform};
+      # Provide the same extended `lib` used by mkNixos so modules can
+      # access `lib.custom.relativeToRoot` and other custom helpers.
       extraSpecialArgs = {
         inherit
           inputs
@@ -20,6 +22,18 @@
           username
           stateVersion
           ;
+        lib = inputs.nixpkgs.lib.extend (
+          self: super:
+          let
+            _custom = import ../libs { inherit (inputs.nixpkgs) lib; };
+          in
+          {
+            custom = _custom;
+            # Keep backward compatibility for modules expecting top-level
+            # `lib.relativeToRoot` (some modules use that directly).
+            relativeToRoot = _custom.relativeToRoot;
+          }
+        );
       };
       modules = [
         ../home-manager
@@ -97,7 +111,14 @@
           ;
 
         lib = inputs.nixpkgs.lib.extend (
-          self: super: { custom = import ../libs { inherit (inputs.nixpkgs) lib; }; }
+          self: super:
+          let
+            _custom = import ../libs { inherit (inputs.nixpkgs) lib; };
+          in
+          {
+            custom = _custom;
+            relativeToRoot = _custom.relativeToRoot;
+          }
         );
       };
     };

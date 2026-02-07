@@ -1,10 +1,9 @@
 return {
   "folke/sidekick.nvim",
   opts = {
-    -- add any options here
-    --
-    --
-    --
+    sources = {
+      copilot = false,
+    },
     cli = {
       mux = {
         backend = "tmux",
