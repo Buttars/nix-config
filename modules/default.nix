@@ -52,6 +52,7 @@ in
     };
 
     homeManager = {
+      imports = [./dotfiles.nix];
       programs.home-manager.enable = true;
       home = {
         sessionPath = [ "$HOME/.local/bin" ];

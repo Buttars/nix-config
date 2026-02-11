@@ -8,9 +8,6 @@
       <features/taskwarrior>
       <features/aws>
     ];
-    homeManager = {
-      imports = [ ./home.nix ];
-    };
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars".aspect = "landon.buttars";
 }
