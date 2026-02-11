@@ -16,34 +16,8 @@ in
 
   systems = nixpkgs.lib.systems.flakeExposed;
 
-  # systems = [
-  #   "x86_64-linux"
-  #   "aarch64-darwin"
-  # ];
-
   flake = {
     overlays = import ../overlays { inherit inputs; };
-
-    # darwinConfigurations."DRHCDGTHGJ" = inputs.darwin.lib.darwinSystem {
-    #   system = "aarch64-darwin";
-    #   specialArgs = {
-    #     inherit inputs stateVersion lib;
-    #     inherit (inputs) dotfiles;
-    #   };
-    #   modules = [
-    #     ../hosts/darwin/DRHCDGTHGJ/configuration.nix
-    #     inputs.home-manager.darwinModules.home-manager
-    #
-    #     {
-    #       home-manager.extraSpecialArgs = {
-    #         inherit inputs stateVersion;
-    #       };
-    #       nixpkgs.overlays = [
-    #         inputs.darwin.overlays.default
-    #       ];
-    #     }
-    #   ];
-    # };
 
     nixosModules = {
       inherit (inputs.home-manager.nixosModules) home-manager;
