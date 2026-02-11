@@ -1,8 +1,7 @@
 {
   # Fish shell configuration for Home Manager
   # Included by: home/* (migrate from home/features/cli/fish.nix)
-}
-{
+
   features.fish = {
     homeManager = { pkgs, ... }:
       {

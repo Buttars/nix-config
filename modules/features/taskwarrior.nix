@@ -1,8 +1,7 @@
 {
   # Taskwarrior support for Home Manager
   # Included by: home/* (migrate from home/features/taskwarrior.nix)
-}
-{
+
   features.taskwarrior = {
     homeManager = { pkgs, lib, ... }:
       {
