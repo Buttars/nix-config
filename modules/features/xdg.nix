@@ -1,8 +1,7 @@
 {
   # XDG user dirs and utilities for Home Manager
   # Included by: home/* (migrate from home/features/xdg.nix)
-}
-{
+
   features.xdg = {
     homeManager = { pkgs, ... }:
       {
