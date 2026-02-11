@@ -1,8 +1,14 @@
 {
-  # Fish shell configuration for Home Manager
-  # Included by: home/* (migrate from home/features/cli/fish.nix)
-
   features.fish = {
+    programs.fish = {
+      enable = true;
+      vendor = {
+        completions.enable = true;
+        config.enable = true;
+        functions.enable = true;
+      };
+    };
+
     homeManager = { pkgs, ... }:
       {
         programs.fish = {
