@@ -7,6 +7,7 @@
       <features/terminal-emulator>
       <features/taskwarrior>
       <features/aws>
+      <features/neovim>
     ];
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars".aspect = "landon.buttars";
