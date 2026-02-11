@@ -3,11 +3,14 @@
   den.aspects."landon.buttars" = {
     includes = [
       <den/primary-user>
-      ./git.nix
     ];
     homeManager = {
       imports = [
-        ../../../home/wgu/DRHCDGTHGJ.nix
+        <features/programming>
+        <features/terminal-emulator>
+        <features/taskwarrior>
+        <features/aws>
+        ./home.nix
       ];
     };
   };
