@@ -10,6 +10,9 @@
       <features/neovim>
       <features/cli>
       <features/git>
+      {
+        dotfiles.mutable = true;
+      }
     ];
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars".aspect = "landon.buttars";
