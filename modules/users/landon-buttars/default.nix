@@ -9,6 +9,7 @@
       <features/aws>
       <features/neovim>
       <features/cli>
+      <features/git>
     ];
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars".aspect = "landon.buttars";
