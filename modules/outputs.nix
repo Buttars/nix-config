@@ -1,7 +1,6 @@
 {
   inputs,
   self,
-  nixpkgs,
   ...
 }:
 let
@@ -48,6 +47,6 @@ in
     {
       packages = import ../pkgs { inherit pkgs; };
       devenv.shells = import ../shell.nix { inherit pkgs; };
-      formatter = pkgs.nixfmt-rfc-style;
+      formatter = pkgs.nixfmt;
     };
 }

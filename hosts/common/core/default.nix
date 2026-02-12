@@ -11,7 +11,7 @@ in
   environment.systemPackages =
     with pkgs;
     [
-      nixfmt-rfc-style
+      nixfmt
       lsof
       tree
       coreutils
