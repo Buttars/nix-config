@@ -1,5 +1,5 @@
 {
-  features.password-manager = {
+  aegis.features._.password-manager = {
     _.keepassxc.homeManger =
       { pkgs, ... }:
       {

@@ -1,5 +1,5 @@
 {
-  features.aws = {
+  aegis.features._.aws = {
     homeManager =
       { pkgs, ... }:
       {

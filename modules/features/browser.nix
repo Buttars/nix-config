@@ -1,5 +1,5 @@
 {
-  features.browser = {
+  aegis.features._.browser = {
     _.google-chrome.homeManager =
       { pkgs, ... }:
       {

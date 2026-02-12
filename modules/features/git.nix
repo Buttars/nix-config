@@ -1,5 +1,5 @@
 {
-  features.git = {
+  aegis.features._.git = {
     homeManager =
       { pkgs, ... }:
       {

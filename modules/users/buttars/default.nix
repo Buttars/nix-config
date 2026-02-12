@@ -2,11 +2,11 @@
   den.aspects.buttars = {
     imports = [
       <den/primary-user>
-      <features/programming>
-      <features/terminal-emulator>
-      <features/neovim>
-      <features/cli>
-      <features/git>
+      <aegis/features/programming>
+      <aegis/features/terminal-emulator>
+      <aegis/features/neovim>
+      <aegis/features/cli>
+      <aegis/features/git>
     ];
   };
   # den.hosts.x86_64-linux.buttars-desktop.users.buttars.aspect = "buttars";

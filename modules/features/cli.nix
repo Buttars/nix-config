@@ -1,5 +1,5 @@
 {
-  features.cli = {
+  aegis.features._.cli = {
     homeManager =
       { lib, pkgs, ... }:
       {

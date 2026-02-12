@@ -1,5 +1,5 @@
 {
-  features.discord.homeManager =
+  aegis.features._.discord.homeManager =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [

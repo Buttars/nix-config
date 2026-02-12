@@ -2,7 +2,7 @@
   # Taskwarrior support for Home Manager
   # Included by: home/* (migrate from home/features/taskwarrior.nix)
 
-  features.taskwarrior = {
+  aegis.features._.taskwarrior = {
     homeManager =
       { pkgs, lib, ... }:
       {
