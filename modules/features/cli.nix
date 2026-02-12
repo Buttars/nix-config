@@ -31,6 +31,7 @@
         { pkgs, ... }:
         {
           home.packages = with pkgs; [
+            tmux
             btop
             diffnav
             gh
