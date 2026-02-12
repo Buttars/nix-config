@@ -7,40 +7,46 @@
           with pkgs;
           [
             bat
-            btop
-            diffnav
             eza
             fd
-            gh
-            gh-dash
-            htop
             intelli-shell
-            neovim
             nix-search-tv
-            process-compose
-            sesh
-            sshs
             tldr
-            tmux
             watch
             wikiman
-            yazi
             zoxide
           ]
           ++ lib.optionals pkg.stdenv.isLinux [
             trashy
           ];
 
-        programs.fzf = {
-          enable = true;
-          defaultOptions = [ "--color 16" ];
-        };
-
         programs.direnv = {
           enable = true;
           nix-direnv.enable = true;
         };
       };
+
+    _.tui = {
+      homeManager =
+        { pkgs, ... }:
+        {
+          home.packages = with pkgs; [
+            btop
+            diffnav
+            gh
+            gh-dash
+            htop
+            process-compose
+            sesh
+            sshs
+            yazi
+          ];
+          programs.fzf = {
+            enable = true;
+            defaultOptions = [ "--color 16" ];
+          };
+        };
+    };
 
     _.aws = {
       homeManager =

@@ -9,6 +9,7 @@
       <aegis/cli>
       <aegis/cli/aws>
       <aegis/cli/git>
+      <aegis/cli/tui>
       <aegis/neovim>
       {
         dotfiles.mutable = true;
