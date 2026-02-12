@@ -8,8 +8,8 @@
       <aegis/taskwarrior>
       <aegis/cli>
       <aegis/cli/aws>
+      <aegis/cli/git>
       <aegis/neovim>
-      <aegis/git>
       {
         dotfiles.mutable = true;
       }
