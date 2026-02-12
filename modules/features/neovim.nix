@@ -1,5 +1,5 @@
 {
-  aegis.features._.neovim = {
+  aegis.neovim = {
     homeManager =
       { pkgs, ... }:
       {

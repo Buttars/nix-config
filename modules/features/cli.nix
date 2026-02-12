@@ -1,5 +1,5 @@
 {
-  aegis.features._.cli = {
+  aegis.cli = {
     homeManager =
       { lib, pkgs, ... }:
       {
@@ -40,6 +40,18 @@
           enable = true;
           nix-direnv.enable = true;
         };
-      };
+    };
+
+    _.aws = {
+      homeManager =
+        { pkgs, ... }:
+        {
+          home.packages = with pkgs; [
+            awscli2
+            terraform
+          ];
+        };
+
+    };
   };
 }

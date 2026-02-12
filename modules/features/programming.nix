@@ -2,7 +2,7 @@
   # This aspect provides programming-related tools for Home Manager.
   # Included by: home/* (migrate from home/features/programming.nix)
 
-  aegis.features._.programming = {
+  aegis.programming = {
     homeManager =
       { pkgs, ... }:
       {

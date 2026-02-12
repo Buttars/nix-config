@@ -2,7 +2,7 @@
   # Home Manager fragment for terminal emulators
   # Included by: home/* (migrate from home/features/terminal-emulator.nix)
 
-  aegis.features._.terminal-emulator = {
+  aegis.terminal-emulator = {
     homeManager =
       { pkgs, ... }:
       {

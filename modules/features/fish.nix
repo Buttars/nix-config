@@ -1,5 +1,5 @@
 {
-  aegis.features._.fish = {
+  aegis.fish = {
     programs.fish = {
       enable = true;
       vendor = {

@@ -3,13 +3,13 @@
   den.aspects."landon.buttars" = {
     includes = [
       <den/primary-user>
-      <aegis/features/programming>
-      <aegis/features/terminal-emulator>
-      <aegis/features/taskwarrior>
-      <aegis/features/aws>
-      <aegis/features/neovim>
-      <aegis/features/cli>
-      <aegis/features/git>
+      <aegis/programming>
+      <aegis/terminal-emulator>
+      <aegis/taskwarrior>
+      <aegis/cli>
+      <aegis/cli/aws>
+      <aegis/neovim>
+      <aegis/git>
       {
         dotfiles.mutable = true;
       }

@@ -2,7 +2,7 @@
   # XDG user dirs and utilities for Home Manager
   # Included by: home/* (migrate from home/features/xdg.nix)
 
-  aegis.features._.xdg = {
+  aegis.xdg = {
     homeManager =
       { pkgs, ... }:
       {
