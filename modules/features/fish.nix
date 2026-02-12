@@ -9,7 +9,8 @@
       };
     };
 
-    homeManager = { pkgs, ... }:
+    homeManager =
+      { pkgs, ... }:
       {
         programs.fish = {
           enable = true;
@@ -18,9 +19,9 @@
             set fish_greeting
           '';
 
-          loginShellInit = '''';
-          interactiveShellInit = '''';
-          shellInitLast = '''';
+          loginShellInit = "";
+          interactiveShellInit = "";
+          shellInitLast = "";
         };
       };
   };

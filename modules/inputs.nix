@@ -37,7 +37,6 @@
 
       nixpkgs-awscli2.url = "github:nixos/nixpkgs/de74240d03acfd332c99dce42fc93239dcaa9cdf";
 
-
       dotfiles = {
         url = "https://github.com/Buttars/.dotfiles";
         type = "git";

@@ -7,10 +7,10 @@
       set fish_greeting
     '';
 
-    loginShellInit = '''';
+    loginShellInit = "";
 
-    interactiveShellInit = '''';
+    interactiveShellInit = "";
 
-    shellInitLast = '''';
+    shellInitLast = "";
   };
 }

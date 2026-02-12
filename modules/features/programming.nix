@@ -3,7 +3,8 @@
   # Included by: home/* (migrate from home/features/programming.nix)
 
   features.programming = {
-    homeManager = { pkgs, ... }:
+    homeManager =
+      { pkgs, ... }:
       {
         home.packages = with pkgs; [
           atac

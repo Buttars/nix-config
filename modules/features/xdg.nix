@@ -3,9 +3,13 @@
   # Included by: home/* (migrate from home/features/xdg.nix)
 
   features.xdg = {
-    homeManager = { pkgs, ... }:
+    homeManager =
+      { pkgs, ... }:
       {
-        home.packages = with pkgs; [ xdg-utils xdg-user-dirs ];
+        home.packages = with pkgs; [
+          xdg-utils
+          xdg-user-dirs
+        ];
 
         xdg = {
           enable = true;

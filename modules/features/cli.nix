@@ -1,6 +1,7 @@
 {
-  features.cli = { 
-    homeManager = { lib, pkgs, ... }:
+  features.cli = {
+    homeManager =
+      { lib, pkgs, ... }:
       {
         home.packages =
           with pkgs;

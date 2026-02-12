@@ -3,9 +3,11 @@
   # Included by: home/* (migrate from home/features/taskwarrior.nix)
 
   features.taskwarrior = {
-    homeManager = { pkgs, lib, ... }:
+    homeManager =
+      { pkgs, lib, ... }:
       {
-        home.packages = with pkgs;
+        home.packages =
+          with pkgs;
           [
             taskwarrior3
             taskwarrior-tui

@@ -3,7 +3,8 @@
   # Included by: home/* (migrate from home/features/terminal-emulator.nix)
 
   features.terminal-emulator = {
-    homeManager = { pkgs, ... }:
+    homeManager =
+      { pkgs, ... }:
       {
         home.packages = with pkgs; [
           alacritty

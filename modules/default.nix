@@ -12,7 +12,7 @@ in
     includes = [
       <den/define-user>
       <den/home-manager>
-      (<den/unfree> ["terraform"])
+      (<den/unfree> [ "terraform" ])
       (
         { host, ... }:
         {
@@ -52,7 +52,7 @@ in
     };
 
     homeManager = {
-      imports = [./home-manager/dotfiles.nix];
+      imports = [ ./home-manager/dotfiles.nix ];
       programs.home-manager.enable = true;
       home = {
         sessionPath = [ "$HOME/.local/bin" ];
