@@ -1,4 +1,4 @@
-{
+{ lib, ... }: {
   aegis.syncthing =
     let
       devices = {
