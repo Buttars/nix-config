@@ -81,7 +81,7 @@ in
 
       misc = {
         disable_hyprland_logo = true;
-        new_window_takes_over_fullscreen = 1;
+        on_focus_under_fullscreen = true;
       };
 
       decoration = {
@@ -234,26 +234,29 @@ in
         "$mod, mouse:273, resizewindow"
       ];
 
-      windowrulev2 = [
-        "opacity 0.0 override 0.0 override,class:^(xwaylandvideobridge)$"
-        "noanim,class:^(xwaylandvideobridge)$"
-        "nofocus,class:^(xwaylandvideobridge)$"
-        "noinitialfocus,class:^(xwaylandvideobridge)$"
-        "float,class:^(Rofi)$"
-        "float,class:^(org.gnome.Calculator)$"
-        "float,class:^(org.gnome.Nautilus)$"
-        "float,class:^(eww)$"
-        "float,class:^(pavucontrol)$"
-        "float,class:^(nm-connection-editor)$"
-        "float,class:^(blueberry.py)$"
-        "float,class:^(org.gnome.Settings)$"
-        "float,class:^(org.gnome.design.Palette)$"
-        "float,class:^(Color Picker)$"
-        "float,class:^(Network)$"
-        "float,class:^(xdg-desktop-portal)$"
-        "float,class:^(xdg-desktop-portal-gnome)$"
-        "float,class:^(transmission-gtk)$"
-        "float,class:^(xdg-desktop-portal-gtk)$"
+      windowrule = [
+        # xwaylandvideobridge
+        "opacity 0.0 override 0.0 override, match:class ^(xwaylandvideobridge)$"
+        "no_anim on, match:class ^(xwaylandvideobridge)$"
+        "no_focus on, match:class ^(xwaylandvideobridge)$"
+        "no_initial_focus on, match:class ^(xwaylandvideobridge)$"
+
+        # Floating apps
+        "float on, match:class ^(Rofi)$"
+        "float on, match:class ^(org.gnome.Calculator)$"
+        "float on, match:class ^(org.gnome.Nautilus)$"
+        "float on, match:class ^(eww)$"
+        "float on, match:class ^(pavucontrol)$"
+        "float on, match:class ^(nm-connection-editor)$"
+        "float on, match:class ^(blueberry.py)$"
+        "float on, match:class ^(org.gnome.Settings)$"
+        "float on, match:class ^(org.gnome.design.Palette)$"
+        "float on, match:class ^(Color Picker)$"
+        "float on, match:class ^(Network)$"
+        "float on, match:class ^(xdg-desktop-portal)$"
+        "float on, match:class ^(xdg-desktop-portal-gnome)$"
+        "float on, match:class ^(transmission-gtk)$"
+        "float on, match:class ^(xdg-desktop-portal-gtk)$"
       ];
     };
   };
