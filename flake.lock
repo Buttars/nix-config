@@ -65,26 +65,6 @@
         "type": "github"
       }
     },
-    "home-manager": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1770818644,
-        "narHash": "sha256-DYS4jIRpRoKOzJjnR/QqEd/MlT4OZZpt8CrBLv+cjsE=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "0acbd1180697de56724821184ad2c3e6e7202cd7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
     "import-tree": {
       "locked": {
         "lastModified": 1763762820,
@@ -102,18 +82,15 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1770843696,
-        "narHash": "sha256-LovWTGDwXhkfCOmbgLVA10bvsi/P8eDDpRudgk68HA8=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "2343bbb58f99267223bc2aac4fc9ea301a155a16",
-        "type": "github"
+        "lastModified": 1771177547,
+        "narHash": "sha256-erxy9meNKMaKpKQpl8KfhZsVY4EtR4eaHT94jY98Ty0=",
+        "rev": "ac055f38c798b0d87695240c7b761b82fc7e5bc2",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre946843.ac055f38c798/nixexprs.tar.xz"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz"
       }
     },
     "root": {
@@ -122,7 +99,6 @@
         "flake-aspects": "flake-aspects",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
-        "home-manager": "home-manager",
         "import-tree": "import-tree",
         "nixpkgs": "nixpkgs",
         "nixpkgs-lib": [
