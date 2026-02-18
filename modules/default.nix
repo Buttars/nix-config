@@ -4,6 +4,7 @@
     includes = [
       <den/define-user>
       <den/home-manager>
+      <aegis/devenv>
       (
         { host, ... }:
         {

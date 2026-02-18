@@ -6,6 +6,10 @@
 
   inputs = {
     den.url = "github:vic/den";
+    devenv = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:cachix/devenv";
+    };
     flake-aspects.url = "github:vic/flake-aspects";
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
@@ -17,6 +21,11 @@
       url = "github:nix-community/home-manager";
     };
     import-tree.url = "github:vic/import-tree";
+    mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
+    nix2container = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nlewo/nix2container";
+    };
     nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
     nixpkgs-lib.follows = "nixpkgs";
     systems.url = "github:nix-systems/default";
