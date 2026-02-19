@@ -2,6 +2,7 @@
   inputs,
   den,
   __findFile,
+  lib,
   ...
 }:
 {
@@ -10,6 +11,11 @@
     includes = [
       (den._.tty-autologin "vm-user")
     ];
+
+    nixos = {
+      fileSystems."/".device = lib.mkDefault "/dev/noroot";
+      boot.loader.grub.enable = lib.mkDefault false;
+    };
 
     homeManager =
       { pkgs, ... }:
