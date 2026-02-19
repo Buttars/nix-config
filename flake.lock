@@ -33,6 +33,27 @@
         "type": "github"
       }
     },
+    "darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771371916,
+        "narHash": "sha256-G14VTfmzzRYxAhtEBNanQgCNA++Cv0/9iV4h/lkqX9U=",
+        "owner": "lnl7",
+        "repo": "nix-darwin",
+        "rev": "aff4c008cec17d6a6760949df641ca0ea9179cac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lnl7",
+        "ref": "master",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "den": {
       "locked": {
         "lastModified": 1771153332,
@@ -376,6 +397,7 @@
     },
     "root": {
       "inputs": {
+        "darwin": "darwin",
         "den": "den",
         "devenv": "devenv",
         "flake-aspects": "flake-aspects",
