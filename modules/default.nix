@@ -1,4 +1,9 @@
-{ inputs, __findFile, ... }:
+{
+  inputs,
+  __findFile,
+  den,
+  ...
+}:
 {
   den.default = {
     includes = [
