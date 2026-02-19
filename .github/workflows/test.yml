@@ -24,4 +24,4 @@ jobs:
             _module.args.CI = true;
           }
           EOF
-      - run: nix flake check
+      - run: nix flake check --impure
