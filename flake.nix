@@ -26,6 +26,10 @@
     };
     import-tree.url = "github:vic/import-tree";
     mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
+    nix-auto-follow = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:fzakaria/nix-auto-follow";
+    };
     nix2container = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nlewo/nix2container";
@@ -33,6 +37,10 @@
     nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
     nixpkgs-lib.follows = "nixpkgs";
     systems.url = "github:nix-systems/default";
+    treefmt-nix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:numtide/treefmt-nix";
+    };
   };
 
 }
