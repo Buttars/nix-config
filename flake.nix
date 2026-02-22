@@ -36,6 +36,10 @@
     };
     nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
     nixpkgs-lib.follows = "nixpkgs";
+    sops-nix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:Mic92/sops-nix";
+    };
     systems.url = "github:nix-systems/default";
     treefmt-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
