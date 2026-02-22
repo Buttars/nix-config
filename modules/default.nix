@@ -52,7 +52,7 @@
       home = {
         sessionPath = [ "$HOME/.local/bin" ];
         sessionVariables.NIXPKGS_ALLOW_UNFREE = "1";
-        stateVersion = "22.11";
+        stateVersion = "25.11";
       };
     };
   };
