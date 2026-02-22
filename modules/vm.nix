@@ -9,6 +9,7 @@
 
   den.aspects.vm = {
     includes = [
+      <aegis/hyprland>
       (den._.tty-autologin "vm-user")
     ];
 
@@ -28,6 +29,7 @@
     includes = [
       <den/primary-user>
       <aegis/devenv>
+      <aegis/hyprland>
       (den._.user-shell "fish")
     ];
 
