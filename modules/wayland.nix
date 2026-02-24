@@ -1,7 +1,7 @@
 {
   aegis.wayland = {
     nixos =
-      { pkgs, lib, ... }:
+      { pkgs, ... }:
       {
         programs.dconf.enable = true;
         environment.systemPackages = [ pkgs.wl-clipboard ];
@@ -10,7 +10,7 @@
         };
       };
     homeManager =
-      { config, ... }:
+      { ... }:
       {
         qt.enable = true;
         gtk.enable = true;

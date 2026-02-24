@@ -1,7 +1,6 @@
 {
   inputs,
   __findFile,
-  den,
   ...
 }:
 {

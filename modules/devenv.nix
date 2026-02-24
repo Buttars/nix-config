@@ -13,7 +13,7 @@
   ];
 
   perSystem =
-    { pkgs, config, ... }:
+    { pkgs, ... }:
     {
       devenv.shells.default = {
         env.NIX_CONFIG = "extra-experimental-features = nix-command flakes ca-derivations";
@@ -35,7 +35,6 @@
     homeManager =
       {
         pkgs,
-        config,
         ...
       }:
       {
