@@ -9,7 +9,9 @@
 
   den.aspects.vm = {
     includes = [
+      <aegis/wayland>
       <aegis/hyprland>
+      <aegis/networking>
       (den._.tty-autologin "vm-user")
     ];
 
