@@ -1,0 +1,17 @@
+{ den, __findFile, ... }:
+{
+  den.aspects."landon.buttars" = {
+    includes = [
+      <den/primary-user>
+      <aegis/programming>
+      <aegis/terminal-emulator>
+      <aegis/taskwarrior>
+      <aegis/cli>
+      <aegis/cli/aws>
+      <aegis/cli/git>
+      <aegis/cli/tui>
+      <aegis/neovim>
+    ];
+  };
+  den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars".aspect = "landon.buttars";
+}
