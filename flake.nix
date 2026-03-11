@@ -40,7 +40,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:Mic92/sops-nix";
     };
-    systems.url = "github:nix-systems/default";
+    srvos = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/srvos";
+    };
     treefmt-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/treefmt-nix";

@@ -18,6 +18,10 @@
     ];
 
     nixos = {
+      imports = [
+        inputs.srvos.nixosModules.mixins-systemd-boot
+      ];
+
       documentation.doc.enable = false;
       documentation.info.enable = false;
       i18n.defaultLocale = "en_US.UTF-8";
@@ -56,13 +60,20 @@
     };
   };
 
-  flake-file.inputs.home-manager = {
-    url = "github:nix-community/home-manager";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  flake-file.inputs = {
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  flake-file.inputs.darwin = {
-    url = "github:lnl7/nix-darwin/master";
-    inputs.nixpkgs.follows = "nixpkgs";
+    darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    srvos = {
+      url = "github:nix-community/srvos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
