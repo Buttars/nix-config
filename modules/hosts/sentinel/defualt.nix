@@ -14,6 +14,10 @@
       # })
     ];
 
+    nixos = {
+      services.openssh.enable = true;
+    };
+
     homeManager =
       { pkgs, ... }:
       {
