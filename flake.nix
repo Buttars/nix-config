@@ -14,6 +14,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:cachix/devenv";
     };
+    disko = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/disko";
+    };
     dotfiles = {
       flake = false;
       ref = "main";
