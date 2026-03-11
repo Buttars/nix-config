@@ -14,6 +14,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:cachix/devenv";
     };
+    dotfiles = {
+      flake = false;
+      ref = "main";
+      rev = "a52773c370f6837c666292e24adbbffe43a61de1";
+      submodules = false;
+      type = "git";
+      url = "https://github.com/Buttars/.dotfiles";
+    };
     flake-aspects.url = "github:vic/flake-aspects";
     flake-file.url = "github:vic/flake-file";
     flake-parts = {

@@ -95,6 +95,26 @@
         "type": "github"
       }
     },
+    "dotfiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761769878,
+        "narHash": "sha256-KWffmzpzkNbER9oh2aRGL8BFEsMP0maADvTr3/KuQG4=",
+        "ref": "main",
+        "rev": "a52773c370f6837c666292e24adbbffe43a61de1",
+        "revCount": 125,
+        "submodules": false,
+        "type": "git",
+        "url": "https://github.com/Buttars/.dotfiles"
+      },
+      "original": {
+        "ref": "main",
+        "rev": "a52773c370f6837c666292e24adbbffe43a61de1",
+        "submodules": false,
+        "type": "git",
+        "url": "https://github.com/Buttars/.dotfiles"
+      }
+    },
     "flake-aspects": {
       "locked": {
         "lastModified": 1771966223,
@@ -420,6 +440,7 @@
         "darwin": "darwin",
         "den": "den",
         "devenv": "devenv",
+        "dotfiles": "dotfiles",
         "flake-aspects": "flake-aspects",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts_2",
