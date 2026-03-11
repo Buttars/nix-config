@@ -28,8 +28,6 @@
       i18n.supportedLocales = [ "all" ];
       system.stateVersion = "25.11";
       time.timeZone = "America/Denver";
-      home-manager.useUserPackages = true;
-      home-manager.useGlobalPkgs = true;
       boot.initrd.systemd.enable = true;
     };
 
