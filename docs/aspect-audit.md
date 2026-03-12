@@ -1,153 +1,197 @@
-Aspect Audit (Den-aware)
-Date: 2026-03-11
+Aspect Audit (Den‑aligned)
+Date: 2026-03-11 (updated 2026-03-12)
 Branch: dendritic-from-scratch
 
 Purpose
-- Inventory and audit of repository aspects (focus: `modules/` and
-  `modules/features/`) using Den conventions. This document captures
-  architectural observations, anti‑patterns to address, and prioritized
-  remediation steps. Hyprland is intentionally excluded from issue flagging
-  per the user's request; its behavior is preserved.
+- Re‑audit the repository with strict adherence to Den's aspect model and the
+  `__findFile` angle‑bracket resolution rules. Remove recommendations or
+  observations that do not align with how Den expects aspects to be authored
+  and consumed.
 
-Den fundamentals (how I interpret aspects here)
-- An aspect is an attrset that may contain per‑class modules (e.g. `nixos`,
-  `homeManager`, `darwin`). The aspect file must evaluate to an attrset that
-  defines `aegis.<aspect-name> = { ... }`.
-- Angle-bracket lookups (e.g. `<aegis/audio>` or `<aegis/browser/brave>`) are
-  resolved via Den's `__findFile`. When Nix evaluates `<aegis/...>` Den maps
-  that to the file path which must export the aspect attrset.
-- Composition is performed by `includes` (for DAG composition) and `provides`
-  (to expose named sub‑aspects or implementations). `provides` may be
-  parametric and accept `{ host, user, ... }` to conditionally apply config.
+Scope & constraints
+- Scope: `modules/` and `modules/features/` (inventory and recommendations).
+- Hyprland: excluded from criticism per user instruction — inventory only.
+- All suggestions follow Den primitives: aspects are attrsets exporting
+  per‑class modules (nixos, homeManager, darwin, etc.). Angle‑bracket
+  lookups (e.g. `<aegis/audio>`) are resolved via `__findFile` and therefore
+  every path must continue to resolve to a file exporting the expected aspect
+  attrset.
 
-Den __findFile (angle‑bracket resolution)
- - Den exposes a `__findFile` implementation so aspect files can be referenced
-   using angle‑bracket/file syntax (for example: `<aegis/audio>`,
-   `<aegis/browser/brave>`, `<aegis/cli/git>`). This behaves similarly to
-   `<nixpkgs>` or other flake file lookups and is implemented in
-   `nix/den-brackets.nix`.
- - Essential behavior:
-   - When Nix encounters an angle bracket path, `__findFile` resolves the
-     lookup to a file path. That file must evaluate to an aspect attrset that
-     defines `aegis.<aspect-name> = { ... }` (with per‑class modules such as
-     `nixos`, `homeManager`, `darwin`). In short: the file must export the
-     aspect attrset that Den expects.
-   - `__findFile` supports three resolution branches (in order):
-     1. `den` namespace — paths beginning with `den` map to `config.den.*`.
-     2. Aspects path — a head token matching an aspect name resolves to
-        `config.den.aspects.<aspectName>...`.
-     3. Denful / provides path — lookup into `config.den.ful` (or
-        `denful` entries) and specially handle `provides` entries for
-        implementation selection.
- - Implementation notes (high level):
-   - The lookup pipeline first transforms `/` into `.provides.` so a
-     file‑style path like `foo/bar` becomes `foo.provides.bar` and maps to the
-     `provides` model inside an aspect.
-   - The transformed string is split on `.` into a list of path tokens. The
-     `findAspect` function then inspects the head token and tries to read the
-     attribute from the appropriate branch in `config` using `lib.getAttrFromPath`.
-   - If no branch matches, `findAspect` throws an explicit "Aspect not found"
-     error mentioning the joined token path.
- - Why this matters for refactors and migration:
-   - Because `<aegis/...>` resolves to a file that must export `aegis.<name>`,
-     refactors that move or rename aspect files must preserve those angle
-     bracket paths. Typical strategies:
-     - Leave a thin shim file at the old `<...>` path that re‑exports the new
-       aspect attrset; or
-     - Update the `__findFile` mapping (if you control it) to point the
-       bracket lookup to the new file location.
- - Practical examples of usage:
-   - `<den.lib>` resolves to Den's library attrset so templates can test for
-     helpers like `owned` or `statics`.
-   - `<aegis/browser/brave>` resolves the `brave` provider for the browser
-     aspect (i.e., `aegis.browser.provides.brave`) and lets hosts `include`
-     that provider directly.
-   - `<aspectName>` shorthand resolves the aspect file that exports
-     `aegis.aspectName` and allows `includes = [ <aspectName> ]` in a host
-     composition.
- - Integration with Den's context pipeline:
-   - `__findFile` is a lookup convenience that happens before Den composes
-     and applies aspect owned configs to the appropriate class stages. After
-     resolution the usual Den pipeline (parametric dispatch, owned config
-     extraction, includes/provides merging) applies.
-   - This means authors can write concise `includes` lists using angle
-     brackets while still relying on Den's strict per‑class evaluation rules.
+Den model recap (concise)
+- Aspect = attrset that may contain per‑class modules:
 
-Audit scope & constraints
-- Included: all files under `modules/` and `modules/features/`, except
-  Hyprland-specific issues (per user instruction).
-- I focus on Den conventions: owned configs, includes/provides, parametric
-  behavior, and cross-class purity.
+  aegis.foo = {
+    nixos = { pkgs, ... }: { ... };
+    homeManager = { pkgs, ... }: { ... };
+    darwin = { ... };
+  };
 
-Top anti‑patterns observed (excluding Hyprland)
-- Mixed system/user concerns without explicit ownership comments
-  - Several files declare both `nixos` and `homeManager` fragments but
-    lack a short header describing intended ownership/override knobs.
-- Duplication of cross‑cutting capability declarations
-  - Fonts and theming overlap: both aspects declare fonts; centralize.
-- Vendor implementations not exposed via `provides`
-  - `modules/features/browser.nix` and some others define product fragments
-    inline rather than as `provides` (makes swapping implementations harder).
-- Hardware logic not isolated as hardware aspects
-  - NVIDIA and ZSA pieces are located among features rather than a
-    `hardware/*` hierarchy with parametric `provides` to gate activation.
-- “Junk-drawer” aspects
-  - Aspects like `programming` bundle many unrelated tools; consider splitting
-    by capability (editors, runtimes, devtools).
-- Bindings/scripts referencing binaries not ensured present
-  - Various scripts and binds reference programs without guaranteeing those
-    binaries are in the aspect's `home.packages` (outside Hyprland too).
-- Large assets and secrets
-  - Some repositories include large binaries or TODO‑flagged secret files —
-    treat assets in `dotfiles` and encrypt secrets with sops/git‑crypt.
+- `__findFile` resolves `<aegis/foo>` to the file that must export `aegis.foo`.
+- `__findFile` maps `/` to `.provides.` so `<aegis/foo/bar>` resolves to
+  `aegis.foo.provides.bar` semantics.
+- Use `includes` to compose aspects and `provides` to expose selectable
+  implementations. Parametric `provides` can accept `{ host, user, ... }`.
 
-Den‑aligned remediation (prioritized)
-Immediate (low risk)
-1. Add per‑aspect header comments to every aspect file: Category (capability,
-   vendor, hardware, profile) and Exports (nixos, homeManager, darwin). This
-   is a documentation-only change and makes ownership explicit.
-2. Centralize fonts: designate `modules/features/fonts.nix` as source of
-   truth and update `theming` to reference fonts (use `lib.mkDefault` where
-   needed so changes are non‑breaking).
-3. Detect and list large files and potential secrets (read‑only scan), then
-   move assets to `dotfiles` or external storage as appropriate.
+Inventory (aspects discovered)
+- For each aspect below we list: aspect name → file path → exported classes.
+- Note: this inventory is produced by scanning `modules/` and `modules/features/`.
 
-Short term (safe refactors)
-4. Convert vendor fragments into `provides` entries (e.g., browsers, password
-   manager backends). Provide compatibility shims so `<aegis/...>` lookups keep
-   resolving during migration.
-5. Create `modules/features/hardware/*` and move hardware implementations
-   (nvidia, zsa). Expose them as parametric `provides` that check host attrs.
+1) aegis.audio
+   - file: modules/features/audio.nix
+   - exports: nixos
 
-Medium term
-6. Split large aspects (e.g., `programming`) into finer capability aspects.
-7. Add guards or ensure packages for binaries referenced by scripts/bindings.
+2) aegis.browser
+   - file: modules/features/browser.nix
+   - exports: homeManager (vendor sub-entries for google-chrome and brave)
 
-Long term
-8. Add CI: den/Nix eval checks for representative hosts, and periodic audits
-   (TODOs, secrets, large files).
+3) aegis.cli
+   - file: modules/features/cli.nix
+   - exports: homeManager (and sub-aspects `_.tui`, `_.aws`, `_.git` also expose homeManager)
 
-Practical checks to run (I can run these if you want)
-- TODOs: rg -n "TODO|FIXME" modules
-- Large assets: git ls-files | rg -nE "\.(jpg|png|gif|mp4)$"
-- Potential secrets: rg -n --hidden --no-ignore-vcs "password|secret|token|key|passwd" modules || true
-- Aspect map: parse files referenced by `__findFile` (angle brackets) and list exported classes.
+4) aegis.discord
+   - file: modules/features/discord.nix
+   - exports: homeManager
 
-Notes about `__findFile` and safe refactor constraints
-- Because `__findFile` resolves `<aegis/...>` to a file that must export the
-  corresponding aspect attrset, any file moves must preserve compatibility:
-  either keep a shim file at the old path that re‑exports the new location,
-  or update `__findFile` mapping. Plan refactors accordingly.
+5) aegis.element-desktop
+   - file: modules/features/element-desktop.nix
+   - exports: homeManager
 
-Where this file is saved
-- `docs/aspect-audit.md` (this file) — committed to the branch for reference.
+6) aegis.fish
+   - file: modules/features/fish.nix
+   - exports: (top-level) programs + homeManager fragment
 
-Next actionable options (pick one)
-1. I will run the read‑only scans and produce exact lists (TODOs, binaries,
-   secrets candidates, aspect exports). (Recommended first.)
-2. I prepare the small, non‑destructive PRs for Immediate items (headers,
-   fonts centralization, docs). I will not apply them until you approve.
-3. I implement the Immediate items directly on this branch now (I can do
-   that if you want me to continue making edits).
+7) aegis.fonts
+   - file: modules/features/fonts.nix
+   - exports: nixos
 
-Which of the three do you want me to do next?
+8) aegis.gaming
+   - file: modules/features/gaming.nix
+   - exports: nixos
+
+9) aegis.hyprland (inventory only)
+   - files: modules/hyprland.nix (system), modules/features/hyprland/default.nix (user)
+   - exports: nixos, homeManager
+
+10) aegis.locale
+    - file: modules/features/locale.nix
+    - exports: nixos
+
+11) aegis.neovim
+    - file: modules/features/neovim.nix
+    - exports: homeManager
+
+12) aegis.nfs-utils
+    - file: modules/features/nfs-utils.nix
+    - exports: nixos
+
+13) aegis.nix-ls
+    - file: modules/features/nix-ls.nix
+    - exports: nixos
+
+14) aegis.nvidia
+    - file: modules/features/nvidia.nix
+    - exports: nixos
+
+15) aegis.password-manager
+    - file: modules/features/password-manager.nix
+    - exports: homeManager (implements sub-entries for keepassxc and bitwarden)
+
+16) aegis.programming
+    - file: modules/features/programming.nix
+    - exports: homeManager
+
+17) aegis.taskwarrior
+    - file: modules/features/taskwarrior.nix
+    - exports: homeManager
+
+18) aegis.terminal-emulator
+    - file: modules/features/terminal-emulator.nix
+    - exports: homeManager
+
+19) aegis.theming
+    - file: modules/features/theming.nix
+    - exports: homeManager
+
+20) aegis.virtualization
+    - file: modules/features/virtualization.nix
+    - exports: provides for docker / libvirtd; contains nixos fragments
+
+21) aegis.xdg
+    - file: modules/features/xdg.nix
+    - exports: homeManager
+
+22) aegis.zsa
+    - file: modules/features/zsa.nix
+    - exports: nixos
+
+23) other aspects and host aspects
+    - modules/devenv.nix → aegis.devenv (homeManager)
+    - modules/disks.nix → aegis.disks.provides.btrfs (provides)
+    - modules/sops/default.nix → aegis.secrets (homeManager + nixos)
+    - modules/networking.nix → aegis.networking (nixos)
+    - modules/power-management.nix → aegis.power-management (nixos)
+    - host aspects under modules/hosts/* (den.aspects.<host> entries)
+
+Aligned observations (only Den‑relevant issues)
+- Per‑class ownership must be explicit: many aspect files already follow the
+  pattern (e.g., declare `nixos = ...` or `homeManager = ...`). Maintain the
+  per‑class separation — do not collapse class fragments into a single mixed
+  module; Den evaluates each class module in its context.
+- Use `provides` for vendor implementations: where an aspect exposes multiple
+  product implementations (browser, password-manager), prefer `provides` so
+  callers can select a provider with `<aegis/aspect/provider>` and includes.
+- Parametric provides for hardware: hardware providers (nvidia, zsa) should
+  be authored as parametric `provides` that accept `{ host, ... }` and apply
+  only when the host attributes match (e.g., `host.gpu == "nvidia"`). This
+  reduces accidental hardware enablement across hosts.
+- Keep `__findFile` compatibility in mind when moving files: any file that
+  used to be addressable by `<aegis/name>` must continue to resolve (either
+  keep a shim at the original path or update the mapping used by Den's
+  `__findFile`).
+- Centralize cross‑cutting capabilities: `fonts.nix` is a sensible source of
+  truth for font packages; other aspects (theming) should reference the
+  fonts aspect (or use `lib.mkDefault`) rather than redeclare packages.
+- Avoid embedding host specifics without a clear override path (use
+  `lib.mkDefault` or parametric includes). Values like monitor geometry or
+  device paths should be overridable by host configuration.
+- Ensure aspects include or guard any binaries their scripts/keybinds rely on.
+  Either ensure the binary is in the same aspect's `home.packages` or add a
+  conditional registration based on package availability.
+
+Removed or changed recommendations (den‑aligned)
+- Removed suggestions that treated an aspect as a single module; aspects are
+  now treated as attrsets with per‑class modules per Den's model.
+- Removed advice that suggested moving aspects without accounting for
+  `__findFile` compatibility. Any move must preserve angle‑bracket resolution
+  via a shim or by updating Den's findFile mapping.
+- Removed generic language about "capability-default vs profile-default" and
+  replaced it with Den patterns: use `includes` and `provides` to expose
+  capabilities and profile/bundle aspects explicitly; pick conventions and
+  document them in `modules/features/README.md`.
+
+Concrete, safe next steps (Den‑centric)
+1. Add a one‑line header to each aspect file indicating: Category and Exports
+   (nixos/homeManager/etc.). This is documentation only and aligns with Den.
+2. Convert inline vendor fragments to `provides` where appropriate (browser,
+   password-manager). Provide compatibility shims at the existing `<...>` file
+   paths during migration.
+3. Move hardware implementations to a `hardware/*` location and expose them
+   via parametric `provides` (host gated). Keep shims if required by
+   existing `<...>` consumers.
+4. Centralize fonts (fonts.nix) and have theming reference fonts via `mkDefault`.
+5. Add a short README in `modules/features/` explaining how to add aspects,
+   how to select providers via `<aegis/aspect/provider>`, and how to keep
+   overrides parametric.
+
+Appendix — checklist for each aspect file
+- Does the file evaluate to an attrset exporting `aegis.<name>`? (required)
+- Which classes does it export (nixos/homeManager/darwin)? Are the
+  per‑class modules pure and small?
+- If multiple implementations exist, are they placed under `provides` so that
+  callers can use `<aegis/<aspect>/<provider>>`?
+- Does the file avoid hard‑coding host specifics (or expose overrides via
+  `lib.mkDefault` or parametric includes)?
+- Does the file ensure packages referenced by scripts/keybinds are present,
+  or conditionally register those features?
+
+End of audit
