@@ -85,8 +85,5 @@ in
   #     swapSize = "16";
   #   })
   # ];
-  # aegis.disks = {
-  # provides.btrfs = diskoConfigurations.btrfs;
-  aegis.disks.provides.btrfs = { };
-  # };
+  aegis.disks.provides.btrfs = diskoConfigurations.btrfs;
 }
