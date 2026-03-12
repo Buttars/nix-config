@@ -16,7 +16,7 @@
             wikiman
             zoxide
           ]
-          ++ lib.optionals pkg.stdenv.isLinux [
+          ++ lib.optionals pkgs.stdenv.isLinux [
             trashy
           ];
 

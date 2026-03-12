@@ -1,6 +1,6 @@
 {
   aegis.password-manager = {
-    _.keepassxc.homeManger =
+    _.keepassxc.homeManager =
       { pkgs, ... }:
       {
         home.packages = with pkgs; [ keepassxc ];

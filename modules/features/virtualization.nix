@@ -1,6 +1,6 @@
 {
   aegis.virtualization = {
-    _.docker = {
+    _.docker.nixos = {
       virtualisation.docker = {
         enable = true;
       };
