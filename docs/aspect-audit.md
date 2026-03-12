@@ -20,6 +20,59 @@ Den fundamentals (how I interpret aspects here)
   (to expose named sub‑aspects or implementations). `provides` may be
   parametric and accept `{ host, user, ... }` to conditionally apply config.
 
+Den __findFile (angle‑bracket resolution)
+ - Den exposes a `__findFile` implementation so aspect files can be referenced
+   using angle‑bracket/file syntax (for example: `<aegis/audio>`,
+   `<aegis/browser/brave>`, `<aegis/cli/git>`). This behaves similarly to
+   `<nixpkgs>` or other flake file lookups and is implemented in
+   `nix/den-brackets.nix`.
+ - Essential behavior:
+   - When Nix encounters an angle bracket path, `__findFile` resolves the
+     lookup to a file path. That file must evaluate to an aspect attrset that
+     defines `aegis.<aspect-name> = { ... }` (with per‑class modules such as
+     `nixos`, `homeManager`, `darwin`). In short: the file must export the
+     aspect attrset that Den expects.
+   - `__findFile` supports three resolution branches (in order):
+     1. `den` namespace — paths beginning with `den` map to `config.den.*`.
+     2. Aspects path — a head token matching an aspect name resolves to
+        `config.den.aspects.<aspectName>...`.
+     3. Denful / provides path — lookup into `config.den.ful` (or
+        `denful` entries) and specially handle `provides` entries for
+        implementation selection.
+ - Implementation notes (high level):
+   - The lookup pipeline first transforms `/` into `.provides.` so a
+     file‑style path like `foo/bar` becomes `foo.provides.bar` and maps to the
+     `provides` model inside an aspect.
+   - The transformed string is split on `.` into a list of path tokens. The
+     `findAspect` function then inspects the head token and tries to read the
+     attribute from the appropriate branch in `config` using `lib.getAttrFromPath`.
+   - If no branch matches, `findAspect` throws an explicit "Aspect not found"
+     error mentioning the joined token path.
+ - Why this matters for refactors and migration:
+   - Because `<aegis/...>` resolves to a file that must export `aegis.<name>`,
+     refactors that move or rename aspect files must preserve those angle
+     bracket paths. Typical strategies:
+     - Leave a thin shim file at the old `<...>` path that re‑exports the new
+       aspect attrset; or
+     - Update the `__findFile` mapping (if you control it) to point the
+       bracket lookup to the new file location.
+ - Practical examples of usage:
+   - `<den.lib>` resolves to Den's library attrset so templates can test for
+     helpers like `owned` or `statics`.
+   - `<aegis/browser/brave>` resolves the `brave` provider for the browser
+     aspect (i.e., `aegis.browser.provides.brave`) and lets hosts `include`
+     that provider directly.
+   - `<aspectName>` shorthand resolves the aspect file that exports
+     `aegis.aspectName` and allows `includes = [ <aspectName> ]` in a host
+     composition.
+ - Integration with Den's context pipeline:
+   - `__findFile` is a lookup convenience that happens before Den composes
+     and applies aspect owned configs to the appropriate class stages. After
+     resolution the usual Den pipeline (parametric dispatch, owned config
+     extraction, includes/provides merging) applies.
+   - This means authors can write concise `includes` lists using angle
+     brackets while still relying on Den's strict per‑class evaluation rules.
+
 Audit scope & constraints
 - Included: all files under `modules/` and `modules/features/`, except
   Hyprland-specific issues (per user instruction).
