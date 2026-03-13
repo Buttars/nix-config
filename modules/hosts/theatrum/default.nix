@@ -59,6 +59,14 @@
         networking = {
           defaultGateway = "10.0.40.1";
           nameservers = [ "10.0.40.1" ];
+          firewall = {
+            enable = true;
+            allowedTCPPorts = [
+              22
+              8096
+            ];
+            allowedUDPPorts = [ 8096 ];
+          };
         };
 
         hardware.nvidia = {
@@ -77,6 +85,7 @@
         };
 
         services.openssh.enable = true;
+        services.openssh.settings.PermitRootLogin = "yes";
       };
 
     homeManager = { };
