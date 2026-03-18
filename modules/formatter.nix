@@ -16,17 +16,28 @@
     {
       packages.fmt = self'.formatter;
       treefmt = {
-        projectRoot = inputs.flake-file;
+        projectRootFile = "flake.nix";
         programs = {
           nixfmt.enable = true;
           deadnix.enable = true;
           nixf-diagnose.enable = true;
           prettier.enable = true;
+          shfmt.enable = true;
         };
         settings.on-unmatched = lib.mkDefault "fatal";
+        settings.formatter.deadnix.options = lib.mkForce [
+          "--edit"
+          "--no-lambda-pattern-names"
+        ];
+        settings.formatter.nixf-diagnose.options = lib.mkForce [
+          "--auto-fix"
+          "--variable-lookup"
+          "false"
+        ];
         settings.global.excludes = [
-          "modules/*"
-          "LICENSE"
+          "dotfiles/*"
+          "*/LICENSE"
+          "*.{jpg,jpeg,png,gif,svg,ico,webp,woff,woff2,ttf,otf}"
           "flake.lock"
           "*/flake.lock"
           ".envrc"
