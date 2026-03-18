@@ -56,6 +56,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/srvos";
     };
+    stylix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/stylix";
+    };
     treefmt-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/treefmt-nix";
