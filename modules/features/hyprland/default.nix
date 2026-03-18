@@ -277,21 +277,21 @@
 
         home.file = {
           ".config/hypr/audio-start.sh" = {
-            source = "./audio-start.sh";
+            source = ./audio-start.sh;
             executable = true;
           };
 
           ".config/hypr/portal-launch.sh" = {
-            source = "./portal-launch.sh";
+            source = ./portal-launch.sh;
             executable = true;
           };
 
           ".config/hypr/initalize-workspaces.sh" = {
-            source = "./inititalize-workspaces.sh";
+            source = ./inititalize-workspaces.sh;
             executable = true;
           };
 
-          ".config/hypr/wallpaper.jpg".source = "./wallpaper.jpg";
+          ".config/hypr/wallpaper.jpg".source = ./wallpaper.jpg;
         };
       };
   };
