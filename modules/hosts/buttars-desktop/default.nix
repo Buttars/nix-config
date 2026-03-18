@@ -1,4 +1,4 @@
-{ __findFile, ... }:
+{ __findFile, inputs, ... }:
 {
   den.hosts.x86_64-linux.buttars-desktop = {
     users.buttars-desktop.classes = [ "home-manager" ];
@@ -23,6 +23,9 @@
     nixos =
       { pkgs, ... }:
       {
+        imports = [
+          inputs.stylix.nixosModules.stylix
+        ];
         environment.systemPackages = with pkgs; [ nfs-utils ];
 
         virtualisation.docker.daemon.settings = {
@@ -62,4 +65,7 @@
         home.packages = [ pkgs.cowsay ];
       };
   };
+
+  flake-file.inputs.stylix.url = "github:nix-community/stylix";
+  flake-file.inputs.stylix.inputs.nixpkgs.follows = "nixpkgs";
 }

@@ -1,12 +1,16 @@
 {
   __findFile,
+  inputs,
   ...
 }:
 {
-  den.aspects.theatrum.nixos =
-
+  den.aspects.buttars-desktop.nixos =
     { config, lib, ... }:
     {
+      imports = [
+        inputs.disko.nixosModules.default
+      ];
+
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
 
