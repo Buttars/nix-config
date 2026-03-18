@@ -23,6 +23,8 @@
     nixos =
       { pkgs, ... }:
       {
+        nixpkgs.config.allowUnfree = true;
+
         imports = [
           ./_disko.nix
           inputs.stylix.nixosModules.stylix
