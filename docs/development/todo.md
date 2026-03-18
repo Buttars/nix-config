@@ -56,12 +56,12 @@ Classes describe **what a machine is**, not what software it happens to run.
 
 Examples:
 
-| Class | Meaning |
-|------|------|
+| Class       | Meaning                |
+| ----------- | ---------------------- |
 | workstation | human-operated machine |
-| laptop | portable workstation |
-| desktop | stationary workstation |
-| server | service host |
+| laptop      | portable workstation   |
+| desktop     | stationary workstation |
+| server      | service host           |
 
 ---
 
@@ -188,13 +188,13 @@ For each aspect determine:
 
 Assign each aspect one category:
 
-| Category | Meaning |
-|--------|--------|
-| capability | reusable system capability |
-| vendor | product-specific implementation |
-| hardware | hardware integration |
-| bundle | opinionated profile |
-| mixed | unclear or inconsistent |
+| Category   | Meaning                         |
+| ---------- | ------------------------------- |
+| capability | reusable system capability      |
+| vendor     | product-specific implementation |
+| hardware   | hardware integration            |
+| bundle     | opinionated profile             |
+| mixed      | unclear or inconsistent         |
 
 ---
 
@@ -369,8 +369,8 @@ Examples:
 
 - introduce profiles/workspace
 - split programming into multiple aspects
-- introduce hardware/* hierarchy
-- introduce capability/* hierarchy
+- introduce hardware/\* hierarchy
+- introduce capability/\* hierarchy
 
 ---
 

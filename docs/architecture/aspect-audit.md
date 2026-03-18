@@ -3,12 +3,14 @@ Date: 2026-03-11 (updated 2026-03-12)
 Branch: dendritic-from-scratch
 
 Purpose
+
 - Re‑audit the repository with strict adherence to Den's aspect model and the
   `__findFile` angle‑bracket resolution rules. Remove recommendations or
   observations that do not align with how Den expects aspects to be authored
   and consumed.
 
 Scope & constraints
+
 - Scope: `modules/` and `modules/features/` (inventory and recommendations).
 - Hyprland: excluded from criticism per user instruction — inventory only.
 - All suggestions follow Den primitives: aspects are attrsets exporting
@@ -18,12 +20,13 @@ Scope & constraints
   attrset.
 
 Den model recap (concise)
+
 - Aspect = attrset that may contain per‑class modules:
 
   aegis.foo = {
-    nixos = { pkgs, ... }: { ... };
-    homeManager = { pkgs, ... }: { ... };
-    darwin = { ... };
+  nixos = { pkgs, ... }: { ... };
+  homeManager = { pkgs, ... }: { ... };
+  darwin = { ... };
   };
 
 - `__findFile` resolves `<aegis/foo>` to the file that must export `aegis.foo`.
@@ -33,106 +36,108 @@ Den model recap (concise)
   implementations. Parametric `provides` can accept `{ host, user, ... }`.
 
 Inventory (aspects discovered)
+
 - For each aspect below we list: aspect name → file path → exported classes.
 - Note: this inventory is produced by scanning `modules/` and `modules/features/`.
 
-1) aegis.audio
+1. aegis.audio
    - file: modules/features/audio.nix
    - exports: nixos
 
-2) aegis.browser
+2. aegis.browser
    - file: modules/features/browser.nix
    - exports: homeManager (vendor sub-entries for google-chrome and brave)
 
-3) aegis.cli
+3. aegis.cli
    - file: modules/features/cli.nix
    - exports: homeManager (and sub-aspects `_.tui`, `_.aws`, `_.git` also expose homeManager)
 
-4) aegis.discord
+4. aegis.discord
    - file: modules/features/discord.nix
    - exports: homeManager
 
-5) aegis.element-desktop
+5. aegis.element-desktop
    - file: modules/features/element-desktop.nix
    - exports: homeManager
 
-6) aegis.fish
+6. aegis.fish
    - file: modules/features/fish.nix
    - exports: (top-level) programs + homeManager fragment
 
-7) aegis.fonts
+7. aegis.fonts
    - file: modules/features/fonts.nix
    - exports: nixos
 
-8) aegis.gaming
+8. aegis.gaming
    - file: modules/features/gaming.nix
    - exports: nixos
 
-9) aegis.hyprland (inventory only)
+9. aegis.hyprland (inventory only)
    - files: modules/hyprland.nix (system), modules/features/hyprland/default.nix (user)
    - exports: nixos, homeManager
 
-10) aegis.locale
+10. aegis.locale
     - file: modules/features/locale.nix
     - exports: nixos
 
-11) aegis.neovim
+11. aegis.neovim
     - file: modules/features/neovim.nix
     - exports: homeManager
 
-12) aegis.nfs-utils
+12. aegis.nfs-utils
     - file: modules/features/nfs-utils.nix
     - exports: nixos
 
-13) aegis.nix-ls
+13. aegis.nix-ls
     - file: modules/features/nix-ls.nix
     - exports: nixos
 
-14) aegis.nvidia
+14. aegis.nvidia
     - file: modules/features/nvidia.nix
     - exports: nixos
 
-15) aegis.password-manager
+15. aegis.password-manager
     - file: modules/features/password-manager.nix
     - exports: homeManager (implements sub-entries for keepassxc and bitwarden)
 
-16) aegis.programming
+16. aegis.programming
     - file: modules/features/programming.nix
     - exports: homeManager
 
-17) aegis.taskwarrior
+17. aegis.taskwarrior
     - file: modules/features/taskwarrior.nix
     - exports: homeManager
 
-18) aegis.terminal-emulator
+18. aegis.terminal-emulator
     - file: modules/features/terminal-emulator.nix
     - exports: homeManager
 
-19) aegis.theming
+19. aegis.theming
     - file: modules/features/theming.nix
     - exports: homeManager
 
-20) aegis.virtualization
+20. aegis.virtualization
     - file: modules/features/virtualization.nix
     - exports: provides for docker / libvirtd; contains nixos fragments
 
-21) aegis.xdg
+21. aegis.xdg
     - file: modules/features/xdg.nix
     - exports: homeManager
 
-22) aegis.zsa
+22. aegis.zsa
     - file: modules/features/zsa.nix
     - exports: nixos
 
-23) other aspects and host aspects
+23. other aspects and host aspects
     - modules/devenv.nix → aegis.devenv (homeManager)
     - modules/disks.nix → aegis.disks.provides.btrfs (provides)
     - modules/sops/default.nix → aegis.secrets (homeManager + nixos)
     - modules/networking.nix → aegis.networking (nixos)
     - modules/power-management.nix → aegis.power-management (nixos)
-    - host aspects under modules/hosts/* (den.aspects.<host> entries)
+    - host aspects under modules/hosts/\* (den.aspects.<host> entries)
 
 Aligned observations (only Den‑relevant issues)
+
 - Per‑class ownership must be explicit: many aspect files already follow the
   pattern (e.g., declare `nixos = ...` or `homeManager = ...`). Maintain the
   per‑class separation — do not collapse class fragments into a single mixed
@@ -159,6 +164,7 @@ Aligned observations (only Den‑relevant issues)
   conditional registration based on package availability.
 
 Removed or changed recommendations (den‑aligned)
+
 - Removed suggestions that treated an aspect as a single module; aspects are
   now treated as attrsets with per‑class modules per Den's model.
 - Removed advice that suggested moving aspects without accounting for
@@ -170,6 +176,7 @@ Removed or changed recommendations (den‑aligned)
   document them in `modules/features/README.md`.
 
 Concrete, safe next steps (Den‑centric)
+
 1. Add a one‑line header to each aspect file indicating: Category and Exports
    (nixos/homeManager/etc.). This is documentation only and aligns with Den.
 2. Convert inline vendor fragments to `provides` where appropriate (browser,
@@ -184,6 +191,7 @@ Concrete, safe next steps (Den‑centric)
    overrides parametric.
 
 Appendix — checklist for each aspect file
+
 - Does the file evaluate to an attrset exporting `aegis.<name>`? (required)
 - Which classes does it export (nixos/homeManager/darwin)? Are the
   per‑class modules pure and small?

@@ -1,14 +1,14 @@
 {
   aegis.hyprland = {
-    homeManager = 
+    homeManager =
       {
-      config,
-      pkgs,
-      lib,
-      inputs,
-      ...
+        config,
+        pkgs,
+        lib,
+        inputs,
+        ...
       }:
-        {
+      {
 
         home.packages = with pkgs; [
           bibata-cursors
@@ -215,20 +215,20 @@
               "$mod SHIFT, x, exec, kitty -e journalctl -f"
               "$mod SHIFT, e, exec, kitty -e nvim"
             ]
-              ++ (builtins.concatLists (
-                builtins.genList (
-                  i:
-                  let
-                    ws = toString (i + 1);
-                    cmd = "hyprctl dispatch workspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
-                    moveCmd = "hyprctl dispatch movetoworkspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
-                  in
-                    [
-                    "$mod, ${ws}, execr, ${cmd}"
-                    "$mod SHIFT, ${ws}, execr, ${moveCmd}"
-                  ]
-                ) 9
-              ));
+            ++ (builtins.concatLists (
+              builtins.genList (
+                i:
+                let
+                  ws = toString (i + 1);
+                  cmd = "hyprctl dispatch workspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
+                  moveCmd = "hyprctl dispatch movetoworkspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
+                in
+                [
+                  "$mod, ${ws}, execr, ${cmd}"
+                  "$mod SHIFT, ${ws}, execr, ${moveCmd}"
+                ]
+              ) 9
+            ));
 
             bindm = [
               "$mod, mouse:272, movewindow"

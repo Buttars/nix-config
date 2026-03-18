@@ -4,7 +4,7 @@
   pkgs ? import <nixpkgs> { },
   ...
 }:
-rec {
+{
   # example = pkgs.callPackage ./example { };
   sidecar = pkgs.callPackage ./sidecar.nix { };
   td = pkgs.callPackage ./td.nix { };

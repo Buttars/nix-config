@@ -1,5 +1,7 @@
 {
-  aegis.element-desktop.homeManager = { pkgs, ... }: {
-    home.packages = with pkgs; [ element-desktop ];
-  };
+  aegis.element-desktop.homeManager =
+    { pkgs, ... }:
+    {
+      home.packages = with pkgs; [ element-desktop ];
+    };
 }

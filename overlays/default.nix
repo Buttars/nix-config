@@ -8,10 +8,10 @@
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
     # awscli2 =
-      # if final.system == "aarch64-darwin" || final.system == "x86_64-darwin" then
-      #   # inputs.nixpkgs-awscli2.legacyPackages.${final.system}.awscli2
-      # else
-        # prev.awscli2;
+    # if final.system == "aarch64-darwin" || final.system == "x86_64-darwin" then
+    #   # inputs.nixpkgs-awscli2.legacyPackages.${final.system}.awscli2
+    # else
+    # prev.awscli2;
 
     gtk3 =
       if final.system == "aarch64-darwin" || final.system == "x86_64-darwin" then
