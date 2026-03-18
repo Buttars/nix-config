@@ -7,6 +7,7 @@
   ];
 
   den.default.nixos.imports = [
+    inputs.home-manager.nixosModules.home-manager
     inputs.disko.nixosModules.default
     inputs.stylix.nixosModules.stylix
   ];

@@ -24,6 +24,7 @@
       { pkgs, ... }:
       {
         imports = [
+          ./_disko.nix
           inputs.stylix.nixosModules.stylix
         ];
         environment.systemPackages = with pkgs; [ nfs-utils ];

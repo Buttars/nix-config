@@ -1,6 +1,6 @@
 { __findFile, ... }:
 {
-  den.hosts.x86_64-linux.DRHCDGTHGJ = {
+  den.hosts.aarch64-darwin.DRHCDGTHGJ = {
     users."landon.buttars".classes = [ "home-manager" ];
   };
   den.aspects.DRHCDGTHGJ = {
