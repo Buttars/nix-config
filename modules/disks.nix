@@ -13,7 +13,6 @@ let
         ...
       }:
       {
-        nixos.imports = [ inputs.disko.nixosModules.disko ];
         nixos.disko.devices = {
           disk = {
             disk0 = {

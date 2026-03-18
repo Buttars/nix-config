@@ -1,13 +1,15 @@
 {
   inputs,
   __findFile,
+  lib,
   ...
 }:
 {
+  den.schema.user.classes = lib.mkDefault [ "homeManager" ];
+
   den.default = {
     includes = [
       <den/define-user>
-      <den/home-manager>
       <aegis/devenv>
       (
         { host, ... }:
@@ -22,6 +24,8 @@
         inputs.srvos.nixosModules.mixins-systemd-boot
       ];
 
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
       documentation.doc.enable = false;
       documentation.info.enable = false;
       i18n.defaultLocale = "en_US.UTF-8";

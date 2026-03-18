@@ -5,4 +5,10 @@
     inputs.den.flakeModule
     (inputs.den.namespace "aegis" true)
   ];
+
+  den.default.nixos.imports = [
+    inputs.disko.nixosModules.default
+    inputs.stylix.nixosModules.stylix
+  ];
+
 }
