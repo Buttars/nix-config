@@ -30,11 +30,13 @@ Aspects (reusable feature units)
 ### Den fundamentals
 
 **`modules/den.nix`** is the core setup file. It:
+
 - Injects `__findFile` into all modules, enabling `<den/...>` and `<aegis/...>` angle-bracket path resolution
 - Registers `aegis` as a namespace (maps `<aegis/foo>` → `modules/features/foo.nix`)
 - Sets global NixOS defaults: home-manager, disko, stylix modules; locale, timezone, state version
 
 **`modules/default.nix`** sets cross-cutting defaults:
+
 - `den.schema.user.classes = ["homeManager"]` — all users get home-manager by default
 - `home-manager.useGlobalPkgs/useUserPackages`
 - Default includes for all hosts: `<den/define-user>`, `<aegis/devenv>`, hostname assignment
