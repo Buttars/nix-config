@@ -22,7 +22,7 @@
         users.mutableUsers = false;
         users.users.sentinel.hashedPasswordFile = config.sops.secrets.buttars-password.path;
         users.users.sentinel.extraGroups = [ "wheel" ];
-        users.users.sentinel.openssh.authorizedKeys.keyFiles = [ ../../users/buttars/id_ed25519.pub ];
+        users.users.sentinel.openssh.authorizedKeys.keyFiles = [ ../../users/buttars/keys/id_ed25519.pub ];
 
         services.openssh.enable = true;
         services.btrfs.autoScrub.enable = true;
