@@ -36,17 +36,15 @@
     };
 
     darwin = {
-      imports = [
-        {
-          home-manager.useUserPackages = true;
-          home-manager.useGlobalPkgs = true;
-          nixpkgs.overlays = with inputs; [
-            darwin.overlays.default
-            self.overlays.additions
-            self.overlays.modifications
-          ];
-        }
+      home-manager.useUserPackages = true;
+      home-manager.useGlobalPkgs = true;
+
+      nixpkgs.overlays = with inputs; [
+        darwin.overlays.default
+        self.overlays.additions
+        self.overlays.modifications
       ];
+
       nix.enable = false;
       system.stateVersion = 5;
       nixpkgs.config.allowUnfree = true;
