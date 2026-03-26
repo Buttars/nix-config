@@ -9,6 +9,8 @@
       <aegis/terminal-emulator>
       <aegis/neovim>
       <aegis/cli>
+      <aegis/cli/tui>
+      <aegis/hyprland>
     ];
 
     homeManager =
@@ -19,4 +21,5 @@
   };
 
   den.hosts.x86_64-linux.buttars-laptop.users.buttars.aspect = "buttars";
+  den.hosts.x86_64-linux.buttars-desktop.users.buttars.aspect = "buttars";
 }
