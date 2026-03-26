@@ -9,7 +9,6 @@
       <aegis/networking>
       <aegis/audio>
       <aegis/virtualization>
-      <aegis/nvidia>
       <aegis/fonts>
       <aegis/gaming>
       <aegis/zsa>
@@ -23,6 +22,15 @@
     nixos =
       { pkgs, ... }:
       {
+        hardware.enableRedistributableFirmware = true;
+
+        boot.initrd.kernelModules = [ "amdgpu" ];
+        boot.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "kvm-intel" ];
+        boot.extraModprobeConfig = "options vfio-pci ids=10de:2782,10de:22bc";
+        boot.kernelParams = [ "intel_iommu=on" "iommu=pt" ];
+
+        services.xserver.videoDrivers = [ "amdgpu" ];
+
         nixpkgs.config.allowUnfree = true;
 
         imports = [
