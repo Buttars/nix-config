@@ -115,6 +115,8 @@ Follow **Conventional Commits** with imperative present tense:
 - `refactor(modules): extract common disk configuration`
 - `chore(flake): update lockfile`
 
+**Commit bodies**: Prefer empty bodies unless there is relevant information (e.g., issue links, breaking changes, or non-obvious context).
+
 **Special cases**:
 - Flake lock updates: Always use `chore(flake): update lockfile`
 
