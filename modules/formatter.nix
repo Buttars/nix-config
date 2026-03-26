@@ -38,7 +38,7 @@
         settings.global.excludes = [
           "dotfiles/*"
           "*/LICENSE"
-          "*.{jpg,jpeg,png,gif,svg,ico,webp,woff,woff2,ttf,otf}"
+          "*.{jpg,jpeg,png,gif,svg,ico,webp,woff,woff2,ttf,otf,pub}"
           "flake.lock"
           "*/flake.lock"
           ".envrc"
