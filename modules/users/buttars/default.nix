@@ -6,6 +6,17 @@
       {
         sops.secrets.buttars-password.neededForUsers = true;
 
+        sops.secrets."private_keys/buttars" = {
+          owner = "buttars";
+          path = "/home/buttars/.ssh/id_ed25519";
+          mode = "0600";
+        };
+
+        systemd.tmpfiles.rules = [
+          "d /home/buttars/.ssh 0700 buttars users -"
+          "C /home/buttars/.ssh/id_ed25519.pub 0644 buttars users - ${./keys/id_ed25519.pub}"
+        ];
+
         users.mutableUsers = false;
         users.users.buttars.hashedPasswordFile = config.sops.secrets.buttars-password.path;
         users.users.buttars.extraGroups = [ "wheel" ] ++ lib.attrNames (lib.filterAttrs (_: v: v) {
