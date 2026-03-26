@@ -9,6 +9,9 @@
       <aegis/networking>
       <aegis/audio>
       <aegis/virtualization>
+      <aegis/virtualization/docker>
+      <aegis/nvidia>
+      <aegis/sops>
       <aegis/fish>
       <aegis/browser/brave>
       <aegis/fonts>
@@ -27,11 +30,9 @@
         hardware.enableRedistributableFirmware = true;
 
         boot.initrd.kernelModules = [ "amdgpu" ];
-        boot.kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" "kvm-intel" ];
-        boot.extraModprobeConfig = "options vfio-pci ids=10de:2782,10de:22bc";
-        boot.kernelParams = [ "intel_iommu=on" "iommu=pt" ];
+        boot.kernelModules = [ "kvm-intel" ];
 
-        services.xserver.videoDrivers = [ "amdgpu" ];
+        services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
         nixpkgs.config.allowUnfree = true;
 
