@@ -7,7 +7,7 @@
     includes = [
       <den/define-user>
       <aegis/networking>
-      <aegis/secrets>
+      <aegis/sops>
     ];
 
     nixos =
