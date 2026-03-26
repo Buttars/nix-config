@@ -15,10 +15,19 @@
     { self', ... }:
     {
       packages.fmt = self'.formatter;
-      devenv.shells.default.git-hooks.hooks.treefmt = {
-        enable = true;
-        package = self'.formatter;
-        settings.fail-on-change = false;
+      devenv.shells.default.git-hooks.hooks = {
+        treefmt = {
+          enable = true;
+          package = self'.formatter;
+          settings.fail-on-change = false;
+        };
+        flake-check = {
+          enable = true;
+          name = "nix flake check";
+          entry = "nix flake check --impure";
+          pass_filenames = false;
+          stages = [ "pre-push" ];
+        };
       };
       treefmt = {
         projectRootFile = "flake.nix";
