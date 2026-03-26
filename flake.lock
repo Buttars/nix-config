@@ -1074,6 +1074,26 @@
         "type": "github"
       }
     },
+    "paneru": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774554530,
+        "narHash": "sha256-cP+bBxbyuo3GaNZu1Wn2fDKPWecwRv0tDtqk36ZMRys=",
+        "owner": "karinushka",
+        "repo": "paneru",
+        "rev": "23367d0856354427fd50d861ff2da457dbe071dc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "karinushka",
+        "repo": "paneru",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": [
@@ -1151,6 +1171,7 @@
         "nixpkgs-lib": [
           "nixpkgs"
         ],
+        "paneru": "paneru",
         "sops-nix": "sops-nix",
         "srvos": "srvos",
         "stylix": "stylix",

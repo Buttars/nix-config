@@ -11,6 +11,7 @@
       <aegis/cli/git>
       <aegis/cli/tui>
       <aegis/neovim>
+      <aegis/paneru>
     ];
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {
