@@ -9,6 +9,8 @@
       <aegis/networking>
       <aegis/audio>
       <aegis/virtualization>
+      <aegis/fish>
+      <aegis/browser/brave>
       <aegis/fonts>
       <aegis/gaming>
       <aegis/zsa>
