@@ -82,7 +82,7 @@
         '';
       };
 
-      home.sessionVariables = lib.mkDefault {
+      home.sessionVariables = {
         EDITOR = "nvim";
         TERMINAL = "kitty";
         BROWSER = "brave";
