@@ -92,4 +92,32 @@ Stylix is imported globally via `den.default.nixos.imports`. Each host's `_styli
 - **`__findFile` must be in every module's arg pattern** that uses `<den/...>` or `<aegis/...>` syntax. The formatter (`deadnix`) is configured with `--no-lambda-pattern-names` to preserve it — do not remove it manually either.
 - **`flake.nix` key ordering**: flake-file requires `url` before `inputs.*` within each input attrset. Run `nix run .#write-flake` to fix ordering.
 - **Unfree packages**: Set `nixpkgs.config.allowUnfree = true` in the host's nixos config (e.g., for nvidia).
-- **Commit style**: `type(scope): description` — e.g., `feat(host/buttars-laptop): ...`, `fix(features/fish): ...`, `refactor(modules): ...`
+
+## Commit Guidelines
+
+Follow **Conventional Commits** with imperative present tense:
+
+**Format**: `type(scope): description`
+
+**Types**:
+- `fix`: Bug fixes — describe the bug, not the change
+- `feat`: New features
+- `style`: Code style changes (formatting, whitespace)
+- `chore`: Maintenance tasks (dependencies, tooling)
+- `docs`: Documentation changes
+- `refactor`: Code refactoring without behavior changes
+- `test`: Test additions or modifications
+- `perf`: Performance improvements
+
+**Examples**:
+- `feat(host/buttars-laptop): add nvidia driver support`
+- `fix(features/fish): shell initialization fails on first login`
+- `refactor(modules): extract common disk configuration`
+- `chore(flake): update lockfile`
+
+**Special cases**:
+- Flake lock updates: Always use `chore(flake): update lockfile`
+
+**Fix commits**: Describe what wasn't working, not what you changed.
+- ✅ `fix(darwin): home-manager configuration not applied to users`
+- ❌ `fix(darwin): add home-manager module import`
