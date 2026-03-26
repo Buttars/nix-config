@@ -15,7 +15,10 @@
     { self', ... }:
     {
       packages.fmt = self'.formatter;
-      devenv.shells.default.git-hooks.hooks.treefmt.enable = true;
+      devenv.shells.default.git-hooks.hooks.treefmt = {
+        enable = true;
+        package = self'.formatter;
+      };
       treefmt = {
         projectRootFile = "flake.nix";
         programs = {
