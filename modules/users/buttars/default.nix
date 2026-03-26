@@ -19,13 +19,18 @@
 
         users.mutableUsers = false;
         users.users.buttars.hashedPasswordFile = config.sops.secrets.buttars-password.path;
-        users.users.buttars.extraGroups = [ "wheel" ] ++ lib.attrNames (lib.filterAttrs (_: v: v) {
-          docker = config.virtualisation.docker.enable;
-          libvirtd = config.virtualisation.libvirtd.enable;
-          networkmanager = config.networking.networkmanager.enable;
-          wireshark = config.programs.wireshark.enable;
-          gamemode = config.programs.gamemode.enable;
-        });
+        users.users.buttars.extraGroups = [
+          "wheel"
+        ]
+        ++ lib.attrNames (
+          lib.filterAttrs (_: v: v) {
+            docker = config.virtualisation.docker.enable;
+            libvirtd = config.virtualisation.libvirtd.enable;
+            networkmanager = config.networking.networkmanager.enable;
+            wireshark = config.programs.wireshark.enable;
+            gamemode = config.programs.gamemode.enable;
+          }
+        );
       };
 
     includes = [

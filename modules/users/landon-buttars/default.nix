@@ -13,7 +13,7 @@
       <aegis/neovim>
     ];
   };
-  den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = { 
+  den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {
     aspect = "landon.buttars";
     classes = [ "homeManager" ];
   };

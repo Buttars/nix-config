@@ -1,4 +1,5 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   stylix.enable = true;
   stylix.autoEnable = false;
   stylix.base16Scheme = builtins.fetchurl {

@@ -32,7 +32,10 @@
         boot.initrd.kernelModules = [ "amdgpu" ];
         boot.kernelModules = [ "kvm-intel" ];
 
-        services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
+        services.xserver.videoDrivers = [
+          "amdgpu"
+          "nvidia"
+        ];
 
         nixpkgs.config.allowUnfree = true;
 
