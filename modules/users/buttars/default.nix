@@ -10,6 +10,7 @@
       <aegis/neovim>
       <aegis/cli>
       <aegis/cli/tui>
+      <aegis/cli/git>
       <aegis/hyprland>
     ];
 
