@@ -100,6 +100,7 @@ Follow **Conventional Commits** with imperative present tense:
 **Format**: `type(scope): description`
 
 **Types**:
+
 - `fix`: Bug fixes — describe the bug, not the change
 - `feat`: New features
 - `style`: Code style changes (formatting, whitespace)
@@ -110,6 +111,7 @@ Follow **Conventional Commits** with imperative present tense:
 - `perf`: Performance improvements
 
 **Examples**:
+
 - `feat(host/buttars-laptop): add nvidia driver support`
 - `fix(features/fish): shell initialization fails on first login`
 - `refactor(modules): extract common disk configuration`
@@ -118,8 +120,12 @@ Follow **Conventional Commits** with imperative present tense:
 **Commit bodies**: Prefer empty bodies unless there is relevant information (e.g., issue links, breaking changes, or non-obvious context).
 
 **Special cases**:
+
 - Flake lock updates: Always use `chore(flake): update lockfile`
 
 **Fix commits**: Describe what wasn't working, not what you changed.
+
 - ✅ `fix(darwin): home-manager configuration not applied to users`
 - ❌ `fix(darwin): add home-manager module import`
+
+**Atomic commits**: Each commit should contain exactly one logical change. Split unrelated changes into separate commits.
