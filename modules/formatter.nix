@@ -18,6 +18,7 @@
       devenv.shells.default.git-hooks.hooks.treefmt = {
         enable = true;
         package = self'.formatter;
+        settings.fail-on-change = false;
       };
       treefmt = {
         projectRootFile = "flake.nix";
