@@ -18,7 +18,9 @@
         };
 
         interactiveShellInit = ''
-          source $HOME/.config/sops-nix/secrets/rendered/neovim-avante.env
+          if test -f $HOME/.config/sops-nix/secrets/rendered/neovim-avante.env
+            source $HOME/.config/sops-nix/secrets/rendered/neovim-avante.env
+          end
 
           function cp; command cp -iv $argv; end
           function mv; command mv -iv $argv; end
@@ -42,7 +44,7 @@
           if test (tty) = "/dev/tty1"
             if type -q Hyprland
               if not pgrep -x Hyprland > /dev/null
-                exec Hyprland
+                exec start-hyprland
               end
             end
           end
