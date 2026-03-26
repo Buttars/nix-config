@@ -21,6 +21,7 @@
         git-worktree-switcher
         docker
         amazon-q-cli
+        kiro-cli
         # firefox
         (pkgs.python3.withPackages (
           ps: with ps; [
