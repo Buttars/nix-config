@@ -1,6 +1,22 @@
 { den, __findFile, ... }:
 {
   den.aspects.buttars = {
+    nixos =
+      { lib, config, ... }:
+      {
+        sops.secrets.buttars-password.neededForUsers = true;
+
+        users.mutableUsers = false;
+        users.users.buttars.hashedPasswordFile = config.sops.secrets.buttars-password.path;
+        users.users.buttars.extraGroups = [ "wheel" ] ++ lib.attrNames (lib.filterAttrs (_: v: v) {
+          docker = config.virtualisation.docker.enable;
+          libvirtd = config.virtualisation.libvirtd.enable;
+          networkmanager = config.networking.networkmanager.enable;
+          wireshark = config.programs.wireshark.enable;
+          gamemode = config.programs.gamemode.enable;
+        });
+      };
+
     includes = [
       <den/primary-user>
       (den._.user-shell "fish")
