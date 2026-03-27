@@ -103,7 +103,7 @@
                 "/srv/media/movies:/movies"
                 "/srv/media/shows:/shows"
               ];
-              extraOptions = [ "--network=container:gluetun" ];
+              networks = [ "container:gluetun" ];
               dependsOn = [ "gluetun" ];
             };
 
@@ -119,7 +119,7 @@
                 "/srv/media/movies:/movies"
                 "/srv/services/qbittorrent/downloads:/downloads"
               ];
-              extraOptions = [ "--network=container:gluetun" ];
+              networks = [ "container:gluetun" ];
               dependsOn = [ "gluetun" ];
             };
 
@@ -135,7 +135,7 @@
                 "/srv/media/shows:/shows"
                 "/srv/services/qbittorrent/downloads:/downloads"
               ];
-              extraOptions = [ "--network=container:gluetun" ];
+              networks = [ "container:gluetun" ];
               dependsOn = [ "gluetun" ];
             };
 
@@ -151,7 +151,7 @@
                 "/srv/media/music:/music"
                 "/srv/services/qbittorrent/downloads:/downloads"
               ];
-              extraOptions = [ "--network=container:gluetun" ];
+              networks = [ "container:gluetun" ];
               dependsOn = [ "gluetun" ];
             };
 
@@ -163,8 +163,7 @@
                 TZ = "America/Denver";
               };
               volumes = [ "/srv/services/prowlarr:/config" ];
-              extraOptions = [ "--network=container:gluetun" ];
-
+              networks = [ "container:gluetun" ];
               dependsOn = [ "gluetun" ];
             };
 
