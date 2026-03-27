@@ -3,22 +3,21 @@
   ...
 }:
 {
-  den.hosts.x86_64-linux.torrens = { };
+  den.hosts.x86_64-linux.torrens = {
+    users.torrens.classes = [ "homeManager" ];
+  };
   den.aspects.torrens = {
     includes = [
       <den/define-user>
       <aegis/networking>
       <aegis/sops>
-      (<aegis/disks/btrfs> {
-        disk = "/dev/sda";
-        withSwap = true;
-        swapSize = "8";
-      })
     ];
 
     nixos =
       { pkgs, config, ... }:
       {
+        imports = [ ./_disko.nix ];
+
         hardware.facter.reportPath = ./facter.json;
         hardware.facter.detected.dhcp.interfaces = [ "ens18" ];
 
@@ -69,7 +68,15 @@
             options = nfsOptions;
           };
 
+        sops.secrets.buttars-password.neededForUsers = true;
         sops.secrets.gluetun_env = { };
+
+        users.mutableUsers = false;
+        users.users.torrens.hashedPasswordFile = config.sops.secrets.buttars-password.path;
+        users.users.torrens.extraGroups = [ "wheel" ];
+        users.users.torrens.openssh.authorizedKeys.keyFiles = [
+          ../../users/buttars/keys/id_ed25519.pub
+        ];
 
         virtualisation.podman = {
           enable = true;
