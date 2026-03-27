@@ -79,6 +79,84 @@
         virtualisation.oci-containers = {
           backend = "podman";
           containers = {
+            qbittorrent = {
+              image = "lscr.io/linuxserver/qbittorrent:latest";
+              environment = {
+                PUID = "1000";
+                PGID = "1000";
+                TZ = "America/Denver";
+                WEBUI_PORT = "8080";
+              };
+              volumes = [
+                "/srv/services/qbittorrent:/config"
+                "/srv/media/downloads:/downloads"
+                "/srv/media/movies:/movies"
+                "/srv/media/shows:/shows"
+              ];
+              extraOptions = [ "--network=container:gluetun" ];
+              dependsOn = [ "gluetun" ];
+            };
+
+            radarr = {
+              image = "lscr.io/linuxserver/radarr:latest";
+              environment = {
+                PUID = "1000";
+                PGID = "1000";
+                TZ = "America/Denver";
+              };
+              volumes = [
+                "/srv/services/radarr:/config"
+                "/srv/media/movies:/movies"
+                "/srv/media/downloads:/downloads"
+              ];
+              extraOptions = [ "--network=container:gluetun" ];
+              dependsOn = [ "gluetun" ];
+            };
+
+            sonarr = {
+              image = "lscr.io/linuxserver/sonarr:latest";
+              environment = {
+                PUID = "1000";
+                PGID = "1000";
+                TZ = "America/Denver";
+              };
+              volumes = [
+                "/srv/services/sonarr:/config"
+                "/srv/media/shows:/shows"
+                "/srv/media/downloads:/downloads"
+              ];
+              extraOptions = [ "--network=container:gluetun" ];
+              dependsOn = [ "gluetun" ];
+            };
+
+            lidarr = {
+              image = "lscr.io/linuxserver/lidarr:latest";
+              environment = {
+                PUID = "1000";
+                PGID = "1000";
+                TZ = "America/Denver";
+              };
+              volumes = [
+                "/srv/services/lidarr:/config"
+                "/srv/media/music:/music"
+                "/srv/media/downloads:/downloads"
+              ];
+              extraOptions = [ "--network=container:gluetun" ];
+              dependsOn = [ "gluetun" ];
+            };
+
+            prowlarr = {
+              image = "lscr.io/linuxserver/prowlarr:latest";
+              environment = {
+                PUID = "1000";
+                PGID = "1000";
+                TZ = "America/Denver";
+              };
+              volumes = [ "/srv/services/prowlarr:/config" ];
+              extraOptions = [ "--network=container:gluetun" ];
+              dependsOn = [ "gluetun" ];
+            };
+
             gluetun = {
               image = "qmcgaw/gluetun:latest";
               environment = {
