@@ -3,8 +3,10 @@
   den.aspects."landon.buttars".homeManager = {
     programs.git = {
       enable = true;
-      userName = "Landon Buttars";
-      userEmail = "landon.buttars@wgu.edu";
+      settings.user = {
+        name = "Landon Buttars";
+        email = "landon.buttars@wgu.edu";
+      };
 
       includes = [
         {
