@@ -81,6 +81,7 @@
             bind-key u new-window -n '🛠️ devenv' -c '#{pane_current_path}' 'nix develop --accept-flake-config --no-pure-eval --command devenv up'
 
             ##### ─── Copy Mode ────────────────────────────────
+            set -g mode-keys vi
             bind-key -T copy-mode-vi 'C-h' select-pane -L
             bind-key -T copy-mode-vi 'C-j' select-pane -D
             bind-key -T copy-mode-vi 'C-k' select-pane -U
