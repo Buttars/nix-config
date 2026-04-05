@@ -12,7 +12,7 @@ keys:
       - &buttars-desktop age10w02unkvvka427edd04fk2jtz6axelus6ehhd8axr4rnqvnsrstqd2gqpq
       - &buttars-laptop age1tn6dq7s4ruxk403g98989erd23ev4tdvvz5fucnu6cqucx7my3ks7ytjy3
       - &landon-buttars-wgu age15tkxx8e9h29vn9u3rs6y00pty3tjprsrxl6kmp3nvesklz86eqrq5k2yme
-      - &sentinel age1rs7mtl3a5d2e3g5xv8639fpvd332kvgheapyw4m7g3qxj7wfm3jslk25aa
+      - &sentinel age198qaul5jy4ncnshr7l4s3x80rqg8rg3jez43f4ap4f22g29kef8s3g4uj
       - &torrens age1q6m26q085sp2zyaz25arjxzhjc49s8fuhqp2nmwct2u4eqtw0srswcyjy7
 creation_rules:
   - path_regex: modules/sops/[^/]+\.(yaml|json|env|ini|sops)$
