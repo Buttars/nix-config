@@ -1,7 +1,10 @@
 { __findFile, inputs, ... }:
 {
   den.hosts.x86_64-linux.buttars-desktop = {
-    users.buttars-desktop.classes = [ "homeManager" ];
+    users.buttars-desktop = {
+      classes = [ "homeManager" ];
+      aspect = "buttars-desktop-user";
+    };
   };
   den.aspects.buttars-desktop = {
     includes = [
