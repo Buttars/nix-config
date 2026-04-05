@@ -16,7 +16,6 @@
       <aegis/nvidia>
       <aegis/sops>
       <aegis/fish>
-      <aegis/browser/brave>
       <aegis/fonts>
       <aegis/gaming>
       <aegis/zsa>

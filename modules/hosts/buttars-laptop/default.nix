@@ -3,9 +3,10 @@
   den.aspects.buttars-laptop = {
     includes = [
       <aegis/audio>
-      <aegis/browser/brave>
       <aegis/fonts>
       <aegis/zsa>
+      <aegis/sops>
+      <aegis/theming>
     ];
     nixos = {
       imports = [

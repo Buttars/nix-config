@@ -12,6 +12,7 @@
       <aegis/cli/tui>
       <aegis/cli/git>
       <aegis/hyprland>
+      <aegis/browser/brave>
       <aegis/sops>
     ];
 
