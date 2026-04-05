@@ -93,10 +93,34 @@
           };
         };
 
+        services.dnsmasq = {
+          enable = true;
+          settings = {
+            # Wildcard: all *.buttars.lan → sentinel (caddy handles routing)
+            address = [
+              "/.buttars.lan/10.0.40.9"
+              "/sentinel.lan/10.0.40.9"
+              "/torrens.lan/10.0.40.5"
+              "/theatrum.lan/10.0.40.3"
+            ];
+            server = [
+              "1.1.1.1"
+              "8.8.8.8"
+            ];
+            # Don't forward .lan queries upstream (no public .lan TLD)
+            local = [ "/lan/" ];
+            cache-size = 1000;
+            domain-needed = true;
+            bogus-priv = true;
+          };
+        };
+
         networking.firewall.allowedTCPPorts = [
+          53
           80
           443
         ];
+        networking.firewall.allowedUDPPorts = [ 53 ];
 
         services.btrfs.autoScrub.enable = true;
         services.beesd.filesystems.nixroot = {
