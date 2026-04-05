@@ -4,7 +4,10 @@
 }:
 {
   den.hosts.x86_64-linux.torrens = {
-    users.torrens.classes = [ "homeManager" ];
+    users.torrens = {
+      classes = [ "homeManager" ];
+      aspect = "torrens-user";
+    };
   };
   den.aspects.torrens = {
     includes = [
@@ -95,8 +98,8 @@
                 WEBUI_PORT = "8080";
               };
               volumes = [
-                "/srv/services/qbittorrent:/config"
-                "/srv/media/downloads:/downloads"
+                "/srv/services/qbittorrent/config:/config"
+                "/srv/services/qbittorrent/downloads:/downloads"
                 "/srv/media/movies:/movies"
                 "/srv/media/shows:/shows"
               ];
@@ -114,7 +117,7 @@
               volumes = [
                 "/srv/services/radarr:/config"
                 "/srv/media/movies:/movies"
-                "/srv/media/downloads:/downloads"
+                "/srv/services/qbittorrent/downloads:/downloads"
               ];
               extraOptions = [ "--network=container:gluetun" ];
               dependsOn = [ "gluetun" ];
@@ -130,7 +133,7 @@
               volumes = [
                 "/srv/services/sonarr:/config"
                 "/srv/media/shows:/shows"
-                "/srv/media/downloads:/downloads"
+                "/srv/services/qbittorrent/downloads:/downloads"
               ];
               extraOptions = [ "--network=container:gluetun" ];
               dependsOn = [ "gluetun" ];
@@ -146,7 +149,7 @@
               volumes = [
                 "/srv/services/lidarr:/config"
                 "/srv/media/music:/music"
-                "/srv/media/downloads:/downloads"
+                "/srv/services/qbittorrent/downloads:/downloads"
               ];
               extraOptions = [ "--network=container:gluetun" ];
               dependsOn = [ "gluetun" ];
@@ -161,16 +164,12 @@
               };
               volumes = [ "/srv/services/prowlarr:/config" ];
               extraOptions = [ "--network=container:gluetun" ];
+
               dependsOn = [ "gluetun" ];
             };
 
             gluetun = {
               image = "qmcgaw/gluetun:latest";
-              environment = {
-                VPN_SERVICE_PROVIDER = "protonvpn";
-                VPN_TYPE = "wireguard";
-                SERVER_COUNTRIES = "Netherlands";
-              };
               environmentFiles = [ config.sops.secrets.gluetun_env.path ];
               ports = [
                 "8080:8080" # qBittorrent
@@ -179,7 +178,7 @@
                 "8686:8686" # Lidarr
                 "9696:9696" # Prowlarr
               ];
-              volumes = [ "/srv/services/gluetun:/gluetun" ];
+              volumes = [ "/var/lib/gluetun:/gluetun" ];
               extraOptions = [
                 "--cap-add=NET_ADMIN"
                 "--device=/dev/net/tun:/dev/net/tun"
