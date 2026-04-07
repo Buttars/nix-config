@@ -48,6 +48,15 @@
             options = defaultNfsOptions;
           };
 
+        fileSystems."/var/cache/jellyfin" = {
+          device = "tmpfs";
+          fsType = "tmpfs";
+          options = [
+            "size=2G"
+            "mode=0755"
+          ];
+        };
+
         services.jellyfin = {
           enable = true;
           dataDir = "/srv/services/jellyfin/data";
@@ -82,6 +91,41 @@
             config.boot.kernelPackages.nvidiaPackages.stable
             nvidia-vaapi-driver
           ];
+        };
+
+        systemd.services.jellyfin-cache-monitor = {
+          description = "Clear Jellyfin transcode cache when tmpfs is nearly full";
+          serviceConfig = {
+            Type = "oneshot";
+            User = "jellyfin";
+          };
+          script = ''
+            threshold=85
+            cache_dir="/var/cache/jellyfin"
+            transcode_dir="$cache_dir/transcodes"
+
+            usage=$(${pkgs.coreutils}/bin/df --output=pcent "$cache_dir" | ${pkgs.coreutils}/bin/tail -1 | ${pkgs.gnused}/bin/sed 's/[^0-9]//g')
+
+            echo "jellyfin-cache-monitor: usage=''${usage}% threshold=''${threshold}%"
+
+            if [ -n "$usage" ] && [ "$usage" -ge "$threshold" ]; then
+              echo "jellyfin-cache-monitor: threshold reached, clearing transcodes"
+              deleted=$(${pkgs.findutils}/bin/find "$transcode_dir" -type f \
+                \( -name "*.ts" -o -name "*.m3u8" -o -name "*.mp4" -o -name "*.webm" \) \
+                -print -delete | ${pkgs.coreutils}/bin/wc -l)
+              echo "jellyfin-cache-monitor: deleted ''${deleted} files"
+            else
+              echo "jellyfin-cache-monitor: usage within threshold, no action taken"
+            fi
+          '';
+        };
+
+        systemd.timers.jellyfin-cache-monitor = {
+          wantedBy = [ "timers.target" ];
+          timerConfig = {
+            OnCalendar = "*:0/5";
+            Persistent = true;
+          };
         };
 
         services.openssh.enable = true;
