@@ -22,6 +22,7 @@
         docker
         amazon-q-cli
         kiro-cli
+        logseq
         # firefox
         (pkgs.python3.withPackages (
           ps: with ps; [
