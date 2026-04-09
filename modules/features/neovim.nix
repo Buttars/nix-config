@@ -3,9 +3,14 @@
     homeManager =
       { pkgs, ... }:
       {
+        programs.neovim = {
+          enable = true;
+          viAlias = true;
+          vimAlias = true;
+          vimdiffAlias = true;
+        };
+
         home.packages = with pkgs; [
-          neovim
-          # pngpaste
           imagemagick
           statix
           opencode

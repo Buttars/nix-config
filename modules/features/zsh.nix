@@ -73,8 +73,6 @@
         { pkgs, ... }:
         {
           programs.zsh.shellAliases = {
-            vim = "nvim";
-            vimdiff = "nvim -d";
             cp = "cp -iv";
             mv = "mv -iv";
             rm = "rm -vI";
