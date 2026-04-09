@@ -32,14 +32,12 @@
         { pkgs, ... }:
         {
           home.packages = with pkgs; [
-            tmux
             btop
             diffnav
             gh
             gh-dash
             htop
             process-compose
-            sesh
             sshs
           ];
           programs.fzf = {
@@ -67,7 +65,6 @@
         {
           home.packages = with pkgs; [
             delta
-            diffnav
           ];
           programs.git = {
             enable = true;

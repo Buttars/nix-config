@@ -27,8 +27,6 @@
           recursive = true;
         };
 
-      programs.zsh.enable = true;
-
       home.packages = with pkgs; [
         gleam
         erlang
