@@ -1,9 +1,6 @@
 { inputs, ... }:
 {
   den.aspects."landon.buttars".homeManager =
-    let
-      inherit (inputs) dotfiles;
-    in
     {
       pkgs,
       config,
@@ -24,11 +21,6 @@
                 config.lib.file.mkOutOfStoreSymlink filePath;
             recursive = true;
           };
-
-        ".config/fish" = {
-          source = "${dotfiles}/.config/fish";
-          recursive = true;
-        };
 
         ".config/direnv/direnv.toml".text = lib.mkIf config.programs.direnv.enable ''
           [global]
