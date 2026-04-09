@@ -21,11 +21,6 @@
           recursive = true;
         };
 
-        ".config/direnv/direnv.toml".text = lib.mkIf config.programs.direnv.enable ''
-          [global]
-          hide_env_diff = true
-        '';
-
         # ".config/hypr".source = "${dotfiles}/.config/hypr";
         ".config/lf".source = "${dotfiles}/.config/lf";
         ".config/zsh".source = "${dotfiles}/.config/zsh";
