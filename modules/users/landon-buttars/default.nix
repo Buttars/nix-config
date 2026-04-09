@@ -4,7 +4,7 @@
     includes = [
       <den/primary-user>
       <aegis/programming>
-      <aegis/terminal-emulator>
+      <aegis/terminal-emulator/kitty>
       <aegis/taskwarrior>
       <aegis/cli>
       <aegis/cli/aws>

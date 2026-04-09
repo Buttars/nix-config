@@ -35,7 +35,6 @@
           hide_env_diff = true
         '';
 
-        ".config/kitty".source = "${dotfiles}/.config/kitty";
         ".config/nixpkgs/config.nix" = {
           text = ''
             {
