@@ -40,7 +40,6 @@
             process-compose
             sesh
             sshs
-            yazi
           ];
           programs.fzf = {
             enable = true;
