@@ -9,8 +9,10 @@
             bat
             eza
             fd
+            dig
             intelli-shell
             nix-search-tv
+            ripgrep
             tldr
             watch
             wikiman

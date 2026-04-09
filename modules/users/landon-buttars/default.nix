@@ -6,9 +6,7 @@
       <aegis/programming>
       <aegis/terminal-emulator/kitty>
       <aegis/taskwarrior>
-      <aegis/cli>
       <aegis/cli/aws>
-      <aegis/cli/git>
       <aegis/cli/tui>
       <aegis/neovim>
       <aegis/paneru>
