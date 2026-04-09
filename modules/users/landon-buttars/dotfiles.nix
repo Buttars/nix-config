@@ -39,7 +39,6 @@
           hide_env_diff = true
         '';
 
-        ".config/tmux".source = "${dotfiles}/.config/tmux";
         ".config/lf".source = "${dotfiles}/.config/lf";
         ".config/zsh".source = "${dotfiles}/.config/zsh";
         ".config/kitty".source = "${dotfiles}/.config/kitty";
