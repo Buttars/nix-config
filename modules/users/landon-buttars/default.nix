@@ -13,6 +13,7 @@
       <aegis/neovim>
       <aegis/paneru>
       <aegis/tmux/full>
+      <aegis/zsh>
     ];
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {
