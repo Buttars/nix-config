@@ -1,6 +1,11 @@
 {
   den.aspects."landon.buttars".homeManager =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      lib,
+      ...
+    }:
     {
       imports = [
         {
@@ -8,6 +13,19 @@
           dotfiles.path = "${config.home.homeDirectory}/nix-config/master/dotfiles";
         }
       ];
+
+      home.file.".config/nvim" =
+        let
+          filePath = "${config.dotfiles.path}/.config/nvim";
+        in
+        {
+          source =
+            if !config.dotfiles.mutable then
+              lib.relativeToRoot "./dotfiles/.config/nvim"
+            else
+              config.lib.file.mkOutOfStoreSymlink filePath;
+          recursive = true;
+        };
 
       programs.zsh.enable = true;
 
