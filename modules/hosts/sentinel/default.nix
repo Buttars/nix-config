@@ -152,16 +152,10 @@
         services.dnsmasq = {
           enable = true;
           settings = {
-            # Wildcard: all *.buttars.lan → sentinel (caddy handles routing)
-            address = [
-              "/.buttars.lan/10.0.40.9"
-              "/sentinel.lan/10.0.40.9"
-              "/torrens.lan/10.0.40.5"
-              "/theatrum.lan/10.0.40.3"
-            ];
+            address = [ "/.buttars.lan/10.0.40.9" ];
             server = [
               "1.1.1.1"
-              "8.8.8.8"
+              "1.0.0.1"
             ];
             cache-size = 1000;
             domain-needed = true;
