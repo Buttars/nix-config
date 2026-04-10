@@ -16,7 +16,8 @@ keys:
       - &landon-buttars-wgu age15tkxx8e9h29vn9u3rs6y00pty3tjprsrxl6kmp3nvesklz86eqrq5k2yme
       - &sentinel age15dfrqqct22q085ajerfp90332rlxgf65gvpejwc7ryrr2r4qpvjs27y4nr
       - &torrens age1q6m26q085sp2zyaz25arjxzhjc49s8fuhqp2nmwct2u4eqtw0srswcyjy7
-      - &aegis age1tqkwruvy4mdw4yr5wd7k4ksdx0au8mstmgw70llh8y8u3jlejgrqyr6qty
+      - &aegis age167fy3y70ztkvnlxtj75n4j9fwkyv8sq0gfu6rk6tk269t0dkdf0qlcd0jq
+
 creation_rules:
   - path_regex: modules/sops/[^/]+\.(yaml|json|env|ini|sops)$
     key_groups:
