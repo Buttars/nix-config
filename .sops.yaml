@@ -8,12 +8,15 @@ keys:
           default: &wgu_default age1ry7vx3wta86009kenncr8fat85h2yqn4wytkapf6fwp6w2naf96q3qzy59
       - sentinel:
           default: &sentinel_default age13e0df0d07jcwpyc4kh247rqjrnwj6gu7g5v3e6x46ezcx2v9653sflkjel
+      - aegis:
+          default: &aegis_default age1lx88597f228vhzav5hun74jzdr6faqk0m2996g8ss76rxmulsffs0vlndz
   - hosts:
       - &buttars-desktop age10w02unkvvka427edd04fk2jtz6axelus6ehhd8axr4rnqvnsrstqd2gqpq
       - &buttars-laptop age1tn6dq7s4ruxk403g98989erd23ev4tdvvz5fucnu6cqucx7my3ks7ytjy3
       - &landon-buttars-wgu age15tkxx8e9h29vn9u3rs6y00pty3tjprsrxl6kmp3nvesklz86eqrq5k2yme
       - &sentinel age15dfrqqct22q085ajerfp90332rlxgf65gvpejwc7ryrr2r4qpvjs27y4nr
       - &torrens age1q6m26q085sp2zyaz25arjxzhjc49s8fuhqp2nmwct2u4eqtw0srswcyjy7
+      - &aegis age1tqkwruvy4mdw4yr5wd7k4ksdx0au8mstmgw70llh8y8u3jlejgrqyr6qty
 creation_rules:
   - path_regex: modules/sops/[^/]+\.(yaml|json|env|ini|sops)$
     key_groups:
@@ -23,9 +26,11 @@ creation_rules:
           - *buttars_buttars-laptop
           - *wgu_default
           - *sentinel_default
+          - *aegis_default
           # Hosts
           - *buttars-desktop
           - *buttars-laptop
           - *landon-buttars-wgu
           - *sentinel
           - *torrens
+          - *aegis
