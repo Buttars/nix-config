@@ -31,15 +31,15 @@ Aspects (reusable feature units)
 
 **`modules/den.nix`** is the core setup file. It:
 
-- Injects `__findFile` into all modules, enabling `<den/...>` and `<aegis/...>` angle-bracket path resolution
-- Registers `aegis` as a namespace (maps `<aegis/foo>` → `modules/features/foo.nix`)
+- Injects `__findFile` into all modules, enabling `<den/...>` and `<aegix/...>` angle-bracket path resolution
+- Registers `aegix` as a namespace (maps `<aegix/foo>` → `modules/features/foo.nix`)
 - Sets global NixOS defaults: home-manager, disko, stylix modules; locale, timezone, state version
 
 **`modules/default.nix`** sets cross-cutting defaults:
 
 - `den.schema.user.classes = ["homeManager"]` — all users get home-manager by default
 - `home-manager.useGlobalPkgs/useUserPackages`
-- Default includes for all hosts: `<den/define-user>`, `<aegis/devenv>`, hostname assignment
+- Default includes for all hosts: `<den/define-user>`, `<aegix/devenv>`, hostname assignment
 
 ### Defining a host
 
@@ -51,7 +51,7 @@ Aspects (reusable feature units)
     users.<username>.classes = [ "home-manager" ];
   };
   den.aspects.<hostname> = {
-    includes = [ <den/define-user> <aegis/networking> <aegis/audio> ];
+    includes = [ <den/define-user> <aegix/networking> <aegix/audio> ];
     nixos = { pkgs, ... }: { ... };
     homeManager = { pkgs, ... }: { ... };
   };
@@ -67,7 +67,7 @@ Disk config goes in a separate `_disko.nix` (manually imported via `nixos.import
 { __findFile, den, ... }:
 {
   den.aspects.<username> = {
-    includes = [ <den/primary-user> (den._.user-shell "fish") <aegis/cli> ];
+    includes = [ <den/primary-user> (den._.user-shell "fish") <aegix/cli> ];
     homeManager = { pkgs, ... }: { ... };
   };
   # Wire user to a host:
@@ -77,11 +77,11 @@ Disk config goes in a separate `_disko.nix` (manually imported via `nixos.import
 
 ### Aspect library (`modules/features/`)
 
-Each file exports `aegis.<name>` with `nixos` and/or `homeManager` keys. The `<aegis/name>` syntax resolves to the corresponding file. Including an aspect in both a host and a user is intentional — the host include applies the `nixos` class config, the user include applies the `homeManager` class config.
+Each file exports `aegix.<name>` with `nixos` and/or `homeManager` keys. The `<aegix/name>` syntax resolves to the corresponding file. Including an aspect in both a host and a user is intentional — the host include applies the `nixos` class config, the user include applies the `homeManager` class config.
 
 ### Disk layout (`modules/disks.nix`)
 
-Provides `aegis.disks.provides.btrfs` — a parametric function for btrfs+LUKS layouts. Each host that uses disko defines its own `_disko.nix` with `disko.devices`.
+Provides `aegix.disks.provides.btrfs` — a parametric function for btrfs+LUKS layouts. Each host that uses disko defines its own `_disko.nix` with `disko.devices`.
 
 ### Theming
 
@@ -89,7 +89,7 @@ Stylix is imported globally via `den.default.nixos.imports`. Each host's `_styli
 
 ## Key Constraints
 
-- **`__findFile` must be in every module's arg pattern** that uses `<den/...>` or `<aegis/...>` syntax. The formatter (`deadnix`) is configured with `--no-lambda-pattern-names` to preserve it — do not remove it manually either.
+- **`__findFile` must be in every module's arg pattern** that uses `<den/...>` or `<aegix/...>` syntax. The formatter (`deadnix`) is configured with `--no-lambda-pattern-names` to preserve it — do not remove it manually either.
 - **`flake.nix` key ordering**: flake-file requires `url` before `inputs.*` within each input attrset. Run `nix run .#write-flake` to fix ordering.
 - **Unfree packages**: Set `nixpkgs.config.allowUnfree = true` in the host's nixos config (e.g., for nvidia).
 

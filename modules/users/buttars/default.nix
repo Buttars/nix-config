@@ -5,15 +5,15 @@
       <den/primary-user>
       (den._.user-shell "fish")
       (<den/unfree> [ "claude-code" ])
-      <aegis/programming>
-      <aegis/terminal-emulator>
-      <aegis/neovim>
-      <aegis/cli>
-      <aegis/cli/tui>
-      <aegis/cli/git>
-      <aegis/hyprland>
-      <aegis/browser/brave>
-      <aegis/sops>
+      <aegix/programming>
+      <aegix/terminal-emulator>
+      <aegix/neovim>
+      <aegix/cli>
+      <aegix/cli/tui>
+      <aegix/cli/git>
+      <aegix/hyprland>
+      <aegix/browser/brave>
+      <aegix/sops>
     ];
 
     nixos =

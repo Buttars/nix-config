@@ -78,11 +78,11 @@ in
 
   # USAGE:
   # den.aspects.my-server.includes = [
-  #   (<aegis/disks/btrfs> {
+  #   (<aegix/disks/btrfs> {
   #     disk = "/dev/vda";
   #     withSwap = true;
   #     swapSize = "16";
   #   })
   # ];
-  aegis.disks.provides.btrfs = diskoConfigurations.btrfs;
+  aegix.disks.provides.btrfs = diskoConfigurations.btrfs;
 }

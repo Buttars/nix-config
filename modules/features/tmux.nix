@@ -1,11 +1,11 @@
 {
   den,
-  aegis,
+  aegix,
   lib,
   ...
 }:
 {
-  aegis.tmux = {
+  aegix.tmux = {
     nixos.programs.tmux.enable = true;
     darwin.programs.tmux.enable = true;
 
@@ -94,10 +94,10 @@
 
     _.full = {
       includes = [
-        aegis.tmux
-        aegis.tmux._.extras
-        aegis.tmux._.sesh
-        aegis.tmux._.gitmux
+        aegix.tmux
+        aegix.tmux._.extras
+        aegix.tmux._.sesh
+        aegix.tmux._.gitmux
       ];
     };
 

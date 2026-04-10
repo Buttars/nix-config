@@ -9,17 +9,17 @@
   den.aspects.buttars-desktop = {
     includes = [
       <den/define-user>
-      <aegis/networking>
-      <aegis/audio>
-      <aegis/virtualization>
-      <aegis/virtualization/docker>
-      <aegis/nvidia>
-      <aegis/sops>
-      <aegis/fish>
-      <aegis/fonts>
-      <aegis/gaming>
-      <aegis/zsa>
-      # (<aegis/disks/btrfs> {
+      <aegix/networking>
+      <aegix/audio>
+      <aegix/virtualization>
+      <aegix/virtualization/docker>
+      <aegix/nvidia>
+      <aegix/sops>
+      <aegix/fish>
+      <aegix/fonts>
+      <aegix/gaming>
+      <aegix/zsa>
+      # (<aegix/disks/btrfs> {
       #   disk = "/dev/sda";
       #   withSwap = true;
       #   swapSize = "32";

@@ -1,5 +1,5 @@
 {
-  aegis.nvidia.nixos =
+  aegix.nvidia.nixos =
     { config, ... }:
     {
       hardware.graphics = {

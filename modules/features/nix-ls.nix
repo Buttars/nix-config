@@ -1,5 +1,5 @@
 {
-  aegis.nix-ls.nixos = {
+  aegix.nix-ls.nixos = {
     programs.nix-ld = {
       enable = true;
     };

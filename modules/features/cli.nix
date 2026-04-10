@@ -1,5 +1,5 @@
 {
-  aegis.cli = {
+  aegix.cli = {
     homeManager =
       { lib, pkgs, ... }:
       {

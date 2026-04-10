@@ -12,8 +12,8 @@
   den.aspects.torrens = {
     includes = [
       <den/define-user>
-      <aegis/networking>
-      <aegis/sops>
+      <aegix/networking>
+      <aegix/sops>
     ];
 
     nixos =

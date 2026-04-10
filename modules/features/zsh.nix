@@ -1,10 +1,10 @@
-{ aegis, lib, ... }:
+{ aegix, lib, ... }:
 {
-  aegis.zsh = {
+  aegix.zsh = {
     includes = [
-      aegis.zsh._.vi-mode
-      aegis.zsh._.aliases
-      aegis.zsh._.plugins
+      aegix.zsh._.vi-mode
+      aegix.zsh._.aliases
+      aegix.zsh._.plugins
     ];
 
     homeManager =

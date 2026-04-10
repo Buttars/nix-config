@@ -1,5 +1,5 @@
 {
-  aegis.locale.nixos =
+  aegix.locale.nixos =
     { lib, ... }:
     {
       i18n = {

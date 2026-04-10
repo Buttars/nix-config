@@ -1,5 +1,5 @@
 {
-  aegis.password-manager = {
+  aegix.password-manager = {
     _.keepassxc.homeManager =
       { pkgs, ... }:
       {

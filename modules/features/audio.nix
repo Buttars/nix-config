@@ -1,6 +1,6 @@
 # NOTE: I plan on migrating this functionality into aspects like desktop/workstation to better align with the aspects pattern.
 {
-  aegis.audio.nixos =
+  aegix.audio.nixos =
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [

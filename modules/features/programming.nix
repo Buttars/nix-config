@@ -1,9 +1,9 @@
-{ aegis, ... }:
+{ aegix, ... }:
 {
-  aegis.programming = {
+  aegix.programming = {
     includes = [
-      aegis.cli
-      aegis.cli._.git
+      aegix.cli
+      aegix.cli._.git
     ];
 
     homeManager =

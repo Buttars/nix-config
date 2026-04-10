@@ -1,18 +1,18 @@
 { den, __findFile, ... }:
 {
-  aegis = {
+  aegix = {
     workstation = den.lib.parametric.atLeast {
       includes = [
       ];
     };
     laptop = den.lib.parametric.atLeast {
       includes = [
-        <aegis/workstation>
+        <aegix/workstation>
       ];
     };
     desktop = den.lib.parametric.atLeast {
       includes = [
-        <aegis/workstation>
+        <aegix/workstation>
       ];
     };
     server = den.lib.parametric.atLeast {

@@ -11,7 +11,7 @@ let
   };
 in
 {
-  aegis.sops = {
+  aegix.sops = {
     homeManager =
       { pkgs, ... }:
       {

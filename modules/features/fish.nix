@@ -1,5 +1,5 @@
 {
-  aegis.fish = {
+  aegix.fish = {
     nixos = {
       programs.fish = {
         enable = true;

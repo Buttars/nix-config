@@ -1,5 +1,5 @@
 {
-  aegis.hyprland = {
+  aegix.hyprland = {
     homeManager =
       {
         config,

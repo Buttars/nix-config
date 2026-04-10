@@ -1,8 +1,8 @@
-{ aegis, ... }:
+{ aegix, ... }:
 {
-  aegis.terminal-emulator = {
+  aegix.terminal-emulator = {
     includes = [
-      aegis.terminal-emulator._.kitty
+      aegix.terminal-emulator._.kitty
     ];
     _.alacritty = {
       homeManager =

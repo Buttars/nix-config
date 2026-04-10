@@ -1,5 +1,5 @@
 {
-  aegis.networking = {
+  aegix.networking = {
     nixos.networking = {
       nftables.enable = true;
       wireguard.enable = true;

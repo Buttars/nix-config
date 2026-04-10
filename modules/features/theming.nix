@@ -1,5 +1,5 @@
 {
-  aegis.theming.homeManager =
+  aegix.theming.homeManager =
     { pkgs, config, ... }:
     {
       home.packages = with pkgs; [

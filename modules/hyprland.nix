@@ -1,5 +1,5 @@
 {
-  aegis.hyprland = {
+  aegix.hyprland = {
     nixos = {
       nix.settings = {
         substituters = [ "https://hyprland.cachix.org" ];

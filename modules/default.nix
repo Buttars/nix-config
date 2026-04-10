@@ -10,7 +10,7 @@
   den.default = {
     includes = [
       <den/define-user>
-      <aegis/devenv>
+      <aegix/devenv>
       (
         { host, ... }:
         {

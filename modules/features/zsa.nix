@@ -1,5 +1,5 @@
 {
-  aegis.zsa.nixos =
+  aegix.zsa.nixos =
     { pkgs, ... }:
     {
       hardware.keyboard.zsa.enable = true;

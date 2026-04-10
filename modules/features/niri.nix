@@ -1,5 +1,5 @@
 {
-  aegis.niri = {
+  aegix.niri = {
     nixos = {
       programs.niri.enable = true;
       environment.pathsToLink = [

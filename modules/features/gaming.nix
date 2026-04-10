@@ -1,5 +1,5 @@
 {
-  aegis.gaming.nixos =
+  aegix.gaming.nixos =
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [

@@ -9,9 +9,9 @@
 
   den.aspects.vm = {
     includes = [
-      <aegis/wayland>
-      <aegis/hyprland>
-      <aegis/networking>
+      <aegix/wayland>
+      <aegix/hyprland>
+      <aegix/networking>
       (den._.tty-autologin "vm-user")
     ];
 
@@ -30,8 +30,8 @@
   den.aspects.vm-user = {
     includes = [
       <den/primary-user>
-      <aegis/devenv>
-      <aegis/hyprland>
+      <aegix/devenv>
+      <aegix/hyprland>
       (den._.user-shell "fish")
     ];
 

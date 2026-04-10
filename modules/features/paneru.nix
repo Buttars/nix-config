@@ -5,7 +5,7 @@
     paneru.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  aegis.paneru = {
+  aegix.paneru = {
     homeManager = {
       imports = [ inputs.paneru.homeModules.paneru ];
       services.paneru = {

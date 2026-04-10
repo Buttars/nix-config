@@ -31,7 +31,7 @@
       };
     };
 
-  aegis.devenv = {
+  aegix.devenv = {
     homeManager =
       {
         pkgs,

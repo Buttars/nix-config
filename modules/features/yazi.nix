@@ -1,6 +1,6 @@
-{ aegis, ... }:
+{ aegix, ... }:
 {
-  aegis.yazi = {
+  aegix.yazi = {
     homeManager =
       { ... }:
       {

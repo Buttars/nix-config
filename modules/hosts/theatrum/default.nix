@@ -8,8 +8,8 @@
     includes = [
       <den/define-user>
       (<den/unfree> [ "nvidia-x11" ])
-      <aegis/networking>
-      (<aegis/disks/btrfs> {
+      <aegix/networking>
+      (<aegix/disks/btrfs> {
         disk = "/dev/sda";
         withSwap = true;
         swapSize = "32";

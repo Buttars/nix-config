@@ -9,8 +9,8 @@
   den.aspects.sentinel = {
     includes = [
       <den/define-user>
-      <aegis/networking>
-      <aegis/sops>
+      <aegix/networking>
+      <aegix/sops>
     ];
 
     nixos =
@@ -107,8 +107,6 @@
               "1.1.1.1"
               "8.8.8.8"
             ];
-            # Don't forward .lan queries upstream (no public .lan TLD)
-            local = [ "/lan/" ];
             cache-size = 1000;
             domain-needed = true;
             bogus-priv = true;

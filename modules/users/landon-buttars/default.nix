@@ -3,17 +3,17 @@
   den.aspects."landon.buttars" = {
     includes = [
       <den/primary-user>
-      <aegis/programming>
-      <aegis/terminal-emulator/kitty>
-      <aegis/taskwarrior>
-      <aegis/cli/aws>
-      <aegis/cli/tui>
-      <aegis/neovim>
-      <aegis/paneru>
-      <aegis/tmux/full>
-      <aegis/zsh>
-      <aegis/yazi>
-      <aegis/workstation>
+      <aegix/programming>
+      <aegix/terminal-emulator/kitty>
+      <aegix/taskwarrior>
+      <aegix/cli/aws>
+      <aegix/cli/tui>
+      <aegix/neovim>
+      <aegix/paneru>
+      <aegix/tmux/full>
+      <aegix/zsh>
+      <aegix/yazi>
+      <aegix/workstation>
     ];
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {

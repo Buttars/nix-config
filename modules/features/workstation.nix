@@ -1,6 +1,6 @@
 { ... }:
 {
-  aegis.workstation = {
+  aegix.workstation = {
     homeManager =
       { ... }:
       {

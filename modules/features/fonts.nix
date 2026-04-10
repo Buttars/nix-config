@@ -1,5 +1,5 @@
 {
-  aegis.fonts.nixos =
+  aegix.fonts.nixos =
     { pkgs, ... }:
     {
 

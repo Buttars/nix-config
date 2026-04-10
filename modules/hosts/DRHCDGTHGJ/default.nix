@@ -3,7 +3,7 @@
   den.aspects.DRHCDGTHGJ = {
     includes = [
       <den/define-user>
-      <aegis/networking>
+      <aegix/networking>
     ];
   };
 }

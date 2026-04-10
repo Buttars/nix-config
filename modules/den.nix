@@ -3,7 +3,7 @@
   _module.args.__findFile = den.lib.__findFile;
   imports = [
     inputs.den.flakeModule
-    (inputs.den.namespace "aegis" true)
+    (inputs.den.namespace "aegix" true)
   ];
 
   den.default.nixos.imports = [

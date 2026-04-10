@@ -1,5 +1,5 @@
 {
-  aegis.wayland = {
+  aegix.wayland = {
     nixos =
       { pkgs, ... }:
       {
