@@ -37,6 +37,31 @@
         };
         users.users.sentinel.openssh.authorizedKeys.keyFiles = [ ../../users/buttars/keys/id_ed25519.pub ];
 
+        fileSystems."/srv" =
+          let
+            nfsProvider = "truenas.lan";
+            defaultNfsOptions = [
+              "defaults"
+              "noatime"
+              "nfsvers=4.2"
+              "rsize=262144"
+              "wsize=262144"
+              "nconnect=4"
+              "async"
+              "hard"
+              "timeo=600"
+              "retrans=2"
+              "auto"
+              "_netdev"
+              "nofail"
+            ];
+          in
+          {
+            device = "${nfsProvider}:/mnt/veritas/cognito";
+            fsType = "nfs";
+            options = defaultNfsOptions;
+          };
+
         services.openssh.enable = true;
 
         services.caddy = {
