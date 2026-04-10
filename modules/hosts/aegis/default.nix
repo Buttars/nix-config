@@ -39,6 +39,73 @@
 
         services.openssh.enable = true;
 
+        services.caddy = {
+          enable = true;
+          email = "admin@buttars.dev";
+          virtualHosts = {
+            "http://jellyfin.buttars.lan".extraConfig = "reverse_proxy http://theatrum.lan:8096";
+            "jellyfin.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://theatrum.lan:8096
+            '';
+
+            "http://qbittorrent.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:8080";
+            "qbittorrent.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://torrens.lan:8080
+            '';
+
+            "http://radarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:7878";
+            "radarr.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://torrens.lan:7878
+            '';
+
+            "http://sonarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:8989";
+            "sonarr.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://torrens.lan:8989
+            '';
+
+            "http://lidarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:8686";
+            "lidarr.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://torrens.lan:8686
+            '';
+
+            "http://prowlarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:9696";
+            "prowlarr.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://torrens.lan:9696
+            '';
+
+            "http://home.buttars.lan".extraConfig = "reverse_proxy http://sentinel.lan:8123";
+            "home.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://sentinel.lan:8123
+            '';
+          };
+        };
+
+        networking.firewall.allowedTCPPorts = [
+          80
+          443
+        ];
+
         services.btrfs.autoScrub.enable = true;
         services.beesd.filesystems.nixroot = {
           spec = "/";
