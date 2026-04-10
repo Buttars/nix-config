@@ -115,6 +115,37 @@
               }
               reverse_proxy http://torrens.lan:9696
             '';
+
+            "http://home.buttars.lan".extraConfig = "reverse_proxy http://localhost:8123";
+            "home.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://localhost:8123
+            '';
+          };
+        };
+
+        systemd.services.home-assistant = {
+          after = [ "srv.mount" ];
+          requires = [ "srv.mount" ];
+        };
+
+        services.home-assistant = {
+          enable = true;
+          openFirewall = false;
+          configDir = "/srv/services/home-assistant";
+          config = {
+            homeassistant = {
+              name = "Home";
+              unit_system = "us_customary";
+              time_zone = "America/Denver";
+            };
+            http = {
+              server_host = "127.0.0.1";
+              use_x_forwarded_for = true;
+              trusted_proxies = [ "127.0.0.1" ];
+            };
           };
         };
 
