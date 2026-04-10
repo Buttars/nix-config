@@ -36,6 +36,22 @@
               8686 # Lidarr
               9696 # Prowlarr
             ];
+            # Host-level kill switch: block container traffic from reaching the
+            # internet directly. Allows LAN and WireGuard (UDP 51820) only.
+            extraCommands = ''
+              iptables -N PODMAN_KILL_SWITCH 2>/dev/null || iptables -F PODMAN_KILL_SWITCH
+              iptables -A PODMAN_KILL_SWITCH -d 10.0.0.0/8 -j ACCEPT
+              iptables -A PODMAN_KILL_SWITCH -d 192.168.0.0/16 -j ACCEPT
+              iptables -A PODMAN_KILL_SWITCH -p udp --dport 51820 -j ACCEPT
+              iptables -A PODMAN_KILL_SWITCH -j DROP
+              iptables -C FORWARD -i podman0 -j PODMAN_KILL_SWITCH 2>/dev/null || \
+                iptables -I FORWARD 1 -i podman0 -j PODMAN_KILL_SWITCH
+            '';
+            extraStopCommands = ''
+              iptables -D FORWARD -i podman0 -j PODMAN_KILL_SWITCH 2>/dev/null || true
+              iptables -F PODMAN_KILL_SWITCH 2>/dev/null || true
+              iptables -X PODMAN_KILL_SWITCH 2>/dev/null || true
+            '';
           };
         };
 
