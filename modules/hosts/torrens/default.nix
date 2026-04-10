@@ -29,6 +29,7 @@
             enable = true;
             allowedTCPPorts = [
               22 # SSH
+              5055 # Jellyseerr
               8080 # qBittorrent WebUI
               7878 # Radarr
               8989 # Sonarr
@@ -81,6 +82,53 @@
           ../../users/buttars/keys/id_ed25519.pub
         ];
 
+        systemd.tmpfiles.rules = [
+          "d /var/lib/qbittorrent 0755 root root -"
+        ];
+
+        systemd.services = {
+          podman-qbittorrent = {
+            after = [ "srv.mount" ];
+            wants = [ "srv.mount" ];
+          };
+          podman-gluetun = {
+            after = [ "srv.mount" ];
+            wants = [ "srv.mount" ];
+          };
+          radarr = {
+            after = [ "srv.mount" ];
+            wants = [ "srv.mount" ];
+          };
+          sonarr = {
+            after = [ "srv.mount" ];
+            wants = [ "srv.mount" ];
+          };
+          lidarr = {
+            after = [ "srv.mount" ];
+            wants = [ "srv.mount" ];
+          };
+          prowlarr = {
+            after = [ "srv.mount" ];
+            wants = [ "srv.mount" ];
+          };
+        };
+
+        services.jellyseerr.enable = true;
+
+        services.radarr = {
+          enable = true;
+          dataDir = "/var/lib/radarr";
+        };
+        services.sonarr = {
+          enable = true;
+          dataDir = "/var/lib/sonarr";
+        };
+        services.lidarr = {
+          enable = true;
+          dataDir = "/var/lib/lidarr";
+        };
+        services.prowlarr.enable = true;
+
         virtualisation.podman = {
           enable = true;
           defaultNetwork.settings.dns_enabled = true;
@@ -98,73 +146,19 @@
                 WEBUI_PORT = "8080";
               };
               volumes = [
-                "/srv/services/qbittorrent/config:/config"
+                "/var/lib/qbittorrent:/config"
                 "/srv/services/qbittorrent/downloads:/downloads"
                 "/srv/media/movies:/movies"
                 "/srv/media/shows:/shows"
-              ];
-              networks = [ "container:gluetun" ];
-              dependsOn = [ "gluetun" ];
-            };
-
-            radarr = {
-              image = "lscr.io/linuxserver/radarr:latest";
-              environment = {
-                PUID = "1000";
-                PGID = "1000";
-                TZ = "America/Denver";
-              };
-              volumes = [
-                "/srv/services/radarr:/config"
-                "/srv/media/movies:/movies"
-                "/srv/services/qbittorrent/downloads:/downloads"
-              ];
-              networks = [ "container:gluetun" ];
-              dependsOn = [ "gluetun" ];
-            };
-
-            sonarr = {
-              image = "lscr.io/linuxserver/sonarr:latest";
-              environment = {
-                PUID = "1000";
-                PGID = "1000";
-                TZ = "America/Denver";
-              };
-              volumes = [
-                "/srv/services/sonarr:/config"
-                "/srv/media/shows:/shows"
-                "/srv/services/qbittorrent/downloads:/downloads"
-              ];
-              networks = [ "container:gluetun" ];
-              dependsOn = [ "gluetun" ];
-            };
-
-            lidarr = {
-              image = "lscr.io/linuxserver/lidarr:latest";
-              environment = {
-                PUID = "1000";
-                PGID = "1000";
-                TZ = "America/Denver";
-              };
-              volumes = [
-                "/srv/services/lidarr:/config"
                 "/srv/media/music:/music"
-                "/srv/services/qbittorrent/downloads:/downloads"
               ];
               networks = [ "container:gluetun" ];
               dependsOn = [ "gluetun" ];
             };
 
-            prowlarr = {
-              image = "lscr.io/linuxserver/prowlarr:latest";
-              environment = {
-                PUID = "1000";
-                PGID = "1000";
-                TZ = "America/Denver";
-              };
-              volumes = [ "/srv/services/prowlarr:/config" ];
-              networks = [ "container:gluetun" ];
-              dependsOn = [ "gluetun" ];
+            byparr = {
+              image = "ghcr.io/thephaseless/byparr:latest";
+              ports = [ "127.0.0.1:8191:8191" ];
             };
 
             gluetun = {
@@ -172,12 +166,7 @@
               environmentFiles = [ config.sops.secrets.gluetun_env.path ];
               ports = [
                 "8080:8080" # qBittorrent
-                "7878:7878" # Radarr
-                "8989:8989" # Sonarr
-                "8686:8686" # Lidarr
-                "9696:9696" # Prowlarr
               ];
-              volumes = [ "/var/lib/gluetun:/gluetun" ];
               extraOptions = [
                 "--cap-add=NET_ADMIN"
                 "--device=/dev/net/tun:/dev/net/tun"
