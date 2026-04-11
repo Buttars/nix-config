@@ -52,6 +52,32 @@
       { pkgs, ... }:
       {
         home.packages = with pkgs; [ claude-code ];
+
+        programs.ssh = {
+          enable = true;
+          matchBlocks = {
+            sentinel = {
+              hostname = "sentinel.lan";
+              user = "sentinel";
+              identityFile = "~/.ssh/id_ed25519";
+            };
+            aegis = {
+              hostname = "aegis.lan";
+              user = "aegis";
+              identityFile = "~/.ssh/id_ed25519";
+            };
+            torrens = {
+              hostname = "torrens.lan";
+              user = "torrens";
+              identityFile = "~/.ssh/id_ed25519";
+            };
+            theatrum = {
+              hostname = "theatrum.lan";
+              user = "theatrum";
+              identityFile = "~/.ssh/id_ed25519";
+            };
+          };
+        };
       };
   };
 
