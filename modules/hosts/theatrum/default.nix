@@ -3,12 +3,27 @@
   ...
 }:
 {
-  den.hosts.x86_64-linux.theatrum = { };
+  den.hosts.x86_64-linux.theatrum = {
+    users.theatrum = {
+      classes = [ "homeManager" ];
+      aspect = "theatrum-user";
+    };
+  };
+
+  den.aspects.theatrum-user = {
+    includes = [ <den/primary-user> ];
+    homeManager =
+      { pkgs, ... }:
+      {
+        home.packages = with pkgs; [ htop ];
+      };
+  };
   den.aspects.theatrum = {
     includes = [
       <den/define-user>
       (<den/unfree> [ "nvidia-x11" ])
       <aegix/networking>
+      <aegix/sops>
       (<aegix/disks/btrfs> {
         disk = "/dev/sda";
         withSwap = true;
@@ -130,8 +145,18 @@
           };
         };
 
+        sops.secrets.buttars-password.neededForUsers = true;
+
+        users.mutableUsers = false;
+        users.users.theatrum.hashedPasswordFile = config.sops.secrets.buttars-password.path;
+        users.users.theatrum.extraGroups = [ "wheel" ];
+        users.users.theatrum.createHome = true;
+        users.users.theatrum.openssh.authorizedKeys.keyFiles = [ ../../users/buttars/keys/id_ed25519.pub ];
+        systemd.tmpfiles.rules = [
+          "d /home/theatrum/.ssh 0700 theatrum users -"
+        ];
+
         services.openssh.enable = true;
-        services.openssh.settings.PermitRootLogin = "yes";
       };
 
     homeManager = { };
