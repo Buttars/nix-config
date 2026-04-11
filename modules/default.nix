@@ -28,6 +28,12 @@
       home-manager.useUserPackages = true;
       documentation.doc.enable = false;
       documentation.info.enable = false;
+
+      nix.settings.experimental-features = [
+        "nix-command"
+        "flakes"
+        "ca-derivations"
+      ];
       i18n.defaultLocale = "en_US.UTF-8";
       i18n.supportedLocales = [ "all" ];
       system.stateVersion = "25.11";
