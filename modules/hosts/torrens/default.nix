@@ -88,6 +88,7 @@
 
         sops.secrets.buttars-password.neededForUsers = true;
         sops.secrets.gluetun_env = { };
+        sops.secrets.gluetun_qbittorrent_env = { };
 
         users.mutableUsers = false;
         users.users.torrens.hashedPasswordFile = config.sops.secrets.buttars-password.path;
@@ -98,6 +99,7 @@
 
         systemd.tmpfiles.rules = [
           "d /var/lib/qbittorrent 0755 root root -"
+          "d /var/lib/gluetun 0755 root root -"
         ];
 
         systemd.services = {
@@ -106,6 +108,10 @@
             wants = [ "srv.mount" ];
           };
           podman-gluetun = {
+            after = [ "srv.mount" ];
+            wants = [ "srv.mount" ];
+          };
+          podman-gluetun-qbittorrent-port-manager = {
             after = [ "srv.mount" ];
             wants = [ "srv.mount" ];
           };
@@ -182,7 +188,11 @@
                 FIREWALL_OUTBOUND_SUBNETS = "10.0.40.0/24";
                 DOT = "off";
                 DNS_ADDRESS = "10.0.40.1";
+                VPN_PORT_FORWARDING = "on";
               };
+              volumes = [
+                "/var/lib/gluetun:/tmp/gluetun"
+              ];
               ports = [
                 "8080:8080" # qBittorrent
               ];
@@ -191,6 +201,25 @@
                 "--cap-add=NET_RAW"
                 "--device=/dev/net/tun:/dev/net/tun"
                 "--sysctl=net.ipv6.conf.all.disable_ipv6=1"
+              ];
+            };
+
+            gluetun-qbittorrent-port-manager = {
+              image = "snoringdragon/gluetun-qbittorrent-port-manager:latest";
+              environmentFiles = [ config.sops.secrets.gluetun_qbittorrent_env.path ];
+              environment = {
+                QBITTORRENT_SERVER = "localhost";
+                QBITTORRENT_PORT = "8080";
+                PORT_FORWARDED = "/tmp/gluetun/forwarded_port";
+                HTTP_S = "http";
+              };
+              volumes = [
+                "/var/lib/gluetun:/tmp/gluetun"
+              ];
+              networks = [ "container:gluetun" ];
+              dependsOn = [
+                "gluetun"
+                "qbittorrent"
               ];
             };
           };
