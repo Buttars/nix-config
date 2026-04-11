@@ -10,6 +10,8 @@ keys:
           default: &sentinel_default age13e0df0d07jcwpyc4kh247rqjrnwj6gu7g5v3e6x46ezcx2v9653sflkjel
       - aegis:
           default: &aegis_default age1lx88597f228vhzav5hun74jzdr6faqk0m2996g8ss76rxmulsffs0vlndz
+      - theatrum:
+          default: &theatrum_default age1ecyr3de0e2r80u6xretd9h75fsddrjqa564agg0y8pw5u0suuvgqnu7xhj
   - hosts:
       - &buttars-desktop age10w02unkvvka427edd04fk2jtz6axelus6ehhd8axr4rnqvnsrstqd2gqpq
       - &buttars-laptop age1tn6dq7s4ruxk403g98989erd23ev4tdvvz5fucnu6cqucx7my3ks7ytjy3
@@ -17,6 +19,7 @@ keys:
       - &sentinel age15dfrqqct22q085ajerfp90332rlxgf65gvpejwc7ryrr2r4qpvjs27y4nr
       - &torrens age1q6m26q085sp2zyaz25arjxzhjc49s8fuhqp2nmwct2u4eqtw0srswcyjy7
       - &aegis age167fy3y70ztkvnlxtj75n4j9fwkyv8sq0gfu6rk6tk269t0dkdf0qlcd0jq
+      - &theatrum age13y37yffmzg80shu88v32yv47h4mctjl86z860zn7hlq5mhx3t9vsyxffth
 
 creation_rules:
   - path_regex: modules/sops/[^/]+\.(yaml|json|env|ini|sops)$
@@ -28,6 +31,7 @@ creation_rules:
           - *wgu_default
           - *sentinel_default
           - *aegis_default
+          - *theatrum_default
           # Hosts
           - *buttars-desktop
           - *buttars-laptop
@@ -35,3 +39,4 @@ creation_rules:
           - *sentinel
           - *torrens
           - *aegis
+          - *theatrum
