@@ -127,7 +127,7 @@
           };
         };
 
-        services.jellyseerr.enable = true;
+        services.seerr.enable = true;
 
         services.radarr = {
           enable = true;
