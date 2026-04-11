@@ -178,11 +178,17 @@
             gluetun = {
               image = "qmcgaw/gluetun:latest";
               environmentFiles = [ config.sops.secrets.gluetun_env.path ];
+              environment = {
+                FIREWALL_OUTBOUND_SUBNETS = "10.0.40.0/24";
+                DOT = "off";
+                DNS_ADDRESS = "10.0.40.1";
+              };
               ports = [
                 "8080:8080" # qBittorrent
               ];
               extraOptions = [
                 "--cap-add=NET_ADMIN"
+                "--cap-add=NET_RAW"
                 "--device=/dev/net/tun:/dev/net/tun"
                 "--sysctl=net.ipv6.conf.all.disable_ipv6=1"
               ];
