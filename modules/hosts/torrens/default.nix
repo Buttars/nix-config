@@ -136,6 +136,58 @@
             after = [ "srv.mount" ];
             wants = [ "srv.mount" ];
           };
+          pgs-to-srt = {
+            after = [ "srv.mount" ];
+            wants = [ "srv.mount" ];
+            serviceConfig = {
+              Type = "oneshot";
+              User = "root";
+            };
+            script = ''
+              set -euo pipefail
+              tmpdir=$(mktemp -d)
+              trap 'rm -rf "$tmpdir"' EXIT
+
+              find /srv/media/movies /srv/media/shows -name "*.mkv" | while read -r mkv; do
+                dir=$(dirname "$mkv")
+                base=$(basename "$mkv" .mkv)
+
+                ${pkgs.mkvtoolnix}/bin/mkvmerge -J "$mkv" \
+                  | ${pkgs.jq}/bin/jq -r '
+                      .tracks[]
+                      | select(.type == "subtitles"
+                          and (.properties.codec_id | startswith("S_HDMV/PGS")))
+                      | "\(.id) \(.properties.language // "und")"
+                    ' \
+                  | while read -r track_id lang; do
+                      srt="$dir/$base.$lang.srt"
+                      [ -f "$srt" ] && continue
+
+                      sup="$tmpdir/$base.$track_id.sup"
+                      echo "pgs-to-srt: extracting track $track_id ($lang) from $mkv"
+                      ${pkgs.mkvtoolnix}/bin/mkvextract "$mkv" tracks "$track_id:$sup"
+
+                      echo "pgs-to-srt: converting $sup"
+                      ${pkgs.subtitleedit}/bin/SubtitleEdit \
+                        /convert "$sup" srt \
+                        /ocrengine:tesseract \
+                        /targetfolder:"$dir"
+
+                      generated="$dir/$base.$track_id.srt"
+                      [ -f "$generated" ] && mv "$generated" "$srt"
+                      rm -f "$sup"
+                    done
+              done
+            '';
+          };
+        };
+
+        systemd.timers.pgs-to-srt = {
+          wantedBy = [ "timers.target" ];
+          timerConfig = {
+            OnCalendar = "weekly";
+            Persistent = true;
+          };
         };
 
         services.seerr.enable = true;
