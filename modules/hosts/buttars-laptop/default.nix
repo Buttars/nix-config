@@ -23,6 +23,13 @@
       };
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
+
+      boot.resumeDevice = "/dev/mapper/crypted";
+      # Run: sudo btrfs inspect-internal map-swapfile -r /.swapvol/swapfile
+      # Then replace the value below with the output.
+      boot.kernelParams = [ "resume_offset=533760" ];
+
+      systemd.sleep.settings.Sleep.HibernateMode = "shutdown";
       boot.initrd.availableKernelModules = [
         "xhci_pci"
         "ahci"
