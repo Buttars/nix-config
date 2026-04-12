@@ -236,7 +236,8 @@
 
             byparr = {
               image = "ghcr.io/thephaseless/byparr:latest";
-              ports = [ "127.0.0.1:8191:8191" ];
+              networks = [ "container:gluetun" ];
+              dependsOn = [ "gluetun" ];
             };
 
             gluetun = {
@@ -253,6 +254,7 @@
               ];
               ports = [
                 "8080:8080" # qBittorrent
+                "127.0.0.1:8191:8191" # byparr
               ];
               extraOptions = [
                 "--cap-add=NET_ADMIN"
