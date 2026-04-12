@@ -30,6 +30,7 @@
             allowedTCPPorts = [
               22 # SSH
               5055 # Jellyseerr
+              6767 # Bazarr
               8080 # qBittorrent WebUI
               7878 # Radarr
               8989 # Sonarr
@@ -131,9 +132,14 @@
             after = [ "srv.mount" ];
             wants = [ "srv.mount" ];
           };
+          bazarr = {
+            after = [ "srv.mount" ];
+            wants = [ "srv.mount" ];
+          };
         };
 
         services.seerr.enable = true;
+        services.bazarr.enable = true;
 
         services.radarr = {
           enable = true;
