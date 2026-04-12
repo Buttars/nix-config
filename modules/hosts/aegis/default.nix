@@ -83,6 +83,14 @@
               reverse_proxy http://torrens.lan:8686
             '';
 
+            "http://bazarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:6767";
+            "bazarr.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://torrens.lan:6767
+            '';
+
             "http://prowlarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:9696";
             "prowlarr.buttars.dev".extraConfig = ''
               tls {
