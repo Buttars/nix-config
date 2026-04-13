@@ -80,9 +80,12 @@
               time_zone = "America/Denver";
             };
             http = {
-              server_host = "127.0.0.1";
+              server_host = "0.0.0.0";
               use_x_forwarded_for = true;
-              trusted_proxies = [ "127.0.0.1" ];
+              trusted_proxies = [
+                "127.0.0.1"
+                "10.0.40.0/24"
+              ];
             };
           };
         };
@@ -101,7 +104,25 @@
           };
         };
 
-        networking.firewall.allowedTCPPorts = [ 53 ];
+        services.caddy = {
+          enable = true;
+          virtualHosts = {
+            "http://jellyfin.buttars.lan".extraConfig = "reverse_proxy http://theatrum.lan:8096";
+            "http://qbittorrent.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:8080";
+            "http://radarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:7878";
+            "http://sonarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:8989";
+            "http://lidarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:8686";
+            "http://bazarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:6767";
+            "http://prowlarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:9696";
+            "http://home.buttars.lan".extraConfig = "reverse_proxy http://127.0.0.1:8123";
+          };
+        };
+
+        networking.firewall.allowedTCPPorts = [
+          53
+          80
+          443
+        ];
         networking.firewall.allowedUDPPorts = [ 53 ];
 
         services.btrfs.autoScrub.enable = true;
