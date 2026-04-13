@@ -24,6 +24,7 @@
       (<den/unfree> [ "nvidia-x11" ])
       <aegix/networking>
       <aegix/sops>
+      <aegix/fail2ban>
       (<aegix/disks/btrfs> {
         disk = "/dev/sda";
         withSwap = true;

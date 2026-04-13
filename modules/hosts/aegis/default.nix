@@ -11,6 +11,7 @@
       <den/define-user>
       <aegix/networking>
       <aegix/sops>
+      <aegix/fail2ban>
     ];
 
     nixos =
@@ -42,6 +43,15 @@
         services.caddy = {
           enable = true;
           email = "admin@buttars.dev";
+          globalConfig = ''
+            log {
+              output file /var/log/caddy/access.log {
+                roll_size 100mb
+                roll_keep 5
+              }
+              format json
+            }
+          '';
           virtualHosts = {
             "jellyfin.buttars.dev".extraConfig = ''
               tls {
@@ -64,6 +74,21 @@
               reverse_proxy http://sentinel.lan:8123
             '';
           };
+        };
+
+        environment.etc."fail2ban/filter.d/caddy-4xx.conf".text = ''
+          [Definition]
+          failregex = .*"remote_ip":"<HOST>".*"status":40[1-9]
+          ignoreregex =
+        '';
+
+        services.fail2ban.jails.caddy-4xx.settings = {
+          enabled = true;
+          filter = "caddy-4xx";
+          logpath = "/var/log/caddy/access.log";
+          maxretry = 10;
+          findtime = "10m";
+          bantime = "1h";
         };
 
         networking.firewall.allowedTCPPorts = [

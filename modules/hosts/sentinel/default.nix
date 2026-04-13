@@ -11,6 +11,7 @@
       <den/define-user>
       <aegix/networking>
       <aegix/sops>
+      <aegix/fail2ban>
     ];
 
     nixos =
@@ -86,6 +87,8 @@
                 "127.0.0.1"
                 "10.0.40.0/24"
               ];
+              ip_ban_enabled = true;
+              login_attempts_threshold = 5;
             };
           };
         };

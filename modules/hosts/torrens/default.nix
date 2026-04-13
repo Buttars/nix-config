@@ -14,6 +14,7 @@
       <den/define-user>
       <aegix/networking>
       <aegix/sops>
+      <aegix/fail2ban>
     ];
 
     nixos =
