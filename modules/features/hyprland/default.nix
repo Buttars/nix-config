@@ -152,8 +152,8 @@
               "$mod CTRL, s, exec, grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%s).png - | tee >(wl-copy) > /dev/null && notify-send 'Screenshot taken!'"
 
               "$mod, l, exec, hyprlock"
-              # TODO: Reenable when suspend is fixed
-              # "$mod SHIFT, l, exec, hyprlock && systemctl suspend"
+              "$mod SHIFT, l, exec, hyprlock & systemctl suspend"
+              "$mod CTRL, l, exec, hyprlock & systemctl hibernate"
 
               "$mod, q, killactive,"
               "$mod SUPER_SHIFT, BACKSPACE, exit"
