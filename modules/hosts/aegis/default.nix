@@ -50,46 +50,11 @@
               reverse_proxy http://theatrum.lan:8096
             '';
 
-            "qbittorrent.buttars.dev".extraConfig = ''
+            "requests.buttars.dev".extraConfig = ''
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://torrens.lan:8080
-            '';
-
-            "radarr.buttars.dev".extraConfig = ''
-              tls {
-                protocols tls1.2 tls1.3
-              }
-              reverse_proxy http://torrens.lan:7878
-            '';
-
-            "sonarr.buttars.dev".extraConfig = ''
-              tls {
-                protocols tls1.2 tls1.3
-              }
-              reverse_proxy http://torrens.lan:8989
-            '';
-
-            "lidarr.buttars.dev".extraConfig = ''
-              tls {
-                protocols tls1.2 tls1.3
-              }
-              reverse_proxy http://torrens.lan:8686
-            '';
-
-            "bazarr.buttars.dev".extraConfig = ''
-              tls {
-                protocols tls1.2 tls1.3
-              }
-              reverse_proxy http://torrens.lan:6767
-            '';
-
-            "prowlarr.buttars.dev".extraConfig = ''
-              tls {
-                protocols tls1.2 tls1.3
-              }
-              reverse_proxy http://torrens.lan:9696
+              reverse_proxy http://torrens.lan:5055
             '';
 
             "home.buttars.dev".extraConfig = ''
