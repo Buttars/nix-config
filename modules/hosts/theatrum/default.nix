@@ -21,7 +21,10 @@
   den.aspects.theatrum = {
     includes = [
       <den/define-user>
-      (<den/unfree> [ "nvidia-x11" ])
+      (<den/unfree> [
+        "nvidia-x11"
+        "nvidia-settings"
+      ])
       <aegix/networking>
       <aegix/sops>
       <aegix/fail2ban>
