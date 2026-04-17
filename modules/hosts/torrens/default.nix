@@ -90,7 +90,6 @@
 
         sops.secrets.buttars-password.neededForUsers = true;
         sops.secrets.gluetun_env = { };
-        sops.secrets.gluetun_qbittorrent_env = { };
 
         users.mutableUsers = false;
         users.users.torrens.hashedPasswordFile = config.sops.secrets.buttars-password.path;
@@ -110,10 +109,6 @@
             wants = [ "srv.mount" ];
           };
           podman-gluetun = {
-            after = [ "srv.mount" ];
-            wants = [ "srv.mount" ];
-          };
-          podman-gluetun-qbittorrent-port-manager = {
             after = [ "srv.mount" ];
             wants = [ "srv.mount" ];
           };
@@ -249,6 +244,8 @@
                 DOT = "off";
                 DNS_ADDRESS = "10.0.40.1";
                 VPN_PORT_FORWARDING = "on";
+                VPN_PORT_FORWARDING_UP_COMMAND = "/bin/sh -c 'wget -O- -nv --retry-connrefused --post-data \"json={\\\"listen_port\\\":{{PORT}},\\\"current_network_interface\\\":\\\"{{VPN_INTERFACE}}\\\",\\\"random_port\\\":false,\\\"upnp\\\":false}\" http://127.0.0.1:8080/api/v2/app/setPreferences'";
+                VPN_PORT_FORWARDING_DOWN_COMMAND = "/bin/sh -c 'wget -O- -nv --retry-connrefused --post-data \"json={\\\"listen_port\\\":0,\\\"current_network_interface\\\":\\\"lo\\\"}\" http://127.0.0.1:8080/api/v2/app/setPreferences'";
               };
               volumes = [
                 "/var/lib/gluetun:/tmp/gluetun"
@@ -265,25 +262,8 @@
               ];
             };
 
-            gluetun-qbittorrent-port-manager = {
-              image = "snoringdragon/gluetun-qbittorrent-port-manager:latest";
-              environmentFiles = [ config.sops.secrets.gluetun_qbittorrent_env.path ];
-              environment = {
-                QBITTORRENT_SERVER = "localhost";
-                QBITTORRENT_PORT = "8080";
-                PORT_FORWARDED = "/tmp/gluetun/forwarded_port";
-                HTTP_S = "http";
-              };
-              volumes = [
-                "/var/lib/gluetun:/tmp/gluetun"
-              ];
-              networks = [ "container:gluetun" ];
-              dependsOn = [
-                "gluetun"
-                "qbittorrent"
-              ];
-            };
           };
+
         };
       };
 
