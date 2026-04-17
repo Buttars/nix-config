@@ -71,7 +71,7 @@
           device = "tmpfs";
           fsType = "tmpfs";
           options = [
-            "size=2G"
+            "size=20G"
             "mode=0755"
           ];
         };
