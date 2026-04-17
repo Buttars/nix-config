@@ -16,11 +16,15 @@
             tldr
             watch
             wikiman
-            zoxide
           ]
           ++ lib.optionals pkgs.stdenv.isLinux [
             trashy
           ];
+
+        programs.zoxide = {
+          enable = true;
+          enableFishIntegration = true;
+        };
 
         programs.direnv = {
           enable = true;
