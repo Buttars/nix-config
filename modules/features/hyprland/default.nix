@@ -50,6 +50,7 @@
 
             exec-once = [
               "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+              "hyprpaper"
               "swaync"
               "waybar"
               "xremap ~/.config/xremap/xremap.config"
@@ -262,19 +263,6 @@
           };
         };
 
-        services.hyprpaper = {
-          enable = true;
-          settings = {
-            preload = [
-              "~/.config/hypr/wallpaper.jpg"
-            ];
-
-            wallpaper = [
-              ",~/.config/hypr/wallpaper.jpg"
-            ];
-          };
-        };
-
         home.file = {
           ".config/hypr/audio-start.sh" = {
             source = ./audio-start.sh;
@@ -292,6 +280,13 @@
           };
 
           ".config/hypr/wallpaper.jpg".source = ./wallpaper.jpg;
+
+          ".config/hypr/hyprpaper.conf".text = ''
+            wallpaper {
+                monitor = *
+                path = ~/.config/hypr/wallpaper.jpg
+            }
+          '';
         };
       };
   };
