@@ -11,6 +11,7 @@
       <aegix/cli>
       <aegix/cli/tui>
       <aegix/cli/git>
+      <aegix/tmux/sesh>
       <aegix/hyprland>
       <aegix/browser/brave>
       <aegix/sops>
