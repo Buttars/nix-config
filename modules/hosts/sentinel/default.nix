@@ -118,6 +118,7 @@
             "http://bazarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:6767";
             "http://prowlarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:9696";
             "http://home.buttars.lan".extraConfig = "reverse_proxy http://127.0.0.1:8123";
+            "http://requests.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:5055";
           };
         };
 
