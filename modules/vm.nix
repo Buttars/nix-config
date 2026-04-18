@@ -17,6 +17,7 @@
 
     nixos = {
       fileSystems."/".device = lib.mkDefault "/dev/noroot";
+      fileSystems."/".fsType = lib.mkDefault "ext4";
       boot.loader.grub.enable = lib.mkDefault false;
     };
 
