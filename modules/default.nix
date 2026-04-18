@@ -26,6 +26,7 @@
 
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
+      home-manager.backupFileExtension = "backup";
       documentation.doc.enable = false;
       documentation.info.enable = false;
 
