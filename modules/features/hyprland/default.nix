@@ -83,6 +83,8 @@
 
             misc = {
               disable_hyprland_logo = true;
+              disable_splash_rendering = true;
+              suppress_portal_warnings = true;
               on_focus_under_fullscreen = true;
             };
 
