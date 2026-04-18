@@ -63,6 +63,8 @@
             options = defaultNfsOptions;
           };
 
+        nix.settings.trusted-users = [ "sentinel" ];
+
         services.openssh.enable = true;
 
         systemd.services.home-assistant = {
