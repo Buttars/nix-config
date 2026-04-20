@@ -15,6 +15,11 @@
           autocd = true;
           enableCompletion = true;
 
+          initContent = ''
+            stty stop undef
+            setopt interactive_comments
+          '';
+
           history = {
             size = 10000000;
             save = 10000000;
@@ -33,9 +38,9 @@
 
     _.vi-mode = {
       homeManager =
-        { lib, ... }:
+        { ... }:
         {
-          programs.zsh.initContent = lib.mkBefore ''
+          programs.zsh.initContent = ''
             bindkey -v
             export KEYTIMEOUT=100
 
@@ -104,6 +109,65 @@
             syntaxHighlighting.enable = true;
             historySubstringSearch.enable = true;
           };
+        };
+    };
+
+    _.prompt = {
+      homeManager =
+        { ... }:
+        {
+          programs.zsh.initContent = ''
+            autoload -U colors && colors
+            PS1="%B%{$fg[blue]%}[%{$fg[green]%}%~%{$fg[blue]%}]%{$fg[red]%}$%b "
+          '';
+        };
+    };
+
+    _.sesh = {
+      homeManager =
+        { ... }:
+        {
+          programs.zsh.initContent = ''
+            function sesh-sessions() {
+              local session
+              session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+              if [[ -n "$session" ]]; then
+                sesh connect "$session"
+              fi
+            }
+            bindkey -s '\es' '^usesh-sessions\n'
+
+            function sesh-start() {
+              sesh connect "$(
+                sesh list -i | fzf-tmux -p 55%,60% --layout=reverse --ansi \
+                  --no-sort --border-label ' sesh ' --prompt '⚡  ' \
+                  --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+                  --bind 'tab:down,btab:up' \
+                  --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list -i)' \
+                  --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t -i)' \
+                  --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c -i)' \
+                  --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z -i)' \
+                  --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+                  --bind 'ctrl-d:execute(tmux kill-session -t $(echo {} | cut -c3-))+change-prompt(⚡  )+reload(sesh list -i)'
+              )"
+            }
+
+            if [[ -z "$TMUX" ]]; then
+              if [[ "$(uname)" == "Darwin" ]] || [[ ! -o login ]]; then
+                sesh-start
+              fi
+            fi
+          '';
+        };
+    };
+
+    _.fzf-nav = {
+      homeManager =
+        { ... }:
+        {
+          programs.zsh.initContent = ''
+            bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
+          '';
         };
     };
   };
