@@ -4,6 +4,7 @@
     includes = [
       <den/define-user>
       <aegix/networking>
+      <aegix/aerospace>
     ];
   };
 }
