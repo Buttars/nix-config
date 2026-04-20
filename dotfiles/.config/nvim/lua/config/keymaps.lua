@@ -14,3 +14,7 @@ end)
 vim.keymap.set("n", "<C-d>", function()
   vim.cmd("norm! " .. tostring(lineCountByPercentage(25)) .. "jzz")
 end)
+
+vim.keymap.set("n", "<leader>cp", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p"))
+end, { desc = "Copy file path" })
