@@ -12,6 +12,9 @@
       <aegix/paneru>
       <aegix/tmux/full>
       <aegix/zsh>
+      <aegix/zsh/prompt>
+      <aegix/zsh/sesh>
+      <aegix/zsh/fzf-nav>
       <aegix/yazi>
       <aegix/workstation>
     ];
