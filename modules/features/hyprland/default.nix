@@ -1,5 +1,10 @@
 {
   aegix.hyprland = {
+    nixos = {
+      programs.hyprland.enable = true;
+      programs.dconf.enable = true;
+    };
+
     homeManager =
       {
         config,
