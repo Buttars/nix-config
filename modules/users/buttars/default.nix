@@ -5,6 +5,7 @@
       <den/primary-user>
       (den._.user-shell "fish")
       (<den/unfree> [ "claude-code" ])
+      <aegix/fish>
       <aegix/programming>
       <aegix/terminal-emulator>
       <aegix/neovim>
