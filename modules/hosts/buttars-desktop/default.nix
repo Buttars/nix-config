@@ -1,11 +1,5 @@
-{ __findFile, inputs, ... }:
+{ __findFile, ... }:
 {
-  den.hosts.x86_64-linux.buttars-desktop = {
-    users.buttars-desktop = {
-      classes = [ "homeManager" ];
-      aspect = "buttars-desktop-user";
-    };
-  };
   den.aspects.buttars-desktop = {
     includes = [
       <den/define-user>
@@ -16,9 +10,11 @@
       <aegix/nvidia>
       <aegix/sops>
       <aegix/fish>
+      <aegix/hyprland>
       <aegix/fonts>
       <aegix/gaming>
       <aegix/zsa>
+      <aegix/nfs-utils>
       # (<aegix/disks/btrfs> {
       #   disk = "/dev/sda";
       #   withSwap = true;
@@ -27,7 +23,7 @@
     ];
 
     nixos =
-      { pkgs, ... }:
+      { ... }:
       {
         hardware.enableRedistributableFirmware = true;
 
@@ -45,17 +41,10 @@
           ./_disko.nix
           ./_stylix.nix
         ];
-        environment.systemPackages = with pkgs; [ nfs-utils ];
 
         virtualisation.docker.daemon.settings = {
           storage-driver = "btrfs";
         };
-
-        virtualisation.docker.enable = true;
-
-        programs.dconf.enable = true;
-
-        programs.hyprland.enable = true;
 
         networking = {
           networkmanager.enable = true;
@@ -63,12 +52,6 @@
         };
 
         services.openssh.enable = true;
-      };
-
-    homeManager =
-      { pkgs, ... }:
-      {
-        home.packages = [ pkgs.cowsay ];
       };
   };
 
