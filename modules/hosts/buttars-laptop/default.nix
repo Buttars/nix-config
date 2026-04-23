@@ -3,6 +3,8 @@
   den.aspects.buttars-laptop = {
     includes = [
       <aegix/audio>
+      <aegix/fish>
+      <aegix/hyprland>
       <aegix/fonts>
       <aegix/zsa>
       <aegix/sops>
@@ -14,9 +16,6 @@
         ./_stylix.nix
       ];
 
-      programs.fish.enable = true;
-      programs.dconf.enable = true;
-      programs.hyprland.enable = true;
       networking = {
         networkmanager.enable = true;
         firewall.enable = false;
