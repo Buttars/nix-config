@@ -12,7 +12,7 @@
       <aegix/cli>
       <aegix/cli/tui>
       <aegix/cli/git>
-      <aegix/tmux/sesh>
+      <aegix/tmux/full>
       <aegix/hyprland>
       <aegix/browser/brave>
       <aegix/sops>
