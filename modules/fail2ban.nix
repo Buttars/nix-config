@@ -3,6 +3,10 @@
     nixos = {
       services.fail2ban = {
         enable = true;
+        ignoreIP = [
+          "127.0.0.1/8"
+          "::1"
+        ];
         maxretry = 5;
         bantime = "1h";
         bantime-increment = {
