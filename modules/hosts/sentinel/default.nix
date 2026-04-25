@@ -93,6 +93,9 @@
               login_attempts_threshold = 5;
             };
           };
+          extraComponents = [
+            "mobile_app"
+          ];
         };
 
         services.dnsmasq = {
