@@ -1,5 +1,10 @@
 {
   aegix.neovim = {
+    os =
+      { pkgs, ... }:
+      {
+        environment.systemPackages = [ pkgs.neovim ];
+      };
     homeManager =
       { pkgs, ... }:
       {
