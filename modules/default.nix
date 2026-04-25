@@ -11,6 +11,7 @@
     includes = [
       <den/define-user>
       <aegix/devenv>
+      <aegix/neovim>
       (
         { host, ... }:
         {
