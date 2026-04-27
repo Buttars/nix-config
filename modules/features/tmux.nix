@@ -86,6 +86,10 @@
             bind-key -T copy-mode-vi 'C-l' select-pane -R
             bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
 
+            # Window cycling (repeatable)
+            bind -r n next-window
+            bind -r p previous-window
+
             bind x kill-pane
             bind r source-file ~/.config/tmux/tmux.conf \; display-message "  config reloaded"
           '';
