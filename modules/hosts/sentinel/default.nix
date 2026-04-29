@@ -74,8 +74,8 @@
 
         services.home-assistant = {
           enable = true;
-          openFirewall = false;
-          configDir = "/srv/services/home-assistant";
+          openFirewall = true;
+          # configDir = "/srv/services/home-assistant";
           config = {
             homeassistant = {
               name = "Home";
@@ -87,7 +87,8 @@
               use_x_forwarded_for = true;
               trusted_proxies = [
                 "127.0.0.1"
-                "10.0.40.0/24"
+                "10.0.45.2/32"
+                "10.0.40.6/32"
               ];
               ip_ban_enabled = true;
               login_attempts_threshold = 5;
