@@ -43,35 +43,33 @@
         services.caddy = {
           enable = true;
           email = "admin@buttars.dev";
-          globalConfig = ''
-            log {
-              output file /var/log/caddy/access.log {
-                roll_size 100mb
-                roll_keep 5
-              }
-              format json
+          logFormat = ''
+            output file /var/log/caddy/access.log {
+              roll_size 100mb
+              roll_keep 5
             }
+            format json
           '';
           virtualHosts = {
             "jellyfin.buttars.dev".extraConfig = ''
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://theatrum.lan:8096
+              reverse_proxy http://jellyfin.buttars.lan
             '';
 
             "requests.buttars.dev".extraConfig = ''
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://torrens.lan:5055
+              reverse_proxy http://requests.buttars.lan
             '';
 
             "home.buttars.dev".extraConfig = ''
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://sentinel.lan:8123
+              reverse_proxy http://home.buttars.lan
             '';
           };
         };
