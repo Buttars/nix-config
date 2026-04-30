@@ -67,50 +67,6 @@
 
         services.openssh.enable = true;
 
-        systemd.services.home-assistant = {
-          after = [ "srv.mount" ];
-          requires = [ "srv.mount" ];
-        };
-
-        services.home-assistant = {
-          enable = true;
-          openFirewall = true;
-          # configDir = "/srv/services/home-assistant";
-          config = {
-            # Includes dependencies for a basic setup
-            # https://www.home-assistant.io/integrations/default_config/
-            default_config = { };
-            homeassistant = {
-              name = "Home";
-              unit_system = "us_customary";
-              time_zone = "America/Denver";
-            };
-            http = {
-              server_host = "0.0.0.0";
-              use_x_forwarded_for = true;
-              trusted_proxies = [
-                "127.0.0.1"
-                "10.0.45.2/32"
-                "10.0.40.6/32"
-              ];
-              ip_ban_enabled = true;
-              login_attempts_threshold = 5;
-            };
-          };
-          extraComponents = [
-            "analytics"
-            "google_translate"
-            "met"
-            "radio_browser"
-            "shopping_list"
-            # Recommended for fast zlib compression
-            # https://www.home-assistant.io/integrations/isal
-            "isal"
-            "mobile_app"
-            "zha"
-          ];
-        };
-
         services.dnsmasq = {
           enable = true;
           settings = {
