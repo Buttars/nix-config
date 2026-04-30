@@ -58,6 +58,7 @@
           ".direnv/*"
           ".devenv/*"
           "*/.gitignore"
+          "modules/sops/secrets.yaml"
         ];
       };
     };
