@@ -2,8 +2,21 @@
 {
   den.aspects.sentinel = {
     nixos =
-      { pkgs, lib, ... }:
       {
+        config,
+        pkgs,
+        lib,
+        ...
+      }:
+      {
+        sops.secrets.zwave_js_secrets = { };
+
+        services.zwave-js = {
+          enable = true;
+          serialPort = "/dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00C36E31-if00-port0";
+          secretsConfigFile = config.sops.secrets.zwave_js_secrets.path;
+        };
+
         systemd.services.home-assistant = {
           after = [ "srv.mount" ];
           requires = [ "srv.mount" ];
@@ -293,6 +306,7 @@
             "isal"
             "mobile_app"
             "zha"
+            "zwave_js"
           ];
         };
       };
