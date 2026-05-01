@@ -135,6 +135,21 @@
                   }
                   {
                     type = "grid";
+                    title = "Climate";
+                    cards = [
+                      {
+                        type = "thermostat";
+                        entity = "climate.t6_pro_z_wave_programmable_thermostat_with_smartstart";
+                        name = "Kitchen";
+                        grid_options = {
+                          columns = 12;
+                          rows = 6;
+                        };
+                      }
+                    ];
+                  }
+                  {
+                    type = "grid";
                     title = "Weather";
                     cards = [
                       {
@@ -242,6 +257,22 @@
                         forecast_type = "daily";
                         show_current = true;
                         show_forecast = true;
+                      }
+                    ];
+                  }
+                  {
+                    type = "grid";
+                    title = "Climate";
+                    column_span = 1;
+                    cards = [
+                      {
+                        type = "thermostat";
+                        entity = "climate.t6_pro_z_wave_programmable_thermostat_with_smartstart";
+                        name = "Kitchen";
+                        grid_options = {
+                          columns = 12;
+                          rows = 4;
+                        };
                       }
                     ];
                   }
