@@ -11,9 +11,11 @@
       {
         sops.secrets.zwave_js_secrets = { };
 
+        users.groups.dialout.members = [ "zwave-js" ];
+
         services.zwave-js = {
           enable = true;
-          serialPort = "/dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00C36E31-if00-port0";
+          serialPort = "/dev/serial/by-id/usb-Silicon_Labs_CP2105_Dual_USB_to_UART_Bridge_Controller_00C36E31-if01-port0";
           secretsConfigFile = config.sops.secrets.zwave_js_secrets.path;
         };
 
