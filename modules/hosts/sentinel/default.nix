@@ -26,7 +26,10 @@
 
         users.mutableUsers = false;
         users.users.sentinel.hashedPasswordFile = config.sops.secrets.buttars-password.path;
-        users.users.sentinel.extraGroups = [ "wheel" ];
+        users.users.sentinel.extraGroups = [
+          "wheel"
+          "docker"
+        ];
         users.users.sentinel.createHome = true;
         systemd.tmpfiles.rules = [
           "d /home/sentinel/.ssh 0700 sentinel users -"
