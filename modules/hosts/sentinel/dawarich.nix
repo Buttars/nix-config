@@ -10,6 +10,7 @@
       }:
       {
         virtualisation.docker.enable = true;
+        virtualisation.docker.daemon.settings.iptables = false;
 
         sops.secrets."dawarich/env" = { };
 
@@ -154,11 +155,6 @@
 
         services.caddy.virtualHosts."http://dawarich.buttars.lan".extraConfig =
           "reverse_proxy http://127.0.0.1:3750";
-        services.caddy.virtualHosts."http://dawarich.buttars.dev".extraConfig = ''
-          reverse_proxy http://127.0.0.1:3750 {
-            header_up X-Forwarded-Proto https
-          }
-        '';
       };
   };
 }

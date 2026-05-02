@@ -76,9 +76,7 @@
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://dawarich.buttars.lan {
-                header_up Host {http.request.host}
-              }
+              reverse_proxy http://dawarich.buttars.lan
             '';
           };
         };
