@@ -55,28 +55,36 @@
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://jellyfin.buttars.lan
+              reverse_proxy http://jellyfin.buttars.lan {
+                header_up Host {upstream_hostport}
+              }
             '';
 
             "requests.buttars.dev".extraConfig = ''
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://requests.buttars.lan
+              reverse_proxy http://requests.buttars.lan {
+                header_up Host {upstream_hostport}
+              }
             '';
 
             "home.buttars.dev".extraConfig = ''
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://home.buttars.lan
+              reverse_proxy http://home.buttars.lan {
+                header_up Host {upstream_hostport}
+              }
             '';
 
             "dawarich.buttars.dev".extraConfig = ''
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://dawarich.buttars.lan
+              reverse_proxy http://dawarich.buttars.lan {
+                header_up Host {upstream_hostport}
+              }
             '';
           };
         };
