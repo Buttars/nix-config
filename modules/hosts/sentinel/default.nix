@@ -73,8 +73,12 @@
         services.dnsmasq = {
           enable = true;
           settings = {
-            address = [ "/.buttars.lan/10.0.40.6" ];
+            address = [
+              "/.buttars.lan/10.0.40.6"
+              "/.buttars.dev/10.0.40.6"
+            ];
             server = [
+              "10.0.40.1"
               "1.1.1.1"
               "1.0.0.1"
             ];

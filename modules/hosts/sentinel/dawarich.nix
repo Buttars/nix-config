@@ -10,7 +10,6 @@
       }:
       {
         virtualisation.docker.enable = true;
-        virtualisation.docker.daemon.settings.iptables = false;
 
         sops.secrets."dawarich/env" = { };
 
