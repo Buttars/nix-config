@@ -17,6 +17,11 @@
       <aegix/zsh/fzf-nav>
       <aegix/yazi>
       <aegix/workstation>
+      <aegix/toolsets/terraform>
+      <aegix/toolsets/k8s>
+      <aegix/toolsets/aws>
+      <aegix/toolsets/node>
+      <aegix/toolsets/python>
     ];
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {
