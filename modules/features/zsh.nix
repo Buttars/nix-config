@@ -119,6 +119,9 @@
           programs.zsh.initContent = ''
             autoload -U colors && colors
             PS1="%B%{$fg[blue]%}[%{$fg[green]%}%~%{$fg[blue]%}]%{$fg[red]%}$%b "
+            if [[ -n "$NIX_TOOLSETS" ]]; then
+              PS1="%{$fg[yellow]%}($NIX_TOOLSETS)%{$reset_color%} $PS1"
+            fi
           '';
         };
     };
