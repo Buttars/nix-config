@@ -5,15 +5,10 @@
       {
         config,
         pkgs,
-        lib,
         ...
       }:
       {
-        sops.secrets.cloudflare_dns_zone_edit_api_token = { };
-
-        sops.templates."caddy-cloudflare-env".content = ''
-          CLOUDFLARE_API_TOKEN=${config.sops.placeholder.cloudflare_dns_zone_edit_api_token}
-        '';
+        sops.secrets."cloudflare/env" = { };
 
         services.caddy.email = "admin@buttars.dev";
 
@@ -26,8 +21,7 @@
           acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
         '';
 
-        systemd.services.caddy.serviceConfig.EnvironmentFile =
-          config.sops.templates."caddy-cloudflare-env".path;
+        systemd.services.caddy.serviceConfig.EnvironmentFile = config.sops.secrets."cloudflare/env".path;
 
         services.caddy.virtualHosts = {
           "jellyfin.buttars.dev".extraConfig = "reverse_proxy http://theatrum.lan:8096";
