@@ -34,6 +34,7 @@
           "lidarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:8686";
           "bazarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:6767";
           "prowlarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:9696";
+          "gatus.buttars.dev".extraConfig = "reverse_proxy http://127.0.0.1:8888";
         };
       };
   };

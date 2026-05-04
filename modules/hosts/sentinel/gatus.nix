@@ -77,8 +77,6 @@
         };
       };
 
-      services.caddy.virtualHosts."http://gatus.buttars.lan".extraConfig =
-        "reverse_proxy http://127.0.0.1:8888";
     };
   };
 }
