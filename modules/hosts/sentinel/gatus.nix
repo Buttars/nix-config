@@ -40,76 +40,70 @@
               group = "Media";
               url = "https://jellyfin.buttars.dev";
               interval = "5m";
-              conditions = [
-                "[STATUS] == 200 || [STATUS] == 302"
-              ];
+              conditions = [ "[STATUS] < 500" ];
             }
             {
               name = "Home Assistant";
               group = "Home";
               url = "https://home.buttars.dev";
               interval = "5m";
-              conditions = [ "[STATUS] == 200" ];
+              conditions = [ "[STATUS] < 500" ];
             }
             {
               name = "Overseerr";
               group = "Media";
               url = "https://requests.buttars.dev";
               interval = "5m";
-              conditions = [ "[STATUS] == 200" ];
+              conditions = [ "[STATUS] < 500" ];
             }
             {
               name = "Dawarich";
               group = "Home";
               url = "https://dawarich.buttars.dev";
               interval = "5m";
-              conditions = [
-                "[STATUS] == 200 || [STATUS] == 302"
-              ];
+              conditions = [ "[STATUS] < 500" ];
             }
             {
               name = "qBittorrent";
               group = "Downloads";
               url = "https://qbittorrent.buttars.dev";
               interval = "5m";
-              conditions = [
-                "[STATUS] == 200 || [STATUS] == 302"
-              ];
+              conditions = [ "[STATUS] < 500" ];
             }
             {
               name = "Radarr";
               group = "Downloads";
               url = "https://radarr.buttars.dev";
               interval = "5m";
-              conditions = [ "[STATUS] == 200" ];
+              conditions = [ "[STATUS] < 500" ];
             }
             {
               name = "Sonarr";
               group = "Downloads";
               url = "https://sonarr.buttars.dev";
               interval = "5m";
-              conditions = [ "[STATUS] == 200" ];
+              conditions = [ "[STATUS] < 500" ];
             }
             {
               name = "Lidarr";
               group = "Downloads";
               url = "https://lidarr.buttars.dev";
               interval = "5m";
-              conditions = [ "[STATUS] == 200" ];
+              conditions = [ "[STATUS] < 500" ];
             }
             {
               name = "Bazarr";
               group = "Downloads";
               url = "https://bazarr.buttars.dev";
               interval = "5m";
-              conditions = [ "[STATUS] == 200" ];
+              conditions = [ "[STATUS] < 500" ];
             }
             {
               name = "Prowlarr";
               group = "Downloads";
               url = "https://prowlarr.buttars.dev";
               interval = "5m";
-              conditions = [ "[STATUS] == 200" ];
+              conditions = [ "[STATUS] < 500" ];
             }
           ];
         };
