@@ -28,6 +28,12 @@
           "requests.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:5055";
           "home.buttars.dev".extraConfig = "reverse_proxy http://127.0.0.1:8123";
           "dawarich.buttars.dev".extraConfig = "reverse_proxy http://127.0.0.1:3750";
+          "qbittorrent.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:8080";
+          "radarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:7878";
+          "sonarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:8989";
+          "lidarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:8686";
+          "bazarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:6767";
+          "prowlarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:9696";
         };
       };
   };

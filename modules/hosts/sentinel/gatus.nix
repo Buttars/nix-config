@@ -37,7 +37,7 @@
             }
             {
               name = "qBittorrent";
-              url = "http://qbittorrent.buttars.lan";
+              url = "https://qbittorrent.buttars.dev";
               interval = "5m";
               conditions = [
                 "[STATUS] == 200 || [STATUS] == 302"
@@ -45,31 +45,31 @@
             }
             {
               name = "Radarr";
-              url = "http://radarr.buttars.lan";
+              url = "https://radarr.buttars.dev";
               interval = "5m";
               conditions = [ "[STATUS] == 200" ];
             }
             {
               name = "Sonarr";
-              url = "http://sonarr.buttars.lan";
+              url = "https://sonarr.buttars.dev";
               interval = "5m";
               conditions = [ "[STATUS] == 200" ];
             }
             {
               name = "Lidarr";
-              url = "http://lidarr.buttars.lan";
+              url = "https://lidarr.buttars.dev";
               interval = "5m";
               conditions = [ "[STATUS] == 200" ];
             }
             {
               name = "Bazarr";
-              url = "http://bazarr.buttars.lan";
+              url = "https://bazarr.buttars.dev";
               interval = "5m";
               conditions = [ "[STATUS] == 200" ];
             }
             {
               name = "Prowlarr";
-              url = "http://prowlarr.buttars.lan";
+              url = "https://prowlarr.buttars.dev";
               interval = "5m";
               conditions = [ "[STATUS] == 200" ];
             }
