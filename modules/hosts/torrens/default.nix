@@ -241,8 +241,8 @@
               environmentFiles = [ config.sops.secrets.gluetun_env.path ];
               environment = {
                 FIREWALL_OUTBOUND_SUBNETS = "10.0.40.0/24";
-                DOT = "off";
-                DNS_ADDRESS = "10.0.40.1";
+                DOT = "on";
+                DOT_PROVIDERS = "cloudflare";
                 VPN_PORT_FORWARDING = "on";
                 VPN_PORT_FORWARDING_UP_COMMAND = "/bin/sh -c 'wget -O- -nv --retry-connrefused --post-data \"json={\\\"listen_port\\\":{{PORT}},\\\"current_network_interface\\\":\\\"{{VPN_INTERFACE}}\\\",\\\"random_port\\\":false,\\\"upnp\\\":false}\" http://127.0.0.1:8080/api/v2/app/setPreferences'";
                 VPN_PORT_FORWARDING_DOWN_COMMAND = "/bin/sh -c 'wget -O- -nv --retry-connrefused --post-data \"json={\\\"listen_port\\\":0,\\\"current_network_interface\\\":\\\"lo\\\"}\" http://127.0.0.1:8080/api/v2/app/setPreferences'";
