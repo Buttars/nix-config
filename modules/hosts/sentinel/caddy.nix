@@ -23,19 +23,29 @@
 
         systemd.services.caddy.serviceConfig.EnvironmentFile = config.sops.secrets."cloudflare/env".path;
 
-        services.caddy.virtualHosts = {
-          "jellyfin.buttars.dev".extraConfig = "reverse_proxy http://theatrum.lan:8096";
-          "requests.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:5055";
-          "home.buttars.dev".extraConfig = "reverse_proxy http://127.0.0.1:8123";
-          "dawarich.buttars.dev".extraConfig = "reverse_proxy http://127.0.0.1:3750";
-          "qbittorrent.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:8080";
-          "radarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:7878";
-          "sonarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:8989";
-          "lidarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:8686";
-          "bazarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:6767";
-          "prowlarr.buttars.dev".extraConfig = "reverse_proxy http://torrens.lan:9696";
-          "gatus.buttars.dev".extraConfig = "reverse_proxy http://127.0.0.1:8888";
-        };
+        services.caddy.virtualHosts =
+          let
+            proxy = upstream: ''
+              reverse_proxy ${upstream} {
+                header_up Host {host}
+                header_up X-Forwarded-For {remote_host}
+                header_up X-Forwarded-Proto {scheme}
+              }
+            '';
+          in
+          {
+            "jellyfin.buttars.dev".extraConfig = proxy "http://theatrum.lan:8096";
+            "requests.buttars.dev".extraConfig = proxy "http://torrens.lan:5055";
+            "home.buttars.dev".extraConfig = proxy "http://127.0.0.1:8123";
+            "dawarich.buttars.dev".extraConfig = proxy "http://127.0.0.1:3750";
+            "qbittorrent.buttars.dev".extraConfig = proxy "http://torrens.lan:8080";
+            "radarr.buttars.dev".extraConfig = proxy "http://torrens.lan:7878";
+            "sonarr.buttars.dev".extraConfig = proxy "http://torrens.lan:8989";
+            "lidarr.buttars.dev".extraConfig = proxy "http://torrens.lan:8686";
+            "bazarr.buttars.dev".extraConfig = proxy "http://torrens.lan:6767";
+            "prowlarr.buttars.dev".extraConfig = proxy "http://torrens.lan:9696";
+            "gatus.buttars.dev".extraConfig = proxy "http://127.0.0.1:8888";
+          };
       };
   };
 }
