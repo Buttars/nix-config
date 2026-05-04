@@ -55,7 +55,7 @@
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://jellyfin.buttars.lan {
+              reverse_proxy http://theatrum.lan:8096 {
                 header_up Host {upstream_hostport}
               }
             '';
@@ -64,7 +64,7 @@
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://requests.buttars.lan {
+              reverse_proxy http://torrens.lan:5055 {
                 header_up Host {upstream_hostport}
               }
             '';
@@ -73,7 +73,7 @@
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://home.buttars.lan {
+              reverse_proxy http://sentinel.lan:8123 {
                 header_up Host {upstream_hostport}
               }
             '';
@@ -82,7 +82,7 @@
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy http://dawarich.buttars.lan {
+              reverse_proxy http://sentinel.lan:3750 {
                 header_up Host {upstream_hostport}
               }
             '';

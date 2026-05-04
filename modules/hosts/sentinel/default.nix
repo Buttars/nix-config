@@ -74,7 +74,6 @@
           enable = true;
           settings = {
             address = [
-              "/.buttars.lan/10.0.40.6"
               "/.buttars.dev/10.0.40.6"
             ];
             server = [
@@ -88,20 +87,7 @@
           };
         };
 
-        services.caddy = {
-          enable = true;
-          virtualHosts = {
-            "http://jellyfin.buttars.lan".extraConfig = "reverse_proxy http://theatrum.lan:8096";
-            "http://qbittorrent.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:8080";
-            "http://radarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:7878";
-            "http://sonarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:8989";
-            "http://lidarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:8686";
-            "http://bazarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:6767";
-            "http://prowlarr.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:9696";
-            "http://home.buttars.lan".extraConfig = "reverse_proxy http://127.0.0.1:8123";
-            "http://requests.buttars.lan".extraConfig = "reverse_proxy http://torrens.lan:5055";
-          };
-        };
+        services.caddy.enable = true;
 
         networking.firewall.allowedTCPPorts = [
           53

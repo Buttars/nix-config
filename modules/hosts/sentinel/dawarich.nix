@@ -88,7 +88,7 @@
                 DATABASE_USERNAME = "postgres";
                 DATABASE_NAME = "dawarich_production";
                 REDIS_URL = "redis://dawarich-redis:6379";
-                APPLICATION_HOSTS = "127.0.0.1,dawarich.buttars.lan,dawarich.buttars.dev";
+                APPLICATION_HOSTS = "127.0.0.1,dawarich.buttars.dev";
                 APPLICATION_PROTOCOL = "http";
                 TIME_ZONE = "America/Denver";
                 SELF_HOSTED = "true";
@@ -128,7 +128,7 @@
                 DATABASE_USERNAME = "postgres";
                 DATABASE_NAME = "dawarich_production";
                 REDIS_URL = "redis://dawarich-redis:6379";
-                APPLICATION_HOSTS = "127.0.0.1,dawarich.buttars.lan,dawarich.buttars.dev";
+                APPLICATION_HOSTS = "127.0.0.1,dawarich.buttars.dev";
                 APPLICATION_PROTOCOL = "http";
                 TIME_ZONE = "America/Denver";
                 SELF_HOSTED = "true";
@@ -152,8 +152,6 @@
           };
         };
 
-        services.caddy.virtualHosts."http://dawarich.buttars.lan".extraConfig =
-          "reverse_proxy http://127.0.0.1:3750";
       };
   };
 }
