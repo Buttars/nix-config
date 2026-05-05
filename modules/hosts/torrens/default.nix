@@ -76,7 +76,7 @@
 
         environment.systemPackages = [ pkgs.nfs-utils ];
 
-        fileSystems."/srv" =
+        fileSystems =
           let
             nfsProvider = "truenas.lan";
             nfsOptions = [
@@ -94,11 +94,25 @@
               "_netdev"
               "nofail"
             ];
+            serviceMount = name: {
+              device = "${nfsProvider}:/mnt/veritas/services/${name}";
+              fsType = "nfs";
+              options = nfsOptions;
+            };
           in
           {
-            device = "${nfsProvider}:/mnt/veritas/cognito";
-            fsType = "nfs";
-            options = nfsOptions;
+            "/srv" = {
+              device = "${nfsProvider}:/mnt/veritas/cognito";
+              fsType = "nfs";
+              options = nfsOptions;
+            };
+            "/var/lib/radarr" = serviceMount "radarr";
+            "/var/lib/sonarr" = serviceMount "sonarr";
+            "/var/lib/lidarr" = serviceMount "lidarr";
+            "/var/lib/prowlarr" = serviceMount "prowlarr";
+            "/var/lib/bazarr" = serviceMount "bazarr";
+            "/var/lib/qbittorrent" = serviceMount "qbittorrent";
+            "/var/lib/gluetun" = serviceMount "gluetun";
           };
 
         sops.secrets.buttars-password.neededForUsers = true;
@@ -109,11 +123,6 @@
         users.users.torrens.extraGroups = [ "wheel" ];
         users.users.torrens.openssh.authorizedKeys.keyFiles = [
           ../../users/buttars/keys/id_ed25519.pub
-        ];
-
-        systemd.tmpfiles.rules = [
-          "d /var/lib/qbittorrent 0755 root root -"
-          "d /var/lib/gluetun 0755 root root -"
         ];
 
         systemd.services = {
