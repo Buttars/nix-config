@@ -65,6 +65,7 @@
               extraOptions = [
                 "--network=dawarich"
                 "--shm-size=1g"
+                "--user=70:70"
               ];
             };
 
@@ -117,7 +118,7 @@
                 "/var/lib/dawarich/storage:/var/app/storage"
                 "/var/lib/dawarich/db:/dawarich_db_data"
               ];
-              ports = [ "127.0.0.1:3750:3000" ];
+              ports = [ "3750:3000" ];
               extraOptions = [ "--network=dawarich" ];
               dependsOn = [
                 "dawarich-db"
