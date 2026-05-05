@@ -20,8 +20,8 @@
         };
 
         systemd.services.home-assistant = {
-          after = [ "srv.mount" ];
-          requires = [ "srv.mount" ];
+          after = [ "var-lib-hass.mount" ];
+          requires = [ "var-lib-hass.mount" ];
         };
 
         services.home-assistant = {

@@ -38,8 +38,14 @@
               "docker-dawarich-sidekiq"
             ]
             (_: {
-              after = [ "init-dawarich-network.service" ];
-              requires = [ "init-dawarich-network.service" ];
+              after = [
+                "init-dawarich-network.service"
+                "var-lib-dawarich.mount"
+              ];
+              requires = [
+                "init-dawarich-network.service"
+                "var-lib-dawarich.mount"
+              ];
             });
 
         virtualisation.oci-containers = {
@@ -53,7 +59,7 @@
               };
               environmentFiles = [ config.sops.secrets."dawarich/env".path ];
               volumes = [
-                "dawarich-db:/var/lib/postgresql/data"
+                "/var/lib/dawarich/db:/var/lib/postgresql/data"
                 "dawarich-shared:/var/shared"
               ];
               extraOptions = [
@@ -106,10 +112,10 @@
                 "::"
               ];
               volumes = [
-                "dawarich-public:/var/app/public"
-                "dawarich-watched:/var/app/tmp/imports/watched"
-                "dawarich-storage:/var/app/storage"
-                "dawarich-db:/dawarich_db_data"
+                "/var/lib/dawarich/public:/var/app/public"
+                "/var/lib/dawarich/watched:/var/app/tmp/imports/watched"
+                "/var/lib/dawarich/storage:/var/app/storage"
+                "/var/lib/dawarich/db:/dawarich_db_data"
               ];
               ports = [ "127.0.0.1:3750:3000" ];
               extraOptions = [ "--network=dawarich" ];
@@ -139,9 +145,9 @@
               entrypoint = "sidekiq-entrypoint.sh";
               cmd = [ "sidekiq" ];
               volumes = [
-                "dawarich-public:/var/app/public"
-                "dawarich-watched:/var/app/tmp/imports/watched"
-                "dawarich-storage:/var/app/storage"
+                "/var/lib/dawarich/public:/var/app/public"
+                "/var/lib/dawarich/watched:/var/app/tmp/imports/watched"
+                "/var/lib/dawarich/storage:/var/app/storage"
               ];
               extraOptions = [ "--network=dawarich" ];
               dependsOn = [
