@@ -56,7 +56,7 @@
                 protocols tls1.2 tls1.3
               }
               reverse_proxy http://theatrum.lan:8096 {
-                header_up Host {upstream_hostport}
+                header_up Host {host}
               }
             '';
 
@@ -65,7 +65,7 @@
                 protocols tls1.2 tls1.3
               }
               reverse_proxy http://torrens.lan:5055 {
-                header_up Host {upstream_hostport}
+                header_up Host {host}
               }
             '';
 
@@ -74,7 +74,7 @@
                 protocols tls1.2 tls1.3
               }
               reverse_proxy http://sentinel.lan:8123 {
-                header_up Host {upstream_hostport}
+                header_up Host {host}
               }
             '';
 
@@ -83,7 +83,7 @@
                 protocols tls1.2 tls1.3
               }
               reverse_proxy http://sentinel.lan:3750 {
-                header_up Host {upstream_hostport}
+                header_up Host {host}
               }
             '';
           };
