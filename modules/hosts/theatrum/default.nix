@@ -76,6 +76,9 @@
           ];
         };
 
+        users.users.jellyfin.uid = 998;
+        users.groups.jellyfin.gid = 998;
+
         services.jellyfin = {
           enable = true;
           dataDir = "/srv/services/jellyfin/data";

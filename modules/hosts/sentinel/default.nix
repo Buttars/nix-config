@@ -68,6 +68,9 @@
 
         nix.settings.trusted-users = [ "sentinel" ];
 
+        users.users.hass.uid = 286;
+        users.groups.hass.gid = 286;
+
         services.openssh.enable = true;
 
         services.dnsmasq = {
