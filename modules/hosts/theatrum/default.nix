@@ -42,10 +42,10 @@
         hardware.facter.reportPath = ./_facter.json;
         hardware.facter.detected.dhcp.interfaces = [ "ens18" ];
 
-        fileSystems."/srv" =
+        fileSystems =
           let
             nfsProvider = "truenas.lan";
-            defaultNfsOptions = [
+            nfsOptions = [
               "defaults"
               "noatime"
               "nfsvers=4.2"
@@ -62,27 +62,38 @@
             ];
           in
           {
-            device = "${nfsProvider}:/mnt/veritas/cognito";
-            fsType = "nfs";
-            options = defaultNfsOptions;
+            "/srv" = {
+              device = "${nfsProvider}:/mnt/veritas/cognito";
+              fsType = "nfs";
+              options = nfsOptions;
+            };
+            "/var/lib/jellyfin" = {
+              device = "${nfsProvider}:/mnt/veritas/services/jellyfin";
+              fsType = "nfs";
+              options = nfsOptions;
+            };
+            "/var/cache/jellyfin" = {
+              device = "tmpfs";
+              fsType = "tmpfs";
+              options = [
+                "size=20G"
+                "mode=0755"
+              ];
+            };
           };
-
-        fileSystems."/var/cache/jellyfin" = {
-          device = "tmpfs";
-          fsType = "tmpfs";
-          options = [
-            "size=20G"
-            "mode=0755"
-          ];
-        };
 
         users.users.jellyfin.uid = 998;
         users.groups.jellyfin.gid = 998;
 
+        systemd.services.jellyfin = {
+          after = [ "var-lib-jellyfin.mount" ];
+          requires = [ "var-lib-jellyfin.mount" ];
+        };
+
         services.jellyfin = {
           enable = true;
-          dataDir = "/srv/services/jellyfin/data";
-          configDir = "/srv/services/jellyfin/config";
+          dataDir = "/var/lib/jellyfin/data";
+          configDir = "/var/lib/jellyfin/config";
         };
 
         virtualisation.podman.enable = true;
