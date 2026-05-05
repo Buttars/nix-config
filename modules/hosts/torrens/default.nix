@@ -57,6 +57,17 @@
 
         nix.settings.trusted-users = [ "torrens" ];
 
+        users.users.radarr.uid = 275;
+        users.groups.radarr.gid = 275;
+        users.users.sonarr.uid = 274;
+        users.groups.sonarr.gid = 274;
+        users.users.lidarr.uid = 306;
+        users.groups.lidarr.gid = 306;
+        users.users.bazarr.uid = 995;
+        users.groups.bazarr.gid = 992;
+        users.users.prowlarr.uid = 61654;
+        users.groups.prowlarr.gid = 61654;
+
         services.openssh.enable = true;
         services.openssh.settings.PermitRootLogin = "yes";
         users.users.root.openssh.authorizedKeys.keyFiles = [
