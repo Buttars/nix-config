@@ -60,6 +60,21 @@
               "_netdev"
               "nofail"
             ];
+            serviceNfsOptions = [
+              "defaults"
+              "noatime"
+              "nfsvers=3"
+              "rsize=262144"
+              "wsize=262144"
+              "nconnect=4"
+              "async"
+              "hard"
+              "timeo=600"
+              "retrans=2"
+              "auto"
+              "_netdev"
+              "nofail"
+            ];
           in
           {
             "/srv" = {
@@ -70,7 +85,7 @@
             "/var/lib/jellyfin" = {
               device = "${nfsProvider}:/mnt/veritas/services/jellyfin";
               fsType = "nfs";
-              options = nfsOptions;
+              options = serviceNfsOptions;
             };
             "/var/cache/jellyfin" = {
               device = "tmpfs";

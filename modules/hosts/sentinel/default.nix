@@ -61,10 +61,25 @@
               "_netdev"
               "nofail"
             ];
+            serviceNfsOptions = [
+              "defaults"
+              "noatime"
+              "nfsvers=3"
+              "rsize=262144"
+              "wsize=262144"
+              "nconnect=4"
+              "async"
+              "hard"
+              "timeo=600"
+              "retrans=2"
+              "auto"
+              "_netdev"
+              "nofail"
+            ];
             serviceMount = name: {
               device = "${nfsProvider}:/mnt/veritas/services/${name}";
               fsType = "nfs";
-              options = nfsOptions;
+              options = serviceNfsOptions;
             };
           in
           {
@@ -107,6 +122,7 @@
           53
           80
           443
+          3750
         ];
         networking.firewall.allowedUDPPorts = [ 53 ];
 

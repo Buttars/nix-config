@@ -66,6 +66,8 @@
         users.users.bazarr.uid = 995;
         users.groups.bazarr.gid = 992;
         users.users.prowlarr.uid = 61654;
+        users.users.prowlarr.isSystemUser = true;
+        users.users.prowlarr.group = "prowlarr";
         users.groups.prowlarr.gid = 61654;
 
         services.openssh.enable = true;
@@ -94,10 +96,25 @@
               "_netdev"
               "nofail"
             ];
+            serviceNfsOptions = [
+              "defaults"
+              "noatime"
+              "nfsvers=3"
+              "rsize=262144"
+              "wsize=262144"
+              "nconnect=4"
+              "async"
+              "hard"
+              "timeo=600"
+              "retrans=2"
+              "auto"
+              "_netdev"
+              "nofail"
+            ];
             serviceMount = name: {
               device = "${nfsProvider}:/mnt/veritas/services/${name}";
               fsType = "nfs";
-              options = nfsOptions;
+              options = serviceNfsOptions;
             };
           in
           {
