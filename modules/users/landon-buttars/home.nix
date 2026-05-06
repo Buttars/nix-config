@@ -53,8 +53,18 @@
 
       programs.ssh = {
         enable = true;
+        enableDefaultConfig = false;
 
         matchBlocks = {
+          "*" = {
+            extraOptions = {
+              AddKeysToAgent = "yes";
+              UseKeychain = "yes";
+              ServerAliveInterval = "30";
+              ServerAliveCountMax = "3";
+            };
+          };
+
           "github.com-buttars" = {
             hostname = "github.com";
             user = "git";
@@ -70,14 +80,6 @@
             identitiesOnly = true;
           };
         };
-
-        extraConfig = ''
-          Host *
-            AddKeysToAgent yes
-            UseKeychain yes
-            ServerAliveInterval 30
-            ServerAliveCountMax 3
-        '';
       };
 
       home.sessionVariables = {

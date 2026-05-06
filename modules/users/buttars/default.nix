@@ -58,6 +58,7 @@
 
         programs.ssh = {
           enable = true;
+          enableDefaultConfig = false;
           matchBlocks = {
             sentinel = {
               hostname = "sentinel.lan";

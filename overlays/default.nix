@@ -14,7 +14,10 @@
     # prev.awscli2;
 
     direnv =
-      if final.system == "aarch64-darwin" || final.system == "x86_64-darwin" then
+      if
+        final.stdenv.hostPlatform.system == "aarch64-darwin"
+        || final.stdenv.hostPlatform.system == "x86_64-darwin"
+      then
         prev.direnv.overrideAttrs (old: {
           env = (old.env or { }) // {
             CGO_ENABLED = "1";
@@ -24,7 +27,10 @@
         prev.direnv;
 
     gtk3 =
-      if final.system == "aarch64-darwin" || final.system == "x86_64-darwin" then
+      if
+        final.stdenv.hostPlatform.system == "aarch64-darwin"
+        || final.stdenv.hostPlatform.system == "x86_64-darwin"
+      then
         (import ./gtk3-sincos-patch) prev
       else
         prev.gtk3;
