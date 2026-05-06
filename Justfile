@@ -12,3 +12,12 @@ aegis:
 
 sentinel:
     just deploy sentinel
+
+switch +args='':
+    #!/usr/bin/env sh
+    host=$(hostname -s)
+    if [ "$(uname)" = "Darwin" ]; then
+        darwin-rebuild switch --flake .#"$host" {{args}}
+    else
+        sudo nixos-rebuild switch --flake .#"$host" {{args}}
+    fi
