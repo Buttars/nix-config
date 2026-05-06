@@ -39,6 +39,7 @@
         amazon-q-cli
         kiro-cli
         logseq
+        obsidian
         # firefox
         (pkgs.python3.withPackages (
           ps: with ps; [
