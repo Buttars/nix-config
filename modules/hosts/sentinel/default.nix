@@ -75,6 +75,7 @@
               "auto"
               "_netdev"
               "nofail"
+              "nolock"
             ];
             serviceMount = name: {
               device = "${nfsProvider}:/mnt/veritas/services/${name}";

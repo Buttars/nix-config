@@ -74,6 +74,7 @@
               "auto"
               "_netdev"
               "nofail"
+              "nolock"
             ];
           in
           {
