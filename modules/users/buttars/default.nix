@@ -22,6 +22,8 @@
     nixos =
       { lib, config, ... }:
       {
+        programs.nh.enable = true;
+
         sops.secrets.buttars-password.neededForUsers = true;
 
         sops.secrets."private_keys/buttars" = {
@@ -54,7 +56,10 @@
     homeManager =
       { pkgs, ... }:
       {
-        home.packages = with pkgs; [ claude-code ];
+        home.packages = with pkgs; [
+          claude-code
+          nvd
+        ];
 
         programs.ssh = {
           enable = true;
