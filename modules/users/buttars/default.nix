@@ -59,6 +59,7 @@
         home.packages = with pkgs; [
           claude-code
           nvd
+          obsidian
         ];
 
         programs.ssh = {
