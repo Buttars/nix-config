@@ -23,6 +23,7 @@
       <aegix/toolsets/aws>
       <aegix/toolsets/node>
       <aegix/toolsets/python>
+      <aegix/github-mcp-server>
     ];
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {
