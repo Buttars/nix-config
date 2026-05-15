@@ -82,6 +82,8 @@
         };
       };
 
+      sops.secrets.github-mcp-server = { };
+
       home.sessionVariables = {
         EDITOR = "nvim";
         TERMINAL = "kitty";
@@ -90,5 +92,11 @@
         AMAZONQ_START_URL = "https://wgu.awsapps.com/start";
         NODE_TLS_REJECT_UNAUTHORIZED = 0;
       };
+
+      programs.zsh.initContent = ''
+        if [[ -f "${config.sops.secrets.github-mcp-server.path}" ]]; then
+          export GITHUB_PERSONAL_ACCESS_TOKEN="$(cat ${config.sops.secrets.github-mcp-server.path})"
+        fi
+      '';
     };
 }
