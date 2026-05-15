@@ -79,6 +79,8 @@ Disk config goes in a separate `_disko.nix` (manually imported via `nixos.import
 
 Each file exports `aegix.<name>` with `nixos` and/or `homeManager` keys. The `<aegix/name>` syntax resolves to the corresponding file. Including an aspect in both a host and a user is intentional — the host include applies the `nixos` class config, the user include applies the `homeManager` class config.
 
+OS-specific logic (darwin vs linux) belongs in the aspect itself, not in host or user definitions. Use `pkgs.stdenv.isDarwin` / `pkgs.stdenv.isLinux` and `lib.mkIf` within the aspect to branch behavior per platform unless told otherwise.
+
 ### Disk layout (`modules/disks.nix`)
 
 Provides `aegix.disks.provides.btrfs` — a parametric function for btrfs+LUKS layouts. Each host that uses disko defines its own `_disko.nix` with `disko.devices`.
