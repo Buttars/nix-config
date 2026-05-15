@@ -87,6 +87,7 @@
             diff = "diff --color=auto";
             ka = "killall";
             g = "git";
+            gwt = "git-worktree-init";
             e = "$EDITOR";
             v = "$EDITOR";
           }

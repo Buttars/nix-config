@@ -10,6 +10,7 @@
             eza
             fd
             dig
+            git-worktree-init
             intelli-shell
             nix-search-tv
             ripgrep
