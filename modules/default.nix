@@ -25,6 +25,11 @@
         inputs.srvos.nixosModules.mixins-systemd-boot
       ];
 
+      nixpkgs.overlays = with inputs; [
+        self.overlays.additions
+        self.overlays.modifications
+      ];
+
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
