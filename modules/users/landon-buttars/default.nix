@@ -17,6 +17,7 @@
       <aegix/zsh/fzf-nav>
       <aegix/yazi>
       <aegix/workstation>
+      <aegix/slack>
       <aegix/toolsets/terraform>
       <aegix/toolsets/k8s>
       <aegix/toolsets/aws>
