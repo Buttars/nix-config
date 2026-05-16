@@ -3,6 +3,7 @@
   den.aspects."landon.buttars" = {
     includes = [
       <den/primary-user>
+      (<den/unfree> [ "obsidian" ])
       <aegix/programming>
       <aegix/terminal-emulator/kitty>
       <aegix/taskwarrior>
@@ -26,6 +27,11 @@
       <aegix/github-mcp-server>
       <aegix/sops>
     ];
+    homeManager =
+      { pkgs, ... }:
+      {
+        home.packages = [ pkgs.obsidian ];
+      };
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {
     aspect = "landon.buttars";
