@@ -4,7 +4,10 @@
     includes = [
       <den/primary-user>
       (den._.user-shell "fish")
-      (<den/unfree> [ "claude-code" ])
+      (<den/unfree> [
+        "claude-code"
+        "obsidian"
+      ])
       <aegix/fish>
       <aegix/fish/aliases>
       <aegix/programming>
