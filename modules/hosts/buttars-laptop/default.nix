@@ -9,6 +9,7 @@
       <aegix/zsa>
       <aegix/sops>
       <aegix/theming>
+      <aegix/syncthing>
     ];
     nixos = {
       imports = [
@@ -58,6 +59,8 @@
           "audio"
         ];
       };
+
+      services.syncthing.user = "buttars";
 
       home-manager.users.buttars = {
         wayland.windowManager.hyprland.settings = {

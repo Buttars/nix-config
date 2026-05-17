@@ -15,6 +15,7 @@
       <aegix/gaming>
       <aegix/zsa>
       <aegix/nfs-utils>
+      <aegix/syncthing>
       # (<aegix/disks/btrfs> {
       #   disk = "/dev/sda";
       #   withSwap = true;
@@ -52,6 +53,7 @@
         };
 
         services.openssh.enable = true;
+        services.syncthing.user = "buttars";
       };
   };
 
