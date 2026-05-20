@@ -25,6 +25,9 @@
       <aegix/toolsets/node>
       <aegix/toolsets/python>
       <aegix/github-mcp-server>
+      <aegix/ai/kiro>
+      <aegix/ai/claude>
+      <aegix/ai/chatgpt>
       <aegix/sops>
     ];
     homeManager =
