@@ -12,7 +12,6 @@
             dig
             git-worktree-init
             intelli-shell
-            nix-search-tv
             ripgrep
             tldr
             watch
@@ -21,6 +20,16 @@
           ++ lib.optionals pkgs.stdenv.isLinux [
             trashy
           ];
+
+        programs.television = {
+          enable = true;
+          enableZshIntegration = true;
+          enableFishIntegration = true;
+        };
+
+        programs.nix-search-tv = {
+          enable = true;
+        };
 
         programs.zoxide = {
           enable = true;

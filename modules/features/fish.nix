@@ -37,6 +37,7 @@
               ka = "killall";
               g = "git";
               gwt = "git-worktree-init";
+              ns = "tv nix-search-tv";
               e = "$EDITOR";
               v = "$EDITOR";
             }
