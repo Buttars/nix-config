@@ -106,11 +106,7 @@
             address = [
               "/.buttars.dev/10.0.40.6"
             ];
-            server = [
-              "10.0.40.1"
-              "1.1.1.1"
-              "1.0.0.1"
-            ];
+            server = [ "10.0.40.1" ];
             cache-size = 1000;
             domain-needed = true;
             bogus-priv = true;
