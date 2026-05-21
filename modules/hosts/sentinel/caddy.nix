@@ -32,9 +32,17 @@
                 header_up X-Forwarded-Proto {scheme}
               }
             '';
+            jellyfinProxy = upstream: ''
+              reverse_proxy ${upstream} {
+                header_up Host {host}
+                header_up X-Forwarded-For {remote_host}
+                header_up X-Forwarded-Proto {scheme}
+                header_up X-Emby-Authorization {http.request.header.X-Emby-Authorization}
+              }
+            '';
           in
           {
-            "jellyfin.buttars.dev".extraConfig = proxy "http://theatrum.lan:8096";
+            "jellyfin.buttars.dev".extraConfig = jellyfinProxy "http://theatrum.lan:8096";
             "requests.buttars.dev".extraConfig = proxy "http://torrens.lan:5055";
             "home.buttars.dev".extraConfig = proxy "http://127.0.0.1:8123";
             "dawarich.buttars.dev".extraConfig = proxy "http://127.0.0.1:3750";
