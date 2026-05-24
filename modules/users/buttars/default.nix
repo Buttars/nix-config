@@ -63,6 +63,7 @@
           claude-code
           nvd
           obsidian
+          discord
         ];
 
         programs.ssh = {
