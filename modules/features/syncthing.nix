@@ -18,11 +18,32 @@
         services.syncthing = {
           enable = true;
           dataDir = homeDir;
-          overrideDevices = false;
-          overrideFolders = false;
-          settings.folders = {
-            "Notes".path = "${homeDir}/Documents/Notes";
-            "Aegis".path = "${homeDir}/Documents/Aegis";
+          overrideDevices = true;
+          overrideFolders = true;
+          settings = {
+            devices = {
+              buttars-phone.id = "RG2SA2K-26FAKLJ-327RFJX-5PJJCHQ-EKLIS2V-CE5X4QO-SSMTZPA-BGZYYQL";
+              buttars-desktop.id = "37ELL6B-T33THUV-UUAW52F-MFVHUPY-4RV2CMV-V4MIZKE-3BR3PNX-BBFISQR";
+              buttars-laptop.id = "PKDBMQH-ACO6SH4-2RYAKCI-CJFQEH7-Q547PT6-ERN7JOU-UTXVMMG-ZYEAOQ2";
+            };
+            folders = {
+              "Notes" = {
+                path = "${homeDir}/Documents/Notes";
+                devices = [
+                  "buttars-phone"
+                  "buttars-desktop"
+                  "buttars-laptop"
+                ];
+              };
+              "Aegis" = {
+                path = "${homeDir}/Documents/Aegis";
+                devices = [
+                  "buttars-phone"
+                  "buttars-desktop"
+                  "buttars-laptop"
+                ];
+              };
+            };
           };
         };
       };
