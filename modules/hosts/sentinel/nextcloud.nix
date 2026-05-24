@@ -13,7 +13,7 @@
           package = pkgs.nextcloud33;
           hostName = "nextcloud.buttars.dev";
           https = true;
-          dataDir = "/var/lib/nextcloud";
+          datadir = "/var/lib/nextcloud";
           database.createLocally = true;
           config = {
             adminpassFile = config.sops.secrets."nextcloud/admin-password".path;
