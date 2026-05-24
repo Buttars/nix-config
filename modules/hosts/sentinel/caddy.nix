@@ -45,25 +45,7 @@
             "bazarr.buttars.dev".extraConfig = proxy "http://torrens.lan:6767";
             "prowlarr.buttars.dev".extraConfig = proxy "http://torrens.lan:9696";
             "gatus.buttars.dev".extraConfig = proxy "http://127.0.0.1:8888";
-            "nextcloud.buttars.dev".extraConfig = ''
-              root * ${pkgs.nextcloud33}
-
-              encode zstd gzip
-
-              redir /.well-known/carddav /remote.php/dav 301
-              redir /.well-known/caldav /remote.php/dav 301
-
-              header {
-                Strict-Transport-Security "max-age=15552000;"
-                -X-Powered-By
-              }
-
-              php_fastcgi unix//run/phpfpm/nextcloud.sock {
-                env front_controller_active true
-              }
-
-              file_server
-            '';
+            "nextcloud.buttars.dev".extraConfig = proxy "http://127.0.0.1:8080";
           };
       };
   };

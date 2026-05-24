@@ -28,6 +28,9 @@
           };
         };
 
+        # nginx owns nextcloud's PHP-FPM; move it off port 80 so caddy can proxy to it
+        services.nginx.defaultHTTPListenPort = 8080;
+
         systemd.services."nextcloud-setup" = {
           after = [ "var-lib-nextcloud.mount" ];
           requires = [ "var-lib-nextcloud.mount" ];

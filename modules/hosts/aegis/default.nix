@@ -91,11 +91,8 @@
               tls {
                 protocols tls1.2 tls1.3
               }
-              reverse_proxy https://sentinel.lan {
+              reverse_proxy http://sentinel.lan:8080 {
                 header_up Host {host}
-                transport http {
-                  tls_insecure_skip_verify
-                }
               }
             '';
           };
