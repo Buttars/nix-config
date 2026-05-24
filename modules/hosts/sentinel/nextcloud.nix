@@ -38,6 +38,22 @@
           after = [ "var-lib-nextcloud.mount" ];
           requires = [ "var-lib-nextcloud.mount" ];
         };
+
+        environment.etc."fail2ban/filter.d/nextcloud.conf".text = ''
+          [Definition]
+          failregex = .*"remoteAddr":"<HOST>".*"message":"Login failed
+          ignoreregex =
+          datepattern = %%Y-%%m-%%dT%%H:%%M:%%S%%z
+        '';
+
+        services.fail2ban.jails.nextcloud.settings = {
+          enabled = true;
+          filter = "nextcloud";
+          logpath = "/var/lib/nextcloud/data/nextcloud.log";
+          maxretry = 5;
+          findtime = "10m";
+          bantime = "1h";
+        };
       };
   };
 }
