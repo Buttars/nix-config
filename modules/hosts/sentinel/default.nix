@@ -91,6 +91,7 @@
             };
             "/var/lib/hass" = serviceMount "home-assistant";
             "/var/lib/dawarich" = serviceMount "dawarich";
+            "/var/lib/nextcloud" = serviceMount "nextcloud";
           };
 
         nix.settings.trusted-users = [ "sentinel" ];

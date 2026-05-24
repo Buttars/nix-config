@@ -86,6 +86,18 @@
                 header_up Host {host}
               }
             '';
+
+            "nextcloud.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy https://sentinel.lan {
+                header_up Host {host}
+                transport http {
+                  tls_insecure_skip_verify
+                }
+              }
+            '';
           };
         };
 

@@ -105,6 +105,13 @@
               interval = "5m";
               conditions = [ "[STATUS] < 500" ];
             }
+            {
+              name = "Nextcloud";
+              group = "Services";
+              url = "https://nextcloud.buttars.dev";
+              interval = "5m";
+              conditions = [ "[STATUS] < 500" ];
+            }
           ];
         };
       };
