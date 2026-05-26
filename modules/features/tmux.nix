@@ -38,6 +38,7 @@
             set -g set-clipboard on
             set -gq allow-passthrough on
             set -g visual-activity off
+            set -g repeat-time 200
 
             # Status bar
             set -g status-interval 3
