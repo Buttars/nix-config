@@ -108,7 +108,10 @@
               pager.diff = "diffnav";
             };
           };
-          programs.jujutsu.enable = true;
+          programs.jujutsu = {
+            enable = true;
+            settings.git.colocate = true;
+          };
         };
     };
   };

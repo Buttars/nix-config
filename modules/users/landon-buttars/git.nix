@@ -18,5 +18,9 @@
         }
       ];
     };
+    programs.jujutsu.settings.user = {
+      name = "Landon Buttars";
+      email = "landon.buttars@wgu.edu";
+    };
   };
 }
