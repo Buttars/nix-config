@@ -8,6 +8,7 @@
       <aegix/terminal-emulator/kitty>
       <aegix/taskwarrior>
       <aegix/cli/aws>
+      <aegix/cli/git>
       <aegix/cli/tui>
       <aegix/neovim>
       <aegix/paneru>
