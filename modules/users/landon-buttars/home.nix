@@ -38,6 +38,7 @@
         docker
         logseq
         obsidian
+        minikube
         # firefox
         (pkgs.python3.withPackages (
           ps: with ps; [
@@ -88,6 +89,7 @@
         BROWSER = "brave";
         AVANTE_PROVIDER = "openai";
         NODE_TLS_REJECT_UNAUTHORIZED = 0;
+        DOCKER_HOST = "unix:///Users/landon.buttars/.colima/default/docker.sock";
       };
 
       programs.zsh.initContent = ''
