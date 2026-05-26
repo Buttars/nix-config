@@ -93,6 +93,7 @@
           home.packages = with pkgs; [
             delta
           ];
+          programs.delta.enableJujutsuIntegration = true;
           programs.git = {
             enable = true;
             lfs.enable = true;
@@ -107,6 +108,7 @@
               pager.diff = "diffnav";
             };
           };
+          programs.jujutsu.enable = true;
         };
     };
   };
