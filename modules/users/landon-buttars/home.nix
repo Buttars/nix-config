@@ -30,8 +30,6 @@
       home.packages = with pkgs; [
         gleam
         erlang
-        sidecar
-        td
         # google-chrome
         colima
         git-worktree-switcher
