@@ -1,5 +1,12 @@
-{ __findFile, ... }:
+{ den, __findFile, ... }:
 {
+  den.hosts.x86_64-linux.buttars-laptop = {
+    users.buttars = {
+      classes = [ "homeManager" ];
+      aspect = den.aspects.buttars;
+    };
+  };
+
   den.aspects.buttars-laptop = {
     includes = [
       <aegix/audio>

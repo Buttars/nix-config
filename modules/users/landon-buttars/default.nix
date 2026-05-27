@@ -39,5 +39,6 @@
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {
     classes = [ "homeManager" ];
+    aspect = den.aspects."landon.buttars";
   };
 }

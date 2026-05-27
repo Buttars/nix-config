@@ -1,5 +1,12 @@
-{ __findFile, ... }:
+{ den, __findFile, ... }:
 {
+  den.hosts.x86_64-linux.buttars-desktop = {
+    users.buttars = {
+      classes = [ "homeManager" ];
+      aspect = den.aspects.buttars;
+    };
+  };
+
   den.aspects.buttars-desktop = {
     includes = [
       <den/define-user>
