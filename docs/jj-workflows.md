@@ -2,7 +2,7 @@
 
 ## Core Concepts
 
-- The working copy *is* the current change (`@`) — no staging step
+- The working copy _is_ the current change (`@`) — no staging step
 - `jj new` finalizes the current change and starts a fresh one on top
 - Changes are identified by immutable change IDs, not commit hashes
 - Bookmarks are optional labels that map to git branches on push
