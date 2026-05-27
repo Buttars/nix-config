@@ -10,10 +10,8 @@
     }:
     {
       home.file = {
-        ".config/nvim" = {
-          source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dendritic-from-scratch/dotfiles/.config/nvim";
-          recursive = true;
-        };
+        ".config/nvim".source =
+          config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dendritic-from-scratch/dotfiles/.config/nvim";
         ".config/rofi".source = "${dotfiles}/.config/rofi";
         ".config/waybar".source = "${dotfiles}/.config/waybar";
       };
