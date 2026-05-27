@@ -70,26 +70,26 @@
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
-          matchBlocks = {
+          settings = {
             sentinel = {
-              hostname = "sentinel.lan";
-              user = "sentinel";
-              identityFile = "~/.ssh/id_ed25519";
+              HostName = "sentinel.lan";
+              User = "sentinel";
+              IdentityFile = "~/.ssh/id_ed25519";
             };
             aegis = {
-              hostname = "aegis.lan";
-              user = "aegis";
-              identityFile = "~/.ssh/id_ed25519";
+              HostName = "aegis.lan";
+              User = "aegis";
+              IdentityFile = "~/.ssh/id_ed25519";
             };
             torrens = {
-              hostname = "torrens.lan";
-              user = "torrens";
-              identityFile = "~/.ssh/id_ed25519";
+              HostName = "torrens.lan";
+              User = "torrens";
+              IdentityFile = "~/.ssh/id_ed25519";
             };
             theatrum = {
-              hostname = "theatrum.lan";
-              user = "theatrum";
-              identityFile = "~/.ssh/id_ed25519";
+              HostName = "theatrum.lan";
+              User = "theatrum";
+              IdentityFile = "~/.ssh/id_ed25519";
             };
           };
         };
