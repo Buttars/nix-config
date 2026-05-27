@@ -22,76 +22,72 @@
 
         wayland.windowManager.hyprland = {
           enable = true;
+          configType = "lua";
 
-          settings = {
-            env = [
-              "XCURSOR_THEME,Bibata-Modern-Ice"
-              "XDG_SESSION_TYPE,wayland"
-              "WLR_NO_HARDWARE_CURSORS,1"
-            ];
+          extraConfig = ''
+            -- Environment
+            hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
+            hl.env("XDG_SESSION_TYPE", "wayland")
+            hl.env("WLR_NO_HARDWARE_CURSORS", "1")
 
-            exec = [
-              "hyprctl setcursor Bibata-Modern-Ice 20"
-              "dconf write /org/gnome/desktop/interface/cursor-theme \"'Bibata-Modern-Ice'\""
-            ];
+            -- Cursor setup on start and reload
+            local function setup_cursor()
+                hl.exec_cmd("hyprctl setcursor Bibata-Modern-Ice 20")
+                hl.exec_cmd("dconf write /org/gnome/desktop/interface/cursor-theme \"'Bibata-Modern-Ice'\"")
+            end
 
-            input = {
-              kb_layout = "us";
-              kb_options = "ctrl:nocaps";
-              follow_mouse = 1;
-              touchpad.natural_scroll = false;
-              sensitivity = 0;
-              accel_profile = "flat";
-            };
+            hl.on("hyprland.start", setup_cursor)
+            hl.on("config.reloaded", setup_cursor)
 
-            general = {
-              gaps_in = 5;
-              gaps_out = 20;
-              border_size = 2;
-              # col.active_border = "rgba(ffffffee)";
-              # col.inactive_border = "rgba(595959aa)";
-              layout = "master";
-            };
+            -- Config
+            hl.config({
+                input = {
+                    kb_layout    = "us",
+                    kb_options   = "ctrl:nocaps",
+                    follow_mouse = 1,
+                    sensitivity  = 0,
+                    accel_profile = "flat",
+                    touchpad = {
+                        natural_scroll = false,
+                    },
+                },
+                general = {
+                    gaps_in     = 5,
+                    gaps_out    = 20,
+                    border_size = 2,
+                    layout      = "master",
+                },
+                misc = {
+                    disable_hyprland_logo     = true,
+                    on_focus_under_fullscreen = true,
+                },
+                decoration = {
+                    rounding = 10,
+                    blur = {
+                        enabled = true,
+                        size    = 3,
+                        passes  = 1,
+                    },
+                    shadow = {
+                        enabled      = true,
+                        range        = 4,
+                        render_power = 3,
+                    },
+                },
+                animations = {
+                    enabled = true,
+                },
+            })
 
-            misc = {
-              disable_hyprland_logo = true;
-              on_focus_under_fullscreen = true;
-            };
-
-            decoration = {
-              rounding = 10;
-              blur = {
-                enabled = true;
-                size = 3;
-                passes = 1;
-              };
-              shadow = {
-                enabled = true;
-                range = 4;
-                render_power = 3;
-                # color = "rgba(1a1a1aee)";
-              };
-            };
-
-            animations = {
-              enabled = true;
-              bezier = "myBezier, 0.05, 0.9, 0.1, 1.0";
-              animation = [
-                "windows, 1, 3, default"
-                "windowsOut, 1, 3, default"
-                "border, 1, 3, default"
-                "borderangle, 1, 3, default"
-                "fade, 1, 3, default"
-                "workspaces, 1, 3, default"
-              ];
-            };
-
-            dwindle = {
-              pseudotile = true;
-              preserve_split = true;
-            };
-
-          };
+            -- Animation curves
+            hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.0 } } })
+            hl.animation({ leaf = "windows",     enabled = true, speed = 3, bezier = "myBezier" })
+            hl.animation({ leaf = "windowsOut",  enabled = true, speed = 3, bezier = "default"  })
+            hl.animation({ leaf = "border",      enabled = true, speed = 3, bezier = "default"  })
+            hl.animation({ leaf = "borderangle", enabled = true, speed = 3, bezier = "default"  })
+            hl.animation({ leaf = "fade",        enabled = true, speed = 3, bezier = "default"  })
+            hl.animation({ leaf = "workspaces",  enabled = true, speed = 3, bezier = "default"  })
+          '';
         };
       };
   };

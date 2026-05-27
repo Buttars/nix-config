@@ -38,235 +38,216 @@
 
         wayland.windowManager.hyprland = {
           enable = true;
+          configType = "lua";
 
-          settings = {
-            env = [
-              "XCURSOR_SIZE,20"
-              "XCURSOR_THEME,Bibata-Modern-Ice"
-              "XDG_SESSION_TYPE,wayland"
-              "WLR_NO_HARDWARE_CURSORS,1"
-            ];
-
-            # TODO: Remove static monitor definition from aspect config
-            monitor = lib.mkDefault [
-              "DP-3, 3840x2160@60, 0x0, 1"
-              "DP-1, 1920x1080@144, 3840x0, 1"
-            ];
-
-            exec-once = [
-              "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-              "hyprpaper"
-              "swaync"
-              "waybar"
-              "xremap ~/.config/xremap/xremap.config"
-              "sh ~/.config/hypr/portal-launch.sh"
-              "sh ~/.config/hypr/initalize-workspaces.sh"
-            ];
-
-            exec = [
-              "hyprctl setcursor Bibata-Modern-Ice 20"
-              "dconf write /org/gnome/desktop/interface/cursor-theme \"'Bibata-Modern-Ice'\""
-            ];
-
-            input = {
-              kb_layout = "us";
-              kb_options = "ctrl:nocaps";
-              follow_mouse = 1;
-              touchpad.natural_scroll = false;
-              sensitivity = 0;
-              accel_profile = "flat";
-            };
-
-            general = {
-              gaps_in = 5;
-              gaps_out = 20;
-              border_size = 2;
-              # col.active_border = "rgba(ffffffee)";
-              # col.inactive_border = "rgba(595959aa)";
-              layout = "master";
-            };
-
-            misc = {
-              disable_hyprland_logo = true;
-              disable_splash_rendering = true;
-              on_focus_under_fullscreen = true;
-            };
-
-            decoration = {
-              rounding = 10;
-              blur = {
-                enabled = true;
-                size = 3;
-                passes = 1;
-              };
-              shadow = {
-                enabled = true;
-                range = 4;
-                render_power = 3;
-                # color = "rgba(1a1a1aee)";
-              };
-            };
-
-            animations = {
-              enabled = true;
-              bezier = "myBezier, 0.05, 0.9, 0.1, 1.0";
-              animation = [
-                "windows, 1, 3, default"
-                "windowsOut, 1, 3, default"
-                "border, 1, 3, default"
-                "borderangle, 1, 3, default"
-                "fade, 1, 3, default"
-                "workspaces, 1, 3, default"
-              ];
-            };
-
-            dwindle = {
-              pseudotile = true;
-              preserve_split = true;
-            };
-
-            "$mod" = "SUPER";
-
-            # TODO: Add colorpicker bindings
-
-            bind = [
-              # Launchers
-              "$mod, RETURN, exec, kitty"
-              "$mod, w, exec, exec $BROWSER"
-              "$mod SHIFT, w, exec, kitty -e sudo nmtui"
-              "$mod SHIFT, r, exec, kitty -e htop"
-              "$mod, d, exec, rofi -show drun & sleep 0.2; hyprctl dispatch focuswindow \"\\^(Rofi)\""
-
-              # "$mod SHIFT, d, exec, passmenu"
-              # TODO: Update this to use keepasscli
-
-              "$mod, n, exec, kitty -e nvim -c VimwikiIndex"
-              # TODO: Fix Vimwiki command
-
-              "$mod SHIFT, n, exec, kitty -e newsboat"
-              # TODO: Add newsboat to installed packages
-
-              "$mod, m, exec, kitty -e ncmpcpp"
-              # TODO: Add ncmcpp to installed packages
-
-              "$mod SHIFT, m, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-
-              "$mod, Scroll_Lock, exec, killall screenkey || screenkey &"
-              # TODO: Add screenkey to installed packages
-
-              # TODO: Add more screenshot capabilities
-              "$mod SHIFT, s, exec, grim -g \"$(slurp -d)\" - | wl-copy"
-              "$mod CTRL, s, exec, grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%s).png - | tee >(wl-copy) > /dev/null && notify-send 'Screenshot taken!'"
-
-              "$mod, l, exec, hyprlock"
-              "$mod SHIFT, l, exec, hyprlock & systemctl suspend"
-              "$mod CTRL, l, exec, hyprlock & systemctl hibernate"
-
-              "$mod, q, killactive,"
-              "$mod SUPER_SHIFT, BACKSPACE, exit"
-
-              # Layout / Window control
-              "$mod, f, fullscreenstate, 2 0"
-              "$mod SHIFT, f, fullscreen, 1"
-              "$mod SHIFT, space, togglefloating, 0"
-              "$mod, j, cyclenext, next"
-              "$mod, k, cyclenext, prev"
-              "$mod SHIFT, j, layoutmsg, swapnext"
-              "$mod SHIFT, k, layoutmsg, swapprev"
-              "$mod, space, layoutmsg, swapwithmaster master"
-
-              # TODO: Layout binds
-              "$mod, a, layoutmsg, addmaster"
-              "$mod SHIFT, a, layoutmsg, removemaster"
-
-              "$mod, z, layoutmsg, setmasterfactor 0.05"
-              "$mod SHIFT, z, layoutmsg, setmasterfactor -0.05"
-
-              "$mod, o, layoutmsg, togglesplit"
-              "$mod, t, layoutmsg, orientationleft"
-              "$mod, b, layoutmsg, orientationbottom"
-              "$mod, c, layoutmsg, orientationcenter"
-
-              # Monitor navigation and movement
-              "$mod, left, execr, hyprctl dispatch focusmonitor -1"
-              "$mod, right, execr, hyprctl dispatch focusmonitor +1"
-              "$mod SHIFT, right, execr, hyprctl dispatch movewindow mon:+1"
-              "$mod SHIFT, left, execr, hyprctl dispatch movewindow mon:-1"
-
-              # Resize windows
-              "$mod CTRL, h, resizeactive, -100 0"
-              "$mod CTRL, l, resizeactive, 100 0"
-              "$mod CTRL, j, resizeactive, 0 100"
-              "$mod CTRL, k, resizeactive, 0 -100"
-
-              # Workspace cycling with fallback
-              "$mod, Tab, exec, hyprctl dispatch workspace m+1 || hyprctl dispatch workspace 1"
-              "$mod SHIFT, Tab, exec, hyprctl dispatch workspace m-1 || hyprctl dispatch workspace 9"
-
-              # Scratchpad terminal
-              "$mod, grave, togglespecialworkspace, term"
-              "$mod SHIFT, grave, movetoworkspacesilent, special:term"
-
-              # Volume & brightness
-              ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-              ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-              ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-              ", XF86MonBrightnessUp, exec, brightnessctl set +10%"
-              ", XF86MonBrightnessDown, exec, brightnessctl set 10%-"
-
-              # Notification control
-              "$mod, c, exec, makoctl dismiss"
-              "$mod SHIFT, c, exec, makoctl dismiss -a"
-
-              # Debug/dev tools
-              "$mod SHIFT, x, exec, kitty -e journalctl -f"
-              "$mod SHIFT, e, exec, kitty -e nvim"
-            ]
-            ++ (builtins.concatLists (
-              builtins.genList (
-                i:
-                let
-                  ws = toString (i + 1);
-                  cmd = "hyprctl dispatch workspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
-                  moveCmd = "hyprctl dispatch movetoworkspace \"$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')${ws}\"";
-                in
-                [
-                  "$mod, ${ws}, execr, ${cmd}"
-                  "$mod SHIFT, ${ws}, execr, ${moveCmd}"
-                ]
-              ) 9
-            ));
-
-            bindm = [
-              "$mod, mouse:272, movewindow"
-              "$mod, mouse:273, resizewindow"
-            ];
-
-            windowrule = [
-              # xwaylandvideobridge
-              "opacity 0.0 override 0.0 override, match:class ^(xwaylandvideobridge)$"
-              "no_anim on, match:class ^(xwaylandvideobridge)$"
-              "no_focus on, match:class ^(xwaylandvideobridge)$"
-              "no_initial_focus on, match:class ^(xwaylandvideobridge)$"
-
-              # Floating apps
-              "float on, match:class ^(Rofi)$"
-              "float on, match:class ^(org.gnome.Calculator)$"
-              "float on, match:class ^(org.gnome.Nautilus)$"
-              "float on, match:class ^(eww)$"
-              "float on, match:class ^(pavucontrol)$"
-              "float on, match:class ^(nm-connection-editor)$"
-              "float on, match:class ^(blueberry.py)$"
-              "float on, match:class ^(org.gnome.Settings)$"
-              "float on, match:class ^(org.gnome.design.Palette)$"
-              "float on, match:class ^(Color Picker)$"
-              "float on, match:class ^(Network)$"
-              "float on, match:class ^(xdg-desktop-portal)$"
-              "float on, match:class ^(xdg-desktop-portal-gnome)$"
-              "float on, match:class ^(transmission-gtk)$"
-              "float on, match:class ^(xdg-desktop-portal-gtk)$"
+          # TODO: Remove static monitor definition from aspect config
+          settings = lib.mkDefault {
+            monitor = [
+              {
+                output = "DP-3";
+                mode = "3840x2160@60";
+                position = "0x0";
+                scale = 1;
+              }
+              {
+                output = "DP-1";
+                mode = "1920x1080@144";
+                position = "3840x0";
+                scale = 1;
+              }
             ];
           };
+
+          extraConfig = ''
+            -- Environment
+            hl.env("XCURSOR_SIZE", "20")
+            hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
+            hl.env("XDG_SESSION_TYPE", "wayland")
+            hl.env("WLR_NO_HARDWARE_CURSORS", "1")
+
+            -- Autostart (exec-once) + exec (cursor reapplied after reload)
+            local function setup_cursor()
+                hl.exec_cmd("hyprctl setcursor Bibata-Modern-Ice 20")
+                hl.exec_cmd("dconf write /org/gnome/desktop/interface/cursor-theme \"'Bibata-Modern-Ice'\"")
+            end
+
+            hl.on("hyprland.start", function()
+                hl.exec_cmd("hyprpaper")
+                hl.exec_cmd("swaync")
+                hl.exec_cmd("waybar")
+                hl.exec_cmd("xremap ~/.config/xremap/xremap.config")
+                hl.exec_cmd("sh ~/.config/hypr/portal-launch.sh")
+                hl.exec_cmd("sh ~/.config/hypr/initalize-workspaces.sh")
+                setup_cursor()
+            end)
+
+            hl.on("config.reloaded", setup_cursor)
+
+            -- Config
+            hl.config({
+                input = {
+                    kb_layout     = "us",
+                    kb_options    = "ctrl:nocaps",
+                    follow_mouse  = 1,
+                    sensitivity   = 0,
+                    accel_profile = "flat",
+                    touchpad = {
+                        natural_scroll = false,
+                    },
+                },
+                general = {
+                    gaps_in     = 5,
+                    gaps_out    = 20,
+                    border_size = 2,
+                    layout      = "master",
+                },
+                misc = {
+                    disable_hyprland_logo     = true,
+                    disable_splash_rendering  = true,
+                    on_focus_under_fullscreen = true,
+                },
+                decoration = {
+                    rounding = 10,
+                    blur = {
+                        enabled = true,
+                        size    = 3,
+                        passes  = 1,
+                    },
+                    shadow = {
+                        enabled      = true,
+                        range        = 4,
+                        render_power = 3,
+                    },
+                },
+                animations = {
+                    enabled = true,
+                },
+            })
+
+            -- Animation curves
+            hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.0 } } })
+            hl.animation({ leaf = "windows",     enabled = true, speed = 3, bezier = "myBezier" })
+            hl.animation({ leaf = "windowsOut",  enabled = true, speed = 3, bezier = "default"  })
+            hl.animation({ leaf = "border",      enabled = true, speed = 3, bezier = "default"  })
+            hl.animation({ leaf = "borderangle", enabled = true, speed = 3, bezier = "default"  })
+            hl.animation({ leaf = "fade",        enabled = true, speed = 3, bezier = "default"  })
+            hl.animation({ leaf = "workspaces",  enabled = true, speed = 3, bezier = "default"  })
+
+            -- Keybindings
+            local mod = "SUPER"
+
+            -- Launchers
+            hl.bind(mod .. " + RETURN",            hl.dsp.exec_cmd("kitty"))
+            hl.bind(mod .. " + W",                 hl.dsp.exec_cmd("$BROWSER"))
+            hl.bind(mod .. " + SHIFT + W",         hl.dsp.exec_cmd("kitty -e sudo nmtui"))
+            hl.bind(mod .. " + SHIFT + R",         hl.dsp.exec_cmd("kitty -e htop"))
+            hl.bind(mod .. " + D",                 hl.dsp.exec_cmd("rofi -show drun & sleep 0.2; hyprctl dispatch focuswindow \"\\^(Rofi)\""))
+            hl.bind(mod .. " + N",                 hl.dsp.exec_cmd("kitty -e nvim -c VimwikiIndex"))
+            hl.bind(mod .. " + SHIFT + N",         hl.dsp.exec_cmd("kitty -e newsboat"))
+            hl.bind(mod .. " + M",                 hl.dsp.exec_cmd("kitty -e ncmpcpp"))
+            hl.bind(mod .. " + SHIFT + M",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
+            hl.bind(mod .. " + Scroll_Lock",       hl.dsp.exec_cmd("killall screenkey || screenkey &"))
+            hl.bind(mod .. " + SHIFT + S",         hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | wl-copy"))
+            hl.bind(mod .. " + CTRL + S",          hl.dsp.exec_cmd("grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%s).png - | tee >(wl-copy) > /dev/null && notify-send 'Screenshot taken!'"))
+            hl.bind(mod .. " + L",                 hl.dsp.exec_cmd("hyprlock"))
+            hl.bind(mod .. " + SHIFT + L",         hl.dsp.exec_cmd("hyprlock & systemctl suspend"))
+            hl.bind(mod .. " + CTRL + L",          hl.dsp.exec_cmd("hyprlock & systemctl hibernate"))
+            hl.bind(mod .. " + Q",                 hl.dsp.window.close())
+            hl.bind(mod .. " + SHIFT + BACKSPACE", hl.dsp.exit())
+
+            -- Layout / Window control
+            hl.bind(mod .. " + F",               hl.dsp.window.fullscreen_state({ internal = 2, client = 0 }))
+            hl.bind(mod .. " + SHIFT + F",       hl.dsp.window.fullscreen({ mode = "maximized" }))
+            hl.bind(mod .. " + SHIFT + space",   hl.dsp.window.float({ action = "toggle" }))
+            hl.bind(mod .. " + J",               hl.dsp.window.cycle_next({}))
+            hl.bind(mod .. " + K",               hl.dsp.window.cycle_next({ next = false }))
+            hl.bind(mod .. " + SHIFT + J",       hl.dsp.layout("swapnext"))
+            hl.bind(mod .. " + SHIFT + K",       hl.dsp.layout("swapprev"))
+            hl.bind(mod .. " + space",           hl.dsp.layout("swapwithmaster master"))
+            hl.bind(mod .. " + A",               hl.dsp.layout("addmaster"))
+            hl.bind(mod .. " + SHIFT + A",       hl.dsp.layout("removemaster"))
+            hl.bind(mod .. " + Z",               hl.dsp.layout("setmasterfactor 0.05"))
+            hl.bind(mod .. " + SHIFT + Z",       hl.dsp.layout("setmasterfactor -0.05"))
+            hl.bind(mod .. " + O",               hl.dsp.layout("togglesplit"))
+            hl.bind(mod .. " + T",               hl.dsp.layout("orientationleft"))
+            hl.bind(mod .. " + B",               hl.dsp.layout("orientationbottom"))
+            hl.bind(mod .. " + C",               hl.dsp.layout("orientationcenter"))
+
+            -- Monitor navigation
+            hl.bind(mod .. " + left",          hl.dsp.focus({ monitor = "-1" }),         { release = true })
+            hl.bind(mod .. " + right",         hl.dsp.focus({ monitor = "+1" }),         { release = true })
+            hl.bind(mod .. " + SHIFT + right", hl.dsp.window.move({ monitor = "+1" }),   { release = true })
+            hl.bind(mod .. " + SHIFT + left",  hl.dsp.window.move({ monitor = "-1" }),   { release = true })
+
+            -- Resize windows
+            hl.bind(mod .. " + CTRL + H", hl.dsp.window.resize({ x = -100, y = 0,    relative = true }))
+            hl.bind(mod .. " + CTRL + L", hl.dsp.window.resize({ x = 100,  y = 0,    relative = true }))
+            hl.bind(mod .. " + CTRL + J", hl.dsp.window.resize({ x = 0,    y = 100,  relative = true }))
+            hl.bind(mod .. " + CTRL + K", hl.dsp.window.resize({ x = 0,    y = -100, relative = true }))
+
+            -- Workspace cycling
+            hl.bind(mod .. " + Tab",       hl.dsp.focus({ workspace = "m+1" }))
+            hl.bind(mod .. " + SHIFT + Tab", hl.dsp.focus({ workspace = "m-1" }))
+
+            -- Scratchpad
+            hl.bind(mod .. " + grave",         hl.dsp.workspace.toggle_special("term"))
+            hl.bind(mod .. " + SHIFT + grave", hl.dsp.window.move({ workspace = "special:term" }))
+
+            -- Volume & brightness
+            hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"),    { locked = true })
+            hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),    { locked = true })
+            hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),   { locked = true })
+            hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set +10%"),                       { locked = true })
+            hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 10%-"),                       { locked = true })
+
+            -- Notification control
+            hl.bind(mod .. " + SHIFT + C", hl.dsp.exec_cmd("makoctl dismiss -a"))
+
+            -- Debug/dev tools
+            hl.bind(mod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty -e journalctl -f"))
+            hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("kitty -e nvim"))
+
+            -- Monitor-aware workspace bindings (1-9)
+            for i = 1, 9 do
+                local ws    = tostring(i)
+                local monId = "$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')"
+                hl.bind(mod .. " + " .. ws,         hl.dsp.exec_cmd("hyprctl dispatch workspace \""         .. monId .. ws .. "\""), { release = true })
+                hl.bind(mod .. " + SHIFT + " .. ws, hl.dsp.exec_cmd("hyprctl dispatch movetoworkspace \"" .. monId .. ws .. "\""), { release = true })
+            end
+
+            -- Mouse binds
+            hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+            hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+            -- Window rules
+            hl.window_rule({
+                match            = { class = "^(xwaylandvideobridge)$" },
+                opacity          = "0.0 override 0.0 override",
+                no_anim          = true,
+                no_focus         = true,
+                no_initial_focus = true,
+            })
+
+            for _, cls in ipairs({
+                "^(Rofi)$",
+                "^(org.gnome.Calculator)$",
+                "^(org.gnome.Nautilus)$",
+                "^(eww)$",
+                "^(pavucontrol)$",
+                "^(nm-connection-editor)$",
+                "^(blueberry.py)$",
+                "^(org.gnome.Settings)$",
+                "^(org.gnome.design.Palette)$",
+                "^(Color Picker)$",
+                "^(Network)$",
+                "^(xdg-desktop-portal)$",
+                "^(xdg-desktop-portal-gnome)$",
+                "^(transmission-gtk)$",
+                "^(xdg-desktop-portal-gtk)$",
+            }) do
+                hl.window_rule({ match = { class = cls }, float = true })
+            end
+          '';
         };
 
         home.file = {
