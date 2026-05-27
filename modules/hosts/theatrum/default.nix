@@ -1,4 +1,5 @@
 {
+  den,
   __findFile,
   ...
 }:
@@ -6,7 +7,7 @@
   den.hosts.x86_64-linux.theatrum = {
     users.theatrum = {
       classes = [ "homeManager" ];
-      aspect = "theatrum-user";
+      aspect = den.aspects."theatrum-user";
     };
   };
 

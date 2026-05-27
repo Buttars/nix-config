@@ -6,7 +6,6 @@
   den.hosts.x86_64-linux.torrens = {
     users.torrens = {
       classes = [ "homeManager" ];
-      aspect = "torrens-user";
     };
   };
   den.aspects.torrens = {
