@@ -11,7 +11,7 @@
             fd
             dig
             git-worktree-init
-            intelli-shell
+            (intelli-shell.overrideAttrs { doCheck = false; })
             ripgrep
             tldr
             watch
