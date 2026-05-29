@@ -11,7 +11,6 @@
       <aegix/cli/git>
       <aegix/cli/tui>
       <aegix/neovim>
-      <aegix/paneru>
       <aegix/tmux/full>
       <aegix/zsh>
       <aegix/zsh/prompt>
