@@ -43,8 +43,6 @@
           "nvidia"
         ];
 
-        nixpkgs.config.allowUnfree = true;
-
         imports = [
           ./_disko.nix
           ./_stylix.nix

@@ -25,6 +25,7 @@
         inputs.srvos.nixosModules.mixins-systemd-boot
       ];
 
+      nixpkgs.config.allowUnfree = true;
       nixpkgs.overlays = with inputs; [
         self.overlays.additions
         self.overlays.modifications
