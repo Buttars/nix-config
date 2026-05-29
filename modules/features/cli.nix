@@ -110,7 +110,18 @@
           };
           programs.jujutsu = {
             enable = true;
-            settings.git.colocate = true;
+            settings = {
+              git.colocate = true;
+              ui.merge-editor = "nvim-fugitive";
+              merge-tools.nvim-fugitive = {
+                program = "nvim";
+                merge-args = [
+                  "-c"
+                  "Gvdiffsplit!"
+                  "$output"
+                ];
+              };
+            };
           };
         };
     };
