@@ -156,7 +156,7 @@
             hl.bind(mod .. " + SHIFT + BACKSPACE", hl.dsp.exit())
 
             -- Layout / Window control
-            hl.bind(mod .. " + F",               hl.dsp.window.fullscreen_state({ internal = 2, client = 0 }))
+            hl.bind(mod .. " + F",               hl.dsp.window.fullscreen({ mode = "fullscreen" }))
             hl.bind(mod .. " + SHIFT + F",       hl.dsp.window.fullscreen({ mode = "maximized" }))
             hl.bind(mod .. " + SHIFT + space",   hl.dsp.window.float({ action = "toggle" }))
             hl.bind(mod .. " + J",               hl.dsp.window.cycle_next({}))
@@ -207,12 +207,10 @@
             hl.bind(mod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty -e journalctl -f"))
             hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("kitty -e nvim"))
 
-            -- Monitor-aware workspace bindings (1-9)
+            -- Workspace bindings (1-9)
             for i = 1, 9 do
-                local ws    = tostring(i)
-                local monId = "$(hyprctl -j monitors | jq -r '.[] | select(.focused == true) | .id')"
-                hl.bind(mod .. " + " .. ws,         hl.dsp.exec_cmd("hyprctl dispatch workspace \""         .. monId .. ws .. "\""), { release = true })
-                hl.bind(mod .. " + SHIFT + " .. ws, hl.dsp.exec_cmd("hyprctl dispatch movetoworkspace \"" .. monId .. ws .. "\""), { release = true })
+                hl.bind(mod .. " + " .. i,         hl.dsp.focus({ workspace = i }))
+                hl.bind(mod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
             end
 
             -- Mouse binds
