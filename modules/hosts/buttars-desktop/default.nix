@@ -55,6 +55,7 @@
         networking = {
           networkmanager.enable = true;
           firewall.enable = false;
+          nameservers = [ "10.0.20.1" ];
         };
 
         services.openssh.enable = true;
