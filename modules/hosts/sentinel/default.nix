@@ -92,6 +92,7 @@
             "/var/lib/hass" = serviceMount "home-assistant";
             "/var/lib/dawarich" = serviceMount "dawarich";
             "/var/lib/nextcloud" = serviceMount "nextcloud";
+            "/var/lib/immich" = serviceMount "immich";
           };
 
         nix.settings.trusted-users = [ "sentinel" ];
@@ -108,6 +109,7 @@
               "/.buttars.dev/10.0.40.6"
             ];
             server = [
+              "/.buttars.dev/1.1.1.1"
               "10.0.40.1"
               "1.1.1.1"
               "1.0.0.1"

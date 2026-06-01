@@ -94,6 +94,15 @@
                 header_up Host {host}
               }
             '';
+
+            "immich.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://sentinel.lan:2283 {
+                header_up Host {host}
+              }
+            '';
           };
         };
 
