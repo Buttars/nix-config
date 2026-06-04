@@ -46,7 +46,7 @@
             "prowlarr.buttars.dev".extraConfig = proxy "http://torrens.lan:9696";
             "gatus.buttars.dev".extraConfig = proxy "http://127.0.0.1:8888";
             "nextcloud.buttars.dev".extraConfig = proxy "http://127.0.0.1:8080";
-            "immich.buttars.dev".extraConfig = proxy "http://[::1]:2283";
+            "immich.buttars.dev".extraConfig = proxy "http://127.0.0.1:2283";
           };
       };
   };

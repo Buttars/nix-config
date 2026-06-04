@@ -4,16 +4,14 @@
     nixos =
       { lib, pkgs, ... }:
       {
-        users.users.immich.uid = 999;
-        users.groups.immich.gid = 999;
-
-        environment.systemPackages = [
+environment.systemPackages = [
           pkgs.immich-cli
           pkgs.immich
         ];
 
         services.immich = {
           enable = true;
+          host = "0.0.0.0";
           mediaLocation = "/var/lib/immich";
         };
 
