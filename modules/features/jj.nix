@@ -3,6 +3,8 @@
     homeManager =
       { ... }:
       {
+        programs.fish.interactiveShellInit = ''jj util completion fish | source'';
+        programs.zsh.initContent = ''source <(jj util completion zsh)'';
         programs.jujutsu = {
           enable = true;
           settings = {
