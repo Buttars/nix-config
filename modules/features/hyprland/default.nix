@@ -41,8 +41,8 @@
           configType = "lua";
 
           # TODO: Remove static monitor definition from aspect config
-          settings = lib.mkDefault {
-            monitor = [
+          settings = {
+            monitor = lib.mkDefault [
               {
                 output = "DP-3";
                 mode = "3840x2160@60";
@@ -60,6 +60,9 @@
 
           extraConfig = ''
             -- Environment
+            hl.env("GDK_SCALE", "1")
+            hl.env("QT_SCALE_FACTOR", "1")
+            hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "0")
             hl.env("XCURSOR_SIZE", "20")
             hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
             hl.env("XDG_SESSION_TYPE", "wayland")
@@ -121,6 +124,9 @@
                 },
                 animations = {
                     enabled = true,
+                },
+                xwayland = {
+                    force_zero_scaling = true,
                 },
             })
 
@@ -275,6 +281,7 @@
             }
           '';
         };
+
       };
   };
 }
