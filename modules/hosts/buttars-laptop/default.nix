@@ -71,13 +71,14 @@
 
       home-manager.users.buttars = {
         wayland.windowManager.hyprland.settings = {
-          monitor = [ "eDP-1, 1920x1080@60, 0x0, 1" ];
-          env = [
-            "GDK_SCALE,1"
-            "QT_SCALE_FACTOR,1"
-            "QT_AUTO_SCREEN_SCALE_FACTOR,0"
+          monitor = [
+            {
+              output = "eDP-1";
+              mode = "1920x1080@60";
+              position = "0x0";
+              scale = 1;
+            }
           ];
-          xwayland.force_zero_scaling = true;
         };
       };
 
