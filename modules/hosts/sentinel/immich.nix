@@ -4,7 +4,7 @@
     nixos =
       { lib, pkgs, ... }:
       {
-environment.systemPackages = [
+        environment.systemPackages = [
           pkgs.immich-cli
           pkgs.immich
         ];

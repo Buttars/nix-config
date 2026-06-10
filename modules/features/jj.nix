@@ -10,7 +10,11 @@
             ui.diff-editor = "vimdiff";
             merge-tools.vimdiff = {
               program = "nvim";
-              diff-args = ["-d" "$left" "$right"];
+              diff-args = [
+                "-d"
+                "$left"
+                "$right"
+              ];
             };
           };
         };
