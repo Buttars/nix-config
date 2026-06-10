@@ -7,6 +7,7 @@
           enable = true;
           settings = {
             git.colocate = true;
+            ui.pager = "diffnav";
             ui.diff-editor = "vimdiff";
             merge-tools.vimdiff = {
               program = "nvim";
