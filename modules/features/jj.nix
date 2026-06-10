@@ -16,6 +16,24 @@
                 "$right"
               ];
             };
+            fix.tools = {
+              nixfmt = {
+                command = [ "nixfmt" ];
+                patterns = [ "glob:**/*.nix" ];
+              };
+              prettier = {
+                command = [
+                  "prettier"
+                  "--stdin-filepath"
+                  "$path"
+                ];
+                patterns = [ "glob:**/*.{json,yaml,yml,md}" ];
+              };
+              shfmt = {
+                command = [ "shfmt" ];
+                patterns = [ "glob:**/*.sh" ];
+              };
+            };
           };
         };
       };
