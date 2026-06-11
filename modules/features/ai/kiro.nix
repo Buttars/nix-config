@@ -83,6 +83,15 @@
               ];
               env.FASTMCP_LOG_LEVEL = "ERROR";
             };
+            launchdarkly = {
+              command = "${mcp-shell}";
+              args = [
+                "npx"
+                "-y"
+                "@launchdarkly/mcp"
+              ];
+              env.LAUNCHDARKLY_ACCESS_TOKEN = "\${LAUNCHDARKLY_ACCESS_TOKEN}";
+            };
           };
         };
 

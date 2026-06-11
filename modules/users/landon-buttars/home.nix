@@ -80,6 +80,7 @@
       };
 
       sops.secrets.github-mcp-server = { };
+      sops.secrets.launch-darkly-mcp-pat = { };
 
       home.sessionVariables = {
         EDITOR = "nvim";
@@ -93,6 +94,9 @@
       programs.zsh.initContent = ''
         if [[ -f "${config.sops.secrets.github-mcp-server.path}" ]]; then
           export GITHUB_PERSONAL_ACCESS_TOKEN="$(cat ${config.sops.secrets.github-mcp-server.path})"
+        fi
+        if [[ -f "${config.sops.secrets.launch-darkly-mcp-pat.path}" ]]; then
+          export LAUNCHDARKLY_ACCESS_TOKEN="$(cat ${config.sops.secrets.launch-darkly-mcp-pat.path})"
         fi
       '';
     };
