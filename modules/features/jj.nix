@@ -9,16 +9,10 @@
           enable = true;
           settings = {
             git.colocate = true;
-            ui.pager = "diffnav";
-            ui.diff-editor = "vimdiff";
-            merge-tools.vimdiff = {
-              program = "nvim";
-              diff-args = [
-                "-d"
-                "$left"
-                "$right"
-              ];
-            };
+            ui.pager = "less -FRX";
+            ui.diff.tool = [ "diffnav" "$left" "$right" ];
+            # ui.diff-editor = [ "nvim" "-d"];
+            merge-tools.vimdiff = { program = "nvim"; };
             fix.tools = {
               nixfmt = {
                 command = [ "nixfmt" ];
