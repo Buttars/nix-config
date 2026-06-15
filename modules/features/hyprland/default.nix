@@ -227,6 +227,11 @@
 
             -- Window rules
             hl.window_rule({
+                match          = { class = ".*" },
+                suppress_event = "fullscreen",
+            })
+
+            hl.window_rule({
                 match            = { class = "^(xwaylandvideobridge)$" },
                 opacity          = "0.0 override 0.0 override",
                 no_anim          = true,
