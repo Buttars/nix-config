@@ -34,6 +34,7 @@
           wl-clipboard
           wlogout
           xdg-desktop-portal-hyprland
+          xremap
         ];
 
         wayland.windowManager.hyprland = {
@@ -276,6 +277,8 @@
             source = ./inititalize-workspaces.sh;
             executable = true;
           };
+
+          ".config/xremap/xremap.config".source = ./xremap.config;
 
           ".config/hypr/wallpaper.jpg".source = ./wallpaper.jpg;
 
