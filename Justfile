@@ -13,6 +13,9 @@ aegis:
 sentinel:
     just deploy sentinel
 
+check:
+    nix flake check --impure
+
 switch +args='':
     #!/usr/bin/env sh
     host=$(hostname -s)

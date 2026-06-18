@@ -91,6 +91,11 @@
               User = "theatrum";
               IdentityFile = "~/.ssh/id_ed25519";
             };
+            buttars-desktop = {
+              HostName = "buttars-desktop.lan";
+              User = "buttars";
+              IdentityFile = "~/.ssh/id_ed25519";
+            };
           };
         };
       };
