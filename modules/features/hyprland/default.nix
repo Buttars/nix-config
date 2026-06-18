@@ -278,7 +278,7 @@
             executable = true;
           };
 
-          ".config/xremap/xremap.config".source = ./xremap.config;
+          ".config/xremap/xremap.config".source = ./xremap.yaml;
 
           ".config/hypr/wallpaper.jpg".source = ./wallpaper.jpg;
 
