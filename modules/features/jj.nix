@@ -9,6 +9,7 @@
           enable = true;
           settings = {
             git.colocate = true;
+            ui.default-command = "log";
             ui.diff-formatter = "delta";
             ui.merge-editor = "nvim-fugitive";
             merge-tools.delta.diff-args = [ "--side-by-side" "$left" "$right" "--width=$width" ];
