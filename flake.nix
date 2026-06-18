@@ -59,7 +59,10 @@
     };
     stylix = {
       url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
