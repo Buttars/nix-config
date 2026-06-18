@@ -28,7 +28,7 @@
       <aegix/ai/kiro>
       <aegix/ai/claude>
       <aegix/ai/chatgpt>
-      <aegix/jj>
+      <aegix/cli/jj>
       <aegix/sops>
     ];
     homeManager =

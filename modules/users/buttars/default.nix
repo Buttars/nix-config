@@ -16,7 +16,7 @@
       <aegix/cli>
       <aegix/cli/tui>
       <aegix/cli/git>
-      <aegix/jj>
+      <aegix/cli/jj>
       <aegix/tmux/full>
       <aegix/hyprland>
       <aegix/browser/brave>
