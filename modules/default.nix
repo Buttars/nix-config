@@ -23,6 +23,7 @@
     nixos = {
       imports = [
         inputs.srvos.nixosModules.mixins-systemd-boot
+        { disabledModules = [ "${inputs.stylix}/modules/kmscon/nixos.nix" ]; }
       ];
 
       nixpkgs.config.allowUnfree = true;
