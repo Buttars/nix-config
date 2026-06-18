@@ -9,10 +9,19 @@
           enable = true;
           settings = {
             git.colocate = true;
-            ui.pager = "less -FRX";
-            ui.diff.tool = [ "diffnav" "$left" "$right" ];
-            # ui.diff-editor = [ "nvim" "-d"];
-            merge-tools.vimdiff = { program = "nvim"; };
+            ui.diff-formatter = "delta";
+            ui.merge-editor = "nvim-fugitive";
+            merge-tools.delta.diff-args = [ "--side-by-side" "$left" "$right" "--width=$width" ];
+            merge-tools.delta.diff-expected-exit-codes = [ 0 1 ];
+            merge-tools.nvim-fugitive = {
+              program = "nvim";
+              merge-args = [
+                "-c"
+                "Gvdiffsplit!"
+                "$output"
+              ];
+            };
+            aliases.diffnav = [ "diff" "--config=ui.diff-formatter=':git'" "--config=ui.pager='diffnav'" ];
             fix.tools = {
               nixfmt = {
                 command = [ "nixfmt" ];

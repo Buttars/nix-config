@@ -93,7 +93,7 @@
           home.packages = with pkgs; [
             delta
           ];
-          programs.delta.enableJujutsuIntegration = true;
+          programs.delta.enableGitIntegration = true;
           programs.git = {
             enable = true;
             lfs.enable = true;
@@ -106,21 +106,6 @@
               pull.rebase = true;
               core.pager = "delta";
               pager.diff = "diffnav";
-            };
-          };
-          programs.jujutsu = {
-            enable = true;
-            settings = {
-              git.colocate = true;
-              ui.merge-editor = "nvim-fugitive";
-              merge-tools.nvim-fugitive = {
-                program = "nvim";
-                merge-args = [
-                  "-c"
-                  "Gvdiffsplit!"
-                  "$output"
-                ];
-              };
             };
           };
         };
