@@ -124,6 +124,8 @@
               git.push-bookmark-prefix = "wip/";
               ui.default-command = "log";
               ui.pager = "less -FRX";
+              ui.diff-editor = ["nvim" "-c" "DiffEditor $left $right $output"];
+              ui.diff-instructions = false;
               ui.diff-formatter = "delta";
               ui.merge-editor = "nvim-fugitive";
               revset-aliases.trunk = "latest(remote_bookmarks(exact:main, exact:origin) | remote_bookmarks(exact:master, exact:origin))";
