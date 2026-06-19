@@ -25,7 +25,9 @@
         '';
 
         programs.zsh.shellAliases.bw-unlock = ''sh -c 'bw unlock --raw > ~/.bw_session && chmod 600 ~/.bw_session && export BW_SESSION="$(cat ~/.bw_session)" && echo "Vault unlocked"' '';
+        programs.zsh.shellAliases.bw-lock = ''sh -c 'rm -f ~/.bw_session && unset BW_SESSION && echo "Vault locked"' '';
         programs.fish.shellAliases.bw-unlock = ''sh -c 'bw unlock --raw > ~/.bw_session && chmod 600 ~/.bw_session && echo "Vault unlocked"' '';
+        programs.fish.shellAliases.bw-lock = ''sh -c 'rm -f ~/.bw_session && echo "Vault locked"' '';
       };
   };
 }
