@@ -95,6 +95,10 @@
           };
         };
 
+      programs.zsh.shellAliases.kc = "kiro-cli chat";
+
+      programs.fish.shellAliases.kc = "kiro-cli chat";
+
       programs.zsh.initContent = lib.mkMerge [
         (lib.mkBefore ''
           eval "$(kiro-cli init zsh pre)"
