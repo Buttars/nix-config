@@ -110,7 +110,12 @@
             bind c new-window -c '#{pane_current_path}'
 
             # Copy mode vi bindings
+            set -g mode-keys vi
             bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
+            bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe-and-cancel "pbcopy"
+
+            # Scrollback search
+            bind / copy-mode \; send-keys /
 
             # Window cycling (repeatable)
             bind -r n next-window
