@@ -25,6 +25,7 @@
             };
 
             settings = {
+              macos_option_as_alt = "yes";
               foreground = "#D9D7D6";
               background = "#0F0F11";
               color0 = "#0C141D";
