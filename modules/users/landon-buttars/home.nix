@@ -10,7 +10,7 @@
       imports = [
         {
           dotfiles.mutable = true;
-          dotfiles.path = "${config.home.homeDirectory}/nix-config/master/dotfiles";
+          dotfiles.path = "${config.home.homeDirectory}/Projects/nix-config/dotfiles";
         }
       ];
 
