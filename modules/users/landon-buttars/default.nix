@@ -30,6 +30,7 @@
       <aegix/ai/chatgpt>
       <aegix/cli/jj>
       <aegix/sops>
+      <aegix/password-manager/bitwarden>
     ];
     homeManager =
       { pkgs, ... }:

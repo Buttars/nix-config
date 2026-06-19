@@ -11,6 +11,31 @@
 
     homeManager =
       { config, pkgs, ... }:
+      let
+        bw-picker = pkgs.writeShellScript "bw-picker" ''
+          export PATH="${pkgs.bitwarden-cli}/bin:${pkgs.jq}/bin:${pkgs.fzf}/bin:${pkgs.tmux}/bin:${pkgs.gum}/bin:$PATH"
+          [ -f "$HOME/.bw_session" ] && BW_SESSION="$(cat "$HOME/.bw_session")"
+          if [ -z "$(echo "$BW_SESSION" | tr -d '[:space:]')" ]; then
+            BW_SESSION=$(gum input --password --prompt "🔒 Master password: " | bw unlock --raw --passwordfile /dev/stdin)
+            if [ -z "$BW_SESSION" ]; then
+              BW_SESSION=$(bw login --raw)
+            fi
+            [ -z "$BW_SESSION" ] && exit 1
+            echo "$BW_SESSION" > "$HOME/.bw_session" && chmod 600 "$HOME/.bw_session"
+          fi
+          ITEMS=$(bw list items --session "$BW_SESSION" 2>&1)
+          if echo "$ITEMS" | grep -qiE "locked|not logged in|unauthenticated"; then
+            BW_SESSION=$(gum input --password --prompt "🔒 Master password: " | bw unlock --raw --passwordfile /dev/stdin)
+            [ -z "$BW_SESSION" ] && exit 1
+            echo "$BW_SESSION" > "$HOME/.bw_session" && chmod 600 "$HOME/.bw_session"
+            ITEMS=$(bw list items --session "$BW_SESSION")
+          fi
+          ITEM=$(echo "$ITEMS" | jq -r '.[] | select(.login) | "\(.name) (\(.login.username))"' | gum filter --prompt="🔑 " --placeholder="Search passwords...")
+          [ -z "$ITEM" ] && exit 0
+          NAME=$(echo "$ITEM" | sed 's/ (.*//')
+          bw get password "$NAME" --session "$BW_SESSION" | tmux load-buffer - && tmux paste-buffer -d
+        '';
+      in
       {
         options.tmux.hasStatusRightProvider = lib.mkOption {
           type = lib.types.bool;
@@ -92,6 +117,7 @@
             bind -r p previous-window
 
             bind x kill-pane
+            bind P display-popup -E -w 60% -h 60% '${bw-picker}'
             bind r source-file ~/.config/tmux/tmux.conf \; display-message "  config reloaded"
           '';
         };
