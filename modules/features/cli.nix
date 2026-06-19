@@ -144,6 +144,7 @@
               };
               aliases.diffnav = [ "diff" "--config=ui.diff-formatter=':git'" "--config=ui.pager='diffnav'" ];
               aliases.bm = [ "bookmark" "set" "-r" "@" ];
+              aliases.tidy = [ "abandon" "empty() & ancestors(@) & ~trunk()" ];
               fix.tools = {
                 nixfmt = {
                   command = [ "nixfmt" ];
