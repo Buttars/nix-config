@@ -12,6 +12,7 @@
       <aegix/networking>
       <aegix/sops>
       <aegix/fail2ban>
+      <aegix/backup>
     ];
 
     nixos =
