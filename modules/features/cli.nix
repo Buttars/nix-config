@@ -121,9 +121,15 @@
             enable = true;
             settings = {
               git.colocate = true;
+              git.push-bookmark-prefix = "wip/";
               ui.default-command = "log";
+              ui.pager = "less -FRX";
               ui.diff-formatter = "delta";
               ui.merge-editor = "nvim-fugitive";
+              revset-aliases.trunk = "latest(remote_bookmarks(exact:main, exact:origin) | remote_bookmarks(exact:master, exact:origin))";
+              revset-aliases.mine = "author(self)";
+              revset-aliases.wip = "description(exact:'')";
+              revset-aliases.stack = "ancestors(@ ~ trunk(), 2..)";
               merge-tools.delta.diff-args = [ "--side-by-side" "$left" "$right" "--width=$width" ];
               merge-tools.delta.diff-expected-exit-codes = [ 0 1 ];
               merge-tools.nvim-fugitive = {
