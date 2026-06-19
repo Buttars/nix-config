@@ -23,7 +23,6 @@
           plugins = with pkgs.tmuxPlugins; [
             sensible
             yank
-            vim-tmux-navigator
           ];
 
           extraConfig = ''
@@ -65,7 +64,12 @@
             set -g prefix C-a
             bind C-a send-prefix
 
-            # Pane navigation
+            # Pane navigation (vim-tmux-navigator via pgrep to handle kiro-cli-term wrapper)
+            bind-key -T root C-h if-shell "pgrep -P $(pgrep -P #{pane_pid}) | xargs -I{} ps -o comm= -p {} 2>/dev/null | grep -iqE '(view|l?n?vim?x?|fzf)(diff)?(-wrapped)?|neovim'" "send-keys C-h" "select-pane -L"
+            bind-key -T root C-j if-shell "pgrep -P $(pgrep -P #{pane_pid}) | xargs -I{} ps -o comm= -p {} 2>/dev/null | grep -iqE '(view|l?n?vim?x?|fzf)(diff)?(-wrapped)?|neovim'" "send-keys C-j" "select-pane -D"
+            bind-key -T root C-k if-shell "pgrep -P $(pgrep -P #{pane_pid}) | xargs -I{} ps -o comm= -p {} 2>/dev/null | grep -iqE '(view|l?n?vim?x?|fzf)(diff)?(-wrapped)?|neovim'" "send-keys C-k" "select-pane -U"
+            bind-key -T root C-l if-shell "pgrep -P $(pgrep -P #{pane_pid}) | xargs -I{} ps -o comm= -p {} 2>/dev/null | grep -iqE '(view|l?n?vim?x?|fzf)(diff)?(-wrapped)?|neovim'" "send-keys C-l" "select-pane -R"
+
             bind h select-pane -L
             bind j select-pane -D
             bind k select-pane -U
@@ -81,10 +85,6 @@
             bind c new-window -c '#{pane_current_path}'
 
             # Copy mode vi bindings
-            bind-key -T copy-mode-vi 'C-h' select-pane -L
-            bind-key -T copy-mode-vi 'C-j' select-pane -D
-            bind-key -T copy-mode-vi 'C-k' select-pane -U
-            bind-key -T copy-mode-vi 'C-l' select-pane -R
             bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
 
             # Window cycling (repeatable)
