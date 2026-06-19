@@ -52,7 +52,9 @@
 
           extraConfig = ''
             # Core
-            set -g default-terminal 'screen-256color'
+            set -g default-terminal 'tmux-256color'
+            set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+            set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
             set -g base-index 1
             set -g detach-on-destroy off
             set -g escape-time 0
