@@ -21,8 +21,18 @@
             set fish_greeting
           '';
 
-          loginShellInit = "";
-          interactiveShellInit = "";
+          interactiveShellInit = ''
+            # Bash-style !! (last command) and !$ (last arg)
+            function __fish_last_command
+              commandline -i (history --max=1)
+            end
+            function __fish_last_arg
+              set -l last (history --max=1)
+              commandline -i (string split ' ' -- $last)[-1]
+            end
+            bind ! __fish_last_command
+            bind '$' __fish_last_arg
+          '';
           shellInitLast = "";
         };
       };
