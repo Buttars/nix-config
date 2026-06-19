@@ -9,6 +9,57 @@
     {
       home.packages = [ pkgs.kiro-cli ];
 
+      home.file.".kiro/agents/default.json".text = builtins.toJSON {
+        name = "default";
+        tools = [ "*" ];
+        allowedTools = [
+          "fs_read"
+          "grep"
+          "glob"
+          "code"
+        ];
+        toolsSettings.execute_bash = {
+          autoAllowReadonly = true;
+          allowedCommands = [
+            "jj log.*"
+            "jj diff.*"
+            "jj show.*"
+            "jj status.*"
+            "jj config.*"
+            "jj bookmark list.*"
+            "git log.*"
+            "git diff.*"
+            "git status.*"
+            "git branch.*"
+            "git remote.*"
+            "git stash list.*"
+          ];
+        };
+      };
+
+      home.file.".kiro/agents/focused-mode.json".text = builtins.toJSON {
+        name = "focused-fix";
+        description = "Scoped to a single fix or small feature — minimal changes, no cleanup, no extras";
+        prompt = "file://../prompts/focused-mode.md";
+        tools = [ "*" ];
+        welcomeMessage = "Focused mode active. What's the single thing we're fixing?";
+      };
+
+      home.file.".kiro/prompts/focused-mode.md".text = ''
+        You are operating in focused mode. Your job is to make the smallest possible change to solve the stated problem.
+
+        ## Rules
+        - Fix only what is asked — nothing more
+        - Do not refactor, clean up, or improve surrounding code
+        - Do not create additional files unless absolutely required by the fix
+        - Do not add tests, docs, or comments unless explicitly asked
+        - If you notice other issues, report them but do not touch them
+        - One logical change only — if the fix requires more, stop and ask
+
+        ## When to push back
+        If the request is too broad to be a single focused fix, say so and ask the user to narrow it down before proceeding.
+      '';
+
       home.file.".kiro/settings/mcp.json".text =
         let
           mcp-shell = pkgs.writeShellScript "mcp-shell" ''
