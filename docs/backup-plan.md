@@ -29,11 +29,11 @@ restic-b2-env: |
 
 Services with databases that need consistent dumps before backup:
 
-| Service | DB | Dump command |
-|---------|-----|------|
-| Immich | Postgres | `pg_dump -h localhost immich > /var/lib/immich/db-backup.sql` |
-| Nextcloud | Postgres/SQLite | `nextcloud-occ maintenance:mode --on && dump && maintenance:mode --off` |
-| Home Assistant | SQLite | `sqlite3 /var/lib/hass/home-assistant_v2.db ".backup /var/lib/hass/db-backup.sqlite"` |
+| Service        | DB              | Dump command                                                                          |
+| -------------- | --------------- | ------------------------------------------------------------------------------------- |
+| Immich         | Postgres        | `pg_dump -h localhost immich > /var/lib/immich/db-backup.sql`                         |
+| Nextcloud      | Postgres/SQLite | `nextcloud-occ maintenance:mode --on && dump && maintenance:mode --off`               |
+| Home Assistant | SQLite          | `sqlite3 /var/lib/hass/home-assistant_v2.db ".backup /var/lib/hass/db-backup.sqlite"` |
 
 These run as `backupPrepareCommand` in the restic module.
 
