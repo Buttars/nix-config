@@ -67,6 +67,18 @@
             export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
             exec "$@"
           '';
+          mcp-shell-docker = pkgs.writeShellScript "mcp-shell-docker" ''
+            export PATH="${pkgs.nodejs}/bin:${pkgs.uv}/bin:${pkgs.python3}/bin:${pkgs.docker}/bin:${pkgs.awscli2}/bin:$PATH"
+            export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
+            [ -S "$HOME/.colima/default/docker.sock" ] || exit 0
+            exec "$@"
+          '';
+          mcp-shell-k8s = pkgs.writeShellScript "mcp-shell-k8s" ''
+            export PATH="${pkgs.nodejs}/bin:${pkgs.uv}/bin:${pkgs.python3}/bin:${pkgs.docker}/bin:${pkgs.awscli2}/bin:$PATH"
+            export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
+            [ -S "$HOME/.colima/default/docker.sock" ] && [ -f "$HOME/.kube/config" ] || exit 0
+            exec "$@"
+          '';
           github-mcp = "${pkgs.github-mcp-server}/bin/github-mcp-server";
         in
         builtins.toJSON {
@@ -110,14 +122,14 @@
               ];
             };
             docker = {
-              command = "${mcp-shell}";
+              command = "${mcp-shell-docker}";
               args = [
                 "uvx"
                 "mcp-server-docker"
               ];
             };
             kubernetes = {
-              command = "${mcp-shell}";
+              command = "${mcp-shell-k8s}";
               args = [
                 "uvx"
                 "awslabs.eks-mcp-server@latest"
@@ -130,7 +142,7 @@
               command = "${mcp-shell}";
               args = [
                 "uvx"
-                "awslabs.core-mcp-server@latest"
+                "awslabs.aws-api-mcp-server@latest"
               ];
               env.FASTMCP_LOG_LEVEL = "ERROR";
             };
@@ -139,9 +151,14 @@
               args = [
                 "npx"
                 "-y"
-                "@launchdarkly/mcp"
+                "--package"
+                "@launchdarkly/mcp-server"
+                "--"
+                "mcp"
+                "start"
+                "--api-key"
+                "\${LAUNCHDARKLY_ACCESS_TOKEN}"
               ];
-              env.LAUNCHDARKLY_ACCESS_TOKEN = "\${LAUNCHDARKLY_ACCESS_TOKEN}";
             };
           };
         };
