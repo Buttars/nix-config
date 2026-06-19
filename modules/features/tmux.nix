@@ -60,6 +60,7 @@
             set -g escape-time 0
             set -g history-limit 1000000
             set -g mouse on
+            set -g focus-events on
             set -g renumber-windows on
             set -g set-clipboard on
             set -gq allow-passthrough on
