@@ -62,6 +62,7 @@
           "*/.gitignore"
           "modules/sops/secrets.yaml"
           "Justfile"
+          "*.patch"
         ];
       };
     };
