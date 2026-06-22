@@ -28,6 +28,7 @@
         };
 
       home.packages = with pkgs; [
+        shottr
         gleam
         erlang
         # google-chrome
@@ -82,6 +83,7 @@
       sops.secrets.github-mcp-server = { };
       sops.secrets.launch-darkly-mcp-pat = { };
       sops.secrets.atlassian-mcp-env = { };
+      sops.secrets.servicenow-mcp-env = { };
 
       home.sessionVariables = {
         EDITOR = "nvim";
@@ -102,6 +104,11 @@
         if [[ -f "${config.sops.secrets.atlassian-mcp-env.path}" ]]; then
           set -a
           eval "$(cat ${config.sops.secrets.atlassian-mcp-env.path})"
+          set +a
+        fi
+        if [[ -f "${config.sops.secrets.servicenow-mcp-env.path}" ]]; then
+          set -a
+          eval "$(cat ${config.sops.secrets.servicenow-mcp-env.path})"
           set +a
         fi
       '';

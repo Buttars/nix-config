@@ -80,6 +80,10 @@
             export JIRA_API_TOKEN="$ATLASSIAN_API_TOKEN"
             exec "$@"
           '';
+          mcp-shell-servicenow = pkgs.writeShellScript "mcp-shell-servicenow" ''
+            export PATH="${pkgs.nodejs}/bin:${pkgs.uv}/bin:${pkgs.python3}/bin:$PATH"
+            exec "$@"
+          '';
           github-mcp = "${pkgs.github-mcp-server}/bin/github-mcp-server";
         in
         builtins.toJSON {
@@ -167,6 +171,19 @@
                 "--api-key"
                 "\${LAUNCHDARKLY_ACCESS_TOKEN}"
               ];
+            };
+            servicenow = {
+              command = "${mcp-shell-servicenow}";
+              args = [
+                "uvx"
+                "servicenow-mcp"
+              ];
+              env = {
+                SERVICENOW_INSTANCE_URL = "\${SERVICENOW_INSTANCE_URL}";
+                SERVICENOW_AUTH_TYPE = "oauth";
+                SERVICENOW_USERNAME = "\${SERVICENOW_USERNAME}";
+                SERVICENOW_PASSWORD = "\${SERVICENOW_PASSWORD}";
+              };
             };
           };
         };
