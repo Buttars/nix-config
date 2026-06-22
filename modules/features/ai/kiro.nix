@@ -12,12 +12,6 @@
       home.file.".kiro/agents/default.json".text = builtins.toJSON {
         name = "default";
         tools = [ "*" ];
-        allowedTools = [
-          "fs_read"
-          "grep"
-          "glob"
-          "code"
-        ];
         toolsSettings.execute_bash = {
           autoAllowReadonly = true;
           allowedCommands = [
@@ -77,6 +71,13 @@
             export PATH="${pkgs.nodejs}/bin:${pkgs.uv}/bin:${pkgs.python3}/bin:${pkgs.docker}/bin:${pkgs.awscli2}/bin:$PATH"
             export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
             [ -S "$HOME/.colima/default/docker.sock" ] && [ -f "$HOME/.kube/config" ] || exit 0
+            exec "$@"
+          '';
+          mcp-shell-atlassian = pkgs.writeShellScript "mcp-shell-atlassian" ''
+            export PATH="${pkgs.nodejs}/bin:${pkgs.uv}/bin:${pkgs.python3}/bin:$PATH"
+            export JIRA_URL="$ATLASSIAN_SITE_URL"
+            export JIRA_USERNAME="$ATLASSIAN_USER_EMAIL"
+            export JIRA_API_TOKEN="$ATLASSIAN_API_TOKEN"
             exec "$@"
           '';
           github-mcp = "${pkgs.github-mcp-server}/bin/github-mcp-server";
@@ -145,6 +146,13 @@
                 "awslabs.aws-api-mcp-server@latest"
               ];
               env.FASTMCP_LOG_LEVEL = "ERROR";
+            };
+            atlassian = {
+              command = "${mcp-shell-atlassian}";
+              args = [
+                "uvx"
+                "mcp-atlassian"
+              ];
             };
             launchdarkly = {
               command = "${mcp-shell}";
