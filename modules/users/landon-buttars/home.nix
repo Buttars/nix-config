@@ -81,6 +81,7 @@
 
       sops.secrets.github-mcp-server = { };
       sops.secrets.launch-darkly-mcp-pat = { };
+      sops.secrets.atlassian-mcp-env = { };
 
       home.sessionVariables = {
         EDITOR = "nvim";
@@ -97,6 +98,11 @@
         fi
         if [[ -f "${config.sops.secrets.launch-darkly-mcp-pat.path}" ]]; then
           export LAUNCHDARKLY_ACCESS_TOKEN="$(cat ${config.sops.secrets.launch-darkly-mcp-pat.path})"
+        fi
+        if [[ -f "${config.sops.secrets.atlassian-mcp-env.path}" ]]; then
+          set -a
+          eval "$(cat ${config.sops.secrets.atlassian-mcp-env.path})"
+          set +a
         fi
       '';
     };
