@@ -12,6 +12,13 @@
         truenasDawarichUser = "3021:1010";
       in
       {
+        users.users.dawarich = {
+          uid = 3021;
+          isSystemUser = true;
+          group = "dawarich";
+        };
+        users.groups.dawarich.gid = 1010;
+
         virtualisation.docker.enable = true;
 
         sops.secrets."dawarich/env" = { };

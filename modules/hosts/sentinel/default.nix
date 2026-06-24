@@ -149,6 +149,8 @@
           };
         };
 
+        services.nfs.idmapd.settings.General.Domain = "lan";
+
         services.caddy.enable = true;
 
         networking.firewall.allowedTCPPorts = [

@@ -22,6 +22,7 @@
         systemd.services.home-assistant = {
           after = [ "var-lib-hass.mount" ];
           requires = [ "var-lib-hass.mount" ];
+          serviceConfig.ProtectSystem = lib.mkForce false;
         };
 
         services.home-assistant = {

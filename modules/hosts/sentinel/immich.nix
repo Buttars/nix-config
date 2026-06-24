@@ -15,16 +15,21 @@
           mediaLocation = "/var/lib/immich";
         };
 
+        users.users.immich.uid = 3031;
+        users.groups.immich.gid = 1012;
+
         systemd.services.immich-server = {
           after = [ "var-lib-immich.mount" ];
           requires = [ "var-lib-immich.mount" ];
           serviceConfig.StateDirectory = lib.mkForce "";
+          serviceConfig.PrivateUsers = lib.mkForce false;
         };
 
         systemd.services.immich-machine-learning = {
           after = [ "var-lib-immich.mount" ];
           requires = [ "var-lib-immich.mount" ];
           serviceConfig.StateDirectory = lib.mkForce "";
+          serviceConfig.PrivateUsers = lib.mkForce false;
         };
 
         environment.etc."fail2ban/filter.d/immich.conf".text = ''
