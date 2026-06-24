@@ -216,10 +216,16 @@
             hl.bind(mod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty -e journalctl -f"))
             hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("kitty -e nvim"))
 
-            -- Workspace bindings (1-9)
+            -- Workspace bindings (1-9, prefixed by monitor: monitor 0 → 1x, monitor 1 → 2x)
             for i = 1, 9 do
-                hl.bind(mod .. " + " .. i,         hl.dsp.focus({ workspace = i }))
-                hl.bind(mod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+                hl.bind(mod .. " + " .. i, function()
+                    local mon = hl.get_active_monitor()
+                    hl.dispatch(hl.dsp.focus({ workspace = (mon.id + 1) * 10 + i }))
+                end)
+                hl.bind(mod .. " + SHIFT + " .. i, function()
+                    local mon = hl.get_active_monitor()
+                    hl.dispatch(hl.dsp.window.move({ workspace = (mon.id + 1) * 10 + i }))
+                end)
             end
 
             -- Mouse binds

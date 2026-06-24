@@ -1,16 +1,17 @@
 #!/bin/sh
 
-# Wait a moment to ensure monitors are up (optional)
 sleep 0.5
 
 hyprctl -j monitors | jq -c '.[]' | while read -r monitor; do
   id=$(echo "$monitor" | jq '.id')
   name=$(echo "$monitor" | jq -r '.name')
-  workspace="${id}1"
+  prefix=$((id + 1))
 
-  hyprctl dispatch workspace "$workspace"
-  hyprctl dispatch moveworkspacetomonitor "$workspace" "$name"
+  hyprctl dispatch focusmonitor "$name"
+  for suffix in 3 2 1; do
+    hyprctl dispatch workspace "${prefix}${suffix}"
+  done
 done
 
-# Optionally focus a specific monitor (e.g., ID 1 if it exists)
-hyprctl dispatch focusmonitor 1
+hyprctl dispatch focusmonitor 0
+hyprctl dispatch workspace 11

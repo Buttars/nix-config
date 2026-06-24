@@ -38,6 +38,8 @@
       documentation.doc.enable = false;
       documentation.info.enable = false;
 
+      programs.git.config = [ { safe.directory = "*"; } ];
+
       nix.settings.experimental-features = [
         "nix-command"
         "flakes"
