@@ -53,6 +53,14 @@
               "/var/lib/immich/thumbs"
               "/var/lib/immich/encoded-video"
             ];
+            backupPrepareCommand = ''
+              mkdir -p /var/lib/immich/database-backup
+              ${pkgs.sudo}/bin/sudo -u postgres \
+                ${config.services.postgresql.package}/bin/pg_dumpall \
+                  --clean --if-exists \
+                  > /var/lib/immich/database-backup/immich-database.sql
+            '';
+            backupCleanupCommand = "rm -f /var/lib/immich/database-backup/immich-database.sql";
           };
         };
       };
