@@ -19,4 +19,5 @@
   gguf-pad-vocab = pkgs.callPackage ./gguf-pad-vocab.nix { };
   gemma3-abliterated-gguf = pkgs.callPackage ./gemma3-abliterated-gguf.nix { };
   nebula-sans-nerdfont = pkgs.callPackage ./nebula-sans-nerdfont.nix { };
+  truenas-mcp = pkgs.callPackage ./truenas-mcp.nix { };
 }
