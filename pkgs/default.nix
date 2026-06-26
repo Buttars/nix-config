@@ -11,4 +11,6 @@
   specify-cli = pkgs.callPackage ./specify-cli.nix { };
   git-worktree-init = pkgs.callPackage ./git-worktree-init.nix { };
   herdr-sessionizer = pkgs.callPackage ./herdr-sessionizer.nix { };
+  truenas-mcp = pkgs.callPackage ./truenas-mcp.nix { };
+
 }

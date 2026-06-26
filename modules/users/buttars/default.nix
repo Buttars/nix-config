@@ -21,6 +21,7 @@
       <aegix/hyprland>
       <aegix/browser/brave>
       <aegix/sops>
+      <aegix/truenas-mcp-server>
     ];
 
     nixos =
