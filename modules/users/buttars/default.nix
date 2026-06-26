@@ -32,6 +32,7 @@
       <aegix/battery-notify>
       <aegix/desktop-apps>
       <aegix/mpv>
+      <aegix/truenas-mcp-server>
     ];
 
     nixos =
