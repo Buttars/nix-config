@@ -78,6 +78,9 @@
             export JIRA_URL="$ATLASSIAN_SITE_URL"
             export JIRA_USERNAME="$ATLASSIAN_USER_EMAIL"
             export JIRA_API_TOKEN="$ATLASSIAN_API_TOKEN"
+            export CONFLUENCE_URL="''${ATLASSIAN_SITE_URL}/wiki"
+            export CONFLUENCE_USERNAME="$ATLASSIAN_USER_EMAIL"
+            export CONFLUENCE_API_TOKEN="$ATLASSIAN_API_TOKEN"
             exec "$@"
           '';
           mcp-shell-servicenow = pkgs.writeShellScript "mcp-shell-servicenow" ''
