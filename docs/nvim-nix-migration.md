@@ -41,7 +41,9 @@ Depends on Option A's tooling work.
       Nix-provided plugin directory (no runtime cloning).
 - [ ] Map the 69 plugins to `nixpkgs.vimPlugins`; write `buildVimPlugin`
       derivations for the unpackaged ones (e.g. `sidekick.nvim`,
-      `jj-diffconflicts`, `opencode.nvim`).
+      `jj-diffconflicts`). `opencode.nvim` is no longer among them — opencode is
+      now a Nix-managed app (`modules/app/opencode.nix`) that Neovim only talks
+      to via `sidekick.lua`, so it needs no vim plugin derivation.
 - [ ] Fold in Option A (tooling + treesitter + mason removal) as a prerequisite.
 - [ ] Verify lazy-load behavior still works when plugins resolve to store paths.
 
