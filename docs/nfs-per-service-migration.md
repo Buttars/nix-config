@@ -1,6 +1,15 @@
 # NFS Per-Service Migration Plan
 
-## Current State
+> **Structural migration — largely landed.** This plan moved service configs
+> onto per-service ZFS datasets mounted at `/var/lib/<service>`. The repo now
+> reflects that on all three hosts; the outstanding piece is narrowing the broad
+> `/srv` export (see Phase 5).
+>
+> The follow-on work — mapping each export to a per-service user instead of
+> `maproot: root/wheel` — is a **separate** plan:
+> [nfs-migration-plan.md](nfs-migration-plan.md). That one is not started.
+
+## Starting State (historical — superseded by the phases below)
 
 - One ZFS dataset: `veritas/cognito` (12.5T) — media + downloads
 - One broad NFS export → `/srv` on torrens, theatrum, sentinel
@@ -179,26 +188,38 @@ umount /mnt/tmp/dawarich
 
 ## Phase 5 — NixOS Config Changes
 
+**Landed in the repo except for the `/srv` narrowing — see the note at the end
+of this section.**
+
 ### Torrens
 
-- Add `fileSystems` entries mounting each service dataset at `/var/lib/<service>`
-- Remove `systemd.tmpfiles.rules` entries for dirs that become NFS mounts
-- Update qbittorrent container volume to use `/var/lib/qbittorrent` (already correct)
-- Extract shared NFS options into a `let` binding
+- [x] Add `fileSystems` entries mounting each service dataset at `/var/lib/<service>`
+      — 12 present, `modules/hosts/torrens/default.nix:126` onward
+- [x] Remove `systemd.tmpfiles.rules` entries for dirs that become NFS mounts
+      — no `tmpfiles` rules remain in the host
+- [x] Update qbittorrent container volume to use `/var/lib/qbittorrent` (already correct)
+- [x] Extract shared NFS options into a `let` binding — `nfsOptions` at `:83`
 
 ### Theatrum
 
-- Replace broad `/srv` mount with per-service jellyfin mount at `/var/lib/jellyfin`
-- Update `services.jellyfin.dataDir` → `/var/lib/jellyfin/data`
-- Update `services.jellyfin.configDir` → `/var/lib/jellyfin/config`
+- [ ] Replace broad `/srv` mount with per-service jellyfin mount at `/var/lib/jellyfin`
+      — the jellyfin mount exists (`:87`), but `/srv` is **still mounted** at `:82`
+- [x] Update `services.jellyfin.dataDir` → `/var/lib/jellyfin/data` (`:112`)
+- [x] Update `services.jellyfin.configDir` → `/var/lib/jellyfin/config` (`:113`)
 
 ### Sentinel
 
-- Add `fileSystems` mount for home-assistant at `/var/lib/hass`
-- Add `fileSystems` mount for dawarich at `/var/lib/dawarich`
-- Update dawarich container volumes to use bind-mount paths from `/var/lib/dawarich/`
-  instead of named Docker volumes
-- Remove or narrow existing broad `/srv` mount
+- [x] Add `fileSystems` mount for home-assistant at `/var/lib/hass` (`:93`)
+- [x] Add `fileSystems` mount for dawarich at `/var/lib/dawarich`
+- [ ] Update dawarich container volumes to use bind-mount paths from `/var/lib/dawarich/`
+      instead of named Docker volumes — not verified from the repo
+- [ ] Remove or narrow existing broad `/srv` mount — **still mounted** at `:88`
+
+> **The `/srv` item is the one loose end, and it is shared across all three
+> hosts.** `veritas/cognito` is still mounted at `/srv` on torrens (`:121`),
+> sentinel (`:88`) and theatrum (`:82`). Deciding what to do with it is Phase 5
+> of the follow-on plan — see [nfs-migration-plan.md](nfs-migration-plan.md),
+> which covers the separate question of per-service `mapall_user` mappings.
 
 ---
 
