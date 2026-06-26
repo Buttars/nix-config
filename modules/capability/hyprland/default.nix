@@ -114,6 +114,11 @@
                     border_size = 2,
                     layout      = "scrolling",
                 },
+                scrolling = {
+                    -- 0 = center, 1 = fit. fit aligns a column to the viewport
+                    -- edge, which slams the window left on unfullscreen.
+                    focus_fit_method = 0,
+                },
                 misc = {
                     disable_hyprland_logo     = true,
                     disable_splash_rendering  = true,
