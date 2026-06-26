@@ -1,5 +1,9 @@
 # Backup Plan: Restic on Sentinel → Backblaze B2
 
+> Design and rationale. The step-by-step validation procedure is in
+> [backup-validation.md](backup-validation.md) and live progress in
+> [backup-validation-status.md](backup-validation-status.md).
+
 ## Overview
 
 Run restic from `sentinel` to back up all service data to Backblaze B2. Sentinel already mounts all NFS service directories, making it the natural backup host.
@@ -38,6 +42,25 @@ Services with databases that need consistent dumps before backup:
 These run as `backupPrepareCommand` in the restic module.
 
 ### 3. NixOS module (`modules/capability/backup.nix`)
+
+> **Superseded by what was actually built.** The sketch below proposed a single
+> `services.restic.backups.b2` job covering all four paths. The implementation
+> instead uses **four independent jobs** — `home-assistant`, `dawarich`,
+> `nextcloud`, `immich` — each spreading a shared `commonOpts`. Repository,
+> daily timer and retention all match this sketch; the job granularity does not.
+>
+> Per-job differences worth knowing:
+>
+> - **immich** carries the `thumbs`/`encoded-video` excludes and a live
+>   `pg_dumpall` prepare/cleanup pair (the sketch left those commented out).
+> - **home-assistant** does the SQLite hot copy — but currently excludes the
+>   copy and backs up the live DB. That is a real bug; see
+>   [backup-validation-status.md](backup-validation-status.md) Open Issue 3.
+> - **nextcloud** has no database dump at all.
+> - The sketch's `/var/lib/jellyfin` exclude was dropped, correctly — jellyfin
+>   runs on theatrum and was never in sentinel's paths.
+>
+> Read the module for current truth. The sketch is kept for the rationale.
 
 ```nix
 { config, pkgs, ... }:
@@ -136,6 +159,11 @@ restic restore latest --target /tmp/restore --include /var/lib/hass/db-backup.sq
 
 ## Open Questions
 
-- [ ] Are immich/nextcloud databases on sentinel or inside containers on TrueNAS?
+- [x] ~~Are immich databases on sentinel or inside containers on TrueNAS?~~ —
+      answered: `backup.nix:57-63` now runs `pg_dumpall` into
+      `/var/lib/immich/database-backup/` before each snapshot and removes it
+      after. See [backup-validation-status.md](backup-validation-status.md).
+- [ ] Nextcloud database — still unanswered, and the only remaining half of the
+      question above. Nothing in `backup.nix` dumps it.
 - [ ] Do you want media backed up too (large cost on B2) or just service state?
 - [ ] Notification preference: email, ntfy, or something else?
