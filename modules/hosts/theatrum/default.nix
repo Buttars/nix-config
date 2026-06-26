@@ -140,10 +140,14 @@
         hardware.graphics = {
           enable = true;
           extraPackages = with pkgs; [
-            config.boot.kernelPackages.nvidiaPackages.stable
             nvidia-vaapi-driver
           ];
         };
+
+        users.users.jellyfin.extraGroups = [
+          "video"
+          "render"
+        ];
 
         systemd.services.jellyfin-cache-monitor = {
           description = "Clear Jellyfin transcode cache when tmpfs is nearly full";
