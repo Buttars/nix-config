@@ -13,8 +13,10 @@ falls through to the single `fallback` image at
 wallpaper the old one had.
 
 Note the repo already carries one image, but for a different purpose:
-`modules/capability/hyprland/wallpaper.jpg` is the **stylix palette source**
-(`modules/capability/theming.nix:26`), not a member of the rotation pool.
+`modules/capability/hyprland/wallpaper.jpg` is the **stylix wallpaper**
+(`modules/capability/theming.nix:9`), not a member of the rotation pool. It does
+**not** drive the palette — `stylix.base16Scheme` is pinned to cyberdream at
+`:11`, so swapping this image changes nothing but the desktop background.
 
 Wanted: a repo-tracked set as the baseline, with the on-device directory kept
 as a **secondary, per-device** source layered on top rather than replaced.
@@ -36,25 +38,9 @@ Two constraints that shaped the current design and still apply:
 - Large binaries in-tree bloat every `nix flake` eval that copies the source.
   Resizing to the target display resolution before committing is worth it.
 
-## Default window width should be ~3/5 of the screen
-
-The scrolling layout's `column_width` is **never set**, so it uses the
-built-in default of `0.5`. Verified live:
-
-```
-scrolling:column_width   float: 0.500000  set: false
-```
-
-- [ ] Set `scrolling.column_width = 0.6` in the `scrolling` block
-      (`modules/capability/hyprland/default.nix:165`).
-- [ ] Consider re-centring `scrolling.explicit_column_widths` to match — it is
-      also unset, defaulting to `0.333, 0.5, 0.667, 1.0`. Something like
-      `0.4, 0.6, 0.8, 1.0` keeps the cycle presets aligned with the new
-      default.
-
 ## Windows should fill the screen, with a keybind to centre the focused one
 
-Currently `focus_fit_method = 0` (centre) at `:168`. Wanted is roughly the
+Currently `focus_fit_method = 0` (centre) at `:179`. Wanted is roughly the
 inverse of today's behaviour: columns should **fill the available screen space
 most of the time**, with centring available on demand rather than always on.
 
@@ -64,15 +50,24 @@ most of the time**, with centring available on demand rather than always on.
       stops being automatic.
 
 **Read the existing comment before changing this.** `focus_fit_method = 0` was
-chosen deliberately: the comment at `:166-167` records that `fit` _"aligns a
-column to the viewport edge, which slams the window left on unfullscreen."_
-Switching to `1` reintroduces that. Confirm whether it is still reproducible on
-the current Hyprland before concluding the setting is simply wrong.
+chosen deliberately, and there is a commit behind it — `fix(capability/hyprland):
+unfullscreening slams the window to the left edge`. The comment at `:177-178`
+records that `fit` _"aligns a column to the viewport edge, which slams the window
+left on unfullscreen."_ Switching to `1` reintroduces the bug that commit fixed.
+Confirm it is no longer reproducible on the current Hyprland before concluding
+the setting is simply wrong.
 
 Related binds that already exist and may cover part of this:
 
-- `Super+Shift+C` — `fit active`, active column fills the screen (`:255`)
-- `Super+O` — `fit expand`, expand column into free space (`:251`)
+- `Super+Shift+C` — `fit active`, active column fills the screen (`:266`)
+- `Super+E` — `fit expand`, expand column into free space (`:263`)
 
 So "fill the screen" may be partly a question of **which behaviour is the
 default** rather than which dispatchers exist.
+
+## Landed
+
+- **Default column width ~3/5.** `scrolling.column_width = 0.6` and
+  `explicit_column_widths = "0.4, 0.6, 0.8, 1.0"` are both set
+  (`modules/capability/hyprland/default.nix:180-181`), so the cycle presets stay
+  centred on the new default.
