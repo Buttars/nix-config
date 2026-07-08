@@ -28,6 +28,7 @@
       <aegix/ai/kiro>
       <aegix/ai/claude>
       <aegix/ai/chatgpt>
+      <aegix/ai/skills>
       <aegix/cli/jj>
       <aegix/sops>
       <aegix/password-manager/bitwarden>

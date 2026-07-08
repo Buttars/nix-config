@@ -1,5 +1,40 @@
 {
   "nodes": {
+    "agent-skills": {
+      "inputs": {
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1783255035,
+        "narHash": "sha256-csxkmV7a0zdhWi24Bz23/GQi1zOimCNTDFyS/ezm7sw=",
+        "owner": "Kyure-A",
+        "repo": "agent-skills-nix",
+        "rev": "46337bfdd6ccfcc08766c933a02fff3338ffe30f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Kyure-A",
+        "repo": "agent-skills-nix",
+        "type": "github"
+      }
+    },
+    "anexpn-nixxx-shell": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776831130,
+        "narHash": "sha256-o979vjRB1OWOeM5nPG1liJQGWrHwCzvNtzXt0+GvGVo=",
+        "owner": "anexpn",
+        "repo": "nixxx-shell",
+        "rev": "f8786c93c922f3fb92097afe86dece82246626ec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anexpn",
+        "repo": "nixxx-shell",
+        "type": "github"
+      }
+    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -467,6 +502,26 @@
         "type": "github"
       }
     },
+    "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781751568,
+        "narHash": "sha256-hZAbXoNA4nCSaIJJLGl/EdErFtlnAS06jEp4oO7Qp6s=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "5bcff43156c0eebe68759338b7879c8e1b2e2bd0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "import-tree": {
       "locked": {
         "lastModified": 1778781969,
@@ -494,6 +549,22 @@
       "original": {
         "owner": "vic",
         "repo": "import-tree",
+        "type": "github"
+      }
+    },
+    "mattpocock-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783516840,
+        "narHash": "sha256-XqF709Y9GMKINzZITlbCTyatG9AxRZh0qn2vcv1Z8yo=",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "rev": "d574778f94cf620fcc8ce741584093bc650a61d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mattpocock",
+        "repo": "skills",
         "type": "github"
       }
     },
@@ -656,6 +727,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1779694939,
+        "narHash": "sha256-Ly4j75O8ICaSQx3uxPnwk2x7PMF0XQvn5r0c3yBA7FI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f9d8b65950353691ab56561e7c73d2e1063d810b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -706,6 +793,8 @@
     },
     "root": {
       "inputs": {
+        "agent-skills": "agent-skills",
+        "anexpn-nixxx-shell": "anexpn-nixxx-shell",
         "darwin": "darwin",
         "den": "den",
         "devenv": "devenv",
@@ -713,12 +802,13 @@
         "dotfiles": "dotfiles",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts_2",
-        "home-manager": "home-manager",
+        "home-manager": "home-manager_2",
         "import-tree": "import-tree",
+        "mattpocock-skills": "mattpocock-skills",
         "mk-shell-bin": "mk-shell-bin",
         "nix-auto-follow": "nix-auto-follow",
         "nix2container": "nix2container",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "paneru": "paneru",
         "sops-nix": "sops-nix",
         "srvos": "srvos",

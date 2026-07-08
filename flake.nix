@@ -4,6 +4,11 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
+    agent-skills.url = "github:Kyure-A/agent-skills-nix";
+    anexpn-nixxx-shell = {
+      url = "github:anexpn/nixxx-shell";
+      flake = false;
+    };
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,6 +40,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
     mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
     nix-auto-follow = {
       url = "github:fzakaria/nix-auto-follow";
