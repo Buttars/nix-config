@@ -59,6 +59,58 @@
           description = "remove jj workspace"
         '';
 
+        # Shell integration replicating the old sesh workflow, but for herdr:
+        #  - `herdr-sessionizer`: zoxide + fzf picker that opens the chosen
+        #    directory as a herdr workspace (bound to Alt-s, like sesh was).
+        #  - autostart: if the shell is interactive and NOT already inside
+        #    herdr ($HERDR_ENV unset), launch/attach herdr. Mirrors the old
+        #    `if [[ -z "$TMUX" ]]` sesh-start behavior.
+        # Provided for both zsh and fish.
+        programs.zsh.initContent = ''
+          function herdr-sessionizer() {
+            local dir
+            dir=$(zoxide query -l | fzf --height 40% --reverse \
+              --border-label ' herdr ' --border --prompt '⚡  ')
+            if [[ -n "$dir" ]]; then
+              if [[ -n "$HERDR_ENV" ]]; then
+                herdr workspace create --cwd "$dir" --focus
+              else
+                herdr workspace create --cwd "$dir" --no-focus
+                herdr
+              fi
+            fi
+          }
+          bindkey -s '\es' '^uherdr-sessionizer\n'
+
+          if [[ -z "$HERDR_ENV" && -o interactive ]]; then
+            if [[ "$(uname)" == "Darwin" ]] || [[ ! -o login ]]; then
+              herdr-sessionizer
+            fi
+          fi
+        '';
+
+        programs.fish.interactiveShellInit = ''
+          function herdr-sessionizer
+            set -l dir (zoxide query -l | fzf --height 40% --reverse \
+              --border-label ' herdr ' --border --prompt '⚡  ')
+            if test -n "$dir"
+              if set -q HERDR_ENV
+                herdr workspace create --cwd "$dir" --focus
+              else
+                herdr workspace create --cwd "$dir" --no-focus
+                herdr
+              end
+            end
+          end
+          bind \es herdr-sessionizer
+
+          if not set -q HERDR_ENV; and status is-interactive
+            if test (uname) = Darwin; or not status is-login
+              herdr-sessionizer
+            end
+          end
+        '';
+
         # Build a combined CA bundle: nix public roots + any corporate roots
         # (Zscaler, etc.) exported from the macOS System keychain. This runs
         # before plugin install so CARGO_HTTP_CAINFO points at a valid bundle.
@@ -82,7 +134,11 @@
           export CARGO_HTTP_CAINFO="${config.home.homeDirectory}/.config/herdr/ca-bundle.crt"
           export NIX_SSL_CERT_FILE="$CARGO_HTTP_CAINFO"
           for plugin in ${lib.concatStringsSep " " plugins}; do
-            herdr plugin install "$plugin" --yes || true
+            # Suppress the install preview/output unless the command fails.
+            if ! out=$(herdr plugin install "$plugin" --yes 2>&1); then
+              echo "herdr: failed to install plugin '$plugin':" >&2
+              echo "$out" >&2
+            fi
           done
         '';
       };
