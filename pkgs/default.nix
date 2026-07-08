@@ -10,4 +10,5 @@
   td = pkgs.callPackage ./td.nix { };
   specify-cli = pkgs.callPackage ./specify-cli.nix { };
   git-worktree-init = pkgs.callPackage ./git-worktree-init.nix { };
+  herdr-sessionizer = pkgs.callPackage ./herdr-sessionizer.nix { };
 }
