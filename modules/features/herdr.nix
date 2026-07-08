@@ -16,7 +16,14 @@
       in
       {
 
-        home.packages = [ pkgs.herdr ];
+        # herdr itself, plus runtime deps some plugins need on PATH:
+        #  - bun: sessionizer plugin runs `bun run ...` at action time
+        #  - herdr-sessionizer: zoxide+fzf workspace picker (Alt-s)
+        home.packages = [
+          pkgs.herdr
+          pkgs.bun
+          pkgs.herdr-sessionizer
+        ];
 
         # Corporate networks (e.g. Zscaler) do TLS inspection, re-signing HTTPS
         # with a private root CA that lives in the macOS System keychain but not
@@ -57,29 +64,21 @@
           type = "plugin_action"
           command = "nathanflurry.jj-workspace.remove"
           description = "remove jj workspace"
+
+          [[keys.command]]
+          key = "prefix+f"
+          type = "pane"
+          command = "herdr-sessionizer"
+          description = "workspace picker (zoxide + existing)"
         '';
 
-        # Shell integration replicating the old sesh workflow, but for herdr:
-        #  - `herdr-sessionizer`: zoxide + fzf picker that opens the chosen
-        #    directory as a herdr workspace (bound to Alt-s, like sesh was).
-        #  - autostart: if the shell is interactive and NOT already inside
-        #    herdr ($HERDR_ENV unset), launch/attach herdr. Mirrors the old
-        #    `if [[ -z "$TMUX" ]]` sesh-start behavior.
-        # Provided for both zsh and fish.
+        # Shell integration for the herdr workflow (zsh + fish):
+        #  - Alt-s: run herdr-sessionizer (unified picker: existing workspaces
+        #    + zoxide dirs). See pkgs/herdr-sessionizer.nix.
+        #  - autostart: on an interactive shell not already inside herdr
+        #    ($HERDR_ENV unset), launch the picker (which attaches afterward).
+        #    Mirrors the old sesh `if [[ -z "$TMUX" ]]` behavior.
         programs.zsh.initContent = ''
-          function herdr-sessionizer() {
-            local dir
-            dir=$(zoxide query -l | fzf --height 40% --reverse \
-              --border-label ' herdr ' --border --prompt '⚡  ')
-            if [[ -n "$dir" ]]; then
-              if [[ -n "$HERDR_ENV" ]]; then
-                herdr workspace create --cwd "$dir" --focus
-              else
-                herdr workspace create --cwd "$dir" --no-focus
-                herdr
-              fi
-            fi
-          }
           bindkey -s '\es' '^uherdr-sessionizer\n'
 
           if [[ -z "$HERDR_ENV" && -o interactive ]]; then
@@ -90,18 +89,6 @@
         '';
 
         programs.fish.interactiveShellInit = ''
-          function herdr-sessionizer
-            set -l dir (zoxide query -l | fzf --height 40% --reverse \
-              --border-label ' herdr ' --border --prompt '⚡  ')
-            if test -n "$dir"
-              if set -q HERDR_ENV
-                herdr workspace create --cwd "$dir" --focus
-              else
-                herdr workspace create --cwd "$dir" --no-focus
-                herdr
-              end
-            end
-          end
           bind \es herdr-sessionizer
 
           if not set -q HERDR_ENV; and status is-interactive
