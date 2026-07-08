@@ -29,6 +29,8 @@
 
       home.packages = with pkgs; [
         shottr
+        sidecar
+        td
         gleam
         erlang
         # google-chrome
