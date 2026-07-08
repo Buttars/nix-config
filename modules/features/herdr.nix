@@ -43,6 +43,13 @@
           [keys]
           prefix = "ctrl+a"
 
+          # Workspace management (defaults leave these unset).
+          previous_workspace = "prefix+shift+left"
+          next_workspace = "prefix+shift+right"
+          switch_workspace = "prefix+shift+1..9"
+          navigate_workspace_up = "k"
+          navigate_workspace_down = "j"
+
           [ui]
           sidebar_collapsed_mode = "hidden"
           hide_tab_bar_when_single_tab = true
