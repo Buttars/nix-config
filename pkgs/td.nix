@@ -1,44 +1,51 @@
 {
   lib,
-  buildGoModule,
-  fetchFromGitHub,
-  git,
-  sqlite,
+  stdenv,
+  fetchurl,
+  autoPatchelfHook,
 }:
 
-buildGoModule rec {
-  pname = "td";
-  version = "0.37.0";
+let
+  version = "0.51.0";
 
-  src = fetchFromGitHub {
-    owner = "marcus";
-    repo = "td";
-    rev = "v${version}";
-    hash = "sha256-lantT8ArHdSHNt3MjX+CKWNVmf7dm2fFdZMmYjlrTx8=";
+  sources = {
+    x86_64-linux = {
+      url = "https://github.com/marcus/td/releases/download/v${version}/td_${version}_linux_amd64.tar.gz";
+      hash = "sha256-//HqJ9Emmd3Jm6KeXiHEZKDnjtsvVX33ReUtE2QbHaU=";
+    };
+    aarch64-linux = {
+      url = "https://github.com/marcus/td/releases/download/v${version}/td_${version}_linux_arm64.tar.gz";
+      hash = "sha256-nDy4isyNgO9ZRI2DlQT7TD9ukYkZ134rK5mOPgpjZXw=";
+    };
+    x86_64-darwin = {
+      url = "https://github.com/marcus/td/releases/download/v${version}/td_${version}_darwin_amd64.tar.gz";
+      hash = "sha256-m7dVQWrJJaimpFdi7qr0OXHn8WIK3wZ8772PU8h3CfE=";
+    };
+    aarch64-darwin = {
+      url = "https://github.com/marcus/td/releases/download/v${version}/td_${version}_darwin_arm64.tar.gz";
+      hash = "sha256-wJsKTIQDmYK3m6LTAB1BItBdyOV9hbfN6crIQ9iU3Kk=";
+    };
   };
 
-  vendorHash = "sha256-8mOebFPbf7+hCpn9hUrE0IGu6deEPSujr+yHqrzYEec=";
+  src = fetchurl sources.${stdenv.hostPlatform.system};
+in
+stdenv.mkDerivation {
+  pname = "td";
+  inherit version src;
 
-  # Tests shell out to git + sqlite3
-  nativeCheckInputs = [
-    git
-    sqlite
-  ];
+  nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
 
-  # Run only short tests (skip long/chaos tests if upstream respects testing.Short())
-  checkFlags = [ "-short" ];
+  sourceRoot = ".";
 
-  ldflags = [
-    "-s"
-    "-w"
-    "-X"
-    "main.Version=v${version}"
-  ];
+  installPhase = ''
+    install -Dm755 td $out/bin/td
+  '';
 
   meta = with lib; {
     description = "A minimalist CLI for tracking tasks across AI coding sessions";
     homepage = "https://github.com/marcus/td";
     license = licenses.mit;
     mainProgram = "td";
+    platforms = builtins.attrNames sources;
   };
 }
