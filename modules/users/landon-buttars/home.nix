@@ -32,7 +32,7 @@
         sidecar
         td
         gleam
-        erlang
+        beamPackages.erlang
         # google-chrome
         colima
         git-worktree-switcher
