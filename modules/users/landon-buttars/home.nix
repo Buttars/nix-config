@@ -37,7 +37,6 @@
         colima
         git-worktree-switcher
         docker
-        logseq
         obsidian
         minikube
         # firefox
