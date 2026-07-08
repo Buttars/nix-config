@@ -11,10 +11,8 @@
       <aegix/cli/git>
       <aegix/cli/tui>
       <aegix/neovim>
-      <aegix/tmux/full>
       <aegix/zsh>
       <aegix/zsh/prompt>
-      <aegix/zsh/sesh>
       <aegix/zsh/fzf-nav>
       <aegix/yazi>
       <aegix/workstation>
@@ -29,6 +27,7 @@
       <aegix/ai/claude>
       <aegix/ai/chatgpt>
       <aegix/ai/skills>
+      <aegix/herdr>
       <aegix/cli/jj>
       <aegix/sops>
       <aegix/password-manager/bitwarden>
