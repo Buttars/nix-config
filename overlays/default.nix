@@ -7,6 +7,19 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
+    # fish 4.x (Rust rewrite) dropped create_manpage_completions.py, but many
+    # nixpkgs packages still invoke it when generating fish completions. Stub it
+    # back in so those builds succeed.
+    fish = prev.fish.overrideAttrs (old: {
+      postInstall = (old.postInstall or "") + ''
+        mkdir -p $out/share/fish/tools
+        cat > $out/share/fish/tools/create_manpage_completions.py <<'PYEOF'
+import sys
+# stub: fish 4.x removed this script; emit no completions
+PYEOF
+      '';
+    });
+
     # awscli2 =
     # if final.system == "aarch64-darwin" || final.system == "x86_64-darwin" then
     #   # inputs.nixpkgs-awscli2.legacyPackages.${final.system}.awscli2
