@@ -17,7 +17,7 @@
       <aegix/cli/tui>
       <aegix/cli/git>
       <aegix/cli/jj>
-      <aegix/tmux/full>
+      <aegix/herdr>
       <aegix/hyprland>
       <aegix/browser/brave>
       <aegix/sops>
