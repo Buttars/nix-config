@@ -27,6 +27,7 @@
       <aegix/ai/claude>
       <aegix/ai/chatgpt>
       <aegix/ai/skills>
+      <aegix/ai/omlx>
       <aegix/herdr>
       <aegix/cli/jj>
       <aegix/sops>
