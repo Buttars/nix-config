@@ -126,7 +126,33 @@ writeShellScriptBin "herdr-sessionizer" ''
       ;;
     dir:*)
       dir=''${key#dir:}
-      herdr workspace create --cwd "$dir" --label "$(basename "$dir")" --focus
+      label="$(basename "$dir")"
+
+      # For ~/Projects directories, use herdr-spreader to apply a project layout
+      if [[ "$dir" == "$HOME/Projects/"* ]]; then
+        spreader_config="$HOME/.config/herdr/plugins/config/herdr-spreader/config.yaml"
+        mkdir -p "$(dirname "$spreader_config")"
+        cat > "$spreader_config" <<YAML
+workspaces:
+  - name: $label
+    root: $dir
+    focus: true
+    tabs:
+      - label: kiro
+        panes:
+          - command: kiro-cli chat
+            focus: true
+      - label: editor
+        panes:
+          - command: nvim
+      - label: shell
+        panes:
+          - command: ""
+YAML
+        herdr plugin action invoke herdr-spreader.apply 2>/dev/null
+      else
+        herdr workspace create --cwd "$dir" --label "$label" --focus
+      fi
       ;;
   esac
 

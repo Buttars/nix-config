@@ -12,6 +12,7 @@
           "persiyanov/herdr-reviewr"
           "paulbkim-dev/vim-herdr-navigation"
           "andrewchng/herdr-sessionizer"
+          "yuk1ty/herdr-spreader"
         ];
       in
       {
