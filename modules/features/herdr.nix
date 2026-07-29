@@ -2,7 +2,12 @@
 {
   aegix.herdr = {
     homeManager =
-      { pkgs, lib, config, ... }:
+      {
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
       let
         # Herdr plugins to install at activation time (owner/repo on GitHub).
         plugins = [
