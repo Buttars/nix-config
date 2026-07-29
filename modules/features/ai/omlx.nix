@@ -9,6 +9,12 @@
       };
     in
     {
+      home.packages = with pkgs; [
+        (pkgs.writeShellScriptBin "omlx" ''
+          exec '/Applications/oMLX.app/Contents/MacOS/omlx-cli' "$@"
+        '')
+      ];
+
       home.activation.install-omlx = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         app_dir="/Applications"
         app_name="oMLX.app"
