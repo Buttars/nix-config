@@ -11,6 +11,9 @@
 
       home.file.".kiro/agents/default.json".text = builtins.toJSON {
         name = "default";
+        resources = [
+          "skill://~/.kiro/skills/**"
+        ];
         tools = [ "*" ];
         toolsSettings.execute_bash = {
           autoAllowReadonly = true;
@@ -34,6 +37,9 @@
       home.file.".kiro/agents/focused-mode.json".text = builtins.toJSON {
         name = "focused-fix";
         description = "Scoped to a single fix or small feature — minimal changes, no cleanup, no extras";
+        resources = [
+          "skill://~/.kiro/skills/**"
+        ];
         prompt = "file://../prompts/focused-mode.md";
         tools = [ "*" ];
         welcomeMessage = "Focused mode active. What's the single thing we're fixing?";

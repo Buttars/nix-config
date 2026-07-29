@@ -33,13 +33,13 @@
         sources.matt = {
           path = inputs.mattpocock-skills;
           subdir = "skills";
-          idPrefix = "matt";
+          filter.maxDepth = 1;
         };
 
         sources.anexpn = {
           path = inputs.anexpn-nixxx-shell;
           subdir = ".claude/skills";
-          idPrefix = "anexpn";
+          filter.maxDepth = 1;
         };
 
         skills.enableAll = true;
