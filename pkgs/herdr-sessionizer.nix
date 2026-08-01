@@ -122,7 +122,7 @@ writeShellScriptBin "herdr-sessionizer" ''
     key=''${pick%%$'\t'*}
     case "$key" in
       ws:*)
-        herdr workspace focus "''${key#ws:}"
+        herdr workspace focus "''${key#ws:}" 2>/dev/null || true
         ;;
       dir:*)
         dir=''${key#dir:}
@@ -151,7 +151,9 @@ writeShellScriptBin "herdr-sessionizer" ''
   YAML
           herdr plugin action invoke herdr-spreader.apply 2>/dev/null
         else
-          herdr workspace create --cwd "$dir" --label "$label" --focus
+          if ! herdr workspace create --cwd "$dir" --label "$label" --focus 2>/dev/null; then
+            cd "$dir"
+          fi
         fi
         ;;
     esac
