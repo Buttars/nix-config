@@ -39,14 +39,6 @@ PYEOF
       else
         prev.direnv;
 
-    gtk3 =
-      if
-        final.stdenv.hostPlatform.system == "aarch64-darwin"
-        || final.stdenv.hostPlatform.system == "x86_64-darwin"
-      then
-        (import ./gtk3-sincos-patch) prev
-      else
-        prev.gtk3;
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
