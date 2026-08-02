@@ -36,7 +36,7 @@
     homeManager =
       { pkgs, ... }:
       {
-        home.packages = [ pkgs.obsidian ];
+        home.packages = [ pkgs.obsidian pkgs.anki-bin ];
       };
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {
