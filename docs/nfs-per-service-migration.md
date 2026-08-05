@@ -232,3 +232,54 @@ Suggested schedule:
 | Hourly    | 24 snapshots |
 | Daily     | 7 snapshots  |
 | Weekly    | 4 snapshots  |
+
+---
+
+## Troubleshooting: NFSv4 ACL blocks writes to new files/dirs
+
+Hit on the `immich` dataset on 2026-08-04. Same class of dataset as everything above, so any of them could show this symptom in the future.
+
+**Symptom**: a service throws `EACCES`/`Operation not permitted` writing *newly created* files or directories under its `/var/lib/<service>` NFS mount, even though `ls -la` shows the directory owned by the correct service user with normal-looking permissions. A one-off `chmod` fixes existing files, but new files keep coming back broken — that's the tell that this is ACL inheritance, not a one-time permission mistake.
+
+**Root cause**: the ZFS dataset's NFSv4 ACL has an inheritable ACE that doesn't grant the owner write on new children. Two forms seen:
+- `owner@` has no inherit flags (`-------` instead of `fd-----`/`fdi----`), so new objects never inherit owner write.
+- An inheritable `everyone@` ACE grants only `r-x` and is the only thing that propagates, so every new object is born read-only.
+
+### Diagnose
+
+Linux `getfacl` on the NFS client doesn't show NFSv4 ACL detail — check from TrueNAS directly (`ssh root@truenas.lan`):
+
+```
+getfacl /mnt/veritas/services/<name>
+```
+
+Check whether `owner@` has `fd`/`fdi` inherit flags, and whether any inheritable `everyone@` ACE is read-only-or-less and would be the only thing new objects inherit.
+
+Confirm with a real test as the service's own user:
+
+```
+su -m <service-user> -c "mkdir -p /mnt/veritas/services/<name>/.permtest && touch /mnt/veritas/services/<name>/.permtest/f"
+stat -f "%Op %Su:%Sg %N" /mnt/veritas/services/<name>/.permtest/f
+rm -rf /mnt/veritas/services/<name>/.permtest
+```
+
+### Fix
+
+Don't hand-edit NFSv4 ACEs with `setfacl` recursively — one mistake recurses over the whole tree. Use TrueNAS's UI instead:
+
+**Storage → Pools → veritas → services/\<name\> (dataset) → Edit Permissions**
+- Give `owner@` (and `group@`) full permissions with `fd` inherit flags.
+- Remove/fix any inheritable `everyone@` ACE that grants only read — a zero-permission inheritable `everyone@` entry is harmless (grants nothing, doesn't restrict `owner@`).
+- Check **"Apply permissions recursively"** and run it.
+- Re-run the diagnose steps to confirm.
+
+### Audit (2026-08-04)
+
+| Dataset           | `owner@` inherit flags                    | Status                                             |
+| ------------------ | ------------------------------------------ | --------------------------------------------------- |
+| `immich`            | none — broken                              | Fixed via Edit Permissions + recursive apply         |
+| `nextcloud`         | n/a — `everyone@` grants full rwx inherit  | Fine (loose, not blocking)                           |
+| `home-assistant`    | `fdi` inherit-only, full rwx               | Fine                                                 |
+| `dawarich`          | `fd`, full rwx                             | Fine                                                 |
+
+No action needed on nextcloud/home-assistant/dawarich unless one starts showing the same symptom — then follow Diagnose/Fix above.
