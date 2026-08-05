@@ -296,7 +296,7 @@
 
           customComponents =
             let
-              hacs-frontend = pkgs.home-assistant.python.pkgs.buildPythonPackage {
+              hacs-frontend = pkgs.home-assistant.python3Packages.buildPythonPackage {
                 pname = "hacs-frontend";
                 version = "20250128065759";
                 format = "wheel";
@@ -317,9 +317,9 @@
                   rev = "2.0.5";
                   hash = "sha256-xj+H75A6iwyGzMvYUjx61aGiH5DK/qYLC6clZ4cGDac=";
                 };
-                propagatedBuildInputs = with pkgs.home-assistant.python.pkgs; [ aiogithubapi ];
+                propagatedBuildInputs = with pkgs.home-assistant.python3Packages; [ aiogithubapi ];
                 postInstall = ''
-                  ln -s ${hacs-frontend}/${pkgs.home-assistant.python.sitePackages}/hacs_frontend \
+                  ln -s ${hacs-frontend}/${pkgs.home-assistant.python3Packages.python.sitePackages}/hacs_frontend \
                     $out/custom_components/hacs/hacs_frontend
                   ${pkgs.jq}/bin/jq '.version = "2.0.5"' \
                     $out/custom_components/hacs/manifest.json > /tmp/manifest.json
