@@ -283,3 +283,45 @@ Don't hand-edit NFSv4 ACEs with `setfacl` recursively — one mistake recurses o
 | `dawarich`          | `fd`, full rwx                             | Fine                                                 |
 
 No action needed on nextcloud/home-assistant/dawarich unless one starts showing the same symptom — then follow Diagnose/Fix above.
+
+---
+
+## TODO: hass / nextcloud UID/GID mismatch on sentinel (found 2026-08-04)
+
+`nixos-rebuild switch` on sentinel warns:
+
+```
+warning: not applying GID change of group 'hass' (1009 -> 286) in /etc/group
+warning: not applying GID change of group 'nextcloud' (1011 -> 992) in /etc/group
+warning: not applying UID change of user 'hass' (3020 -> 286) in /etc/passwd
+warning: not applying UID change of user 'nextcloud' (3030 -> 994) in /etc/passwd
+```
+
+The config declares `hass` at uid/gid 286/286 (`modules/hosts/sentinel/default.nix:101-102`)
+and `nextcloud` at uid 994 / gid 992 (`modules/hosts/sentinel/nextcloud.nix:34-35`), but the
+live system still has them at the old ids (`hass` 3020:1009, `nextcloud` 3030:1011). NixOS
+refuses to auto-change UID/GID of an existing account (safety guard) — hence the warning
+instead of a silent, dangerous rewrite.
+
+Confirmed the data hasn't moved either — TrueNAS still owns both datasets at the *old*
+numeric ids:
+
+- `/mnt/veritas/services/home-assistant` → 3020:1009 (needs → 286:286)
+- `/mnt/veritas/services/nextcloud` → 3030:1011 (needs → 994:992)
+
+There's also a local (non-NFS) path tied to the old nextcloud gid: `/var/lib/redis-nextcloud`
+(owned 3030:1011, mode 700).
+
+**Not yet fixed.** Both sides (TrueNAS ownership and sentinel's local passwd/group) must move
+together — changing one without the other recreates the same class of problem as the immich
+ACL incident above (files owned by a numeric id that no longer resolves to the right user).
+
+Fix, when ready:
+
+1. Stop affected services on sentinel: `home-assistant`, `phpfpm-nextcloud`, `redis-nextcloud`.
+2. On TrueNAS: `chown -R 286:286 /mnt/veritas/services/home-assistant` and
+   `chown -R 994:992 /mnt/veritas/services/nextcloud`.
+3. On sentinel: `groupmod -g 286 hass && usermod -u 286 hass`,
+   `groupmod -g 992 nextcloud && usermod -u 994 nextcloud`,
+   `chown -R 994:992 /var/lib/redis-nextcloud`.
+4. Restart the services, then re-run `nixos-rebuild switch` to confirm the warnings are gone.
