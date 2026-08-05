@@ -31,6 +31,33 @@
           pkgs.herdr-sessionizer
         ];
 
+        systemd.user.services.herdr = lib.mkIf pkgs.stdenv.isLinux {
+          Unit = {
+            Description = "Herdr terminal workspace server";
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = "${pkgs.herdr}/bin/herdr server";
+            Restart = "on-failure";
+            RestartSec = 2;
+          };
+          Install.WantedBy = [ "default.target" ];
+        };
+
+        launchd.agents.herdr = lib.mkIf pkgs.stdenv.isDarwin {
+          enable = true;
+          config = {
+            ProgramArguments = [
+              "${pkgs.herdr}/bin/herdr"
+              "server"
+            ];
+            RunAtLoad = true;
+            KeepAlive = true;
+            StandardOutPath = "${config.home.homeDirectory}/.config/herdr/launchd-server.log";
+            StandardErrorPath = "${config.home.homeDirectory}/.config/herdr/launchd-server.log";
+          };
+        };
+
         # Corporate networks (e.g. Zscaler) do TLS inspection, re-signing HTTPS
         # with a private root CA that lives in the macOS System keychain but not
         # in nix's cacert bundle. Nix's cargo/curl use nix OpenSSL and can't read
