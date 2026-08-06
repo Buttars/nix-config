@@ -38,7 +38,6 @@
         git-worktree-switcher
         docker
         obsidian
-        minikube
         # firefox
         (pkgs.python3.withPackages (
           ps: with ps; [

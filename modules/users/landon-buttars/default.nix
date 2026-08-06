@@ -7,7 +7,6 @@
       <aegix/programming>
       <aegix/terminal-emulator/kitty>
       <aegix/taskwarrior>
-      <aegix/cli/aws>
       <aegix/cli/git>
       <aegix/cli/tui>
       <aegix/neovim>
@@ -17,9 +16,7 @@
       <aegix/yazi>
       <aegix/workstation>
       <aegix/slack>
-      <aegix/toolsets/terraform>
-      <aegix/toolsets/k8s>
-      <aegix/toolsets/aws>
+      <aegix/cloud>
       <aegix/toolsets/node>
       <aegix/toolsets/python>
       <aegix/github-mcp-server>
@@ -36,7 +33,10 @@
     homeManager =
       { pkgs, ... }:
       {
-        home.packages = [ pkgs.obsidian pkgs.anki-bin ];
+        home.packages = [
+          pkgs.obsidian
+          pkgs.anki-bin
+        ];
       };
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {

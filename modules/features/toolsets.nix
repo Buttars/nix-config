@@ -5,13 +5,10 @@
 # `nix develop` invocation needed — just run the command.
 #
 # Include desired toolsets in a user or host aspect:
-#   <aegix/toolsets/terraform>
-#   <aegix/toolsets/k8s>
-#   <aegix/toolsets/aws>
 #   <aegix/toolsets/node>
 #   <aegix/toolsets/python>
 #
-# Then run: dev-terraform, dev-k8s, dev-aws, dev-node, dev-python
+# Then run: dev-node, dev-python
 { inputs, ... }:
 let
   mkToolset =
@@ -37,51 +34,6 @@ let
 in
 {
   aegix.toolsets = {
-    _.terraform.homeManager =
-      { pkgs, ... }:
-      {
-        home.packages = [
-          (mkToolset pkgs "dev-terraform" (
-            with pkgs;
-            [
-              terraform
-              just
-              pre-commit
-              tflint
-            ]
-          ))
-        ];
-      };
-    _.k8s.homeManager =
-      { pkgs, ... }:
-      {
-        home.packages = [
-          (mkToolset pkgs "dev-k8s" (
-            with pkgs;
-            [
-              kubectl
-              kubernetes-helm
-              k9s
-              kubectx
-              stern
-            ]
-          ))
-        ];
-      };
-    _.aws.homeManager =
-      { pkgs, ... }:
-      {
-        home.packages = [
-          (mkToolset pkgs "dev-aws" (
-            with pkgs;
-            [
-              awscli2
-              ssm-session-manager-plugin
-              aws-vault
-            ]
-          ))
-        ];
-      };
     _.node.homeManager =
       { pkgs, ... }:
       {
