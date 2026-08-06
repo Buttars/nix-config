@@ -20,6 +20,10 @@
         tflint
         pre-commit
         just
+
+        # Pulumi
+        pulumi-bin
+        pulumi-esc
       ];
     };
 }
