@@ -27,6 +27,10 @@
           ssh-to-age
           gnupg
           age
+
+          nixfmt
+          prettier
+          shfmt
         ];
       };
     };

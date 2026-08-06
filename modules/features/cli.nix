@@ -159,7 +159,10 @@
               ];
               fix.tools = {
                 nixfmt = {
-                  command = [ "nixfmt" ];
+                  command = [
+                    "nixfmt"
+                    "-"
+                  ];
                   patterns = [ "glob:**/*.nix" ];
                 };
                 prettier = {
@@ -168,7 +171,12 @@
                     "--stdin-filepath"
                     "$path"
                   ];
-                  patterns = [ "glob:**/*.{json,yaml,yml,md}" ];
+                  patterns = [
+                    "glob:**/*.json"
+                    "glob:**/*.yaml"
+                    "glob:**/*.yml"
+                    "glob:**/*.md"
+                  ];
                 };
                 shfmt = {
                   command = [ "shfmt" ];
