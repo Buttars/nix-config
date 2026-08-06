@@ -53,29 +53,27 @@
         enable = true;
         enableDefaultConfig = false;
 
-        matchBlocks = {
+        settings = {
           "*" = {
-            extraOptions = {
-              AddKeysToAgent = "yes";
-              UseKeychain = "yes";
-              ServerAliveInterval = "30";
-              ServerAliveCountMax = "3";
-            };
+            AddKeysToAgent = "yes";
+            UseKeychain = "yes";
+            ServerAliveInterval = 30;
+            ServerAliveCountMax = 3;
           };
 
           "github.com-buttars" = {
-            hostname = "github.com";
-            user = "git";
-            identityFile = "~/.ssh/id_ed25519_personal";
-            identitiesOnly = true;
+            HostName = "github.com";
+            User = "git";
+            IdentityFile = "~/.ssh/id_ed25519_personal";
+            IdentitiesOnly = true;
           };
 
           # Default GitHub = work
           "github.com" = {
-            hostname = "github.com";
-            user = "git";
-            identityFile = "~/.ssh/id_ed25519";
-            identitiesOnly = true;
+            HostName = "github.com";
+            User = "git";
+            IdentityFile = "~/.ssh/id_ed25519";
+            IdentitiesOnly = true;
           };
         };
       };
