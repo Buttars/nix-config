@@ -15,6 +15,10 @@
       url = "github:anexpn/nixxx-shell";
       flake = false;
     };
+    paperclipai-skills = {
+      url = "github:paperclipai/paperclip";
+      flake = false;
+    };
   };
 
   aegix.ai._.skills.homeManager =
@@ -39,6 +43,12 @@
         sources.anexpn = {
           path = inputs.anexpn-nixxx-shell;
           subdir = ".claude/skills";
+          filter.maxDepth = 1;
+        };
+
+        sources.paperclipai = {
+          path = inputs.paperclipai-skills;
+          subdir = "skills/para-memory-files";
           filter.maxDepth = 1;
         };
 
