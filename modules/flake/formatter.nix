@@ -69,6 +69,7 @@
           "modules/hosts/specula/reticulum-config"
           "Justfile"
           "*.patch"
+          "*.bak"
         ];
       };
     };
