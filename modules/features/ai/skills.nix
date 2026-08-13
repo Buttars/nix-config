@@ -57,7 +57,7 @@
         targets.kiro = {
           enable = true;
           dest = "$HOME/.kiro/skills";
-          structure = "symlink-tree";
+          structure = "copy-tree";
         };
 
         targets.claude = {
