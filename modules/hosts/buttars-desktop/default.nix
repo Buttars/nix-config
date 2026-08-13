@@ -68,7 +68,19 @@
         };
 
         networking = {
-          networkmanager.enable = true;
+          networkmanager = {
+            enable = true;
+            ensureProfiles.profiles."Wired connection 2" = {
+              connection = {
+                id = "Wired connection 2";
+                type = "ethernet";
+              };
+              ipv4 = {
+                method = "auto";
+                dns = "";
+              };
+            };
+          };
           firewall.enable = false;
           nameservers = [ "10.0.20.1" ];
         };
