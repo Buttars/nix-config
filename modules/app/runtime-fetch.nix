@@ -32,7 +32,12 @@
               mkdir -p "$(dirname "$dest")"
               tmp="$(mktemp)"
               trap 'rm -f "$tmp"' EXIT
-              ${lib.getExe pkgs.curl} -fL --retry 3 -o "$tmp" ${lib.escapeShellArg entry.url}
+              # --connect-timeout/--speed-* bound a broken or unreachable URL
+              # to a couple minutes instead of hanging forever — this service
+              # runs synchronously as part of default.target, so a stuck
+              # fetch stalls the whole user session's activation queue,
+              # which in turn can hang nixos-rebuild switch itself.
+              ${lib.getExe pkgs.curl} -fL --retry 3 --connect-timeout 15 --speed-time 60 --speed-limit 1000 -o "$tmp" ${lib.escapeShellArg entry.url}
               echo "${entry.hash}  $tmp" | ${lib.getExe' pkgs.coreutils "sha256sum"} -c -
               ${entry.postFetch}
             '';
