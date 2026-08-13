@@ -44,35 +44,54 @@
     {
       options.aegix.runtime-fetch.entries = lib.mkOption {
         type = lib.types.listOf (
-          lib.types.submodule {
-            options = {
-              name = lib.mkOption {
-                type = lib.types.str;
-                description = "Unit-name-safe slug (used as the systemd service name).";
+          lib.types.submodule (
+            { config, ... }:
+            {
+              options = {
+                name = lib.mkOption {
+                  type = lib.types.str;
+                  description = "Unit-name-safe slug (used as the systemd service name).";
+                };
+                url = lib.mkOption {
+                  type = lib.types.str;
+                  description = "Source URL. Must be somewhere you have the legal right to download from.";
+                };
+                hash = lib.mkOption {
+                  type = lib.types.str;
+                  description = "Expected sha256 of the downloaded file, hex-encoded as printed by `sha256sum`.";
+                };
+                dest = lib.mkOption {
+                  type = lib.types.str;
+                  description = "Absolute path to place the final file at.";
+                };
+                xiso = lib.mkOption {
+                  type = lib.types.bool;
+                  default = false;
+                  description = ''
+                    Run `extract-xiso -D -r` on the fetched file after the hash check —
+                    xemu needs discs rewritten into XISO format, plain ISOs won't boot.
+                  '';
+                };
+                postFetch = lib.mkOption {
+                  type = lib.types.str;
+                  description = ''
+                    Shell run after the download at $tmp passes its hash check, responsible
+                    for producing $dest (e.g. moving it into place, or extracting an archive).
+                  '';
+                };
               };
-              url = lib.mkOption {
-                type = lib.types.str;
-                description = "Source URL. Must be somewhere you have the legal right to download from.";
-              };
-              hash = lib.mkOption {
-                type = lib.types.str;
-                description = "Expected sha256 of the downloaded file, hex-encoded as printed by `sha256sum`.";
-              };
-              dest = lib.mkOption {
-                type = lib.types.str;
-                description = "Absolute path to place the final file at.";
-              };
-              postFetch = lib.mkOption {
-                type = lib.types.str;
-                default = ''mv "$tmp" "$dest"'';
-                defaultText = lib.literalExpression ''mv "$tmp" "$dest"'';
-                description = ''
-                  Shell run after the download at $tmp passes its hash check, responsible
-                  for producing $dest (e.g. moving it into place, or extracting an archive).
-                '';
-              };
-            };
-          }
+
+              config.postFetch = lib.mkDefault (
+                if config.xiso then
+                  ''
+                    mv "$tmp" "$dest"
+                    ${lib.getExe' pkgs.extract-xiso "extract-xiso"} -D -r "$dest"
+                  ''
+                else
+                  ''mv "$tmp" "$dest"''
+              );
+            }
+          )
         );
         default = [ ];
         description = "Large emulation assets (game images, BIOS/HDD templates, ...) fetched at runtime instead of at build time.";

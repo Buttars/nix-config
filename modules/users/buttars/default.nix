@@ -96,6 +96,7 @@
             # Replace with the real `sha256sum` output once you have a source.
             hash = "0000000000000000000000000000000000000000000000000000000000000000";
             dest = "/home/buttars/Games/xbox/Conker Live and Reloaded.iso";
+            xiso = true;
           }
           {
             # xemu's official blank/template Xbox HDD image, needed for xemu to
