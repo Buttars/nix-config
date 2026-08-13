@@ -9,6 +9,32 @@
     let
       cfg = config.aegix.runtime-fetch;
 
+      fetchScript = entry: ''
+        set -euo pipefail
+        dest=${lib.escapeShellArg entry.dest}
+        if [ -e "$dest" ]; then
+          exit 0
+        fi
+        mkdir -p "$(dirname "$dest")"
+        tmp="$(mktemp)"
+        trap 'rm -f "$tmp"' EXIT
+        # --connect-timeout/--speed-* bound a broken or unreachable URL to a
+        # couple minutes instead of hanging forever.
+        ${lib.getExe pkgs.curl} -fL --retry 3 --connect-timeout 15 --speed-time 60 --speed-limit 1000 -o "$tmp" ${lib.escapeShellArg entry.url}
+        echo "${entry.hash}  $tmp" | ${lib.getExe' pkgs.coreutils "sha256sum"} -c -
+        ${entry.postFetch}
+      '';
+
+      # No [Install] section and no Restart= here: this unit is only ever
+      # triggered by its matching timer (mkTimer below), never enabled or
+      # managed directly. Kept off default.target entirely — a unit
+      # WantedBy=default.target gets swept into "restarting
+      # sysinit-reactivation.target", which switch-to-configuration uses to
+      # reconcile everything default.target wants after ANY system switch,
+      # and that reconciliation waits for whatever's running under it to
+      # settle. timers.target (used below) isn't part of that graph, so a
+      # switch never has to wait on a download regardless of how long it
+      # takes or how it's progressing.
       mkService = entry: {
         name = "fetch-${entry.name}";
         value = {
@@ -16,33 +42,29 @@
           Service = {
             Type = "oneshot";
             RemainAfterExit = true;
-            Restart = "on-failure";
-            RestartSec = 30;
-            # Runs at runtime rather than as a fetchurl derivation so a
-            # large emulation asset (game image, BIOS, HDD template, ...)
-            # never blocks nixos-rebuild/home-manager switch — url/hash are
-            # plain strings, not store paths, so nothing here forces a
-            # build during activation.
-            ExecStart = pkgs.writeShellScript "fetch-${entry.name}" ''
-              set -euo pipefail
-              dest=${lib.escapeShellArg entry.dest}
-              if [ -e "$dest" ]; then
-                exit 0
-              fi
-              mkdir -p "$(dirname "$dest")"
-              tmp="$(mktemp)"
-              trap 'rm -f "$tmp"' EXIT
-              # --connect-timeout/--speed-* bound a broken or unreachable URL
-              # to a couple minutes instead of hanging forever — this service
-              # runs synchronously as part of default.target, so a stuck
-              # fetch stalls the whole user session's activation queue,
-              # which in turn can hang nixos-rebuild switch itself.
-              ${lib.getExe pkgs.curl} -fL --retry 3 --connect-timeout 15 --speed-time 60 --speed-limit 1000 -o "$tmp" ${lib.escapeShellArg entry.url}
-              echo "${entry.hash}  $tmp" | ${lib.getExe' pkgs.coreutils "sha256sum"} -c -
-              ${entry.postFetch}
-            '';
+            # Runs at runtime rather than as a fetchurl derivation so a large
+            # emulation asset (game image, BIOS, HDD template, ...) never
+            # blocks nixos-rebuild/home-manager switch — url/hash are plain
+            # strings, not store paths, so nothing here forces a build during
+            # activation.
+            ExecStart = pkgs.writeShellScript "fetch-${entry.name}" (fetchScript entry);
           };
-          Install.WantedBy = [ "default.target" ];
+        };
+      };
+
+      # Retries are timer-scheduled (OnUnitInactiveSec) rather than via
+      # systemd's Restart=/RestartSec= service-restart limiter, which is what
+      # made a stuck fetch (e.g. an unreachable placeholder URL) burn through
+      # its 5 retries in under a minute and hit start-limit-hit previously.
+      mkTimer = entry: {
+        name = "fetch-${entry.name}";
+        value = {
+          Unit.Description = "Schedule download of ${entry.name}";
+          Timer = {
+            OnStartupSec = "30s";
+            OnUnitInactiveSec = entry.retryInterval;
+          };
+          Install.WantedBy = [ "timers.target" ];
         };
       };
     in
@@ -55,7 +77,7 @@
               options = {
                 name = lib.mkOption {
                   type = lib.types.str;
-                  description = "Unit-name-safe slug (used as the systemd service name).";
+                  description = "Unit-name-safe slug (used as the systemd service/timer name).";
                 };
                 url = lib.mkOption {
                   type = lib.types.str;
@@ -84,6 +106,11 @@
                     for producing $dest (e.g. moving it into place, or extracting an archive).
                   '';
                 };
+                retryInterval = lib.mkOption {
+                  type = lib.types.str;
+                  default = "10m";
+                  description = "How long after a failed/incomplete attempt to retry (systemd time span, e.g. \"10m\").";
+                };
               };
 
               config.postFetch = lib.mkDefault (
@@ -103,5 +130,6 @@
       };
 
       config.systemd.user.services = builtins.listToAttrs (map mkService cfg.entries);
+      config.systemd.user.timers = builtins.listToAttrs (map mkTimer cfg.entries);
     };
 }
