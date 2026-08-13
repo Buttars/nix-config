@@ -12,7 +12,8 @@
       home.file.".kiro/agents/default.json".text = builtins.toJSON {
         name = "default";
         resources = [
-          "skill://~/.kiro/skills/**"
+          "skill://~/.kiro/skills/*/SKILL.md"
+          "skill://~/.kiro/skills/*/*/SKILL.md"
         ];
         tools = [ "*" ];
         toolsSettings.execute_bash = {
@@ -38,7 +39,8 @@
         name = "focused-fix";
         description = "Scoped to a single fix or small feature — minimal changes, no cleanup, no extras";
         resources = [
-          "skill://~/.kiro/skills/**"
+          "skill://~/.kiro/skills/*/SKILL.md"
+          "skill://~/.kiro/skills/*/*/SKILL.md"
         ];
         prompt = "file://../prompts/focused-mode.md";
         tools = [ "*" ];
