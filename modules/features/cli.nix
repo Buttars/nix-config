@@ -6,12 +6,12 @@
         home.packages =
           with pkgs;
           [
+            (intelli-shell.overrideAttrs { doCheck = false; })
             bat
+            dig
             eza
             fd
-            dig
             git-worktree-init
-            (intelli-shell.overrideAttrs { doCheck = false; })
             ripgrep
             tldr
             watch
