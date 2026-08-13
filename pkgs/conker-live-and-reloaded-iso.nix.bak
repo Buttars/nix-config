@@ -1,0 +1,15 @@
+{
+  lib,
+  fetchurl,
+}:
+fetchurl {
+  url = "https://archive.org/download/conker-live-and-reloaded_202108/Conker%20Live%20and%20Reloaded.iso";
+  hash = "sha256-kwUR2RgfoPy7b/38ch2WYbgg00c5S4e8kHUuFfdE+YA=";
+  name = "conker-live-and-reloaded.iso";
+
+  meta = {
+    description = "Conker: Live & Reloaded (Xbox)";
+    license = lib.licenses.unfree;
+    platforms = lib.platforms.all;
+  };
+}

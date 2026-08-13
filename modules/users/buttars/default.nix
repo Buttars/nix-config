@@ -92,9 +92,9 @@
           {
             name = "conker-live-and-reloaded";
             # Replace with a URL you have the legal right to download from.
-            url = "https://REPLACE-ME/conker-live-and-reloaded.iso";
+            url = "https://archive.org/download/conker-live-and-reloaded_202108/Conker%20Live%20and%20Reloaded.iso";
             # Replace with the real `sha256sum` output once you have a source.
-            hash = "0000000000000000000000000000000000000000000000000000000000000000";
+            hash = "sha256-kwUR2RgfoPy7b/38ch2WYbgg00c5S4e8kHUuFfdE+YA=";
             dest = "/home/buttars/Games/xbox/Conker Live and Reloaded.iso";
             xiso = true;
           }

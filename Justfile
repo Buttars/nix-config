@@ -25,3 +25,8 @@ switch +args='':
     else
         sudo nixos-rebuild switch --flake .#"$host" {{args}}
     fi
+
+boot +args='':
+    #!/usr/bin/env sh
+    host=$(hostname -s)
+    sudo nixos-rebuild boot --flake .#"$host" {{args}}
