@@ -85,31 +85,10 @@
               "x-systemd.automount"
               "x-systemd.mount-timeout=30"
             ];
-            # x-systemd.automount retries the mount on next access. Without it a
-            # single timeout -- truenas rebooting, say -- leaves the mount dead
-            # until someone notices and remounts it by hand.
-            serviceNfsOptions = [
-              "defaults"
-              "noatime"
-              "nfsvers=3"
-              "rsize=262144"
-              "wsize=262144"
-              "nconnect=4"
-              "async"
-              "hard"
-              "timeo=600"
-              "retrans=2"
-              "auto"
-              "_netdev"
-              "nofail"
-              "x-systemd.automount"
-              "x-systemd.mount-timeout=30"
-              "nolock"
-            ];
             serviceMount = name: {
               device = "${nfsProvider}:/mnt/veritas/services/${name}";
               fsType = "nfs";
-              options = serviceNfsOptions;
+              options = nfsOptions;
             };
           in
           {
