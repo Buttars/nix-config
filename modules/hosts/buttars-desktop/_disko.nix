@@ -23,6 +23,7 @@
               name = "crypted";
               passwordFile = "/tmp/secret.key";
               additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
+              settings.allowDiscards = true;
               content = {
                 type = "btrfs";
                 extraArgs = [ "-f" ];
