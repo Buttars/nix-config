@@ -102,8 +102,9 @@
 
     _.jj = {
       homeManager =
-        { ... }:
+        { pkgs, ... }:
         {
+          home.packages = [ pkgs.jj-hunk ];
           programs.fish.interactiveShellInit = "jj util completion fish | source";
           programs.zsh.initContent = "source <(jj util completion zsh)";
           programs.jujutsu = {
@@ -141,6 +142,14 @@
                   "-c"
                   "Gvdiffsplit!"
                   "$output"
+                ];
+              };
+              merge-tools.jj-hunk = {
+                program = "jj-hunk";
+                edit-args = [
+                  "select"
+                  "$left"
+                  "$right"
                 ];
               };
               aliases.diffnav = [
