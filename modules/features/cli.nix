@@ -14,6 +14,7 @@
             git-worktree-init
             ripgrep
             tldr
+            tree
             watch
             wikiman
           ]
