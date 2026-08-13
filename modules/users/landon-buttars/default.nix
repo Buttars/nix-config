@@ -36,6 +36,7 @@
         home.packages = [
           pkgs.obsidian
           pkgs.anki-bin
+          pkgs.parqeye
         ];
       };
   };

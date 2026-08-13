@@ -12,4 +12,5 @@
   git-worktree-init = pkgs.callPackage ./git-worktree-init.nix { };
   herdr-sessionizer = pkgs.callPackage ./herdr-sessionizer.nix { };
   jj-hunk = pkgs.callPackage ./jj-hunk.nix { };
+  parqeye = pkgs.callPackage ./parqeye.nix { };
 }
