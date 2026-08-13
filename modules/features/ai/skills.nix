@@ -37,7 +37,7 @@
         sources.matt = {
           path = inputs.mattpocock-skills;
           subdir = "skills";
-          filter.maxDepth = 1;
+          filter.maxDepth = 3;
         };
 
         sources.anexpn = {
