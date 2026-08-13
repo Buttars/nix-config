@@ -34,6 +34,7 @@
       <aegix/desktop-apps>
       <aegix/mpv>
       <aegix/truenas-mcp-server>
+      <aegix/game-isos>
     ];
 
     nixos =
@@ -86,6 +87,17 @@
           vivaldi
         ];
         home.sessionVariables.HERDR_AGENT = "claude";
+
+        aegix.game-isos.entries = [
+          {
+            name = "conker-live-and-reloaded";
+            # Replace with a URL you have the legal right to download from.
+            url = "https://REPLACE-ME/conker-live-and-reloaded.iso";
+            # Replace with the real `sha256sum` output once you have a source.
+            hash = "0000000000000000000000000000000000000000000000000000000000000000";
+            dest = "/home/buttars/Games/xbox/Conker Live and Reloaded.iso";
+          }
+        ];
 
         programs.ssh = {
           enable = true;
