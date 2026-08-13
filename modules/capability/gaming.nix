@@ -1,12 +1,17 @@
+{ __findFile, ... }:
 {
-  aegix.gaming.nixos =
-    { pkgs, ... }:
-    {
-      environment.systemPackages = with pkgs; [
-        mangohud
-      ];
-      programs.steam.enable = true;
-      programs.gamemode.enable = true;
-      programs.gamescope.enable = true;
-    };
+  aegix.gaming = {
+    includes = [ <aegix/emulation> ];
+
+    nixos =
+      { pkgs, ... }:
+      {
+        environment.systemPackages = with pkgs; [
+          mangohud
+        ];
+        programs.steam.enable = true;
+        programs.gamemode.enable = true;
+        programs.gamescope.enable = true;
+      };
+  };
 }
