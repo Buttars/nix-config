@@ -56,7 +56,11 @@
           "nvidia"
         ];
 
-        environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/by-path/pci-0000:01:00.0-card";
+        # Aquamarine splits AQ_DRM_DEVICES on ":", but by-path symlinks embed
+        # colons in the PCI address itself (pci-0000:01:00.0-card), so that
+        # form gets shredded into bogus paths and Hyprland aborts with "no
+        # gpus to use". card1 is the amdgpu device at PCI 01:00.0.
+        environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/card1";
 
         imports = [
           ./_disko.nix
