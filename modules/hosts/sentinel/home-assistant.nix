@@ -26,7 +26,6 @@
 
         services.home-assistant = {
           enable = true;
-          openFirewall = true;
           config = {
             default_config = { };
             frontend.extra_module_url = [ "/local/community/lovelace-mushroom/mushroom.js" ];
