@@ -188,8 +188,8 @@
             -- Resize windows
             hl.bind(mod .. " + comma",  hl.dsp.layout("colresize -0.05"))
             hl.bind(mod .. " + period", hl.dsp.layout("colresize +0.05"))
-            hl.bind(mod .. " + CTRL + J", hl.dsp.window.resize({ x = 0,    y = 100,  relative = true }))
-            hl.bind(mod .. " + CTRL + K", hl.dsp.window.resize({ x = 0,    y = -100, relative = true }))
+            hl.bind(mod .. " + SHIFT + J", hl.dsp.window.resize({ x = 0,    y = 100,  relative = true }))
+            hl.bind(mod .. " + SHIFT + K", hl.dsp.window.resize({ x = 0,    y = -100, relative = true }))
 
             -- Workspace cycling
             hl.bind(mod .. " + Tab",       hl.dsp.focus({ workspace = "m+1" }))
