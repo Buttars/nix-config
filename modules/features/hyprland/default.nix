@@ -186,8 +186,8 @@
             hl.bind(mod .. " + SHIFT + left",  hl.dsp.window.move({ monitor = "-1" }),   { release = true })
 
             -- Resize windows
-            hl.bind(mod .. " + CTRL + H", hl.dsp.layout("colresize -0.05"))
-            hl.bind(mod .. " + CTRL + L", hl.dsp.layout("colresize +0.05"))
+            hl.bind(mod .. " + comma",  hl.dsp.layout("colresize -0.05"))
+            hl.bind(mod .. " + period", hl.dsp.layout("colresize +0.05"))
             hl.bind(mod .. " + CTRL + J", hl.dsp.window.resize({ x = 0,    y = 100,  relative = true }))
             hl.bind(mod .. " + CTRL + K", hl.dsp.window.resize({ x = 0,    y = -100, relative = true }))
 
