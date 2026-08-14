@@ -149,7 +149,11 @@ writeShellScriptBin "herdr-sessionizer" ''
           panes:
             - command: ""
   YAML
-          herdr plugin action invoke herdr-spreader.apply 2>/dev/null
+          if ! herdr plugin action invoke herdr-spreader.apply 2>/dev/null; then
+            if ! herdr workspace create --cwd "$dir" --label "$label" --focus 2>/dev/null; then
+              cd "$dir"
+            fi
+          fi
         else
           if ! herdr workspace create --cwd "$dir" --label "$label" --focus 2>/dev/null; then
             cd "$dir"
