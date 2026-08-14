@@ -38,6 +38,7 @@
           pkgs.anki-bin
           pkgs.parqeye
         ];
+        home.sessionVariables.HERDR_AGENT = "kiro-cli chat";
       };
   };
   den.hosts.aarch64-darwin.DRHCDGTHGJ.users."landon.buttars" = {

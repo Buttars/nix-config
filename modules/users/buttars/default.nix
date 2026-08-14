@@ -66,6 +66,7 @@
           obsidian
           discord
         ];
+        home.sessionVariables.HERDR_AGENT = "claude";
 
         programs.ssh = {
           enable = true;

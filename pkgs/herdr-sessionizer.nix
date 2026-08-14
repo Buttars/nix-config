@@ -130,6 +130,7 @@ writeShellScriptBin "herdr-sessionizer" ''
 
         # For ~/Projects directories, use herdr-spreader to apply a project layout
         if [[ "$dir" == "$HOME/Projects/"* ]]; then
+          agent_cmd="''${HERDR_AGENT:-claude}"
           spreader_config="$HOME/.config/herdr/plugins/config/herdr-spreader/config.yaml"
           mkdir -p "$(dirname "$spreader_config")"
           cat > "$spreader_config" <<YAML
@@ -138,9 +139,9 @@ writeShellScriptBin "herdr-sessionizer" ''
       root: $dir
       focus: true
       tabs:
-        - label: kiro
+        - label: agent
           panes:
-            - command: kiro-cli chat
+            - command: $agent_cmd
               focus: true
         - label: editor
           panes:
