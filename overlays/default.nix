@@ -12,11 +12,11 @@
     # back in so those builds succeed.
     fish = prev.fish.overrideAttrs (old: {
       postInstall = (old.postInstall or "") + ''
-        mkdir -p $out/share/fish/tools
-        cat > $out/share/fish/tools/create_manpage_completions.py <<'PYEOF'
-import sys
-# stub: fish 4.x removed this script; emit no completions
-PYEOF
+                mkdir -p $out/share/fish/tools
+                cat > $out/share/fish/tools/create_manpage_completions.py <<'PYEOF'
+        import sys
+        # stub: fish 4.x removed this script; emit no completions
+        PYEOF
       '';
     });
 

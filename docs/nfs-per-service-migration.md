@@ -239,9 +239,10 @@ Suggested schedule:
 
 Hit on the `immich` dataset on 2026-08-04. Same class of dataset as everything above, so any of them could show this symptom in the future.
 
-**Symptom**: a service throws `EACCES`/`Operation not permitted` writing *newly created* files or directories under its `/var/lib/<service>` NFS mount, even though `ls -la` shows the directory owned by the correct service user with normal-looking permissions. A one-off `chmod` fixes existing files, but new files keep coming back broken — that's the tell that this is ACL inheritance, not a one-time permission mistake.
+**Symptom**: a service throws `EACCES`/`Operation not permitted` writing _newly created_ files or directories under its `/var/lib/<service>` NFS mount, even though `ls -la` shows the directory owned by the correct service user with normal-looking permissions. A one-off `chmod` fixes existing files, but new files keep coming back broken — that's the tell that this is ACL inheritance, not a one-time permission mistake.
 
 **Root cause**: the ZFS dataset's NFSv4 ACL has an inheritable ACE that doesn't grant the owner write on new children. Two forms seen:
+
 - `owner@` has no inherit flags (`-------` instead of `fd-----`/`fdi----`), so new objects never inherit owner write.
 - An inheritable `everyone@` ACE grants only `r-x` and is the only thing that propagates, so every new object is born read-only.
 
@@ -268,6 +269,7 @@ rm -rf /mnt/veritas/services/<name>/.permtest
 Don't hand-edit NFSv4 ACEs with `setfacl` recursively — one mistake recurses over the whole tree. Use TrueNAS's UI instead:
 
 **Storage → Pools → veritas → services/\<name\> (dataset) → Edit Permissions**
+
 - Give `owner@` (and `group@`) full permissions with `fd` inherit flags.
 - Remove/fix any inheritable `everyone@` ACE that grants only read — a zero-permission inheritable `everyone@` entry is harmless (grants nothing, doesn't restrict `owner@`).
 - Check **"Apply permissions recursively"** and run it.
@@ -275,12 +277,12 @@ Don't hand-edit NFSv4 ACEs with `setfacl` recursively — one mistake recurses o
 
 ### Audit (2026-08-04)
 
-| Dataset           | `owner@` inherit flags                    | Status                                             |
-| ------------------ | ------------------------------------------ | --------------------------------------------------- |
-| `immich`            | none — broken                              | Fixed via Edit Permissions + recursive apply         |
-| `nextcloud`         | n/a — `everyone@` grants full rwx inherit  | Fine (loose, not blocking)                           |
-| `home-assistant`    | `fdi` inherit-only, full rwx               | Fine                                                 |
-| `dawarich`          | `fd`, full rwx                             | Fine                                                 |
+| Dataset          | `owner@` inherit flags                    | Status                                       |
+| ---------------- | ----------------------------------------- | -------------------------------------------- |
+| `immich`         | none — broken                             | Fixed via Edit Permissions + recursive apply |
+| `nextcloud`      | n/a — `everyone@` grants full rwx inherit | Fine (loose, not blocking)                   |
+| `home-assistant` | `fdi` inherit-only, full rwx              | Fine                                         |
+| `dawarich`       | `fd`, full rwx                            | Fine                                         |
 
 No action needed on nextcloud/home-assistant/dawarich unless one starts showing the same symptom — then follow Diagnose/Fix above.
 
@@ -303,7 +305,7 @@ live system still has them at the old ids (`hass` 3020:1009, `nextcloud` 3030:10
 refuses to auto-change UID/GID of an existing account (safety guard) — hence the warning
 instead of a silent, dangerous rewrite.
 
-Confirmed the data hasn't moved either — TrueNAS still owns both datasets at the *old*
+Confirmed the data hasn't moved either — TrueNAS still owns both datasets at the _old_
 numeric ids:
 
 - `/mnt/veritas/services/home-assistant` → 3020:1009 (needs → 286:286)
