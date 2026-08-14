@@ -92,7 +92,6 @@
           [ui]
           sidebar_collapsed_mode = "hidden"
           hide_tab_bar_when_single_tab = true
-          theme = "terminal"
 
           [[keys.command]]
           key = "prefix+a"
