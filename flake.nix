@@ -53,6 +53,7 @@
       url = "github:nlewo/nix2container";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     paneru = {
       url = "github:karinushka/paneru";

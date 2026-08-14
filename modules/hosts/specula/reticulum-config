@@ -1,0 +1,26 @@
+[reticulum]
+  enable_transport = True
+  share_instance = True
+  shared_instance_port = 37428
+  instance_control_port = 37429
+
+[logging]
+  loglevel = 4
+
+[interfaces]
+  [[Default Interface]]
+    type = AutoInterface
+    enabled = true
+
+  # RNode over USB (LoRa). Uncomment and fill in your region's frequency
+  # once you know the exact board -- use `rnodeconf --autoinstall` to flash
+  # firmware and `rnodeconf --info /dev/ttyUSB0` to probe it first.
+  # [[RNode LoRa Interface]]
+  #   type = RNodeInterface
+  #   enabled = true
+  #   port = /dev/ttyUSB0
+  #   frequency = 915000000
+  #   bandwidth = 125000
+  #   txpower = 17
+  #   spreadingfactor = 8
+  #   codingrate = 5

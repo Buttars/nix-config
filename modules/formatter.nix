@@ -61,6 +61,8 @@
           ".devenv/*"
           "*/.gitignore"
           "modules/sops/secrets.yaml"
+          "modules/hosts/*/host_key/ssh_host_ed25519_key"
+          "modules/hosts/specula/reticulum-config"
           "Justfile"
           "*.patch"
         ];

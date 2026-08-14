@@ -20,6 +20,7 @@ keys:
       - &torrens age1q6m26q085sp2zyaz25arjxzhjc49s8fuhqp2nmwct2u4eqtw0srswcyjy7
       - &aegis age167fy3y70ztkvnlxtj75n4j9fwkyv8sq0gfu6rk6tk269t0dkdf0qlcd0jq
       - &theatrum age13y37yffmzg80shu88v32yv47h4mctjl86z860zn7hlq5mhx3t9vsyxffth
+      - &specula age1wvzkw04pxdwuptvzmfdz8rtl8gfxnctgsxg5vszs5pjrkn9n3qvs596mqv
 
 creation_rules:
   - path_regex: modules/sops/[^/]+\.(yaml|json|env|ini|sops)$
@@ -40,3 +41,4 @@ creation_rules:
           - *torrens
           - *aegis
           - *theatrum
+          - *specula
