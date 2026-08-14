@@ -145,21 +145,23 @@
           end
         '';
 
-        # Build a combined CA bundle: nix public roots + any corporate roots
-        # (Zscaler, etc.) exported from the macOS System keychain. This runs
-        # before plugin install so CARGO_HTTP_CAINFO points at a valid bundle.
-        home.activation.herdr-cert-bundle = lib.mkIf pkgs.stdenv.isDarwin (
-          lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            bundle="${config.home.homeDirectory}/.config/herdr/ca-bundle.crt"
-            mkdir -p "$(dirname "$bundle")"
-            cat "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" > "$bundle"
+        # Build a combined CA bundle: nix public roots + (on Darwin) any
+        # corporate roots exported from the macOS System keychain. Plugin
+        # install (below) points CARGO_HTTP_CAINFO/NIX_SSL_CERT_FILE at this
+        # file on every platform, so it must exist on Linux too, not just
+        # Darwin, or cargo/git TLS verification fails outright.
+        home.activation.herdr-cert-bundle = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          bundle="${config.home.homeDirectory}/.config/herdr/ca-bundle.crt"
+          mkdir -p "$(dirname "$bundle")"
+          cat "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" > "$bundle"
+          ${lib.optionalString pkgs.stdenv.isDarwin ''
             # Append corporate TLS-inspection roots from the System keychain.
             for cn in "Zscaler Root CA"; do
               /usr/bin/security find-certificate -a -c "$cn" -p \
                 /Library/Keychains/System.keychain >> "$bundle" 2>/dev/null || true
             done
-          ''
-        );
+          ''}
+        '';
 
         home.activation.herdr-plugins = lib.hm.dag.entryAfter [ "herdr-cert-bundle" ] ''
           # Note: nix gcc/clang is intentionally NOT on PATH — cargo needs the
