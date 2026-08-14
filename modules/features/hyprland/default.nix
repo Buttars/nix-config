@@ -102,7 +102,7 @@
                     gaps_in     = 5,
                     gaps_out    = 20,
                     border_size = 2,
-                    layout      = "master",
+                    layout      = "scrolling",
                 },
                 misc = {
                     disable_hyprland_logo     = true,
@@ -167,17 +167,17 @@
             hl.bind(mod .. " + SHIFT + space",   hl.dsp.window.float({ action = "toggle" }))
             hl.bind(mod .. " + J",               hl.dsp.window.cycle_next({}))
             hl.bind(mod .. " + K",               hl.dsp.window.cycle_next({ next = false }))
-            hl.bind(mod .. " + SHIFT + J",       hl.dsp.layout("swapnext"))
-            hl.bind(mod .. " + SHIFT + K",       hl.dsp.layout("swapprev"))
-            hl.bind(mod .. " + space",           hl.dsp.layout("swapwithmaster master"))
-            hl.bind(mod .. " + A",               hl.dsp.layout("addmaster"))
-            hl.bind(mod .. " + SHIFT + A",       hl.dsp.layout("removemaster"))
-            hl.bind(mod .. " + Z",               hl.dsp.layout("setmasterfactor 0.05"))
-            hl.bind(mod .. " + SHIFT + Z",       hl.dsp.layout("setmasterfactor -0.05"))
-            hl.bind(mod .. " + O",               hl.dsp.layout("togglesplit"))
-            hl.bind(mod .. " + T",               hl.dsp.layout("orientationleft"))
-            hl.bind(mod .. " + B",               hl.dsp.layout("orientationbottom"))
-            hl.bind(mod .. " + C",               hl.dsp.layout("orientationcenter"))
+            hl.bind(mod .. " + SHIFT + J",       hl.dsp.layout("swapcol r"))
+            hl.bind(mod .. " + SHIFT + K",       hl.dsp.layout("swapcol l"))
+            hl.bind(mod .. " + space",           hl.dsp.layout("promote"))
+            hl.bind(mod .. " + A",               hl.dsp.layout("consume"))
+            hl.bind(mod .. " + SHIFT + A",       hl.dsp.layout("expel"))
+            hl.bind(mod .. " + Z",               hl.dsp.layout("colresize +0.05"))
+            hl.bind(mod .. " + SHIFT + Z",       hl.dsp.layout("colresize -0.05"))
+            hl.bind(mod .. " + O",               hl.dsp.layout("fit expand"))
+            hl.bind(mod .. " + T",               hl.dsp.layout("fit toend"))
+            hl.bind(mod .. " + B",               hl.dsp.layout("fit tobeg"))
+            hl.bind(mod .. " + C",               hl.dsp.layout("fit active"))
 
             -- Monitor navigation
             hl.bind(mod .. " + left",          hl.dsp.focus({ monitor = "-1" }),         { release = true })
