@@ -78,7 +78,6 @@
             hl.on("hyprland.start", function()
                 hl.exec_cmd("hyprpaper")
                 hl.exec_cmd("swaync")
-                hl.exec_cmd("waybar")
                 hl.exec_cmd("xremap ~/.config/xremap/xremap.config")
                 hl.exec_cmd("sh ~/.config/hypr/portal-launch.sh")
                 hl.exec_cmd("sh ~/.config/hypr/initalize-workspaces.sh")
@@ -260,6 +259,19 @@
                 hl.window_rule({ match = { class = cls }, float = true })
             end
           '';
+        };
+
+        systemd.user.services.waybar = lib.mkIf pkgs.stdenv.isLinux {
+          Unit = {
+            Description = "Waybar";
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = "${pkgs.waybar}/bin/waybar";
+            Restart = "on-failure";
+            RestartSec = 2;
+          };
+          Install.WantedBy = [ "default.target" ];
         };
 
         home.file = {
