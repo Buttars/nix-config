@@ -163,21 +163,30 @@
         '';
 
         home.activation.herdr-plugins = lib.hm.dag.entryAfter [ "herdr-cert-bundle" ] ''
+          # Run inside a subshell so the PATH/cert env changes below stay local
+          # to plugin installation. All home.activation blocks share one shell
+          # process; prepending /usr/bin ahead of $PATH here (needed so cargo
+          # finds the system Xcode clang on Darwin) otherwise leaks into the
+          # later setupLaunchAgents step, shadowing GNU coreutils (readlink -m)
+          # and silently breaking the sops-nix LaunchAgent update.
+          #
           # On Darwin, nix gcc/clang is intentionally left off PATH — cargo
           # needs the system Xcode clang (with the macOS SDK and -liconv) for
           # linking. On Linux there is no such system fallback, so nix's gcc
           # must be on PATH or cargo/cgo builds fail with "linker `cc` not
           # found".
-          export PATH="${pkgs.herdr}/bin:${pkgs.cargo}/bin:${pkgs.rustc}/bin:${pkgs.git}/bin:${pkgs.curl}/bin:${pkgs.gnutar}/bin:${pkgs.gzip}/bin:${pkgs.go}/bin:${pkgs.bun}/bin:${pkgs.gawk}/bin:${lib.optionalString pkgs.stdenv.isLinux "${pkgs.gcc}/bin:"}/usr/bin:/bin:$PATH"
-          export CARGO_HTTP_CAINFO="${config.home.homeDirectory}/.config/herdr/ca-bundle.crt"
-          export NIX_SSL_CERT_FILE="$CARGO_HTTP_CAINFO"
-          for plugin in ${lib.concatStringsSep " " plugins}; do
-            # Suppress the install preview/output unless the command fails.
-            if ! out=$(herdr plugin install "$plugin" --yes 2>&1); then
-              echo "herdr: failed to install plugin '$plugin':" >&2
-              echo "$out" >&2
-            fi
-          done
+          (
+            export PATH="${pkgs.herdr}/bin:${pkgs.cargo}/bin:${pkgs.rustc}/bin:${pkgs.git}/bin:${pkgs.curl}/bin:${pkgs.gnutar}/bin:${pkgs.gzip}/bin:${pkgs.go}/bin:${pkgs.bun}/bin:${pkgs.gawk}/bin:${lib.optionalString pkgs.stdenv.isLinux "${pkgs.gcc}/bin:"}/usr/bin:/bin:$PATH"
+            export CARGO_HTTP_CAINFO="${config.home.homeDirectory}/.config/herdr/ca-bundle.crt"
+            export NIX_SSL_CERT_FILE="$CARGO_HTTP_CAINFO"
+            for plugin in ${lib.concatStringsSep " " plugins}; do
+              # Suppress the install preview/output unless the command fails.
+              if ! out=$(herdr plugin install "$plugin" --yes 2>&1); then
+                echo "herdr: failed to install plugin '$plugin':" >&2
+                echo "$out" >&2
+              fi
+            done
+          )
         '';
       };
   };
