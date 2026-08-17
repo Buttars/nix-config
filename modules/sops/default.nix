@@ -32,6 +32,16 @@
         };
         home.sessionVariables.SOPS_AGE_KEY_FILE = keyFile;
         home.packages = [ pkgs.sops ];
+
+        # Work around Mic92/sops-nix#910: on Darwin the module's explicit
+        # `sops-nix` activation runs `launchctl bootout && bootstrap`, which
+        # fails with "Bootstrap failed: 5: Input/output error" and leaves the
+        # agent unloaded after a switch. home-manager's setupLaunchAgents
+        # already (re)loads the agent whenever the plist changes, so neutralize
+        # the redundant, flaky step on Darwin only (leave it intact on Linux).
+        home.activation.sops-nix = lib.mkIf pkgs.stdenv.isDarwin (
+          lib.mkForce (lib.hm.dag.entryAfter [ "linkGeneration" ] "")
+        );
       };
     nixos = {
       imports = [ inputs.sops-nix.nixosModules.sops ];
