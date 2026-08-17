@@ -164,8 +164,17 @@
             };
             atlassian = {
               command = "${mcp-shell-atlassian}";
+              # Pin atlassian-python-api <5: mcp-atlassian 0.23.0 declares an
+              # unbounded dep, and atlassian-python-api 5.0.0 (2026-08-15)
+              # rewrote Confluence into a Cloud dispatcher missing legacy
+              # methods, breaking Confluence Cloud tools ("'Cloud' object has no
+              # attribute 'get_page_by_id'") and confluence_search.
+              # See sooperset/mcp-atlassian#1585. Drop once mcp-atlassian >=0.23.1
+              # (which caps the dep, #1589) is released to PyPI.
               args = [
                 "uvx"
+                "--with"
+                "atlassian-python-api==4.0.7"
                 "mcp-atlassian"
               ];
             };
