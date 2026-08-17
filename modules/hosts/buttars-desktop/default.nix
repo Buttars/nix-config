@@ -38,6 +38,7 @@
 
         boot.initrd.kernelModules = [ "amdgpu" ];
         boot.kernelModules = [ "kvm-intel" ];
+        boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
         services.xserver.videoDrivers = [
           "amdgpu"
