@@ -15,7 +15,7 @@ let
     };
     x86_64-linux = {
       url = "https://github.com/laulauland/jj-hunk/releases/download/v${version}/jj-hunk-${version}.x86_64_linux.bottle.tar.gz";
-      hash = "sha256-TtIiLGMZ5MsT098IncSZkSK88bLMMUhU9nCboW6OzWg=";
+      hash = "sha256-CRBxyfCjRtMH1Oem25zh+MLrPbWqvdFm5OxZQHT5zqI=";
     };
   };
 
@@ -26,6 +26,7 @@ stdenv.mkDerivation {
   inherit version src;
 
   nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
+  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [ stdenv.cc.cc.lib ];
 
   sourceRoot = ".";
 
