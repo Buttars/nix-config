@@ -99,7 +99,15 @@
         environment.systemPackages = [ pkgs.nomadnet ];
       };
 
-    homeManager = { };
+    homeManager =
+      { lib, ... }:
+      {
+        # <aegix/devenv> (global default) enables direnv, which drags fish
+        # into the closure for its test suite -- fish's tests are flaky
+        # under QEMU emulation (ulimit/noshebang behave differently) and
+        # specula has no interactive dev-shell use for direnv anyway.
+        programs.direnv.enable = lib.mkForce false;
+      };
   };
 
   flake-file.inputs.nixos-hardware.url = "github:NixOS/nixos-hardware";
