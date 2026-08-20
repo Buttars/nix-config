@@ -209,7 +209,7 @@
             hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 10%-"),                       { locked = true })
 
             -- Notification control
-            hl.bind(mod .. " + SHIFT + C", hl.dsp.exec_cmd("makoctl dismiss -a"))
+            hl.bind(mod .. " + CTRL + C", hl.dsp.exec_cmd("swaync-client --close-all"))
 
             -- Debug/dev tools
             hl.bind(mod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty -e journalctl -f"))
