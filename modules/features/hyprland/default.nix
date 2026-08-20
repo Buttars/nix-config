@@ -177,7 +177,8 @@
             hl.bind(mod .. " + O",               hl.dsp.layout("fit expand"))
             hl.bind(mod .. " + T",               hl.dsp.layout("fit toend"))
             hl.bind(mod .. " + B",               hl.dsp.layout("fit tobeg"))
-            hl.bind(mod .. " + C",               hl.dsp.layout("fit active"))
+            hl.bind(mod .. " + C",               hl.dsp.window.center())
+            hl.bind(mod .. " + SHIFT + C",       hl.dsp.layout("fit active"))
 
             -- Monitor navigation
             hl.bind(mod .. " + left",          hl.dsp.focus({ monitor = "-1" }),         { release = true })
