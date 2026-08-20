@@ -46,6 +46,7 @@
         users.users.buttars.hashedPasswordFile = config.sops.secrets.buttars-password.path;
         users.users.buttars.extraGroups = [
           "wheel"
+          "dialout"
         ]
         ++ lib.attrNames (
           lib.filterAttrs (_: v: v) {
