@@ -80,7 +80,6 @@
                 hl.exec_cmd("swaync")
                 hl.exec_cmd("xremap ~/.config/xremap/xremap.config")
                 hl.exec_cmd("sh ~/.config/hypr/portal-launch.sh")
-                hl.exec_cmd("sh ~/.config/hypr/initalize-workspaces.sh")
                 setup_cursor()
             end)
 
@@ -216,10 +215,54 @@
             hl.bind(mod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty -e journalctl -f"))
             hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("kitty -e nvim"))
 
-            -- Workspace bindings (1-9)
-            for i = 1, 9 do
-                hl.bind(mod .. " + " .. i,         hl.dsp.focus({ workspace = i }))
-                hl.bind(mod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+            -- Workspace bindings: workspace <monitor><slot>, where <monitor>
+            -- is the 1-based index of the monitor in left-to-right (x
+            -- position) order and <slot> is 0-9, e.g. 11 = monitor 1
+            -- workspace 1, 32 = monitor 3 workspace 2.
+            local function monitorsLeftToRight()
+                local mons = hl.get_monitors()
+                table.sort(mons, function(a, b) return a.x < b.x end)
+                return mons
+            end
+
+            local function monitorSlot(mon)
+                if mon == nil then
+                    return 1
+                end
+                for i, m in ipairs(monitorsLeftToRight()) do
+                    if m.id == mon.id then
+                        return i
+                    end
+                end
+                return 1
+            end
+
+            local function pinWorkspacesToMonitors()
+                for _, mon in ipairs(monitorsLeftToRight()) do
+                    local slot = monitorSlot(mon)
+                    for ws = 0, 9 do
+                        hl.workspace_rule({
+                            workspace  = tostring(slot * 10 + ws),
+                            monitor    = mon.name,
+                            default    = (ws == 1),
+                            persistent = (ws == 1),
+                        })
+                    end
+                end
+            end
+
+            pinWorkspacesToMonitors()
+            hl.on("monitor.layout_changed", pinWorkspacesToMonitors)
+
+            for d = 0, 9 do
+                hl.bind(mod .. " + " .. d, function()
+                    local slot = monitorSlot(hl.get_active_monitor())
+                    hl.dispatch(hl.dsp.focus({ workspace = slot * 10 + d }))
+                end)
+                hl.bind(mod .. " + SHIFT + " .. d, function()
+                    local slot = monitorSlot(hl.get_active_monitor())
+                    hl.dispatch(hl.dsp.window.move({ workspace = slot * 10 + d }))
+                end)
             end
 
             -- Mouse binds
@@ -283,11 +326,6 @@
 
           ".config/hypr/portal-launch.sh" = {
             source = ./portal-launch.sh;
-            executable = true;
-          };
-
-          ".config/hypr/initalize-workspaces.sh" = {
-            source = ./inititalize-workspaces.sh;
             executable = true;
           };
 
