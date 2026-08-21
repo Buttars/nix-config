@@ -22,6 +22,7 @@
       <aegix/browser/brave>
       <aegix/sops>
       <aegix/printing3d>
+      <aegix/reticulum>
     ];
 
     nixos =
