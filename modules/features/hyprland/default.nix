@@ -161,7 +161,11 @@
             hl.bind(mod .. " + SHIFT + BACKSPACE", hl.dsp.exit())
 
             -- Layout / Window control
-            hl.bind(mod .. " + F",               hl.dsp.window.fullscreen({ mode = "fullscreen" }))
+            -- internal = 2 (fullscreen) makes Hyprland fill the monitor as
+            -- usual; client = 0 (none) keeps the app from being told it's
+            -- fullscreen, so apps like Chrome don't switch into their own
+            -- fullscreen UI (hiding tabs/bookmarks bar).
+            hl.bind(mod .. " + F",               hl.dsp.window.fullscreen_state({ internal = 2, client = 0, action = "toggle" }))
             hl.bind(mod .. " + SHIFT + F",       hl.dsp.window.fullscreen({ mode = "maximized" }))
             hl.bind(mod .. " + SHIFT + space",   hl.dsp.window.float({ action = "toggle" }))
             hl.bind(mod .. " + J",               hl.dsp.layout("focus d"))
