@@ -238,7 +238,8 @@
             end
 
             local function pinWorkspacesToMonitors()
-                for _, mon in ipairs(monitorsLeftToRight()) do
+                local mons = monitorsLeftToRight()
+                for _, mon in ipairs(mons) do
                     local slot = monitorSlot(mon)
                     for ws = 0, 9 do
                         hl.workspace_rule({
@@ -248,6 +249,15 @@
                             persistent = (ws == 1),
                         })
                     end
+                    -- workspace_rule's `default` only takes effect when a
+                    -- monitor connects; force the switch here too so a plain
+                    -- config reload (e.g. after a rebuild) also lands each
+                    -- monitor on its <slot>1 workspace.
+                    hl.dispatch(hl.dsp.focus({ monitor = mon.name }))
+                    hl.dispatch(hl.dsp.focus({ workspace = slot * 10 + 1 }))
+                end
+                if mons[1] ~= nil then
+                    hl.dispatch(hl.dsp.focus({ monitor = mons[1].name }))
                 end
             end
 
