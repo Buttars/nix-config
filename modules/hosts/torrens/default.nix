@@ -171,6 +171,23 @@
             after = [ "srv.mount" ];
             wants = [ "srv.mount" ];
           };
+          qbittorrent-port-check = {
+            after = [ "podman-qbittorrent.service" ];
+            serviceConfig.Type = "oneshot";
+            script = ''
+              set -euo pipefail
+              status=$(${pkgs.curl}/bin/curl -sf http://127.0.0.1:8080/api/v2/transfer/info \
+                | ${pkgs.jq}/bin/jq -r .connection_status || echo "unknown")
+              echo "qbittorrent connection_status: $status"
+
+              if [ "$status" = "firewalled" ]; then
+                echo "qbittorrent is firewalled; restarting gluetun stack to renegotiate port forward"
+                ${pkgs.systemd}/bin/systemctl restart podman-gluetun.service
+                sleep 10
+                ${pkgs.systemd}/bin/systemctl restart podman-qbittorrent.service podman-byparr.service
+              fi
+            '';
+          };
           pgs-to-srt = {
             after = [ "srv.mount" ];
             wants = [ "srv.mount" ];
@@ -222,6 +239,14 @@
           timerConfig = {
             OnCalendar = "weekly";
             Persistent = true;
+          };
+        };
+
+        systemd.timers.qbittorrent-port-check = {
+          wantedBy = [ "timers.target" ];
+          timerConfig = {
+            OnBootSec = "5m";
+            OnUnitActiveSec = "15m";
           };
         };
 
