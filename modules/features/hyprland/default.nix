@@ -241,8 +241,15 @@
                 return 1
             end
 
-            local function pinWorkspacesToMonitors()
-                local mons = monitorsLeftToRight()
+            local function monitorSignature(mons)
+                local names = {}
+                for _, mon in ipairs(mons) do
+                    table.insert(names, mon.name)
+                end
+                return table.concat(names, ",")
+            end
+
+            local function applyWorkspaceRules(mons)
                 for _, mon in ipairs(mons) do
                     local slot = monitorSlot(mon)
                     for ws = 0, 9 do
@@ -253,16 +260,32 @@
                             persistent = (ws == 1),
                         })
                     end
-                    -- workspace_rule's `default` only takes effect when a
-                    -- monitor connects; force the switch here too so a plain
-                    -- config reload (e.g. after a rebuild) also lands each
-                    -- monitor on its <slot>1 workspace.
+                end
+            end
+
+            -- workspace_rule's `default` only takes effect when a monitor connects.
+            local function focusDefaultWorkspaces(mons)
+                for _, mon in ipairs(mons) do
                     hl.dispatch(hl.dsp.focus({ monitor = mon.name }))
-                    hl.dispatch(hl.dsp.focus({ workspace = slot * 10 + 1 }))
+                    hl.dispatch(hl.dsp.focus({ workspace = monitorSlot(mon) * 10 + 1 }))
                 end
                 if mons[1] ~= nil then
                     hl.dispatch(hl.dsp.focus({ monitor = mons[1].name }))
                 end
+            end
+
+            -- monitor.layout_changed fires continuously, not only on hotplug.
+            local lastMonitors = nil
+
+            local function pinWorkspacesToMonitors()
+                local mons = monitorsLeftToRight()
+                local signature = monitorSignature(mons)
+                if signature == lastMonitors then
+                    return
+                end
+                lastMonitors = signature
+                applyWorkspaceRules(mons)
+                focusDefaultWorkspaces(mons)
             end
 
             pinWorkspacesToMonitors()
