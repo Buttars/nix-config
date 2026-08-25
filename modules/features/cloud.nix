@@ -2,6 +2,12 @@
   aegix.cloud.homeManager =
     { pkgs, ... }:
     {
+      programs.granted = {
+        enable = true;
+        enableZshIntegration = true;
+        enableFishIntegration = true;
+      };
+
       home.packages = with pkgs; [
         # AWS
         awscli2
