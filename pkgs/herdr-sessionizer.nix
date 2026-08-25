@@ -13,20 +13,21 @@
 
 # Unified workspace picker for herdr.
 #
-# Shows existing herdr workspaces (with live agent status) and zoxide
-# directories in one fzf list. Selecting an existing workspace focuses it;
-# selecting a directory creates a workspace labeled by the directory basename.
-# Outside herdr it attaches afterward.
+# Shows a pinned scratchpad, existing herdr workspaces (with live agent
+# status) and zoxide directories in one fzf list. Selecting an existing
+# workspace focuses it; selecting a directory creates a workspace labeled by
+# the directory basename; selecting the scratchpad focuses (or creates) a
+# "scratch" workspace rooted at $HOME (~). Outside herdr it attaches afterward.
 #
 # Selections are keyed on an unambiguous hidden field (workspace id or path),
 # so duplicate workspace labels are handled correctly. Each fzf line is:
 #   <KEY>\t<DISPLAY>
-# where KEY is "ws:<workspace_id>" or "dir:<path>". fzf shows only the display
-# column (--with-nth 2) and we parse the key on selection.
+# where KEY is "scratch:", "ws:<workspace_id>" or "dir:<path>". fzf shows only
+# the display column (--with-nth 2) and we parse the key on selection.
 #
 # fzf bindings:
-#   enter   open (focus workspace / create from dir)
-#   ctrl-x  close the selected workspace
+#   enter   open (focus workspace / create from dir / open scratchpad)
+#   ctrl-x  close the selected workspace (or the scratchpad workspace)
 #   ctrl-f  reload with a filesystem search (fd) instead of zoxide frecency
 #   ctrl-z  reload back to the zoxide list
 writeShellScriptBin "herdr-sessionizer" ''
@@ -35,10 +36,18 @@ writeShellScriptBin "herdr-sessionizer" ''
 
     self="$0"
 
+    # Emit the pinned scratchpad row. Always available, rooted at $HOME (~).
+    if [ "''${1:-}" = "--list-scratch" ]; then
+      printf 'scratch:\tscratchpad  ·  ~\n'
+      exit 0
+    fi
+
     # Emit workspace rows: "ws:<id>\t<label>  ·  <status> <panes>p"
+    # The scratchpad has its own pinned row above, so hide the "scratch"
+    # workspace here to avoid a duplicate entry.
     if [ "''${1:-}" = "--list-workspaces" ]; then
       herdr workspace list 2>/dev/null \
-        | jq -r '.result.workspaces[]
+        | jq -r '.result.workspaces[] | select(.label != "scratch")
             | "ws:\(.workspace_id)\t\(.label)  ·  \(.agent_status) \(.pane_count)p"'
       exit 0
     fi
@@ -69,6 +78,9 @@ writeShellScriptBin "herdr-sessionizer" ''
     if [ "''${1:-}" = "--preview" ]; then
       key=''${2%%$'\t'*}
       case "$key" in
+        scratch:)
+          eza -la --icons --color=always --group-directories-first "$HOME" 2>/dev/null || ls -la "$HOME"
+          ;;
         ws:*)
           id=''${key#ws:}
           herdr workspace list 2>/dev/null \
@@ -93,11 +105,16 @@ writeShellScriptBin "herdr-sessionizer" ''
       exit 0
     fi
 
-    # Close: takes the raw line; only acts on workspace rows.
+    # Close: takes the raw line; acts on workspace rows and the scratchpad.
     if [ "''${1:-}" = "--close" ]; then
       key=''${2%%$'\t'*}
       case "$key" in
         ws:*) herdr workspace close "''${key#ws:}" >/dev/null 2>&1 || true ;;
+        scratch:)
+          sid=$(herdr workspace list 2>/dev/null \
+            | jq -r '.result.workspaces[] | select(.label == "scratch") | .workspace_id' | head -1) || true
+          [ -n "$sid" ] && herdr workspace close "$sid" >/dev/null 2>&1 || true
+          ;;
       esac
       exit 0
     fi
@@ -105,6 +122,7 @@ writeShellScriptBin "herdr-sessionizer" ''
     # --- main picker ---
     pick=$(
       {
+        "$self" --list-scratch
         "$self" --list-workspaces
         "$self" --list-zoxide
       } | fzf --height 40% --reverse --border-label ' herdr ' --border \
@@ -113,14 +131,24 @@ writeShellScriptBin "herdr-sessionizer" ''
         --preview "$self --preview {}" \
         --preview-window 'right,55%,border-left' \
         --header 'enter open · ctrl-x close · ctrl-f find · ctrl-z zoxide' \
-        --bind "ctrl-x:execute-silent($self --close {})+reload($self --list-workspaces; $self --list-zoxide)" \
-        --bind "ctrl-f:reload($self --list-fd)" \
-        --bind "ctrl-z:reload($self --list-workspaces; $self --list-zoxide)"
+        --bind "ctrl-x:execute-silent($self --close {})+reload($self --list-scratch; $self --list-workspaces; $self --list-zoxide)" \
+        --bind "ctrl-f:reload($self --list-scratch; $self --list-fd)" \
+        --bind "ctrl-z:reload($self --list-scratch; $self --list-workspaces; $self --list-zoxide)"
     ) || exit 0
     [ -n "$pick" ] || exit 0
 
     key=''${pick%%$'\t'*}
     case "$key" in
+      scratch:)
+        # Focus the existing scratchpad, or create it rooted at ~.
+        sid=$(herdr workspace list 2>/dev/null \
+          | jq -r '.result.workspaces[] | select(.label == "scratch") | .workspace_id' | head -1) || true
+        if [ -n "$sid" ]; then
+          herdr workspace focus "$sid" 2>/dev/null || true
+        else
+          herdr workspace create --cwd "$HOME" --label scratch --focus 2>/dev/null || cd "$HOME"
+        fi
+        ;;
       ws:*)
         herdr workspace focus "''${key#ws:}" 2>/dev/null || true
         ;;
