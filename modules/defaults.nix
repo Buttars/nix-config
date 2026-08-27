@@ -7,6 +7,8 @@
 {
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
 
+  den.schema.host.includes = [ <aegix/nix-gc> ];
+
   den.default = {
     includes = [
       <den/define-user>
