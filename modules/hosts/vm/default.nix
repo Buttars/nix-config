@@ -6,6 +6,7 @@
   ...
 }:
 {
+  den.hosts.x86_64-linux.vm.users.vm-user = { };
 
   den.aspects.vm = {
     includes = [
@@ -27,23 +28,6 @@
         home.packages = [ pkgs.neovim ];
       };
   };
-
-  den.aspects.vm-user = {
-    includes = [
-      <den/primary-user>
-      <aegix/devenv>
-      <aegix/hyprland>
-      (den._.user-shell "fish")
-    ];
-
-    homeManager =
-      { pkgs, ... }:
-      {
-        home.packages = [ pkgs.btop ];
-      };
-  };
-
-  den.hosts.x86_64-linux.vm.users.vm-user = { };
 
   perSystem =
     { pkgs, ... }:
