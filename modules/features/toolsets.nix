@@ -33,6 +33,8 @@ let
     '';
 in
 {
+  flake-file.inputs.mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
+
   aegix.toolsets = {
     _.node.homeManager =
       { pkgs, ... }:
