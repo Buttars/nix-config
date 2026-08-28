@@ -1,10 +1,6 @@
 { __findFile, ... }:
 {
   aegix = {
-    workstation = {
-      includes = [
-      ];
-    };
     laptop = {
       includes = [
         <aegix/workstation>
