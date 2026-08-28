@@ -3,7 +3,10 @@
     homeManager =
       { pkgs, ... }:
       {
-        home.packages = [ pkgs.jj-hunk ];
+        home.packages = [
+          pkgs.jj-hunk
+          pkgs.mergiraf
+        ];
         programs.fish.interactiveShellInit = "jj util completion fish | source";
         programs.zsh.initContent = "source <(jj util completion zsh)";
         programs.jujutsu = {
@@ -20,7 +23,7 @@
             ];
             ui.diff-instructions = false;
             ui.diff-formatter = "delta";
-            ui.merge-editor = "nvim-fugitive";
+            ui.merge-editor = "diffconflicts";
             revset-aliases.trunk = "latest(remote_bookmarks(exact:main, exact:origin) | remote_bookmarks(exact:master, exact:origin))";
             revset-aliases.mine = "author(self)";
             revset-aliases.wip = "description(exact:'')";
@@ -35,13 +38,19 @@
               0
               1
             ];
-            merge-tools.nvim-fugitive = {
+            merge-tools.diffconflicts = {
               program = "nvim";
               merge-args = [
                 "-c"
-                "Gvdiffsplit!"
+                "let g:jj_diffconflicts_marker_length=$marker_length"
+                "-c"
+                "JJDiffConflicts!"
                 "$output"
+                "$base"
+                "$left"
+                "$right"
               ];
+              merge-tool-edits-conflict-markers = true;
             };
             merge-tools.jj-hunk = {
               program = "jj-hunk";
