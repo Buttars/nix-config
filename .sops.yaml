@@ -23,7 +23,7 @@ keys:
       - &specula age1wvzkw04pxdwuptvzmfdz8rtl8gfxnctgsxg5vszs5pjrkn9n3qvs596mqv
 
 creation_rules:
-  - path_regex: modules/sops/[^/]+\.(yaml|json|env|ini|sops)$
+  - path_regex: modules/app/sops/[^/]+\.(yaml|json|env|ini|sops)$
     key_groups:
       - age:
           # Users

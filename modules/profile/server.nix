@@ -1,0 +1,6 @@
+{ ... }:
+{
+  aegix.server = {
+    includes = [ ];
+  };
+}
