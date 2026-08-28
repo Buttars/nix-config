@@ -1,5 +1,5 @@
 {
-  aegix.ai._.kiro.homeManager =
+  aegix.kiro.homeManager =
     {
       pkgs,
       config,

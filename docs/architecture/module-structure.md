@@ -98,9 +98,9 @@ Non-`.nix` files are never imported, so `_` on them means nothing. Don't use it 
 
 **`profile/`** — workstation, laptop, desktop, server
 
-**`capability/`** — terminal-emulator, browser, password-manager, virtualization, toolsets, ai, cli, programming, hyprland, niri, gaming, printing3d, theming, backup, reticulum, cloud
+**`capability/`** — terminal-emulator, virtualization, toolsets, ai, cli, programming, hyprland, niri, gaming, printing3d, theming, backup, reticulum, cloud
 
-**`app/`** — fish, zsh, neovim, tmux, yazi, taskwarrior, slack, discord, element-desktop, syncthing, fail2ban, github-mcp-server, herdr, paneru, aerospace, nfs-utils, sops, devenv, and the alternatives promoted out of `_.`: kitty, alacritty, brave, google-chrome, keepassxc, bitwarden, docker, libvirtd, node, python, claude, chatgpt, kiro, omlx, skills, git, jj
+**`app/`** — fish, zsh, neovim, tmux, yazi, taskwarrior, slack, discord, element-desktop, syncthing, fail2ban, github-mcp-server, herdr, paneru, aerospace, nfs-utils, sops, devenv, and the alternatives promoted out of `_.`: kitty, alacritty, brave, google-chrome, keepassxc, bitwarden, docker, libvirtd, claude, chatgpt, kiro, omlx, skills, git, jj
 
 **`base/`** — locale, networking, fonts, xdg, wayland, nix-ls
 
@@ -115,7 +115,9 @@ These are opinions, not facts:
 - **`audio`** — in `hardware/` because hosts include it directly like `nvidia`, but it is really `services.pipewire`, i.e. a service. Could equally be `app/`.
 - **`sops`** — in `app/` since it configures the sops-nix tool; arguably `base/` as secrets infrastructure.
 - **`theming`** — in `capability/` since it coordinates stylix + qt + gtk; arguably `base/` as cross-cutting appearance config.
-- **`cli._.tui`** — a bundle of TUI programs, so a capability rather than an app. Either promote to `capability/tui` or leave nested.
+- **`cli._.tui`** — a bundle of TUI programs, so a capability rather than an app. Left nested; promote to `capability/tui` later or leave as is.
+- **`toolsets._.{node,python}`** — left nested. They are generated dev-shell binaries sharing a `mkToolset` builder, so they are facets of one mechanism rather than independent apps. Promoting them would mean extracting the builder into `lib/` first.
+- **`browser` and `password-manager`** — deleted as capabilities. Nothing included them bare, only their alternatives, so nothing remained after promotion. `virtualization` and `terminal-emulator` were included bare and survive as thin capabilities.
 - **`devenv`** — in `app/` (direnv + the devenv package); could be `capability/`.
 - **`power-management`** — included by nobody. Dead code; delete rather than classify.
 

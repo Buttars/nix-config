@@ -5,9 +5,9 @@
       <den/primary-user>
       (<den/unfree> [ "obsidian" ])
       <aegix/programming>
-      <aegix/terminal-emulator/kitty>
+      <aegix/kitty>
       <aegix/taskwarrior>
-      <aegix/cli/git>
+      <aegix/git>
       <aegix/cli/tui>
       <aegix/neovim>
       <aegix/zsh>
@@ -20,15 +20,15 @@
       <aegix/toolsets/node>
       <aegix/toolsets/python>
       <aegix/github-mcp-server>
-      <aegix/ai/kiro>
-      <aegix/ai/claude>
-      <aegix/ai/chatgpt>
-      <aegix/ai/skills>
-      <aegix/ai/omlx>
+      <aegix/kiro>
+      <aegix/claude>
+      <aegix/chatgpt>
+      <aegix/skills>
+      <aegix/omlx>
       <aegix/herdr>
-      <aegix/cli/jj>
+      <aegix/jj>
       <aegix/sops>
-      <aegix/password-manager/bitwarden>
+      <aegix/bitwarden>
     ];
     homeManager =
       { pkgs, ... }:

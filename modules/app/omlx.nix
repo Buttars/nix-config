@@ -1,5 +1,5 @@
 {
-  aegix.ai._.omlx.homeManager =
+  aegix.omlx.homeManager =
     { lib, pkgs, ... }:
     let
       version = "0.5.1";

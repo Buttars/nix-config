@@ -13,7 +13,7 @@
       <aegix/networking>
       <aegix/audio>
       <aegix/virtualization>
-      <aegix/virtualization/docker>
+      <aegix/docker>
       <aegix/nvidia>
       <aegix/sops>
       <aegix/fish>

@@ -3,7 +3,7 @@
   aegix.programming = {
     includes = [
       aegix.cli
-      aegix.cli._.git
+      aegix.git
     ];
 
     homeManager =

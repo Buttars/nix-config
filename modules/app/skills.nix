@@ -21,7 +21,7 @@
     };
   };
 
-  aegix.ai._.skills.homeManager =
+  aegix.skills.homeManager =
     { ... }:
     {
       imports = [ inputs.agent-skills.homeManagerModules.default ];

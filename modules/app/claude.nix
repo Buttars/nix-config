@@ -1,5 +1,5 @@
 {
-  aegix.ai._.claude.homeManager =
+  aegix.claude.homeManager =
     { pkgs, ... }:
     {
       home.packages = [ pkgs.claude-code ];

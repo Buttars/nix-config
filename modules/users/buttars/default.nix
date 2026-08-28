@@ -15,11 +15,11 @@
       <aegix/neovim>
       <aegix/cli>
       <aegix/cli/tui>
-      <aegix/cli/git>
-      <aegix/cli/jj>
+      <aegix/git>
+      <aegix/jj>
       <aegix/herdr>
       <aegix/hyprland>
-      <aegix/browser/brave>
+      <aegix/brave>
       <aegix/sops>
       <aegix/printing3d>
       <aegix/reticulum>

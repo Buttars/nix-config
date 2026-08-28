@@ -1,5 +1,5 @@
 {
-  aegix.ai._.chatgpt.homeManager =
+  aegix.chatgpt.homeManager =
     { pkgs, ... }:
     {
       home.packages = [ pkgs.chatgpt ];
