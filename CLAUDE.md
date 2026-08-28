@@ -40,13 +40,13 @@ modules/
 ├── profile/      workstation laptop desktop server
 ├── capability/   groupings that make something usable
 ├── app/          one program or service each
-├── base/         machine-level settings with no program behind them
+├── platform/         machine-level settings with no program behind them
 ├── hardware/     device and driver enablement   <- outside the stack
 ├── lib/          functions, not aspects         <- outside the stack
 └── hosts/ users/ entities
 ```
 
-Includes only ever step **down** one layer: `profile → capability → app → base`. `hardware/` and `lib/` are reachable from anywhere; hosts are not part of the stack and may include any layer. `checks.module-layers` enforces this — run `nix flake check --impure`.
+Includes only ever step **down** one layer: `profile → capability → app → platform`. `hardware/` and `lib/` are reachable from anywhere; hosts are not part of the stack and may include any layer. `checks.module-layers` enforces this — run `nix flake check --impure`.
 
 **Where does a new file go?** Declares `aegix.<name>` → `modules/<layer>/<name>.nix`, one aspect per file. Declares a host or user → `modules/hosts/` or `modules/users/`. A flake-parts output not tied to an entity → `modules/flake/`. A plain NixOS/HM module → prefix `_` and import it explicitly.
 

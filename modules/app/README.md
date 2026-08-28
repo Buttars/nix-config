@@ -11,7 +11,7 @@ stands on its own.
 (`kitty` vs `alacritty`); a `capability/` picks between them. Internal facets of
 one app stay nested in its file (`zsh._.vi-mode`, `tmux._.gitmux`).
 
-**Dependencies:** may include `base/` only. Including a `capability/` (pointing
+**Dependencies:** may include `platform/` only. Including a `capability/` (pointing
 upward) is forbidden.
 
 Full reference: [docs/architecture/module-structure.md](../../docs/architecture/module-structure.md)

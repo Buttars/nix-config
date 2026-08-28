@@ -2,7 +2,7 @@
 
 **Not a layer.** Hardware answers _"what physical machine is this?"_, not _"how
 much abstraction is this?"_, so it has no ordering relationship to the
-`profile → capability → app → base` stack.
+`profile → capability → app → platform` stack.
 
 **Goes here:** driver/device enablement — `nvidia`, `audio`, `zsa`.
 

@@ -8,7 +8,7 @@ root="${1:-.}"
 modules="$root/modules"
 status=0
 
-layers="profile capability app base"
+layers="profile capability app platform"
 siblings="hardware lib"
 
 declare -A owner
@@ -27,8 +27,8 @@ allowed() {
   case "$1:$2" in
   *:hardware | *:lib) return 0 ;;
   profile:capability | profile:profile) return 0 ;;
-  capability:app | capability:base | capability:capability) return 0 ;;
-  app:base) return 0 ;;
+  capability:app | capability:platform | capability:capability) return 0 ;;
+  app:platform) return 0 ;;
   *) return 1 ;;
   esac
 }

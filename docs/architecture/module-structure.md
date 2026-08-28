@@ -25,7 +25,7 @@ modules/
 ├── profile/          workstation laptop desktop server
 ├── capability/       browser programming hyprland terminal-emulator ...
 ├── app/              kitty brave fish neovim slack ...
-├── base/             locale networking fonts xdg wayland nix-ls
+├── platform/             locale networking fonts xdg wayland nix-ls
 ├── hardware/         nvidia audio zsa            <- outside the stack
 ├── lib/              disks.nix                   <- outside the stack
 ├── hosts/            one directory per machine
@@ -37,7 +37,7 @@ modules/
 | `profile`    | Named bundles a machine opts into           | "What role does this machine play?"          |
 | `capability` | Groupings that make something usable        | "What can this machine do?"                  |
 | `app`        | One program or service                      | "Can I name the binary or the systemd unit?" |
-| `base`       | Machine-level settings that aren't programs | "Is this config with no program behind it?"  |
+| `platform`   | Machine-level settings that aren't programs | "Is this config with no program behind it?"  |
 
 There is deliberately **no `aegix/` parent directory.** It would mirror nothing — `<aegix/kitty>` lives at `app/kitty.nix`, not `aegix/kitty.nix` — and den never looks at paths anyway, since `namespace "aegix"` takes a string.
 
@@ -54,9 +54,9 @@ These are not layers. They have no ordering relationship to anything.
 ALLOWED                          FORBIDDEN
   profile    -> capability         profile -> app        (skips a layer)
   profile    -> profile            app     -> capability (points upward)
-  capability -> app, base          base    -> anything
+  capability -> app, platform          platform    -> anything
   capability -> capability
-  app        -> base
+  app        -> platform
 
 SIBLINGS  hardware/ and lib/ are reachable from any layer and from hosts.
 HOSTS     not part of the stack; may include any layer plus siblings.
@@ -102,7 +102,7 @@ Non-`.nix` files are never imported, so `_` on them means nothing. Don't use it 
 
 **`app/`** — fish, zsh, neovim, tmux, yazi, taskwarrior, slack, discord, element-desktop, syncthing, fail2ban, github-mcp-server, herdr, paneru, aerospace, nfs-utils, sops, devenv, and the alternatives promoted out of `_.`: kitty, alacritty, brave, google-chrome, keepassxc, bitwarden, docker, libvirtd, claude, chatgpt, kiro, omlx, skills, git, jj
 
-**`base/`** — locale, networking, fonts, xdg, wayland, nix-ls
+**`platform/`** — locale, networking, fonts, xdg, wayland, nix-ls
 
 **`hardware/`** — nvidia, audio, zsa
 
@@ -113,8 +113,8 @@ Non-`.nix` files are never imported, so `_` on them means nothing. Don't use it 
 These are opinions, not facts:
 
 - **`audio`** — in `hardware/` because hosts include it directly like `nvidia`, but it is really `services.pipewire`, i.e. a service. Could equally be `app/`.
-- **`sops`** — in `app/` since it configures the sops-nix tool; arguably `base/` as secrets infrastructure.
-- **`theming`** — in `capability/` since it coordinates stylix + qt + gtk; arguably `base/` as cross-cutting appearance config.
+- **`sops`** — in `app/` since it configures the sops-nix tool; arguably `platform/` as secrets infrastructure.
+- **`theming`** — in `capability/` since it coordinates stylix + qt + gtk; arguably `platform/` as cross-cutting appearance config.
 - **`cli._.tui`** — a bundle of TUI programs, so a capability rather than an app. Left nested; promote to `capability/tui` later or leave as is.
 - **`toolsets._.{node,python}`** — left nested. They are generated dev-shell binaries sharing a `mkToolset` builder, so they are facets of one mechanism rather than independent apps. Promoting them would mean extracting the builder into `lib/` first.
 - **`browser` and `password-manager`** — deleted as capabilities. Nothing included them bare, only their alternatives, so nothing remained after promotion. `virtualization` and `terminal-emulator` were included bare and survive as thin capabilities.
@@ -200,7 +200,7 @@ Checks that drv-hashing cannot cover:
 
 ## Deferred follow-ups
 
-- **Split the layers into separate den namespaces** — `<profile/laptop>`, `<capability/browser>`, `<app/kitty>`, `<base/locale>`, registered via `inputs.den.namespace` in `den.nix`. With no `aegix/` parent directory this is _purely_ registering namespaces and rewriting brackets, with zero file movement. It would make the layer visible at every use site and let the direction check become structural rather than grep-based.
+- **Split the layers into separate den namespaces** — `<profile/laptop>`, `<capability/browser>`, `<app/kitty>`, `<platform/locale>`, registered via `inputs.den.namespace` in `den.nix`. With no `aegix/` parent directory this is _purely_ registering namespaces and rewriting brackets, with zero file movement. It would make the layer visible at every use site and let the direction check become structural rather than grep-based.
 - **Decompose `capability/hyprland`** into `app/{waybar,rofi,hyprlock,swaync,wlogout,hyprpaper}` so `niri` can share them instead of redeclaring. Excluded from the migration above to keep it a provable no-op.
 - **Clear den's deprecated `provides` fallback** for the remaining nested facets — `aegix.zsh.prompt` rather than `aegix.zsh._.prompt`. Den warns: `bracket path uses 'provides.X' — migrate to direct nesting`.
 - **Delete unincluded aspects** — `power-management`, `discord`, `element-desktop`, `locale`, `niri`, `nix-ls`, `paneru`, `tmux`, `xdg`, and the unused `laptop`/`desktop`/`server` profiles. Needs its own audit.

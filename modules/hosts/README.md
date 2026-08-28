@@ -11,7 +11,7 @@ host-owned data files:
 - `_stylix.nix` — per-host theme
 - `hardware-configuration.nix` / `facter.json` — hardware description
 
-A host may include **any** layer (`profile`/`capability`/`app`/`base`) plus the
+A host may include **any** layer (`profile`/`capability`/`app`/`platform`) plus the
 siblings (`hardware/`, `lib/`).
 
 **`_` prefix caveat:** import-tree skips any path containing `/_`, so `_`-files
