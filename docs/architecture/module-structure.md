@@ -1,7 +1,7 @@
 # Module Structure
 
 Date: 2026-08-27
-Status: Adopted — migration not yet started
+Status: Adopted — migration complete
 
 How `modules/` is organized, what each directory means, and where a new file goes.
 

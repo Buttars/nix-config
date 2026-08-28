@@ -29,7 +29,7 @@ dependency on a fixed home AP.
 - [ ] Set the real SSID: replace `ssid=CHANGEME-ssid` in
       `modules/hosts/specula/default.nix` (`sops.templates."specula-wifi.nmconnection"`).
 - [ ] Set the real wifi password:
-      `sops modules/sops/secrets.yaml` and replace the `specula-wifi-psk`
+      `sops modules/app/sops/secrets.yaml` and replace the `specula-wifi-psk`
       placeholder (`CHANGEME-wifi-password`).
 - [ ] Build the image:
       `nix build --impure .#nixosConfigurations.specula.config.system.build.sdImage`

@@ -1,3 +1,5 @@
+> **Historical (March 2026).** Superseded by [module-structure.md](module-structure.md). Paths below predate the move from `modules/features/` to the layered `modules/{profile,capability,app,base}/` directories.
+
 Aspect Audit (Den‑aligned)
 Date: 2026-03-11 (updated 2026-03-12)
 Branch: dendritic-from-scratch

@@ -1,3 +1,5 @@
+> **Historical (March 2026).** Superseded by [module-structure.md](module-structure.md). Paths below predate the move from `modules/features/` to the layered `modules/{profile,capability,app,base}/` directories.
+
 # Aspect Architecture Recommendations
 
 Date: 2026-03-12

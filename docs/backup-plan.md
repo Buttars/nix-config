@@ -8,7 +8,7 @@ Run restic from `sentinel` to back up all service data to Backblaze B2. Sentinel
 
 - [x] Create B2 bucket (`buttars-backups`, object lock enabled, governance 200 days)
 - [x] Create B2 application key (scoped to bucket)
-- [x] Add credentials to sops: `restic-b2-env` in `modules/sops/secrets.yaml`
+- [x] Add credentials to sops: `restic-b2-env` in `modules/app/sops/secrets.yaml`
 - [x] Generate restic repo password and store in sops + Bitwarden
 - [ ] Initialize restic repo: `restic -r s3:s3.us-west-004.backblazeb2.com/buttars-backups init`
 
@@ -16,7 +16,7 @@ Run restic from `sentinel` to back up all service data to Backblaze B2. Sentinel
 
 ### 1. Sops secrets
 
-Already added to `modules/sops/secrets.yaml` as `restic-b2-env`:
+Already added to `modules/app/sops/secrets.yaml` as `restic-b2-env`:
 
 ```yaml
 restic-b2-env: |
@@ -37,7 +37,7 @@ Services with databases that need consistent dumps before backup:
 
 These run as `backupPrepareCommand` in the restic module.
 
-### 3. NixOS module (`modules/features/backup.nix`)
+### 3. NixOS module (`modules/capability/backup.nix`)
 
 ```nix
 { config, pkgs, ... }:
