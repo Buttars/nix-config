@@ -69,7 +69,7 @@
     };
 
     homeManager = {
-      imports = [ ./home-manager/dotfiles.nix ];
+      imports = [ ./_hm-dotfiles.nix ];
       programs.home-manager.enable = true;
       home = {
         sessionPath = [ "$HOME/.local/bin" ];
