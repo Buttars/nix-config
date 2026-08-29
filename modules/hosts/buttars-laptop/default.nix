@@ -42,7 +42,12 @@
       # Then replace the value below with the output.
       boot.kernelParams = [ "resume_offset=533760" ];
 
-      systemd.sleep.settings.Sleep.HibernateMode = "shutdown";
+      systemd.sleep.settings.Sleep = {
+        HibernateMode = "shutdown";
+        # suspend-then-hibernate stays suspended this long before writing
+        # the image and powering off.
+        HibernateDelaySec = "45min";
+      };
       boot.initrd.availableKernelModules = [
         "xhci_pci"
         "ahci"
