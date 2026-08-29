@@ -33,6 +33,8 @@
                 fg1: ${c.base07};
                 fg2: ${c.base04};
                 fg3: ${c.base02};
+
+                font: "${config.stylix.fonts.sansSerif.name} ${toString config.stylix.fonts.sizes.popups}";
               }
             '';
         };
