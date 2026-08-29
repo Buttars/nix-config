@@ -23,6 +23,7 @@
       <aegix/brave>
       <aegix/vivaldi>
       <aegix/sops>
+      <aegix/bitwarden>
       <aegix/printing3d>
       <aegix/reticulum>
       <aegix/theming>
