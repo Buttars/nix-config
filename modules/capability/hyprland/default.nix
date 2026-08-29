@@ -170,7 +170,7 @@
                                 on_focus_under_fullscreen = true,
                             },
                             decoration = {
-                                rounding = 10,
+                                rounding = 0,
                                 blur = {
                                     enabled = false,
                                 },

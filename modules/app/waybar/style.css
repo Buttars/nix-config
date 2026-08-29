@@ -46,7 +46,7 @@
 tooltip {
   background-color: @background;
   border: 1px solid @accent;
-  border-radius: 8px;
+  border-radius: 0;
   padding: 8px;
 }
 

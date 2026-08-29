@@ -43,7 +43,7 @@
               color: ${c.base05};
               background-color: ${c.base01};
               border: 2px solid ${c.base02};
-              border-radius: 12px;
+              border-radius: 0;
               margin: 8px;
               transition: background-color 150ms ease-in-out;
             }

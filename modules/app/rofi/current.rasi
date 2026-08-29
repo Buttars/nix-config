@@ -14,7 +14,7 @@
 window {
     location:         center;
     width:            600;
-    border-radius:    16px;
+    border-radius:    0px;
     border:           2px;
     border-color:     @bg2;
     background-color: @bg0;
@@ -27,7 +27,7 @@ mainbox {
 
 inputbar {
     background-color: @bg1;
-    border-radius:    12px;
+    border-radius:    0px;
     padding:          12px 16px;
     spacing:          12px;
     children:         [ prompt, entry ];
@@ -56,7 +56,7 @@ listview {
 element {
     padding:       10px 12px;
     spacing:       12px;
-    border-radius: 10px;
+    border-radius: 0px;
 }
 
 element normal active {
@@ -84,7 +84,7 @@ element-text {
 }
 
 message {
-    border-radius:    12px;
+    border-radius:    0px;
     background-color: @bg1;
 }
 

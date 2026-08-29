@@ -50,7 +50,7 @@
           input-field = [
             {
               size = "300, 50";
-              rounding = 12;
+              rounding = 0;
               outline_thickness = 2;
               dots_size = "0.25";
               dots_spacing = "0.3";
