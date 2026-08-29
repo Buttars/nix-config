@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+# Comments reference aspects for documentation; those are not dependencies.
+body=$(grep -v '^[[:space:]]*#' "$f" 2>/dev/null)
+refs=$(printf '%s\n' "$body" | grep -oE '<aegix/[a-zA-Z0-9_-]+' | sed 's|<aegix/||')#!/usr/bin/env bash
 # Enforces the module structure documented in docs/architecture/module-structure.md:
 #   1. one aspect, one file
 #   2. layer dependency direction
@@ -51,8 +53,10 @@ done
 for l in $layers; do
   while IFS= read -r f; do
     [ -e "$f" ] || continue
-    refs=$(grep -oE '<aegix/[a-zA-Z0-9_-]+' "$f" 2>/dev/null | sed 's|<aegix/||')
-    refs="$refs $(grep -oE '(^|[^.a-zA-Z0-9_-])aegix\.[a-zA-Z0-9_-]+' "$f" 2>/dev/null |
+    # Comments reference aspects for documentation, not as dependencies.
+    body=$(grep -v '^[[:space:]]*#' "$f" 2>/dev/null)
+    refs=$(printf '%s\n' "$body" | grep -oE '<aegix/[a-zA-Z0-9_-]+' | sed 's|<aegix/||')
+    refs="$refs $(printf '%s\n' "$body" | grep -oE '(^|[^.a-zA-Z0-9_-])aegix\.[a-zA-Z0-9_-]+' |
       sed 's/.*aegix\.//')"
     for r in $refs; do
       to="${owner[$r]:-}"
