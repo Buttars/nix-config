@@ -122,6 +122,22 @@ Stylix is imported globally via `den.default.nixos.imports`. Each host's `_styli
 
 ## Commit Guidelines
 
+This is a **colocated Jujutsu repo** (`.jj/` beside `.git/`). Use `jj`, not `git`, for version control. Git is permanently in detached HEAD here — that is normal, not a problem to fix.
+
+**Commit each feature as you finish it.** Do not let unrelated work pile up in one change:
+
+1. Finish and verify one logical change.
+2. `jj describe -m "<message>"` following the rules below.
+3. `jj new` to start the next change.
+
+Forgetting step 3 is the common mistake: the next feature silently accumulates into the previous commit, and its message no longer describes its contents.
+
+Useful commands:
+
+- `jj split <paths> -m "<message>"` — pull unrelated work out of a change that already mixed things together
+- `jj bookmark set master -r @` — bookmarks do not advance on their own
+- Never add a `Co-Authored-By` trailer; no commit in this repo carries one
+
 Follow **Conventional Commits** with imperative present tense:
 
 **Format**: `type(scope): description`
@@ -156,3 +172,8 @@ Follow **Conventional Commits** with imperative present tense:
 - ❌ `fix(darwin): add home-manager module import`
 
 **Atomic commits**: Each commit should contain exactly one logical change. Split unrelated changes into separate commits.
+
+- One feature per commit, committed when that feature is done — not batched at the end.
+- A formatter run, a lockfile update, or an unrelated fix noticed along the way each get their own commit.
+- If a change has already mixed concerns, `jj split <paths>` separates it by file rather than redoing the work.
+- Verify before describing: `nix run .#fmt`, then `nix flake check --impure`.
