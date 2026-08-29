@@ -10,7 +10,10 @@
             dig
             eza
             fd
+            dust
+            duf
             git-worktree-init
+            ncdu
             ripgrep
             tldr
             tree
