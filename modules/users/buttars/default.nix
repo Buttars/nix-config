@@ -28,6 +28,7 @@
       <aegix/opencode>
       <aegix/battery-notify>
       <aegix/desktop-apps>
+      <aegix/mpv>
     ];
 
     nixos =

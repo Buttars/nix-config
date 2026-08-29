@@ -24,6 +24,12 @@
           "image/jpeg" = "org.gnome.Loupe.desktop";
           "image/gif" = "org.gnome.Loupe.desktop";
           "image/webp" = "org.gnome.Loupe.desktop";
+          "video/mp4" = "mpv.desktop";
+          "video/x-matroska" = "mpv.desktop";
+          "video/webm" = "mpv.desktop";
+          "video/quicktime" = "mpv.desktop";
+          "audio/mpeg" = "mpv.desktop";
+          "audio/flac" = "mpv.desktop";
           "text/html" = "brave-browser.desktop";
           "x-scheme-handler/http" = "brave-browser.desktop";
           "x-scheme-handler/https" = "brave-browser.desktop";

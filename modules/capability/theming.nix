@@ -40,6 +40,7 @@
         swaync.enable = true;
         bat.enable = true;
         btop.enable = true;
+        mpv.enable = true;
       };
       # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rebecca.yaml";
 
