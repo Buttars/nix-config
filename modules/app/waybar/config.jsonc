@@ -12,6 +12,8 @@
     "network",
     "pulseaudio",
     "cpu",
+    "memory",
+    "temperature",
     "battery"
   ],
   "hyprland/workspaces": {
@@ -44,11 +46,41 @@
     "format": "󰍛",
     "on-click": "$TERMINAL -e btop"
   },
+  "memory": {
+    "interval": 5,
+    "format": "󰾆",
+    "tooltip-format": "{used:0.1f}G / {total:0.1f}G  ({percentage}%)",
+    "states": {
+      "warning": 80,
+      "critical": 92
+    },
+    "on-click": "$TERMINAL -e btop"
+  },
+  "temperature": {
+    "interval": 5,
+    "format": "",
+    "tooltip-format": "{temperatureC}°C",
+    "critical-threshold": 82,
+    "on-click": "$TERMINAL -e btop"
+  },
   "clock": {
     "format": "{:L%A %H:%M}",
     "format-alt": "{:L%d %B W%V %Y}",
-    "tooltip": false,
-    "on-click-right": "omarchy-cmd-tzupdate"
+    "tooltip": true,
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "today": "<b><u>{}</u></b>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
@@ -76,7 +108,7 @@
     "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
     "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
     "interval": 5,
-    "on-click": "omarchy-menu power",
+    "on-click": "wlogout",
     "states": {
       "warning": 20,
       "critical": 10

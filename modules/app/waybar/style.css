@@ -50,7 +50,15 @@
 }
 
 tooltip {
-  padding: 2px;
+  background-color: @background;
+  border: 1px solid @accent;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+tooltip label {
+  color: @foreground;
+  font-family: "CommitMono Nerd Font Mono", monospace;
 }
 
 #custom-update {
@@ -72,5 +80,15 @@ tooltip {
 }
 
 #custom-screenrecording-indicator.active {
+  color: @urgent;
+}
+
+#memory.warning,
+#temperature.critical {
+  color: @warning;
+}
+
+#memory.critical,
+#battery.critical {
   color: @urgent;
 }

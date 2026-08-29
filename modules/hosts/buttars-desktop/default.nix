@@ -18,6 +18,7 @@
       <aegix/sops>
       <aegix/fish>
       <aegix/hyprland>
+      <aegix/desktop-services>
       <aegix/fonts>
       <aegix/gaming>
       <aegix/zsa>

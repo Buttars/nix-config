@@ -25,11 +25,14 @@
             in
             ''
               * {
-                background:     ${c.base00};
-                foreground:     ${c.base05};
-                selected:       ${c.base0D};
-                urgent:         ${c.base08};
-                alternate-bg:   ${c.base01};
+                bg0: ${c.base00};
+                bg1: ${c.base01};
+                bg2: ${c.base02};
+                bg3: ${c.base0D};
+                fg0: ${c.base05};
+                fg1: ${c.base07};
+                fg2: ${c.base04};
+                fg3: ${c.base02};
               }
             '';
         };

@@ -4,6 +4,9 @@
     includes = [
       <aegix/waybar>
       <aegix/rofi>
+      <aegix/hyprlock>
+      <aegix/hypridle>
+      <aegix/polkit-agent>
     ];
 
     nixos = {
@@ -30,6 +33,15 @@
         inputs,
         ...
       }:
+      let
+        # vm-user has no stylix, so fall back to literal cyberdream values.
+        bare =
+          name: fallback:
+          if config.lib ? stylix then
+            lib.removePrefix "#" config.lib.stylix.colors.withHashtag.${name}
+          else
+            fallback;
+      in
       {
 
         home.packages = with pkgs; [
@@ -37,7 +49,6 @@
           font-awesome
           glib
           grim
-          hyprlock
           hyprpaper
           hyprpicker
           jq
@@ -114,9 +125,16 @@
                 },
                 general = {
                     gaps_in     = 5,
-                    gaps_out    = 20,
-                    border_size = 2,
+                    gaps_out    = 12,
+                    border_size = 3,
                     layout      = "scrolling",
+                    ["col.active_border"] = {
+                        colors = { "rgba(${bare "base0D" "5ea1ff"}ff)", "rgba(${bare "base0C" "5ef1ff"}ff)" },
+                        angle  = 45,
+                    },
+                    ["col.inactive_border"] = {
+                        colors = { "rgba(${bare "base02" "3c4048"}ff)" },
+                    },
                 },
                 scrolling = {
                     -- 0 = center, 1 = fit. fit aligns a column to the viewport
@@ -131,13 +149,11 @@
                 decoration = {
                     rounding = 10,
                     blur = {
-                        enabled = true,
-                        size    = 3,
-                        passes  = 1,
+                        enabled = false,
                     },
                     shadow = {
                         enabled      = true,
-                        range        = 4,
+                        range        = 8,
                         render_power = 3,
                     },
                 },
@@ -150,13 +166,17 @@
             })
 
             -- Animation curves
-            hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.0 } } })
-            hl.animation({ leaf = "windows",     enabled = true, speed = 3, bezier = "myBezier" })
-            hl.animation({ leaf = "windowsOut",  enabled = true, speed = 3, bezier = "default"  })
-            hl.animation({ leaf = "border",      enabled = true, speed = 3, bezier = "default"  })
-            hl.animation({ leaf = "borderangle", enabled = true, speed = 3, bezier = "default"  })
-            hl.animation({ leaf = "fade",        enabled = true, speed = 3, bezier = "default"  })
-            hl.animation({ leaf = "workspaces",  enabled = true, speed = 3, bezier = "default"  })
+            hl.curve("snap",      { type = "bezier", points = { { 0.05, 0.9  }, { 0.1,  1.0  } } })
+            hl.curve("overshoot", { type = "bezier", points = { { 0.05, 0.9  }, { 0.1,  1.05 } } })
+            hl.curve("smooth",    { type = "bezier", points = { { 0.25, 0.1  }, { 0.25, 1.0  } } })
+
+            hl.animation({ leaf = "windowsIn",   enabled = true, speed = 5, bezier = "overshoot", style = "popin 80%" })
+            hl.animation({ leaf = "windowsOut",  enabled = true, speed = 4, bezier = "smooth",    style = "popin 80%" })
+            hl.animation({ leaf = "windowsMove", enabled = true, speed = 4, bezier = "snap"      })
+            hl.animation({ leaf = "border",      enabled = true, speed = 6, bezier = "smooth"    })
+            hl.animation({ leaf = "borderangle", enabled = true, speed = 3, bezier = "smooth"    })
+            hl.animation({ leaf = "fade",        enabled = true, speed = 4, bezier = "smooth"    })
+            hl.animation({ leaf = "workspaces",  enabled = true, speed = 5, bezier = "snap",      style = "slide" })
 
             -- Keybindings
             local mod = "SUPER"
@@ -178,6 +198,7 @@
             hl.bind(mod .. " + SHIFT + ALT + L",   hl.dsp.exec_cmd("hyprlock & systemctl suspend"),                              { description = "Lock and suspend" })
             hl.bind(mod .. " + CTRL + ALT + L",    hl.dsp.exec_cmd("hyprlock & systemctl hibernate"),                            { description = "Lock and hibernate" })
             hl.bind(mod .. " + Q",                 hl.dsp.window.close(),                                                        { description = "Close window" })
+            hl.bind(mod .. " + SHIFT + Q",         hl.dsp.exec_cmd("wlogout"),                                                   { description = "Power menu (wlogout)" })
             hl.bind(mod .. " + SHIFT + BACKSPACE", hl.dsp.exit(),                                                                { description = "Exit Hyprland" })
 
             -- Layout / Window control

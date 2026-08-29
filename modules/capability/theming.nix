@@ -23,6 +23,7 @@
       gtk.iconTheme.name = "Papirus-Dark";
 
       stylix.enable = true;
+      stylix.image = ../capability/hyprland/wallpaper.jpg;
 
       stylix.targets = {
         gtk.enable = true;
@@ -32,7 +33,9 @@
         fzf.enable = true;
         yazi.enable = true;
         hyprland.enable = true;
-        hyprlock.enable = true;
+        # app/hyprlock.nix builds the full layout and reads the same palette,
+        # so the stylix target would only conflict over `background`.
+        hyprlock.enable = false;
         hyprpaper.enable = true;
       };
       # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rebecca.yaml";

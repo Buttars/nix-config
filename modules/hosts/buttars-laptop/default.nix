@@ -12,6 +12,7 @@
       <aegix/audio>
       <aegix/fish>
       <aegix/hyprland>
+      <aegix/desktop-services>
       <aegix/fonts>
       <aegix/zsa>
       <aegix/sops>
