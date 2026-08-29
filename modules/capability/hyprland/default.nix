@@ -158,82 +158,85 @@
             local mod = "SUPER"
 
             -- Launchers
-            hl.bind(mod .. " + RETURN",            hl.dsp.exec_cmd("kitty"))
-            hl.bind(mod .. " + W",                 hl.dsp.exec_cmd("$BROWSER"))
-            hl.bind(mod .. " + SHIFT + W",         hl.dsp.exec_cmd("kitty -e sudo nmtui"))
-            hl.bind(mod .. " + SHIFT + R",         hl.dsp.exec_cmd("kitty -e htop"))
-            hl.bind(mod .. " + D",                 hl.dsp.exec_cmd("rofi -show drun & sleep 0.2; hyprctl dispatch focuswindow \"\\^(Rofi)\""))
-            hl.bind(mod .. " + N",                 hl.dsp.exec_cmd("kitty -e nvim -c VimwikiIndex"))
-            hl.bind(mod .. " + SHIFT + N",         hl.dsp.exec_cmd("kitty -e newsboat"))
-            hl.bind(mod .. " + M",                 hl.dsp.exec_cmd("kitty -e ncmpcpp"))
-            hl.bind(mod .. " + SHIFT + M",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
-            hl.bind(mod .. " + Scroll_Lock",       hl.dsp.exec_cmd("killall screenkey || screenkey &"))
-            hl.bind(mod .. " + SHIFT + S",         hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | wl-copy"))
-            hl.bind(mod .. " + CTRL + S",          hl.dsp.exec_cmd("grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%s).png - | tee >(wl-copy) > /dev/null && notify-send 'Screenshot taken!'"))
-            hl.bind(mod .. " + ALT + L",           hl.dsp.exec_cmd("hyprlock"))
-            hl.bind(mod .. " + SHIFT + ALT + L",   hl.dsp.exec_cmd("hyprlock & systemctl suspend"))
-            hl.bind(mod .. " + CTRL + ALT + L",    hl.dsp.exec_cmd("hyprlock & systemctl hibernate"))
-            hl.bind(mod .. " + Q",                 hl.dsp.window.close())
-            hl.bind(mod .. " + SHIFT + BACKSPACE", hl.dsp.exit())
+            hl.bind(mod .. " + RETURN",            hl.dsp.exec_cmd("kitty"),                                                     { description = "Terminal" })
+            hl.bind(mod .. " + W",                 hl.dsp.exec_cmd("$BROWSER"),                                                  { description = "Browser" })
+            hl.bind(mod .. " + SHIFT + W",         hl.dsp.exec_cmd("kitty -e sudo nmtui"),                                       { description = "Network manager (nmtui)" })
+            hl.bind(mod .. " + SHIFT + R",         hl.dsp.exec_cmd("kitty -e htop"),                                             { description = "Process monitor (htop)" })
+            hl.bind(mod .. " + D",                 hl.dsp.exec_cmd("rofi -show drun & sleep 0.2; hyprctl dispatch focuswindow \"\\^(Rofi)\""), { description = "App launcher (rofi)" })
+            hl.bind(mod .. " + N",                 hl.dsp.exec_cmd("kitty -e nvim -c VimwikiIndex"),                             { description = "Notes (vimwiki)" })
+            hl.bind(mod .. " + SHIFT + N",         hl.dsp.exec_cmd("kitty -e newsboat"),                                         { description = "RSS reader (newsboat)" })
+            hl.bind(mod .. " + M",                 hl.dsp.exec_cmd("kitty -e ncmpcpp"),                                          { description = "Music player (ncmpcpp)" })
+            hl.bind(mod .. " + SHIFT + M",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),                { description = "Mute toggle" })
+            hl.bind(mod .. " + Scroll_Lock",       hl.dsp.exec_cmd("killall screenkey || screenkey &"),                          { description = "Screenkey toggle" })
+            hl.bind(mod .. " + SHIFT + S",         hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | wl-copy"),                       { description = "Screenshot region to clipboard" })
+            hl.bind(mod .. " + CTRL + S",          hl.dsp.exec_cmd("grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%s).png - | tee >(wl-copy) > /dev/null && notify-send 'Screenshot taken!'"), { description = "Screenshot region to file" })
+            hl.bind(mod .. " + ALT + L",           hl.dsp.exec_cmd("hyprlock"),                                                  { description = "Lock screen" })
+            hl.bind(mod .. " + SHIFT + ALT + L",   hl.dsp.exec_cmd("hyprlock & systemctl suspend"),                              { description = "Lock and suspend" })
+            hl.bind(mod .. " + CTRL + ALT + L",    hl.dsp.exec_cmd("hyprlock & systemctl hibernate"),                            { description = "Lock and hibernate" })
+            hl.bind(mod .. " + Q",                 hl.dsp.window.close(),                                                        { description = "Close window" })
+            hl.bind(mod .. " + SHIFT + BACKSPACE", hl.dsp.exit(),                                                                { description = "Exit Hyprland" })
 
             -- Layout / Window control
             -- internal = 2 (fullscreen) makes Hyprland fill the monitor as
             -- usual; client = 0 (none) keeps the app from being told it's
             -- fullscreen, so apps like Chrome don't switch into their own
             -- fullscreen UI (hiding tabs/bookmarks bar).
-            hl.bind(mod .. " + F",               hl.dsp.window.fullscreen_state({ internal = 2, client = 0, action = "toggle" }))
-            hl.bind(mod .. " + SHIFT + F",       hl.dsp.window.fullscreen({ mode = "maximized" }))
-            hl.bind(mod .. " + SHIFT + space",   hl.dsp.window.float({ action = "toggle" }))
-            hl.bind(mod .. " + J",               hl.dsp.layout("focus d"))
-            hl.bind(mod .. " + K",               hl.dsp.layout("focus u"))
-            hl.bind(mod .. " + H",               hl.dsp.layout("focus l"))
-            hl.bind(mod .. " + L",               hl.dsp.layout("focus r"))
-            hl.bind(mod .. " + SHIFT + H",       hl.dsp.layout("swapcol l"))
-            hl.bind(mod .. " + SHIFT + L",       hl.dsp.layout("swapcol r"))
-            hl.bind(mod .. " + space",           hl.dsp.layout("promote"))
-            hl.bind(mod .. " + A",               hl.dsp.layout("consume"))
-            hl.bind(mod .. " + SHIFT + A",       hl.dsp.layout("expel"))
-            hl.bind(mod .. " + O",               hl.dsp.layout("fit expand"))
-            hl.bind(mod .. " + T",               hl.dsp.layout("fit toend"))
-            hl.bind(mod .. " + B",               hl.dsp.layout("fit tobeg"))
-            hl.bind(mod .. " + C",               hl.dsp.window.center())
-            hl.bind(mod .. " + SHIFT + C",       hl.dsp.layout("fit active"))
+            hl.bind(mod .. " + F",               hl.dsp.window.fullscreen_state({ internal = 2, client = 0, action = "toggle" }), { description = "Fullscreen toggle" })
+            hl.bind(mod .. " + SHIFT + F",       hl.dsp.window.fullscreen({ mode = "maximized" }), { description = "Maximize toggle" })
+            hl.bind(mod .. " + SHIFT + space",   hl.dsp.window.float({ action = "toggle" }),       { description = "Float toggle" })
+            hl.bind(mod .. " + J",               hl.dsp.layout("focus d"),                         { description = "Focus window below" })
+            hl.bind(mod .. " + K",               hl.dsp.layout("focus u"),                         { description = "Focus window above" })
+            hl.bind(mod .. " + H",               hl.dsp.layout("focus l"),                         { description = "Focus column left" })
+            hl.bind(mod .. " + L",               hl.dsp.layout("focus r"),                         { description = "Focus column right" })
+            hl.bind(mod .. " + SHIFT + H",       hl.dsp.layout("swapcol l"),                       { description = "Move column left" })
+            hl.bind(mod .. " + SHIFT + L",       hl.dsp.layout("swapcol r"),                       { description = "Move column right" })
+            hl.bind(mod .. " + space",           hl.dsp.layout("promote"),                         { description = "Promote window to its own column" })
+            hl.bind(mod .. " + A",               hl.dsp.layout("consume"),                         { description = "Consume: pull window into previous column" })
+            hl.bind(mod .. " + SHIFT + A",       hl.dsp.layout("expel"),                           { description = "Expel: push window out to its own column" })
+            hl.bind(mod .. " + O",               hl.dsp.layout("fit expand"),                      { description = "Fit: expand column to free space" })
+            hl.bind(mod .. " + T",               hl.dsp.layout("fit toend"),                       { description = "Fit: active column to end of row" })
+            hl.bind(mod .. " + B",               hl.dsp.layout("fit tobeg"),                       { description = "Fit: start of row to active column" })
+            hl.bind(mod .. " + C",               hl.dsp.window.center(),                           { description = "Center window" })
+            hl.bind(mod .. " + SHIFT + C",       hl.dsp.layout("fit active"),                      { description = "Fit: active column fills screen" })
 
             -- Monitor navigation
-            hl.bind(mod .. " + left",          hl.dsp.focus({ monitor = "-1" }),         { release = true })
-            hl.bind(mod .. " + right",         hl.dsp.focus({ monitor = "+1" }),         { release = true })
-            hl.bind(mod .. " + SHIFT + right", hl.dsp.window.move({ monitor = "+1" }),   { release = true })
-            hl.bind(mod .. " + SHIFT + left",  hl.dsp.window.move({ monitor = "-1" }),   { release = true })
+            hl.bind(mod .. " + left",          hl.dsp.focus({ monitor = "-1" }),       { release = true, description = "Focus monitor left" })
+            hl.bind(mod .. " + right",         hl.dsp.focus({ monitor = "+1" }),       { release = true, description = "Focus monitor right" })
+            hl.bind(mod .. " + SHIFT + right", hl.dsp.window.move({ monitor = "+1" }), { release = true, description = "Move window to monitor right" })
+            hl.bind(mod .. " + SHIFT + left",  hl.dsp.window.move({ monitor = "-1" }), { release = true, description = "Move window to monitor left" })
 
             -- Resize windows
-            hl.bind(mod .. " + comma",  hl.dsp.layout("colresize -0.05"))
-            hl.bind(mod .. " + period", hl.dsp.layout("colresize +0.05"))
-            hl.bind(mod .. " + SHIFT + J", hl.dsp.window.resize({ x = 0,    y = 100,  relative = true }))
-            hl.bind(mod .. " + SHIFT + K", hl.dsp.window.resize({ x = 0,    y = -100, relative = true }))
+            hl.bind(mod .. " + comma",  hl.dsp.layout("colresize -0.05"), { description = "Column narrower" })
+            hl.bind(mod .. " + period", hl.dsp.layout("colresize +0.05"), { description = "Column wider" })
+            hl.bind(mod .. " + SHIFT + J", hl.dsp.window.resize({ x = 0, y = 100,  relative = true }), { description = "Window taller" })
+            hl.bind(mod .. " + SHIFT + K", hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { description = "Window shorter" })
 
             -- Workspace cycling
-            hl.bind(mod .. " + Tab",       hl.dsp.focus({ workspace = "m+1" }))
-            hl.bind(mod .. " + SHIFT + Tab", hl.dsp.focus({ workspace = "m-1" }))
+            hl.bind(mod .. " + Tab",         hl.dsp.focus({ workspace = "m+1" }), { description = "Next workspace on this monitor" })
+            hl.bind(mod .. " + SHIFT + Tab", hl.dsp.focus({ workspace = "m-1" }), { description = "Previous workspace on this monitor" })
 
             -- Scratchpad
-            hl.bind(mod .. " + grave",         hl.dsp.workspace.toggle_special("term"))
-            hl.bind(mod .. " + SHIFT + grave", hl.dsp.window.move({ workspace = "special:term" }))
+            hl.bind(mod .. " + grave",         hl.dsp.workspace.toggle_special("term"),             { description = "Scratchpad terminal toggle" })
+            hl.bind(mod .. " + SHIFT + grave", hl.dsp.window.move({ workspace = "special:term" }),  { description = "Move window to scratchpad" })
 
             -- Volume & brightness
-            hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-            hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-            hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true })
-            hl.bind(mod .. " + plus",        hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-            hl.bind(mod .. " + minus",       hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-            hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set +10%"),                       { locked = true })
-            hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 10%-"),                       { locked = true })
+            hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true, description = "Volume up" })
+            hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true, description = "Volume down" })
+            hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, description = "Mute toggle" })
+            hl.bind(mod .. " + plus",        hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true, description = "Volume up" })
+            hl.bind(mod .. " + minus",       hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true, description = "Volume down" })
+            hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set +10%"),                         { locked = true, description = "Brightness up" })
+            hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 10%-"),                         { locked = true, description = "Brightness down" })
 
             -- Notification control
-            hl.bind(mod .. " + CTRL + C", hl.dsp.exec_cmd("swaync-client --close-all"))
+            hl.bind(mod .. " + CTRL + C", hl.dsp.exec_cmd("swaync-client --close-all"), { description = "Dismiss all notifications" })
+
+            -- Cheatsheet
+            hl.bind(mod .. " + slash", hl.dsp.exec_cmd("sh ~/.config/hypr/keybinds.sh"), { description = "Show this keybind list" })
 
             -- Debug/dev tools
-            hl.bind(mod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty -e journalctl -f"))
-            hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("kitty -e nvim"))
+            hl.bind(mod .. " + SHIFT + X", hl.dsp.exec_cmd("kitty -e journalctl -f"), { description = "Follow system log" })
+            hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd("kitty -e nvim"),          { description = "Editor" })
 
             -- Workspace bindings: workspace <monitor><slot>, where <monitor>
             -- is the 1-based index of the monitor in left-to-right (x
@@ -311,16 +314,16 @@
                 hl.bind(mod .. " + " .. d, function()
                     local slot = monitorSlot(hl.get_active_monitor())
                     hl.dispatch(hl.dsp.focus({ workspace = slot * 10 + d }))
-                end)
+                end, { description = "Go to workspace " .. d .. " on this monitor" })
                 hl.bind(mod .. " + SHIFT + " .. d, function()
                     local slot = monitorSlot(hl.get_active_monitor())
                     hl.dispatch(hl.dsp.window.move({ workspace = slot * 10 + d }))
-                end)
+                end, { description = "Move window to workspace " .. d .. " on this monitor" })
             end
 
             -- Mouse binds
-            hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
-            hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+            hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true, description = "Drag window" })
+            hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true, description = "Resize window" })
 
             -- Window rules
             hl.window_rule({
@@ -379,6 +382,11 @@
 
           ".config/hypr/portal-launch.sh" = {
             source = ./portal-launch.sh;
+            executable = true;
+          };
+
+          ".config/hypr/keybinds.sh" = {
+            source = ./keybinds.sh;
             executable = true;
           };
 
