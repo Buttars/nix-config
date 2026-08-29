@@ -14,6 +14,8 @@
       <aegix/fish>
       <aegix/hyprland>
       <aegix/desktop-services>
+      <aegix/greeter>
+      <aegix/plymouth>
       <aegix/power-management>
       <aegix/fonts>
       <aegix/zsa>

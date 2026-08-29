@@ -13,14 +13,6 @@
           if test -f $HOME/.config/sops-nix/secrets/rendered/neovim-avante.env
             source $HOME/.config/sops-nix/secrets/rendered/neovim-avante.env
           end
-
-          if test (tty) = "/dev/tty1"
-            if type -q Hyprland
-              if not pgrep -x Hyprland > /dev/null
-                exec start-hyprland
-              end
-            end
-          end
         '';
       };
 
