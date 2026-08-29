@@ -26,6 +26,7 @@
       <aegix/theming>
       <aegix/opencode>
       <aegix/battery-notify>
+      <aegix/desktop-apps>
     ];
 
     nixos =

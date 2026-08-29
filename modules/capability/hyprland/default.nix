@@ -371,7 +371,6 @@
                 "^(eww)$",
                 "^(pavucontrol)$",
                 "^(nm-connection-editor)$",
-                "^(blueberry.py)$",
                 "^(org.gnome.Settings)$",
                 "^(org.gnome.design.Palette)$",
                 "^(Color Picker)$",
