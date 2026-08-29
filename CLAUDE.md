@@ -153,11 +153,38 @@ Follow **Conventional Commits** with imperative present tense:
 - `test`: Test additions or modifications
 - `perf`: Performance improvements
 
+**Scopes**: the scope is the module path with `modules/` and `.nix` stripped, so it doubles as a pointer to the file. If you cannot name a scope from this table, the change is probably too broad — split it.
+
+| Change touches                                     | Scope                     |
+| -------------------------------------------------- | ------------------------- |
+| `modules/profile/laptop.nix`                       | `profile/laptop`          |
+| `modules/capability/hyprland/`                     | `capability/hyprland`     |
+| `modules/app/kitty.nix`                            | `app/kitty`               |
+| `modules/platform/locale.nix`                      | `platform/locale`         |
+| `modules/hardware/nvidia.nix`                      | `hardware/nvidia`         |
+| `modules/lib/disks.nix`                            | `lib/disks`               |
+| `modules/hosts/torrens/`                           | `hosts/torrens`           |
+| `modules/users/buttars/`                           | `users/buttars`           |
+| `modules/flake/`                                   | `flake`                   |
+| `modules/den.nix`, `defaults.nix`, `ci-noboot.nix` | `den`                     |
+| `pkgs/<name>.nix`, `overlays/`                     | `pkgs/<name>`, `overlays` |
+| `CLAUDE.md`                                        | `claude`                  |
+| `docs/`                                            | `docs` or `docs/<area>`   |
+| a whole layer, or the stack itself                 | `modules`                 |
+
+Choosing between them:
+
+1. **One aspect changed** → `<layer>/<aspect>`. The common case.
+2. **Several files serving one feature** → the scope of the thing being added, usually the capability that composes it or the app that owns it. Adding `app/waybar.nix` plus its data files is still `app/waybar`.
+3. **A layer-wide change** → the bare layer name (`capability`, `app`). A change spanning layers structurally → `modules`.
+4. **Entities win over layers.** Enabling an existing aspect on one machine is `hosts/<name>`, not the aspect's scope — the aspect did not change.
+5. **Several unrelated things** → not a scope problem. Split the commit.
+
 **Examples**:
 
-- `feat(host/buttars-laptop): add nvidia driver support`
-- `fix(features/fish): shell initialization fails on first login`
-- `refactor(modules): extract common disk configuration`
+- `feat(hosts/buttars-laptop): add nvidia driver support`
+- `fix(app/fish): shell initialization fails on first login`
+- `refactor(modules): rename base layer to platform`
 - `chore(flake): update lockfile`
 
 **Commit bodies**: Prefer empty bodies unless there is relevant information (e.g., issue links, breaking changes, or non-obvious context).
