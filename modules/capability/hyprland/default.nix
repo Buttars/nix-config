@@ -9,6 +9,7 @@
       <aegix/polkit-agent>
       <aegix/cliphist>
       <aegix/satty>
+      <aegix/swaync>
     ];
 
     nixos = {
@@ -57,7 +58,6 @@
           libnotify
           nautilus
           slurp
-          swaynotificationcenter
           waypaper
           wl-clipboard
           wlogout
@@ -105,7 +105,6 @@
 
             hl.on("hyprland.start", function()
                 hl.exec_cmd("hyprpaper")
-                hl.exec_cmd("swaync")
                 hl.exec_cmd("xremap ~/.config/xremap/xremap.config")
                 hl.exec_cmd("sh ~/.config/hypr/portal-launch.sh")
                 setup_cursor()

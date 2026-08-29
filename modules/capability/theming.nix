@@ -37,6 +37,9 @@
         # so the stylix target would only conflict over `background`.
         hyprlock.enable = false;
         hyprpaper.enable = true;
+        swaync.enable = true;
+        bat.enable = true;
+        btop.enable = true;
       };
       # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rebecca.yaml";
 

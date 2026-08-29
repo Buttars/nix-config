@@ -7,7 +7,6 @@
           with pkgs;
           [
             (intelli-shell.overrideAttrs { doCheck = false; })
-            bat
             dig
             eza
             fd
@@ -21,6 +20,9 @@
           ++ lib.optionals pkgs.stdenv.isLinux [
             trashy
           ];
+
+        programs.bat.enable = true;
+        programs.btop.enable = true;
 
         programs.television = {
           enable = true;
@@ -49,7 +51,6 @@
         { pkgs, ... }:
         {
           home.packages = with pkgs; [
-            btop
             diffnav
             gh
             gh-dash
