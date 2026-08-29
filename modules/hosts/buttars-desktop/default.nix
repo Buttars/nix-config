@@ -19,6 +19,7 @@
       <aegix/fish>
       <aegix/hyprland>
       <aegix/desktop-services>
+      <aegix/file-chooser>
       <aegix/greeter>
       <aegix/plymouth>
       <aegix/fonts>

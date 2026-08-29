@@ -375,6 +375,7 @@
 
             for _, cls in ipairs({
                 "^(Rofi)$",
+                "^(termfilechooser)$",
                 "^(org.gnome.Calculator)$",
                 "^(org.gnome.Nautilus)$",
                 "^(eww)$",
