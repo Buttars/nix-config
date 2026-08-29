@@ -12,6 +12,7 @@
       <aegix/swaync>
       <aegix/wallpaper>
       <aegix/media-keys>
+      <aegix/wlogout>
     ];
 
     nixos = {
@@ -62,7 +63,6 @@
           slurp
           waypaper
           wl-clipboard
-          wlogout
           xdg-desktop-portal-hyprland
           xremap
         ];
