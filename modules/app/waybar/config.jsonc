@@ -5,7 +5,7 @@
   "spacing": 0,
   "height": 26,
   "modules-left": ["hyprland/workspaces"],
-  "modules-center": ["clock", "custom/screenrecording-indicator"],
+  "modules-center": ["clock"],
   "modules-right": [
     "group/tray-expander",
     "bluetooth",
@@ -104,7 +104,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "omarchy-launch-wifi"
+    "on-click": "$TERMINAL -e nmtui"
   },
   "battery": {
     "format": "{capacity}% {icon}",
@@ -130,12 +130,12 @@
     "format-disabled": "󰂲",
     "format-connected": "",
     "tooltip-format": "Devices connected: {num_connections}",
-    "on-click": "blueberry"
+    "on-click": "blueman-manager"
   },
   "pulseaudio": {
     "format": "{icon}",
-    "on-click": "$TERMINAL --class=Wiremix -e wiremix",
-    "on-click-right": "pamixer -t",
+    "on-click": "pavucontrol",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,
     "format-muted": "",
