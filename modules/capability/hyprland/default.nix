@@ -209,7 +209,7 @@
                         hl.bind(mod .. " + W",                 hl.dsp.exec_cmd("$BROWSER"),                                                  { description = "Browser" })
                         hl.bind(mod .. " + SHIFT + W",         hl.dsp.exec_cmd("kitty -e sudo nmtui"),                                       { description = "Network manager (nmtui)" })
                         hl.bind(mod .. " + SHIFT + R",         hl.dsp.exec_cmd("kitty -e htop"),                                             { description = "Process monitor (htop)" })
-                        hl.bind(mod .. " + D",                 hl.dsp.exec_cmd("rofi -show drun & sleep 0.2; hyprctl dispatch focuswindow \"\\^(Rofi)\""), { description = "App launcher (rofi)" })
+                        hl.bind(mod .. " + D",                 hl.dsp.exec_cmd("rofi -show drun"),                                           { description = "App launcher (rofi)" })
                         hl.bind(mod .. " + N",                 hl.dsp.exec_cmd("kitty -e nvim -c VimwikiIndex"),                             { description = "Notes (vimwiki)" })
                         hl.bind(mod .. " + SHIFT + N",         hl.dsp.exec_cmd("kitty -e newsboat"),                                         { description = "RSS reader (newsboat)" })
                         hl.bind(mod .. " + M",                 hl.dsp.exec_cmd("kitty -e ncmpcpp"),                                          { description = "Music player (ncmpcpp)" })
@@ -394,7 +394,6 @@
                         })
 
                         for _, cls in ipairs({
-                            "^(Rofi)$",
                             "^(termfilechooser)$",
                             "^(org.gnome.Calculator)$",
                             "^(org.gnome.Nautilus)$",
@@ -412,7 +411,12 @@
                         }) do
                             hl.window_rule({ match = { class = cls }, float = true })
                         end
+
+                        -- rofi 2.x is a layer-shell surface, not a window, so
+                        -- window rules never match it. Layer rules do.
+                        hl.layer_rule({ match = { namespace = "^(rofi)$" }, animation = "popin 90%" })
           '';
+
         };
 
         home.file = {
