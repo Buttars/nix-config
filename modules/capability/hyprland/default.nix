@@ -188,18 +188,20 @@
                             },
                         })
 
-                        -- Animation curves
-                        hl.curve("snap",      { type = "bezier", points = { { 0.05, 0.9  }, { 0.1,  1.0  } } })
-                        hl.curve("overshoot", { type = "bezier", points = { { 0.05, 0.9  }, { 0.1,  1.05 } } })
-                        hl.curve("smooth",    { type = "bezier", points = { { 0.25, 0.1  }, { 0.25, 1.0  } } })
+                        -- Animation curves. Speeds are deciseconds, so 2 = 200ms.
+                        -- Kept short deliberately: motion should confirm what
+                        -- happened, not delay it.
+                        hl.curve("snap", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.0 } } })
 
-                        hl.animation({ leaf = "windowsIn",   enabled = true, speed = 5, bezier = "overshoot", style = "popin 80%" })
-                        hl.animation({ leaf = "windowsOut",  enabled = true, speed = 4, bezier = "smooth",    style = "popin 80%" })
-                        hl.animation({ leaf = "windowsMove", enabled = true, speed = 4, bezier = "snap"      })
-                        hl.animation({ leaf = "border",      enabled = true, speed = 6, bezier = "smooth"    })
-                        hl.animation({ leaf = "borderangle", enabled = true, speed = 3, bezier = "smooth"    })
-                        hl.animation({ leaf = "fade",        enabled = true, speed = 4, bezier = "smooth"    })
-                        hl.animation({ leaf = "workspaces",  enabled = true, speed = 5, bezier = "snap",      style = "slide" })
+                        hl.animation({ leaf = "windowsIn",   enabled = true, speed = 3, bezier = "snap", style = "popin 90%" })
+                        hl.animation({ leaf = "windowsOut",  enabled = true, speed = 2, bezier = "snap", style = "popin 90%" })
+                        hl.animation({ leaf = "windowsMove", enabled = true, speed = 2, bezier = "snap" })
+                        hl.animation({ leaf = "border",      enabled = true, speed = 2, bezier = "snap" })
+                        -- borderangle rotates the gradient continuously, which is
+                        -- perpetual motion in the corner of your eye.
+                        hl.animation({ leaf = "borderangle", enabled = false })
+                        hl.animation({ leaf = "fade",        enabled = true, speed = 2, bezier = "snap" })
+                        hl.animation({ leaf = "workspaces",  enabled = true, speed = 3, bezier = "snap", style = "slide" })
 
                         -- Keybindings
                         local mod = "SUPER"
