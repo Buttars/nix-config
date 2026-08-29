@@ -45,6 +45,8 @@
           "C /home/buttars/.ssh/id_ed25519.pub 0644 buttars users - ${./keys/id_ed25519.pub}"
         ];
 
+        security.sudo.wheelNeedsPassword = false;
+
         users.mutableUsers = false;
         users.users.buttars.hashedPasswordFile = config.sops.secrets.buttars-password.path;
         users.users.buttars.extraGroups = [
