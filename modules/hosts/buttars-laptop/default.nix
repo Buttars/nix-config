@@ -13,6 +13,7 @@
       <aegix/fish>
       <aegix/hyprland>
       <aegix/desktop-services>
+      <aegix/power-management>
       <aegix/fonts>
       <aegix/zsa>
       <aegix/sops>

@@ -11,6 +11,7 @@
     "bluetooth",
     "network",
     "pulseaudio",
+    "power-profiles-daemon",
     "cpu",
     "memory",
     "temperature",
@@ -45,6 +46,16 @@
     "interval": 5,
     "format": "󰍛",
     "on-click": "$TERMINAL -e btop"
+  },
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}",
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
   },
   "memory": {
     "interval": 5,
