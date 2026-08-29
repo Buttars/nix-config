@@ -12,6 +12,9 @@
       <aegix/swaync>
       <aegix/wallpaper>
       <aegix/media-keys>
+      <aegix/mpd>
+      <aegix/newsboat>
+      <aegix/screenkey>
       <aegix/wlogout>
     ];
 
