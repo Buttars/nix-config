@@ -62,7 +62,6 @@
           "*/.gitignore"
           "modules/app/sops/secrets.yaml"
           "modules/app/rofi/*.rasi"
-          "modules/app/rofi/themes/*.rasi"
           "modules/app/waybar/config.jsonc"
           "modules/app/waybar/style.css"
           "modules/hosts/*/host_key/ssh_host_ed25519_key"

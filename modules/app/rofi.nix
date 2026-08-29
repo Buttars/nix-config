@@ -11,9 +11,6 @@
       (import ../lib/_mutable-files.nix { inherit config lib; } "rofi" {
         "rofi/config.rasi" = ./rofi/config.rasi;
         "rofi/current.rasi" = ./rofi/current.rasi;
-        "rofi/themes/rounded-common.rasi" = ./rofi/themes/rounded-common.rasi;
-        "rofi/themes/rounded-gray-dark.rasi" = ./rofi/themes/rounded-gray-dark.rasi;
-        "rofi/themes/rounded-nord-dark.rasi" = ./rofi/themes/rounded-nord-dark.rasi;
       })
       {
         home.packages = [ pkgs.rofi ];
