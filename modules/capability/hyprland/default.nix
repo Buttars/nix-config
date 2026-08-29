@@ -11,6 +11,7 @@
       <aegix/satty>
       <aegix/swaync>
       <aegix/wallpaper>
+      <aegix/media-keys>
     ];
 
     nixos = {
@@ -256,6 +257,10 @@
             hl.bind(mod .. " + minus",       hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true, description = "Volume down" })
             hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl set +10%"),                         { locked = true, description = "Brightness up" })
             hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 10%-"),                         { locked = true, description = "Brightness down" })
+            hl.bind("XF86AudioPlay",         hl.dsp.exec_cmd("playerctl play-pause"),                          { locked = true, description = "Play / pause" })
+            hl.bind("XF86AudioNext",         hl.dsp.exec_cmd("playerctl next"),                                { locked = true, description = "Next track" })
+            hl.bind("XF86AudioPrev",         hl.dsp.exec_cmd("playerctl previous"),                            { locked = true, description = "Previous track" })
+            hl.bind("XF86AudioStop",         hl.dsp.exec_cmd("playerctl stop"),                                { locked = true, description = "Stop playback" })
 
             -- Notification control
             hl.bind(mod .. " + CTRL + C", hl.dsp.exec_cmd("swaync-client --close-all"), { description = "Dismiss all notifications" })
