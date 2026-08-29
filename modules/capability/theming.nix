@@ -23,6 +23,18 @@
       gtk.iconTheme.name = "Papirus-Dark";
 
       stylix.enable = true;
+
+      stylix.targets = {
+        gtk.enable = true;
+        qt.enable = true;
+        kitty.enable = true;
+        fish.enable = true;
+        fzf.enable = true;
+        yazi.enable = true;
+        hyprland.enable = true;
+        hyprlock.enable = true;
+        hyprpaper.enable = true;
+      };
       # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rebecca.yaml";
 
       stylix = {
@@ -44,12 +56,12 @@
 
         sansSerif = {
           package = pkgs.inter-nerdfont;
-          name = "Inter NerdFont";
+          name = "Inter Variable";
         };
 
         monospace = {
           package = pkgs.nerd-fonts.commit-mono;
-          name = "Commit Mono NerdFont";
+          name = "CommitMono Nerd Font Mono";
         };
 
         emoji = {

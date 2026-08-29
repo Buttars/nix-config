@@ -23,6 +23,7 @@
       <aegix/sops>
       <aegix/printing3d>
       <aegix/reticulum>
+      <aegix/theming>
       <aegix/opencode>
     ];
 
