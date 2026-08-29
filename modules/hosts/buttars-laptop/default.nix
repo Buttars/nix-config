@@ -10,6 +10,7 @@
   den.aspects.buttars-laptop = {
     includes = [
       <aegix/audio>
+      <aegix/bluetooth>
       <aegix/fish>
       <aegix/hyprland>
       <aegix/desktop-services>
