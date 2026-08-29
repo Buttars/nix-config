@@ -14,6 +14,7 @@
       <aegix/terminal-emulator>
       <aegix/neovim>
       <aegix/cli>
+      <aegix/archive-tools>
       <aegix/cli/tui>
       <aegix/git>
       <aegix/jj>
