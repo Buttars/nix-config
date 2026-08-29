@@ -22,14 +22,6 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    dotfiles = {
-      type = "git";
-      url = "https://github.com/Buttars/.dotfiles";
-      rev = "a52773c370f6837c666292e24adbbffe43a61de1";
-      ref = "main";
-      submodules = false;
-      flake = false;
-    };
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";

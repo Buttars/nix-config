@@ -1,5 +1,11 @@
+{ __findFile, ... }:
 {
   aegix.hyprland = {
+    includes = [
+      <aegix/waybar>
+      <aegix/rofi>
+    ];
+
     nixos = {
       nix.settings = {
         substituters = [ "https://hyprland.cachix.org" ];
@@ -37,10 +43,8 @@
           jq
           libnotify
           nautilus
-          rofi
           slurp
           swaynotificationcenter
-          waybar
           waypaper
           wl-clipboard
           wlogout
@@ -359,19 +363,6 @@
                 hl.window_rule({ match = { class = cls }, float = true })
             end
           '';
-        };
-
-        systemd.user.services.waybar = lib.mkIf pkgs.stdenv.isLinux {
-          Unit = {
-            Description = "Waybar";
-            After = [ "graphical-session.target" ];
-          };
-          Service = {
-            ExecStart = "${pkgs.waybar}/bin/waybar";
-            Restart = "on-failure";
-            RestartSec = 2;
-          };
-          Install.WantedBy = [ "default.target" ];
         };
 
         home.file = {
