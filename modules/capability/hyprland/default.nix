@@ -7,6 +7,8 @@
       <aegix/hyprlock>
       <aegix/hypridle>
       <aegix/polkit-agent>
+      <aegix/cliphist>
+      <aegix/satty>
     ];
 
     nixos = {
@@ -192,7 +194,8 @@
             hl.bind(mod .. " + M",                 hl.dsp.exec_cmd("kitty -e ncmpcpp"),                                          { description = "Music player (ncmpcpp)" })
             hl.bind(mod .. " + SHIFT + M",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),                { description = "Mute toggle" })
             hl.bind(mod .. " + Scroll_Lock",       hl.dsp.exec_cmd("killall screenkey || screenkey &"),                          { description = "Screenkey toggle" })
-            hl.bind(mod .. " + SHIFT + S",         hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | wl-copy"),                       { description = "Screenshot region to clipboard" })
+            hl.bind(mod .. " + SHIFT + S",         hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | satty -f - --copy-command wl-copy --early-exit"), { description = "Screenshot region, annotate, copy" })
+            hl.bind(mod .. " + V",                 hl.dsp.exec_cmd("cliphist list | rofi -dmenu -i -p clipboard | cliphist decode | wl-copy"), { description = "Clipboard history" })
             hl.bind(mod .. " + CTRL + S",          hl.dsp.exec_cmd("grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%s).png - | tee >(wl-copy) > /dev/null && notify-send 'Screenshot taken!'"), { description = "Screenshot region to file" })
             hl.bind(mod .. " + ALT + L",           hl.dsp.exec_cmd("hyprlock"),                                                  { description = "Lock screen" })
             hl.bind(mod .. " + SHIFT + ALT + L",   hl.dsp.exec_cmd("hyprlock & systemctl suspend"),                              { description = "Lock and suspend" })
