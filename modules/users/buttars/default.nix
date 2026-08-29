@@ -20,6 +20,7 @@
       <aegix/herdr>
       <aegix/hyprland>
       <aegix/brave>
+      <aegix/vivaldi>
       <aegix/sops>
       <aegix/printing3d>
       <aegix/reticulum>
