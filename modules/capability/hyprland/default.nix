@@ -10,6 +10,7 @@
       <aegix/cliphist>
       <aegix/satty>
       <aegix/swaync>
+      <aegix/wallpaper>
     ];
 
     nixos = {
@@ -104,7 +105,7 @@
             end
 
             hl.on("hyprland.start", function()
-                hl.exec_cmd("hyprpaper")
+                hl.exec_cmd("random-wallpaper")
                 hl.exec_cmd("xremap ~/.config/xremap/xremap.config")
                 hl.exec_cmd("sh ~/.config/hypr/portal-launch.sh")
                 setup_cursor()
@@ -195,6 +196,7 @@
             hl.bind(mod .. " + Scroll_Lock",       hl.dsp.exec_cmd("killall screenkey || screenkey &"),                          { description = "Screenkey toggle" })
             hl.bind(mod .. " + SHIFT + S",         hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | satty -f - --copy-command wl-copy --early-exit"), { description = "Screenshot region, annotate, copy" })
             hl.bind(mod .. " + V",                 hl.dsp.exec_cmd("cliphist list | rofi -dmenu -i -p clipboard | cliphist decode | wl-copy"), { description = "Clipboard history" })
+            hl.bind(mod .. " + SHIFT + P",         hl.dsp.exec_cmd("random-wallpaper"),                                          { description = "Shuffle wallpaper" })
             hl.bind(mod .. " + CTRL + S",          hl.dsp.exec_cmd("grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%s).png - | tee >(wl-copy) > /dev/null && notify-send 'Screenshot taken!'"), { description = "Screenshot region to file" })
             hl.bind(mod .. " + ALT + L",           hl.dsp.exec_cmd("hyprlock"),                                                  { description = "Lock screen" })
             hl.bind(mod .. " + SHIFT + ALT + L",   hl.dsp.exec_cmd("hyprlock & systemctl suspend"),                              { description = "Lock and suspend" })
