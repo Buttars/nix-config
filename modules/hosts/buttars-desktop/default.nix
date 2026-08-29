@@ -24,6 +24,7 @@
       <aegix/nfs-utils>
       <aegix/syncthing>
       <aegix/reticulum>
+      <aegix/ollama>
       # (<aegix/disks/btrfs> {
       #   disk = "/dev/sda";
       #   withSwap = true;
