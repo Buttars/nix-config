@@ -11,6 +11,7 @@
       <aegix/satty>
       <aegix/swaync>
       <aegix/wallpaper>
+      <aegix/wdisplays>
       <aegix/media-keys>
       <aegix/mpd>
       <aegix/newsboat>
