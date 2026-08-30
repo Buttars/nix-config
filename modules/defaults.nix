@@ -13,6 +13,7 @@
     includes = [
       <den/define-user>
       <aegix/devenv>
+      <aegix/locale>
       <aegix/neovim>
       (
         { host, ... }:
@@ -45,10 +46,8 @@
         "flakes"
         "ca-derivations"
       ];
-      i18n.defaultLocale = "en_US.UTF-8";
       i18n.supportedLocales = [ "all" ];
       system.stateVersion = "25.11";
-      time.timeZone = "America/Denver";
       boot.initrd.systemd.enable = true;
     };
 
