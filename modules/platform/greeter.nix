@@ -6,6 +6,12 @@
     environment.pathsToLink = [ "/share/wayland-sessions" ];
 
     services.displayManager.regreet.enable = true;
+    services.displayManager.regreet.cageArgs = [
+      "-s"
+      "-d"
+      "-m"
+      "extend"
+    ];
     stylix.targets.regreet.enable = true;
   };
 }
