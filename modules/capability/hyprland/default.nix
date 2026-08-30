@@ -256,6 +256,35 @@
                         hl.bind(mod .. " + C",               hl.dsp.window.center(),                           { description = "Center window" })
                         hl.bind(mod .. " + SHIFT + C",       hl.dsp.layout("fit active"),                      { description = "Fit: active column fills screen" })
 
+                        hl.bind(mod .. " + Y", function()
+                            local layouts   = { "scrolling", "monocle" }
+                            local workspace = hl.get_active_workspace()
+                            if hl.get_active_special_workspace() then
+                                workspace = hl.get_active_special_workspace()
+                            end
+
+                            if not workspace then
+                                return
+                            end
+
+                            local next_layout = layouts[1]
+                            for i = 1, #layouts do
+                                if layouts[i] == workspace.tiled_layout then
+                                    next_layout = layouts[(i % #layouts) + 1]
+                                    break
+                                end
+                            end
+
+                            if workspace.special then
+                                hl.workspace_rule({ workspace = tostring(workspace.name), layout = next_layout })
+                            else
+                                hl.workspace_rule({ workspace = tostring(workspace.id), layout = next_layout })
+                            end
+                        end, { description = "Cycle layout (scrolling / monocle)" })
+
+                        hl.bind(mod .. " + SHIFT + Y",  hl.dsp.layout("cyclenext"),                       { description = "Monocle: next window" })
+                        hl.bind(mod .. " + CTRL + Y",   hl.dsp.layout("cycleprev"),                       { description = "Monocle: previous window" })
+
                         -- Monitor navigation
                         hl.bind(mod .. " + left",          hl.dsp.focus({ monitor = "-1" }),       { release = true, description = "Focus monitor left" })
                         hl.bind(mod .. " + right",         hl.dsp.focus({ monitor = "+1" }),       { release = true, description = "Focus monitor right" })
