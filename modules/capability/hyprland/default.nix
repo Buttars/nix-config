@@ -292,8 +292,10 @@
                         hl.bind(mod .. " + SHIFT + left",  hl.dsp.window.move({ monitor = "-1" }), { release = true, description = "Move window to monitor left" })
 
                         -- Resize windows
-                        hl.bind(mod .. " + comma",  hl.dsp.layout("colresize -0.05"), { description = "Column narrower" })
-                        hl.bind(mod .. " + period", hl.dsp.layout("colresize +0.05"), { description = "Column wider" })
+                        hl.bind(mod .. " + comma",  hl.dsp.layout("colresize -conf"), { description = "Column to previous preset width" })
+                        hl.bind(mod .. " + period", hl.dsp.layout("colresize +conf"), { description = "Column to next preset width" })
+                        hl.bind(mod .. " + SHIFT + comma",  hl.dsp.layout("colresize -0.05"), { description = "Column narrower" })
+                        hl.bind(mod .. " + SHIFT + period", hl.dsp.layout("colresize +0.05"), { description = "Column wider" })
                         hl.bind(mod .. " + SHIFT + J", hl.dsp.window.resize({ x = 0, y = 100,  relative = true }), { description = "Window taller" })
                         hl.bind(mod .. " + SHIFT + K", hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { description = "Window shorter" })
 
