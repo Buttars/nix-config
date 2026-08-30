@@ -21,6 +21,8 @@
       <aegix/herdr>
       <aegix/hyprland>
       <aegix/brave>
+      <aegix/claude>
+      <aegix/discord>
       <aegix/vivaldi>
       <aegix/sops>
       <aegix/bitwarden>
@@ -74,10 +76,8 @@
       { pkgs, ... }:
       {
         home.packages = with pkgs; [
-          claude-code
           nvd
           obsidian
-          discord
         ];
         home.sessionVariables.HERDR_AGENT = "claude";
 
