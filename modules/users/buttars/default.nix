@@ -53,6 +53,8 @@
           "C /home/buttars/.ssh/id_ed25519.pub 0644 buttars users - ${./keys/id_ed25519.pub}"
         ];
 
+        users.users.buttars.openssh.authorizedKeys.keyFiles = [ ./keys/id_ed25519.pub ];
+
         security.sudo.wheelNeedsPassword = false;
 
         users.mutableUsers = false;
