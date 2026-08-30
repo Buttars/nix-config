@@ -12,7 +12,6 @@
         home.packages = with pkgs; [
           atac
           compose2nix
-          devenv
           devpod
           lazydocker
           nixpkgs-fmt
