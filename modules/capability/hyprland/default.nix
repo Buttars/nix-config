@@ -166,6 +166,8 @@
                                 -- 0 = center, 1 = fit. fit aligns a column to the viewport
                                 -- edge, which slams the window left on unfullscreen.
                                 focus_fit_method = 0,
+                                column_width = 0.6,
+                                explicit_column_widths = "0.4, 0.6, 0.8, 1.0",
                             },
                             misc = {
                                 disable_hyprland_logo     = true,
