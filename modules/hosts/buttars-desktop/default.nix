@@ -45,6 +45,8 @@
         boot.kernelModules = [ "kvm-intel" ];
         boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+        aegix.plymouth.disabledOutputs = [ "DP-3" ];
+
         environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/by-path/pci-0000:01:00.0-card";
 
         services.xserver.videoDrivers = [
