@@ -67,6 +67,25 @@
 
         services.openssh.enable = true;
         services.syncthing.user = "buttars";
+
+        home-manager.users.buttars = {
+          wayland.windowManager.hyprland.settings = {
+            monitor = [
+              {
+                output = "DP-3";
+                mode = "3840x2160@60";
+                position = "0x0";
+                scale = 1;
+              }
+              {
+                output = "DP-1";
+                mode = "1920x1080@144";
+                position = "3840x0";
+                scale = 1;
+              }
+            ];
+          };
+        };
       };
   };
 
