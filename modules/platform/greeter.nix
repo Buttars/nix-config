@@ -5,7 +5,7 @@
     # system profile and the session list comes up empty.
     environment.pathsToLink = [ "/share/wayland-sessions" ];
 
-    programs.regreet.enable = true;
+    services.displayManager.regreet.enable = true;
     stylix.targets.regreet.enable = true;
   };
 }
