@@ -74,7 +74,10 @@
       home.packages = [ battery-notify ];
 
       systemd.user.services.battery-notify = {
-        Unit.Description = "Low battery notification";
+        Unit = {
+          Description = "Low battery notification";
+          ConditionPathExistsGlob = "/sys/class/power_supply/BAT*";
+        };
         Service = {
           Type = "oneshot";
           ExecStart = "${battery-notify}/bin/battery-notify";
