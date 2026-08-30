@@ -14,9 +14,9 @@
 
       xdg.configFile."wlogout/layout".text = ''
         { "label": "lock",     "action": "hyprlock",            "text": "Lock",     "keybind": "l" }
-        { "label": "hibernate","action": "systemctl hibernate", "text": "Hibernate","keybind": "h" }
+        { "label": "hibernate","action": "hyprlock & systemctl hibernate", "text": "Hibernate","keybind": "h" }
         { "label": "logout",   "action": "hyprctl dispatch exit","text": "Log out", "keybind": "e" }
-        { "label": "suspend",  "action": "systemctl suspend",   "text": "Suspend",  "keybind": "u" }
+        { "label": "suspend",  "action": "hyprlock & systemctl suspend",   "text": "Suspend",  "keybind": "u" }
         { "label": "reboot",   "action": "systemctl reboot",    "text": "Reboot",   "keybind": "r" }
         { "label": "shutdown", "action": "systemctl poweroff",  "text": "Shutdown", "keybind": "s" }
       '';

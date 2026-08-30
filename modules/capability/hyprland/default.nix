@@ -221,10 +221,8 @@
                         hl.bind(mod .. " + SHIFT + P",         hl.dsp.exec_cmd("random-wallpaper"),                                          { description = "Shuffle wallpaper" })
                         hl.bind(mod .. " + CTRL + S",          hl.dsp.exec_cmd("grim -g \"$(slurp)\" ~/Pictures/screenshot-$(date +%s).png - | tee >(wl-copy) > /dev/null && notify-send 'Screenshot taken!'"), { description = "Screenshot region to file" })
                         hl.bind(mod .. " + CTRL + L",           hl.dsp.exec_cmd("hyprlock"),                                                  { description = "Lock screen" })
-                        hl.bind(mod .. " + CTRL + SHIFT + S",   hl.dsp.exec_cmd("hyprlock & systemctl suspend"),                              { description = "Lock and suspend" })
-                        hl.bind(mod .. " + CTRL + SHIFT + H",   hl.dsp.exec_cmd("hyprlock & systemctl hibernate"),                            { description = "Lock and hibernate" })
+                        hl.bind(mod .. " + CTRL + SHIFT + L",   hl.dsp.exec_cmd("wlogout"),                                                   { description = "Power menu (lock, suspend, hibernate, ...)" })
                         hl.bind(mod .. " + Q",                 hl.dsp.window.close(),                                                        { description = "Close window" })
-                        hl.bind(mod .. " + SHIFT + Q",         hl.dsp.exec_cmd("wlogout"),                                                   { description = "Power menu (wlogout)" })
                         hl.bind(mod .. " + SHIFT + BACKSPACE", hl.dsp.exit(),                                                                { description = "Exit Hyprland" })
 
                         -- Layout / Window control
