@@ -71,6 +71,9 @@
         services.syncthing.user = "buttars";
 
         home-manager.users.buttars = {
+          aegix.hyprland.monitorMode = "static";
+          aegix.hyprland.primaryMonitor = "DP-2";
+
           wayland.windowManager.hyprland.settings = {
             monitor = [
               {
