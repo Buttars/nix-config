@@ -78,8 +78,8 @@
                 scale = 1;
               }
               {
-                output = "DP-1";
-                mode = "1920x1080@144";
+                output = "DP-2";
+                mode = "1920x1080@60";
                 position = "3840x0";
                 scale = 1;
               }
