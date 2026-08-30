@@ -73,6 +73,7 @@
         home-manager.users.buttars = {
           aegix.hyprland.monitorMode = "static";
           aegix.hyprland.primaryMonitor = "DP-2";
+          aegix.hypridle.autoSleep = false;
 
           wayland.windowManager.hyprland.settings = {
             monitor = [
