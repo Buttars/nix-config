@@ -15,6 +15,7 @@
       <aegix/zsh/fzf-nav>
       <aegix/yazi>
       <aegix/workstation>
+      <aegix/omniwm>
       <aegix/slack>
       <aegix/cloud>
       <aegix/toolsets/node>
