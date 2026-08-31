@@ -257,13 +257,47 @@
                           hl.bind(mod .. " + SHIFT + H",       hl.dsp.layout("swapcol l"),                       { description = "Move column left" })
                           hl.bind(mod .. " + SHIFT + L",       hl.dsp.layout("swapcol r"),                       { description = "Move column right" })
                           hl.bind(mod .. " + space",           hl.dsp.layout("promote"),                         { description = "Promote window to its own column" })
-                          hl.bind(mod .. " + A",               hl.dsp.layout("consume"),                         { description = "Consume next column into this one (needs a column to the right)" })
-                          hl.bind(mod .. " + SHIFT + A",       hl.dsp.layout("expel"),                           { description = "Expel window to its own column (needs a stacked column)" })
-                          hl.bind(mod .. " + O",               hl.dsp.layout("fit expand"),                      { description = "Fit: expand column to free space" })
-                          hl.bind(mod .. " + T",               hl.dsp.layout("fit toend"),                       { description = "Fit: active column to end of row" })
-                          hl.bind(mod .. " + B",               hl.dsp.layout("fit tobeg"),                       { description = "Fit: start of row to active column" })
                           hl.bind(mod .. " + C",               hl.dsp.window.center(),                           { description = "Center window" })
-                          hl.bind(mod .. " + SHIFT + C",       hl.dsp.layout("fit active"),                      { description = "Fit: active column fills screen" })
+                          hl.bind(mod .. " + A", hl.dsp.submap("arrange"), { description = "Arrange mode (fit, promote, consume, expel)" })
+                          hl.bind(mod .. " + R", hl.dsp.submap("resize"),  { description = "Resize mode (width, height, presets)" })
+
+                          local once = function(key, action, description)
+                              hl.bind(key, function()
+                                  hl.dispatch(action)
+                                  hl.dispatch(hl.dsp.submap("reset"))
+                              end, { description = description })
+                          end
+
+                          local leave = function()
+                              hl.bind("escape", hl.dsp.submap("reset"), { description = "Leave mode" })
+                              hl.bind("return", hl.dsp.submap("reset"), { description = "Leave mode" })
+                              hl.bind(mod, hl.dsp.submap("reset"), { description = "Leave mode" })
+                          end
+
+                          hl.define_submap("arrange", function()
+                              once("e", hl.dsp.layout("fit expand"), "Expand column into free space")
+                              once("t", hl.dsp.layout("fit toend"),  "Fit active column to end of row")
+                              once("b", hl.dsp.layout("fit tobeg"),  "Fit start of row to active column")
+                              once("f", hl.dsp.layout("fit active"), "Active column fills screen")
+                              once("p", hl.dsp.layout("promote"),    "Promote window to its own column")
+                              once("c", hl.dsp.layout("consume"),    "Consume next column into this one")
+                              once("x", hl.dsp.layout("expel"),      "Expel window to its own column")
+                              leave()
+                          end)
+
+                          hl.define_submap("resize", function()
+                              hl.bind("h", hl.dsp.layout("colresize -0.05"), { description = "Column narrower" })
+                              hl.bind("l", hl.dsp.layout("colresize +0.05"), { description = "Column wider" })
+                              hl.bind("j", hl.dsp.window.resize({ x = 0, y = 100,  relative = true }), { description = "Window taller" })
+                              hl.bind("k", hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { description = "Window shorter" })
+                              hl.bind("comma",  hl.dsp.layout("colresize -conf"), { description = "Previous preset width" })
+                              hl.bind("period", hl.dsp.layout("colresize +conf"), { description = "Next preset width" })
+                              once("1", hl.dsp.layout("colresize 0.4"), "Column to 40%")
+                              once("2", hl.dsp.layout("colresize 0.6"), "Column to 60%")
+                              once("3", hl.dsp.layout("colresize 0.8"), "Column to 80%")
+                              once("4", hl.dsp.layout("colresize 1.0"), "Column fills screen")
+                              leave()
+                          end)
 
                           hl.bind(mod .. " + Y", function()
                               local layouts   = { "scrolling", "monocle" }
@@ -300,13 +334,6 @@
                           hl.bind(mod .. " + SHIFT + right", hl.dsp.window.move({ monitor = "+1" }), { release = true, description = "Move window to monitor right" })
                           hl.bind(mod .. " + SHIFT + left",  hl.dsp.window.move({ monitor = "-1" }), { release = true, description = "Move window to monitor left" })
 
-                          -- Resize windows
-                          hl.bind(mod .. " + comma",  hl.dsp.layout("colresize -conf"), { description = "Column to previous preset width" })
-                          hl.bind(mod .. " + period", hl.dsp.layout("colresize +conf"), { description = "Column to next preset width" })
-                          hl.bind(mod .. " + SHIFT + comma",  hl.dsp.layout("colresize -0.05"), { description = "Column narrower" })
-                          hl.bind(mod .. " + SHIFT + period", hl.dsp.layout("colresize +0.05"), { description = "Column wider" })
-                          hl.bind(mod .. " + SHIFT + J", hl.dsp.window.resize({ x = 0, y = 100,  relative = true }), { description = "Window taller" })
-                          hl.bind(mod .. " + SHIFT + K", hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { description = "Window shorter" })
 
                           -- Workspace cycling
                           hl.bind(mod .. " + Tab",         hl.dsp.focus({ workspace = "m+1" }), { description = "Next workspace on this monitor" })
