@@ -329,10 +329,10 @@
                           hl.bind(mod .. " + CTRL + Y",   hl.dsp.layout("cycleprev"),                       { description = "Monocle: previous window" })
 
                           -- Monitor navigation
-                          hl.bind(mod .. " + left",          hl.dsp.focus({ monitor = "-1" }),       { release = true, description = "Focus monitor left" })
-                          hl.bind(mod .. " + right",         hl.dsp.focus({ monitor = "+1" }),       { release = true, description = "Focus monitor right" })
-                          hl.bind(mod .. " + SHIFT + right", hl.dsp.window.move({ monitor = "+1" }), { release = true, description = "Move window to monitor right" })
-                          hl.bind(mod .. " + SHIFT + left",  hl.dsp.window.move({ monitor = "-1" }), { release = true, description = "Move window to monitor left" })
+                          hl.bind(mod .. " + I",          hl.dsp.focus({ monitor = "-1" }),       { release = true, description = "Focus monitor left" })
+                          hl.bind(mod .. " + O",         hl.dsp.focus({ monitor = "+1" }),       { release = true, description = "Focus monitor right" })
+                          hl.bind(mod .. " + SHIFT + O", hl.dsp.window.move({ monitor = "+1" }), { release = true, description = "Move window to monitor right" })
+                          hl.bind(mod .. " + SHIFT + I",  hl.dsp.window.move({ monitor = "-1" }), { release = true, description = "Move window to monitor left" })
 
 
                           -- Workspace cycling
