@@ -14,4 +14,5 @@
   jj-hunk = pkgs.callPackage ./jj-hunk.nix { };
   parqeye = pkgs.callPackage ./parqeye.nix { };
   meshchat = pkgs.callPackage ./meshchat.nix { };
+  omniwm = pkgs.callPackage ./omniwm.nix { };
 }
