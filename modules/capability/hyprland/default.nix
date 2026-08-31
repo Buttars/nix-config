@@ -257,8 +257,10 @@
                           hl.bind(mod .. " + SHIFT + H",       hl.dsp.layout("swapcol l"),                       { description = "Move column left" })
                           hl.bind(mod .. " + SHIFT + L",       hl.dsp.layout("swapcol r"),                       { description = "Move column right" })
                           hl.bind(mod .. " + space",           hl.dsp.layout("promote"),                         { description = "Promote window to its own column" })
-                          hl.bind(mod .. " + C",               hl.dsp.window.center(),                           { description = "Center window" })
-                          hl.bind(mod .. " + A", hl.dsp.submap("arrange"), { description = "Arrange mode (fit, promote, consume, expel)" })
+                          hl.bind(mod .. " + C", hl.dsp.layout("consume"), { description = "Consume next column into this one" })
+                          hl.bind(mod .. " + X", hl.dsp.layout("expel"),   { description = "Expel window to its own column" })
+                          hl.bind(mod .. " + G", hl.dsp.window.center(),    { description = "Center window" })
+                          hl.bind(mod .. " + A", hl.dsp.submap("arrange"), { description = "Arrange mode (fit, promote)" })
                           hl.bind(mod .. " + R", hl.dsp.submap("resize"),  { description = "Resize mode (width, height, presets)" })
 
                           local once = function(key, action, description)
@@ -280,8 +282,6 @@
                               once("b", hl.dsp.layout("fit tobeg"),  "Fit start of row to active column")
                               once("f", hl.dsp.layout("fit active"), "Active column fills screen")
                               once("p", hl.dsp.layout("promote"),    "Promote window to its own column")
-                              once("c", hl.dsp.layout("consume"),    "Consume next column into this one")
-                              once("x", hl.dsp.layout("expel"),      "Expel window to its own column")
                               leave()
                           end)
 
