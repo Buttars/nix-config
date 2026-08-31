@@ -1,3 +1,4 @@
+{ __findFile, ... }:
 {
   aegix.cli = {
     homeManager =
@@ -50,6 +51,8 @@
       };
 
     _.tui = {
+      includes = [ <aegix/yazi> ];
+
       homeManager =
         { pkgs, ... }:
         {
@@ -64,17 +67,6 @@
           programs.fzf = {
             enable = true;
             defaultOptions = [ "--color 16" ];
-          };
-          programs.yazi = {
-            enable = true;
-            shellWrapperName = "y";
-            enableFishIntegration = true;
-            enableZshIntegration = true;
-            settings.mgr = {
-              show_hidden = true;
-              sort_by = "natural";
-              sort_dir_first = true;
-            };
           };
         };
     };
