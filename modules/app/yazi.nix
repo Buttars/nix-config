@@ -2,8 +2,10 @@
 {
   aegix.yazi = {
     homeManager =
-      { ... }:
+      { pkgs, ... }:
       {
+        home.packages = [ pkgs.ouch ];
+
         programs.yazi = {
           enable = true;
           shellWrapperName = "y";
@@ -29,6 +31,16 @@
                 on = [ "<Esc>" ];
                 run = "escape";
                 desc = "Cancel";
+              }
+              {
+                on = [ "X" ];
+                run = "shell -- ouch decompress --yes %s";
+                desc = "Extract archive here";
+              }
+              {
+                on = [ "T" ];
+                run = "shell \"ouch compress %s \" --interactive";
+                desc = "Compress selection into an archive";
               }
             ];
           };
