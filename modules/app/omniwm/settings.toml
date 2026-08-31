@@ -563,11 +563,11 @@ binding = "Option+X"
 id = "expelWindowFromColumn"
 
 [[hotkeys]]
-binding = "Option+Right Arrow"
+binding = "Option+O"
 id = "focusMonitorNext"
 
 [[hotkeys]]
-binding = "Option+Left Arrow"
+binding = "Option+I"
 id = "focusMonitorPrevious"
 
 [[hotkeys]]
@@ -591,11 +591,11 @@ binding = "Unassigned"
 id = "moveWorkspaceToMonitor.down"
 
 [[hotkeys]]
-binding = "Option+Shift+Left Arrow"
+binding = "Option+Shift+I"
 id = "moveWindowToMonitor.left"
 
 [[hotkeys]]
-binding = "Option+Shift+Right Arrow"
+binding = "Option+Shift+O"
 id = "moveWindowToMonitor.right"
 
 [[hotkeys]]
@@ -915,7 +915,7 @@ binding = "Option+Y"
 id = "toggleWorkspaceLayout"
 
 [[hotkeys]]
-binding = "Option+Shift+O"
+binding = "Option+E"
 id = "toggleOverview"
 
 [[hotkeys]]
