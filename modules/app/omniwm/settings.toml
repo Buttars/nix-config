@@ -599,11 +599,11 @@ binding = "Option+Shift+O"
 id = "moveWindowToMonitor.right"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Option+Shift+U"
 id = "moveWindowToMonitor.up"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Option+Shift+D"
 id = "moveWindowToMonitor.down"
 
 [[hotkeys]]
