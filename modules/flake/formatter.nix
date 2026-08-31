@@ -39,6 +39,7 @@
           nixf-diagnose.enable = true;
           prettier.enable = true;
           shfmt.enable = true;
+          taplo.enable = true;
         };
         settings.on-unmatched = lib.mkDefault "fatal";
         settings.formatter.deadnix.options = lib.mkForce [
