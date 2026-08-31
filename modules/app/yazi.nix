@@ -2,7 +2,7 @@
 {
   aegix.yazi = {
     homeManager =
-      { pkgs, ... }:
+      { pkgs, lib, ... }:
       let
         # fuse-archive presents the archive as a read-only directory, which is
         # the only way to walk into one from yazi.
@@ -55,7 +55,7 @@
         };
       in
       {
-        home.packages = [
+        home.packages = lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           archive-enter
           archive-leave
         ];
@@ -89,22 +89,6 @@
               {
                 on = [
                   "T"
-                  "e"
-                ];
-                run = "shell -- yazi-archive-enter %h";
-                desc = "Enter archive";
-              }
-              {
-                on = [
-                  "T"
-                  "u"
-                ];
-                run = "shell -- yazi-archive-leave";
-                desc = "Close all mounted archives";
-              }
-              {
-                on = [
-                  "T"
                   "c"
                 ];
                 run = "shell \"7z a archive.zip %s\" --interactive";
@@ -117,6 +101,24 @@
                 ];
                 run = "shell \"7z l %h | less\" --block";
                 desc = "List archive contents";
+              }
+            ]
+            ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+              {
+                on = [
+                  "T"
+                  "e"
+                ];
+                run = "shell -- yazi-archive-enter %h";
+                desc = "Enter archive";
+              }
+              {
+                on = [
+                  "T"
+                  "u"
+                ];
+                run = "shell -- yazi-archive-leave";
+                desc = "Close all mounted archives";
               }
             ];
           };
