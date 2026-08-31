@@ -16,4 +16,8 @@
     inputs.stylix.nixosModules.stylix
   ];
 
+  den.default.darwin.home-manager.sharedModules = [
+    inputs.stylix.homeModules.stylix
+  ];
+
 }

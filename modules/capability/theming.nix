@@ -1,58 +1,20 @@
 {
   aegix.theming.homeManager =
-    { pkgs, config, ... }:
+    { pkgs, lib, ... }:
+    let
+      isLinux = pkgs.stdenv.hostPlatform.isLinux;
+    in
     {
-      home.packages = with pkgs; [
-        libsForQt5.qt5ct
-        qt6Packages.qt6ct
-        nwg-look
-      ];
-
-      qt.enable = true;
-      # qt.platformTheme.name = "gtk";
-      # qt.style.name = "adwaita-dark";
-      #
-      gtk.enable = true;
-      gtk.cursorTheme.package = pkgs.bibata-cursors;
-      gtk.cursorTheme.name = "Bibata-Modern-Ice";
-
-      # gtk.theme.package = pkgs.arc-theme;
-      # gtk.theme.name = "Arc-Dark";
-
-      gtk.iconTheme.package = pkgs.papirus-icon-theme;
-      gtk.iconTheme.name = "Papirus-Dark";
-
       stylix.enable = true;
       stylix.image = ../capability/hyprland/wallpaper.jpg;
 
-      stylix.targets = {
-        gtk.enable = true;
-        qt.enable = true;
-        kitty.enable = true;
-        fish.enable = true;
-        fzf.enable = true;
-        yazi.enable = true;
-        hyprland.enable = true;
-        # app/hyprlock.nix builds the full layout and reads the same palette,
-        # so the stylix target would only conflict over `background`.
-        hyprlock.enable = false;
-        hyprpaper.enable = true;
-        swaync.enable = true;
-        bat.enable = true;
-        btop.enable = true;
-        mpv.enable = true;
+      stylix.base16Scheme = builtins.fetchurl {
+        url = "https://raw.githubusercontent.com/scottmckendry/cyberdream.nvim/main/extras/base16/cyberdream.yaml";
+        sha256 = "1bfi479g7v5cz41d2s0lbjlqmfzaah68cj1065zzsqksx3n63znf";
       };
-      # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rebecca.yaml";
-
-      stylix = {
-        base16Scheme = builtins.fetchurl {
-          url = "https://raw.githubusercontent.com/scottmckendry/cyberdream.nvim/main/extras/base16/cyberdream.yaml";
-          sha256 = "1bfi479g7v5cz41d2s0lbjlqmfzaah68cj1065zzsqksx3n63znf";
-        };
-        override = {
-          base00 = "#0F0F11";
-          base0E = "#DE4F72";
-        };
+      stylix.override = {
+        base00 = "#0F0F11";
+        base0E = "#DE4F72";
       };
 
       stylix.fonts = {
@@ -82,7 +44,44 @@
           popups = 10;
           terminal = 10;
         };
+      };
 
+      stylix.targets = {
+        kitty.enable = true;
+        fish.enable = true;
+        fzf.enable = true;
+        yazi.enable = true;
+        bat.enable = true;
+        btop.enable = true;
+        mpv.enable = true;
+
+        gtk.enable = isLinux;
+        qt.enable = isLinux;
+        hyprland.enable = isLinux;
+        # app/hyprlock.nix builds the full layout and reads the same palette,
+        # so the stylix target would only conflict over `background`.
+        hyprlock.enable = false;
+        hyprpaper.enable = isLinux;
+        swaync.enable = isLinux;
+      };
+
+      home.packages = lib.optionals isLinux (
+        with pkgs;
+        [
+          libsForQt5.qt5ct
+          qt6Packages.qt6ct
+          nwg-look
+        ]
+      );
+
+      qt.enable = isLinux;
+
+      gtk = lib.mkIf isLinux {
+        enable = true;
+        cursorTheme.package = pkgs.bibata-cursors;
+        cursorTheme.name = "Bibata-Modern-Ice";
+        iconTheme.package = pkgs.papirus-icon-theme;
+        iconTheme.name = "Papirus-Dark";
       };
     };
 }

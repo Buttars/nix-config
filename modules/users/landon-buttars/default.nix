@@ -16,6 +16,7 @@
       <aegix/yazi>
       <aegix/workstation>
       <aegix/omniwm>
+      <aegix/theming>
       <aegix/slack>
       <aegix/cloud>
       <aegix/toolsets/node>
