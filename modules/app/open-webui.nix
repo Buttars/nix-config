@@ -19,6 +19,11 @@
           DO_NOT_TRACK = "True";
           ANONYMIZED_TELEMETRY = "False";
 
+          # The telemetry flags above only cover analytics. OFFLINE_MODE is what
+          # stops the version check and hugging face fetches.
+          OFFLINE_MODE = "True";
+          ENABLE_COMMUNITY_SHARING = "False";
+
           OLLAMA_BASE_URL = "http://${config.services.ollama.host}:${toString config.services.ollama.port}";
         };
       };
