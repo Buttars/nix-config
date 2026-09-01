@@ -3,6 +3,7 @@ monitorDwindleOverrides = []
 monitorGapOverrides = []
 monitorNiriOverrides = []
 monitorOrientationOverrides = []
+monitorRoutingOverrides = []
 schemaVersion = 1
 
 [appearance]
@@ -134,7 +135,7 @@ position = "center"
 widthPercent = 50.0
 
 [routing]
-mode = "custom"
+mode = "macOS"
 
 [scratchpads]
 
@@ -922,26 +923,8 @@ id = "toggleOverview"
 binding = "Unassigned"
 id = "toggleSystemStats"
 
-[[monitorRoutingOverrides]]
-gridColumn = 0
-gridRow = 1
-monitorDisplayUUID = "D9871117-BEF3-4499-9E58-092503071904"
-monitorName = "V277U E (2)"
-
-[[monitorRoutingOverrides]]
-gridColumn = 0
-gridRow = 0
-monitorDisplayUUID = "1E5A8EA0-C4FD-4BA7-A1B0-957A6149AA46"
-monitorName = "V277U E (1)"
-
-[[monitorRoutingOverrides]]
-gridColumn = 1
-gridRow = 1
-monitorDisplayUUID = "37D8832A-2D66-02CA-B9F7-8F30A301B230"
-monitorName = "Built-in Retina Display"
-
 [[workspaces]]
-id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
+id = "47CA3889-7F33-49A9-80EB-6B3238026F41"
 layoutType = "niri"
 name = "1"
 
@@ -949,7 +932,7 @@ name = "1"
 type = "main"
 
 [[workspaces]]
-id = "454CECD4-5E9D-4ED1-95D7-979D48817F5F"
+id = "435042D7-FB4C-4210-AA43-8DBF9EF195CB"
 layoutType = "niri"
 name = "2"
 
@@ -957,7 +940,7 @@ name = "2"
 type = "main"
 
 [[workspaces]]
-id = "BEB842B5-E894-4791-9FD1-397C3CDD3538"
+id = "C72D9E4A-46A7-4DF7-8CB6-E16AD0A08B74"
 layoutType = "niri"
 name = "3"
 
@@ -965,7 +948,7 @@ name = "3"
 type = "main"
 
 [[workspaces]]
-id = "248AA883-2261-4D45-943C-79C0E46A232B"
+id = "D672EF1A-55D1-4B37-BCB4-056777873717"
 layoutType = "niri"
 name = "4"
 
@@ -973,7 +956,7 @@ name = "4"
 type = "main"
 
 [[workspaces]]
-id = "8B8C45D6-CE9E-41D9-BD50-BE4989D5E3DE"
+id = "F880B19A-CE11-43F8-BBC9-F860E13FADAA"
 layoutType = "niri"
 name = "5"
 
@@ -981,8 +964,79 @@ name = "5"
 type = "main"
 
 [[workspaces]]
-displayName = "❤️"
-id = "5953F2BF-A378-4266-91B2-287174C4FA4D"
+id = "97545F33-9582-4C7D-B40B-B73AF02053FA"
+layoutType = "niri"
+name = "6"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "FC1A6EBF-191E-4E74-9DBF-AA0BC3C9B4AA"
+layoutType = "niri"
+name = "7"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "E2D531CC-C0F6-4F94-B05B-5C105C0322E5"
+layoutType = "niri"
+name = "8"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "E7FCBF67-C1E8-44D7-9FB6-A56E5DD634FD"
+layoutType = "niri"
+name = "9"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "4271ED06-3403-4C58-B93E-96FADB3FA38A"
+layoutType = "niri"
+name = "1"
+
+[workspaces.monitorAssignment]
+type = "secondary"
+
+[[workspaces]]
+id = "4EE2197C-9359-405B-8383-BCE90D7FA19C"
+layoutType = "niri"
+name = "2"
+
+[workspaces.monitorAssignment]
+type = "secondary"
+
+[[workspaces]]
+id = "1BDBC66A-3665-43EA-B108-9E176A588660"
+layoutType = "niri"
+name = "3"
+
+[workspaces.monitorAssignment]
+type = "secondary"
+
+[[workspaces]]
+id = "40176B30-E028-414E-9229-A0C35CA8348F"
+layoutType = "niri"
+name = "4"
+
+[workspaces.monitorAssignment]
+type = "secondary"
+
+[[workspaces]]
+id = "A09F33A4-8812-4024-8CA3-A01C058C1128"
+layoutType = "niri"
+name = "5"
+
+[workspaces.monitorAssignment]
+type = "secondary"
+
+[[workspaces]]
+id = "78043FC0-EEFE-43B1-A7D3-FBED83EE5425"
 layoutType = "niri"
 name = "6"
 
@@ -990,10 +1044,25 @@ name = "6"
 type = "secondary"
 
 [[workspaces]]
-displayName = "🚀"
-id = "A7D5E104-6985-4516-8ED5-07F144F2A33D"
+id = "F597A921-343F-4B33-BAAB-82E3824BAF78"
 layoutType = "niri"
 name = "7"
+
+[workspaces.monitorAssignment]
+type = "secondary"
+
+[[workspaces]]
+id = "1D205201-F0FF-4B63-BD1A-EFBA3F876280"
+layoutType = "niri"
+name = "8"
+
+[workspaces.monitorAssignment]
+type = "secondary"
+
+[[workspaces]]
+id = "A5669F5E-5539-44AD-8FF7-078F4A297FDF"
+layoutType = "niri"
+name = "9"
 
 [workspaces.monitorAssignment]
 type = "secondary"
