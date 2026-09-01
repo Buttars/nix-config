@@ -28,6 +28,7 @@
       <aegix/syncthing>
       <aegix/reticulum>
       <aegix/ollama>
+      <aegix/open-webui>
       # (<aegix/disks/btrfs> {
       #   disk = "/dev/sda";
       #   withSwap = true;
