@@ -1,8 +1,8 @@
 {
   aegix.opencode.homeManager =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
     let
-      model = "qwen2.5-coder:7b";
+      ai = import ../lib/_ai-models.nix;
     in
     {
       home.packages = [ pkgs.opencode ];
@@ -12,12 +12,12 @@
           npm = "@ai-sdk/openai-compatible";
           name = "Ollama";
           options.baseURL = "http://127.0.0.1:11434/v1";
-          models.${model} = {
-            name = model;
-            contextLength = 65536;
-          };
+          models = lib.mapAttrs (name: m: {
+            inherit name;
+            inherit (m) contextLength;
+          }) ai.models;
         };
-        model = "ollama/${model}";
+        model = "ollama/${ai.default}";
       };
     };
 }
