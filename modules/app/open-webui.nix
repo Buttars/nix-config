@@ -10,8 +10,9 @@
       # opt-outs have to be repeated here.
       services.open-webui = lib.mkIf config.services.ollama.enable {
         enable = true;
-        host = "127.0.0.1";
+        host = "0.0.0.0";
         port = 8080;
+        openFirewall = true;
 
         environment = {
           SCARF_NO_ANALYTICS = "True";
@@ -19,7 +20,6 @@
           ANONYMIZED_TELEMETRY = "False";
 
           OLLAMA_BASE_URL = "http://${config.services.ollama.host}:${toString config.services.ollama.port}";
-          WEBUI_AUTH = "False";
         };
       };
     };
