@@ -6,6 +6,6 @@
   models = {
     "qwen2.5-coder:7b".contextLength = 32768;
     "ornith:9b".contextLength = 32768;
-    "ornith:35b".contextLength = 32768;
+    "hermes3:8b".contextLength = 32768;
   };
 }
