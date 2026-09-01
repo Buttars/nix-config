@@ -113,9 +113,11 @@
 
           [[keys.command]]
           key = "prefix+f"
-          type = "pane"
-          command = "herdr-sessionizer"
+          type = "popup"
+          command = "${pkgs.herdr-sessionizer}/bin/herdr-sessionizer"
           description = "workspace picker (zoxide + existing)"
+          width = "85%"
+          height = "85%"
         '';
 
         # Shell integration for the herdr workflow (zsh + fish):
