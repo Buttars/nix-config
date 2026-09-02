@@ -7,7 +7,7 @@ return {
       find = "fs",
       find_left = "Fs",
       highlight = "hs",
-      replace = "rs",
+      replace = "cs",
       update_n_lines = "ns",
     },
   },
