@@ -40,6 +40,7 @@
           pkgs.chatgpt
           pkgs.claude-code
           pkgs.github-mcp-server
+          pkgs.mergiraf
         ];
         home.sessionVariables.HERDR_AGENT = "kiro-cli chat";
       };
