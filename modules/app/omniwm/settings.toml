@@ -3,7 +3,6 @@ monitorDwindleOverrides = []
 monitorGapOverrides = []
 monitorNiriOverrides = []
 monitorOrientationOverrides = []
-monitorRoutingOverrides = []
 schemaVersion = 1
 
 [appearance]
@@ -135,7 +134,7 @@ position = "center"
 widthPercent = 50.0
 
 [routing]
-mode = "macOS"
+mode = "custom"
 
 [scratchpads]
 
@@ -328,27 +327,27 @@ binding = "Unassigned"
 id = "assignFocusedWindowToScratchpad.10"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Option+1"
 id = "switchWorkspace.0"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Option+Shift+1"
 id = "moveToWorkspace.0"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Option+2"
 id = "switchWorkspace.1"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Option+Shift+2"
 id = "moveToWorkspace.1"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Option+3"
 id = "switchWorkspace.2"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Option+Shift+3"
 id = "moveToWorkspace.2"
 
 [[hotkeys]]
@@ -564,11 +563,11 @@ binding = "Option+X"
 id = "expelWindowFromColumn"
 
 [[hotkeys]]
-binding = "Option+O"
+binding = "Option+]"
 id = "focusMonitorNext"
 
 [[hotkeys]]
-binding = "Option+I"
+binding = "Option+["
 id = "focusMonitorPrevious"
 
 [[hotkeys]]
@@ -592,19 +591,19 @@ binding = "Unassigned"
 id = "moveWorkspaceToMonitor.down"
 
 [[hotkeys]]
-binding = "Option+Shift+I"
+binding = "Unassigned"
 id = "moveWindowToMonitor.left"
 
 [[hotkeys]]
-binding = "Option+Shift+O"
+binding = "Unassigned"
 id = "moveWindowToMonitor.right"
 
 [[hotkeys]]
-binding = "Option+Shift+U"
+binding = "Unassigned"
 id = "moveWindowToMonitor.up"
 
 [[hotkeys]]
-binding = "Option+Shift+D"
+binding = "Unassigned"
 id = "moveWindowToMonitor.down"
 
 [[hotkeys]]
@@ -923,18 +922,56 @@ id = "toggleOverview"
 binding = "Unassigned"
 id = "toggleSystemStats"
 
+[[monitorRoutingOverrides]]
+gridColumn = 0
+gridRow = 0
+monitorDisplayUUID = "1E5A8EA0-C4FD-4BA7-A1B0-957A6149AA46"
+monitorName = "V277U E (1)"
+
+[[monitorRoutingOverrides]]
+gridColumn = 0
+gridRow = 1
+monitorDisplayUUID = "D9871117-BEF3-4499-9E58-092503071904"
+monitorName = "V277U E (2)"
+
+[[monitorRoutingOverrides]]
+gridColumn = 1
+gridRow = 1
+monitorDisplayUUID = "37D8832A-2D66-02CA-B9F7-8F30A301B230"
+monitorName = "Built-in Retina Display"
+
 [[workspaces]]
-id = "3DC07CA6-79E9-42DF-B0A8-876571904789"
+id = "D621932D-5534-4D71-BAD1-B7B63772724B"
 layoutType = "niri"
 name = "1"
 
 [workspaces.monitorAssignment]
-type = "main"
+type = "specificDisplay"
+
+[workspaces.monitorAssignment.output]
+displayUUID = "1E5A8EA0-C4FD-4BA7-A1B0-957A6149AA46"
+name = "V277U E (1)"
 
 [[workspaces]]
-id = "FE064DEE-1436-4756-A8B2-A765D6F2E9CF"
+id = "8FA08159-211E-402A-89CB-6810ECE3CAD0"
 layoutType = "niri"
 name = "2"
 
 [workspaces.monitorAssignment]
-type = "secondary"
+type = "specificDisplay"
+
+[workspaces.monitorAssignment.output]
+displayUUID = "D9871117-BEF3-4499-9E58-092503071904"
+name = "V277U E (2)"
+
+[[workspaces]]
+id = "AA626C12-5919-481F-B387-4BC09C81573D"
+layoutType = "niri"
+name = "3"
+
+[workspaces.monitorAssignment]
+type = "specificDisplay"
+
+[workspaces.monitorAssignment.output]
+displayUUID = "37D8832A-2D66-02CA-B9F7-8F30A301B230"
+name = "Built-in Retina Display"
