@@ -1,6 +1,8 @@
-{ __findFile, ... }:
+{ ... }:
 {
-  aegix.ai = {
-    includes = [ <aegix/github-mcp-server> ];
-  };
+  aegix.ai.homeManager =
+    { pkgs, ... }:
+    {
+      home.packages = [ pkgs.github-mcp-server ];
+    };
 }

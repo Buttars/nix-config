@@ -20,10 +20,7 @@
       <aegix/jj>
       <aegix/herdr>
       <aegix/hyprland>
-      <aegix/brave>
-      <aegix/claude>
       <aegix/discord>
-      <aegix/vivaldi>
       <aegix/sops>
       <aegix/bitwarden>
       <aegix/printing3d>
@@ -80,6 +77,9 @@
         home.packages = with pkgs; [
           nvd
           obsidian
+          brave
+          claude-code
+          vivaldi
         ];
         home.sessionVariables.HERDR_AGENT = "claude";
 

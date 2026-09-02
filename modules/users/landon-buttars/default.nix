@@ -17,14 +17,10 @@
       <aegix/workstation>
       <aegix/omniwm>
       <aegix/theming>
-      <aegix/slack>
       <aegix/cloud>
       <aegix/toolsets/node>
       <aegix/toolsets/python>
-      <aegix/github-mcp-server>
       <aegix/kiro>
-      <aegix/claude>
-      <aegix/chatgpt>
       <aegix/skills>
       <aegix/omlx>
       <aegix/herdr>
@@ -40,6 +36,10 @@
           pkgs.anki-bin
           pkgs.parqeye
           pkgs.keymapp
+          pkgs.slack
+          pkgs.chatgpt
+          pkgs.claude-code
+          pkgs.github-mcp-server
         ];
         home.sessionVariables.HERDR_AGENT = "kiro-cli chat";
       };

@@ -2,10 +2,7 @@
 {
   aegix.devenv = {
     homeManager =
-      {
-        pkgs,
-        ...
-      }:
+      { pkgs, ... }:
       {
         programs.direnv = {
           enable = true;

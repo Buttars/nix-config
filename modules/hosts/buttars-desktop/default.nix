@@ -25,7 +25,6 @@
       <aegix/fonts>
       <aegix/gaming>
       <aegix/zsa>
-      <aegix/nfs-utils>
       <aegix/syncthing>
       <aegix/reticulum>
       <aegix/ollama>
@@ -37,8 +36,10 @@
     ];
 
     nixos =
-      { ... }:
+      { pkgs, ... }:
       {
+        environment.systemPackages = [ pkgs.nfs-utils ];
+
         hardware.enableRedistributableFirmware = true;
 
         boot.initrd.kernelModules = [ "amdgpu" ];

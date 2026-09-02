@@ -8,13 +8,11 @@
       <aegix/hypridle>
       <aegix/polkit-agent>
       <aegix/cliphist>
-      <aegix/satty>
       <aegix/swaync>
       <aegix/wallpaper>
       <aegix/wdisplays>
       <aegix/media-keys>
       <aegix/mpd>
-      <aegix/newsboat>
       <aegix/screenkey>
       <aegix/wlogout>
     ];
@@ -97,6 +95,8 @@
             jq
             libnotify
             nautilus
+            newsboat
+            satty
             slurp
             waypaper
             wl-clipboard
