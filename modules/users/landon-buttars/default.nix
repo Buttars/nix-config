@@ -39,6 +39,7 @@
           pkgs.obsidian
           pkgs.anki-bin
           pkgs.parqeye
+          pkgs.keymapp
         ];
         home.sessionVariables.HERDR_AGENT = "kiro-cli chat";
       };
