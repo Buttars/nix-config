@@ -76,10 +76,3 @@ tooltip label {
 #battery.critical {
   color: @urgent;
 }
-
-#submap {
-  color: @background;
-  background-color: @accent;
-  padding: 0 8px;
-  margin: 3px 4px;
-}
