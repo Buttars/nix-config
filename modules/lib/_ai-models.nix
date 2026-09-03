@@ -9,5 +9,6 @@
     "hermes3:8b".contextLength = 32768;
     "huihui_ai/qwen3-abliterated:14b".contextLength = 32768;
     "huihui_ai/gemma3-abliterated:latest".contextLength = 32768;
+    "unsloth/gemma-4-12b-it-GGUF".contextLength = 32768;
   };
 }
