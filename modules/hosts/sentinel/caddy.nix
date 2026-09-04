@@ -55,6 +55,7 @@
             "gatus.buttars.dev".extraConfig = proxy "http://127.0.0.1:8888";
             "nextcloud.buttars.dev".extraConfig = proxy "http://127.0.0.1:8080";
             "immich.buttars.dev".extraConfig = proxy "http://127.0.0.1:2283";
+            "chat.buttars.dev".extraConfig = proxy "http://buttars-desktop.lan:8080";
           };
       };
   };
