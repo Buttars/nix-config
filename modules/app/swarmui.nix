@@ -21,6 +21,9 @@
         src = inputs.swarmui;
         tag = "swarmui:${src.shortRev or "dev"}";
         stateDir = "/var/lib/swarmui";
+        # Public weights, and large enough that encrypting them would dominate
+        # the volume and every migration of it.
+        modelsDir = "/var/lib/swarmui-models";
       in
       lib.mkIf (lib.elem "nvidia" config.services.xserver.videoDrivers) {
         # The layer rules stop an app from pulling in another app, so the host
@@ -66,9 +69,9 @@
           # already own the data, so let it run as root and own its own volume.
           volumes = [
             "${stateDir}/Data:/SwarmUI/Data"
-            "${stateDir}/Models:/SwarmUI/Models"
             "${stateDir}/Output:/SwarmUI/Output"
             "${stateDir}/dlbackend:/SwarmUI/dlbackend"
+            "${modelsDir}:/SwarmUI/Models"
           ];
           extraOptions = [ "--device=nvidia.com/gpu=0" ];
         };
@@ -78,9 +81,11 @@
           requires = [ "swarmui-image.service" ];
         };
 
+        systemd.tmpfiles.rules = [ "d ${modelsDir} 0755 root root -" ];
+
         aegix.luks-volumes.swarmui = {
           mountPoint = stateDir;
-          size = "100G";
+          size = "32G";
           services = [ "docker-swarmui" ];
         };
       };
