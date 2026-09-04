@@ -65,7 +65,10 @@
                 size = lib.mkOption {
                   type = lib.types.str;
                   default = "16G";
-                  description = "Size the create helper gives the backing file.";
+                  description = ''
+                    Size the create helper gives the backing file, unless it is
+                    called with `--size`. Only read at creation time.
+                  '';
                 };
 
                 services = lib.mkOption {
@@ -204,11 +207,24 @@
               runtimeInputs = inputs;
               excludeShellChecks = exclusions;
               text = preamble + ''
-                resolve "$@"
+                args=()
+                while [ "$#" -gt 0 ]; do
+                  case "$1" in
+                    --size) size_override="$2"; shift 2 ;;
+                    --size=*) size_override="''${1#--size=}"; shift ;;
+                    -*) echo "usage: luks-create [--size SIZE] [volume]" >&2; exit 1 ;;
+                    *) args+=("$1"); shift ;;
+                  esac
+                done
+
+                resolve "''${args[@]}"
+                size="''${size_override:-$size}"
+
                 if [ -e "$image" ]; then
                   echo "$image already exists; refusing to overwrite it." >&2
                   exit 1
                 fi
+                echo "Creating $image at $size."
                 truncate -s "$size" "$image"
                 # btrfs copy-on-write over a loop-backed image fragments badly.
                 chattr +C "$image" 2>/dev/null || true
