@@ -259,6 +259,51 @@
                 fi
               '';
             })
+            (pkgs.writeShellApplication {
+              name = "luks-migrate";
+              runtimeInputs = inputs;
+              excludeShellChecks = exclusions;
+              text = preamble + ''
+                resolve "$@"
+                staging="$mount.premigrate"
+
+                if mountpoint -q "$mount"; then
+                  echo "$mount is mounted; run luks-lock first so the existing data is visible." >&2
+                  exit 1
+                fi
+                if [ ! -e "$image" ]; then
+                  echo "$image does not exist; create it with luks-create." >&2
+                  exit 1
+                fi
+                if [ -e "$staging" ]; then
+                  echo "$staging exists; finish or remove the previous migration first." >&2
+                  exit 1
+                fi
+                if [ ! -d "$mount" ]; then
+                  echo "nothing at $mount to migrate." >&2
+                  exit 1
+                fi
+
+                for s in "''${services[@]}"; do
+                  systemctl stop "$s.service" || true
+                done
+
+                mv "$mount" "$staging"
+                if [ ! -e "/dev/mapper/$name" ]; then
+                  cryptsetup open --type luks "$image" "$name"
+                fi
+                mkdir -p "$mount"
+                mount "/dev/mapper/$name" "$mount"
+                cp -aT "$staging" "$mount"
+
+                for s in "''${services[@]}"; do
+                  systemctl start "$s.service"
+                done
+
+                echo "Copied into $mount. The previous copy is still at $staging;"
+                echo "remove it once you have confirmed the service is healthy."
+              '';
+            })
           ];
       };
     };
