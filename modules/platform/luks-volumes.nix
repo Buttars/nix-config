@@ -20,6 +20,8 @@
           dashed = lib.replaceStrings [ "-" ] [ "\\x2d" ] stripped;
         in
         "${lib.replaceStrings [ "/" ] [ "-" ] dashed}.mount";
+
+      anyAutoLock = lib.any (v: v.autoLockMinutes > 0) (lib.attrValues cfg);
     in
     {
       options.aegix.luks-volumes = lib.mkOption {
@@ -76,6 +78,16 @@
                     to the mount point while it is still on the unencrypted parent.
                   '';
                 };
+
+                autoLockMinutes = lib.mkOption {
+                  type = lib.types.int;
+                  default = 15;
+                  description = ''
+                    Lock the volume again after this many minutes without any read
+                    or write reaching its device. 0 leaves it unlocked until you
+                    run `luks-lock`.
+                  '';
+                };
               };
             }
           )
@@ -96,7 +108,18 @@
         ) cfg;
 
         systemd.services = lib.mkMerge (
-          lib.mapAttrsToList (
+          [
+            (lib.mkIf anyAutoLock {
+              luks-autolock = {
+                description = "Lock idle LUKS volumes";
+                serviceConfig = {
+                  Type = "oneshot";
+                  ExecStart = "/run/current-system/sw/bin/luks-autolock";
+                };
+              };
+            })
+          ]
+          ++ lib.mapAttrsToList (
             _name: v:
             lib.genAttrs v.services (_: {
               wantedBy = lib.mkForce [ ];
@@ -107,6 +130,14 @@
             })
           ) cfg
         );
+
+        systemd.timers.luks-autolock = lib.mkIf anyAutoLock {
+          wantedBy = [ "timers.target" ];
+          timerConfig = {
+            OnBootSec = "1min";
+            OnUnitActiveSec = "1min";
+          };
+        };
 
         environment.systemPackages =
           let
@@ -119,6 +150,7 @@
                 fstype=${cfg.${name}.fsType}
                 size=${cfg.${name}.size}
                 services=(${lib.concatStringsSep " " cfg.${name}.services})
+                autolock=${toString cfg.${name}.autoLockMinutes}
                 ;;'') (lib.attrNames cfg);
 
             preamble = ''
@@ -158,6 +190,7 @@
               pkgs.util-linux
               pkgs.systemd
               pkgs.coreutils
+              pkgs.gnused
               pkgs.fzf
             ];
 
@@ -302,6 +335,42 @@
 
                 echo "Copied into $mount. The previous copy is still at $staging;"
                 echo "remove it once you have confirmed the service is healthy."
+              '';
+            })
+            (pkgs.writeShellApplication {
+              name = "luks-autolock";
+              runtimeInputs = inputs;
+              excludeShellChecks = exclusions;
+              # Idle is measured from the device's own io counters rather than
+              # atime, which relatime only updates once a day, or open handles,
+              # which a running service always holds.
+              text = preamble + ''
+                mkdir -p /run/luks-autolock
+                now=$(date +%s)
+
+                for name in "''${volumes[@]}"; do
+                  [ -e "/dev/mapper/$name" ] || continue
+                  load_meta "$name"
+                  [ "$autolock" -gt 0 ] || continue
+
+                  dev=$(basename "$(readlink -f "/dev/mapper/$name")")
+                  counters=$(cat "/sys/class/block/$dev/stat" 2>/dev/null || true)
+                  [ -n "$counters" ] || continue
+
+                  state="/run/luks-autolock/$name"
+                  if [ -f "$state" ] && [ "$(head -n1 "$state")" = "$counters" ]; then
+                    since=$(sed -n 2p "$state")
+                    if [ "$(( now - since ))" -ge "$(( autolock * 60 ))" ]; then
+                      echo "locking $name after $autolock idle minutes"
+                      # Sibling command in the same list, so it cannot be
+                      # referenced by store path from here.
+                      /run/current-system/sw/bin/luks-lock "$name"
+                      rm -f "$state"
+                    fi
+                  else
+                    printf '%s\n%s\n' "$counters" "$now" > "$state"
+                  fi
+                done
               '';
             })
           ];
