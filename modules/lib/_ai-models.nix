@@ -29,7 +29,7 @@
       tools = false;
       local = true;
     };
-    "unsloth/gemma-4-12b-it-GGUF" = {
+    "hf.co/unsloth/gemma-4-12b-it-GGUF:Q4_K_M" = {
       contextLength = 32768;
       tools = false;
     };
