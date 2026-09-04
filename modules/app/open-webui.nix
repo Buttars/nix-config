@@ -24,7 +24,10 @@
           OFFLINE_MODE = "True";
           ENABLE_COMMUNITY_SHARING = "False";
 
-          OLLAMA_BASE_URL = "http://127.0.0.1:${toString config.services.ollama.port}";
+          OLLAMA_BASE_URLS = lib.concatStringsSep ";" [
+            "http://127.0.0.1:${toString config.services.ollama.port}"
+            "http://buttars-desktop.lan:${toString config.services.ollama.port}"
+          ];
         };
       };
     };
