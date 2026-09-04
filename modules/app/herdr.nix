@@ -34,6 +34,7 @@
         systemd.user.services.herdr = lib.mkIf pkgs.stdenv.isLinux {
           Unit = {
             Description = "Herdr terminal workspace server";
+            PartOf = [ "graphical-session.target" ];
             After = [ "graphical-session.target" ];
           };
           Service = {
@@ -41,7 +42,7 @@
             Restart = "always";
             RestartSec = 2;
           };
-          Install.WantedBy = [ "default.target" ];
+          Install.WantedBy = [ "graphical-session.target" ];
         };
 
         launchd.agents.herdr = lib.mkIf pkgs.stdenv.isDarwin {
