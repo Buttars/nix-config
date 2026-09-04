@@ -24,7 +24,7 @@
           OFFLINE_MODE = "True";
           ENABLE_COMMUNITY_SHARING = "False";
 
-          OLLAMA_BASE_URL = "http://${config.services.ollama.host}:${toString config.services.ollama.port}";
+          OLLAMA_BASE_URL = "http://127.0.0.1:${toString config.services.ollama.port}";
         };
       };
     };
