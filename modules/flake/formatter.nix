@@ -38,6 +38,7 @@
           deadnix.enable = true;
           nixf-diagnose.enable = true;
           prettier.enable = true;
+          ruff-format.enable = true;
           shfmt.enable = true;
           taplo.enable = true;
         };
