@@ -4,6 +4,7 @@
     includes = [
       <den/primary-user>
       (<den/unfree> [ "obsidian" ])
+      <aegix/locale>
       <aegix/programming>
       <aegix/kitty>
       <aegix/taskwarrior>
