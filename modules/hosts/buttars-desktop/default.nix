@@ -14,6 +14,7 @@
       <aegix/audio>
       <aegix/virtualization>
       <aegix/docker>
+      <aegix/swarmui>
       <aegix/nvidia>
       <aegix/sops>
       <aegix/fish>

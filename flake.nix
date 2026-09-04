@@ -70,6 +70,10 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    swarmui = {
+      url = "github:mcmonkeyprojects/SwarmUI";
+      flake = false;
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";

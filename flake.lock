@@ -862,6 +862,7 @@
         "sops-nix": "sops-nix",
         "srvos": "srvos",
         "stylix": "stylix",
+        "swarmui": "swarmui",
         "treefmt-nix": "treefmt-nix_2"
       }
     },
@@ -956,6 +957,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "stylix",
+        "type": "github"
+      }
+    },
+    "swarmui": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788497538,
+        "narHash": "sha256-JOH/mS9O+SNd/0IjKI4aUPJgpUiM5BL8XD4dv1iOgQg=",
+        "owner": "mcmonkeyprojects",
+        "repo": "SwarmUI",
+        "rev": "4073a6ccb0b836ac67645f70b2fb8a2b93779da8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mcmonkeyprojects",
+        "repo": "SwarmUI",
         "type": "github"
       }
     },
