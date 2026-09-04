@@ -15,7 +15,7 @@
           models = lib.mapAttrs (name: m: {
             inherit name;
             inherit (m) contextLength;
-          }) ai.models;
+          }) (lib.filterAttrs (_: m: m.tools) ai.models);
         };
         model = "ollama/${ai.default}";
       };
