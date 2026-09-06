@@ -55,6 +55,8 @@
           "nvidia"
         ];
 
+        environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/by-path/pci-0000:01:00.0-card";
+
         imports = [
           ./_disko.nix
           ./_stylix.nix
