@@ -73,7 +73,11 @@
             "${stateDir}/dlbackend:/SwarmUI/dlbackend"
             "${modelsDir}:/SwarmUI/Models"
           ];
-          extraOptions = [ "--device=nvidia.com/gpu=0" ];
+          environment.PYTORCH_CUDA_ALLOC_CONF = "expandable_segments:True";
+          extraOptions = [
+            "--device=nvidia.com/gpu=0"
+            "--shm-size=8g"
+          ];
         };
 
         systemd.services.docker-swarmui = {
@@ -85,8 +89,9 @@
 
         aegix.luks-volumes.swarmui = {
           mountPoint = stateDir;
-          size = "32G";
+          size = "100G";
           services = [ "docker-swarmui" ];
+          autoLockMinutes = 0;
         };
       };
   };
