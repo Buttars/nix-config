@@ -22,6 +22,7 @@
       <aegix/hyprland>
       <aegix/discord>
       <aegix/thunderbird>
+      <aegix/protonmail-bridge>
       <aegix/sops>
       <aegix/bitwarden>
       <aegix/printing3d>
