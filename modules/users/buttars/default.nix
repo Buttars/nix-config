@@ -21,6 +21,7 @@
       <aegix/herdr>
       <aegix/hyprland>
       <aegix/discord>
+      <aegix/thunderbird>
       <aegix/sops>
       <aegix/bitwarden>
       <aegix/printing3d>
