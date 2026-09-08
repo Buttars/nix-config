@@ -75,6 +75,12 @@
               "abandon"
               "empty() & ancestors(@) & ~trunk()"
             ];
+            aliases.ticketize = [
+              "util"
+              "exec"
+              "--"
+              "${pkgs.jj-ticketize}/bin/jj-ticketize"
+            ];
             fix.tools = {
               nixfmt = {
                 command = [

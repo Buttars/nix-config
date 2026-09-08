@@ -12,6 +12,7 @@
   git-worktree-init = pkgs.callPackage ./git-worktree-init.nix { };
   herdr-sessionizer = pkgs.callPackage ./herdr-sessionizer.nix { };
   jj-hunk = pkgs.callPackage ./jj-hunk.nix { };
+  jj-ticketize = pkgs.callPackage ./jj-ticketize.nix { };
   parqeye = pkgs.callPackage ./parqeye.nix { };
   meshchat = pkgs.callPackage ./meshchat.nix { };
   omniwm = pkgs.callPackage ./omniwm.nix { };
