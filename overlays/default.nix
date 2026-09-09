@@ -39,6 +39,8 @@
       else
         prev.direnv;
 
+    devenv = inputs.devenv.packages.${final.stdenv.hostPlatform.system}.devenv;
+
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
