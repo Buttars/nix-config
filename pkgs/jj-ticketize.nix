@@ -11,11 +11,7 @@ writeShellApplication {
   ];
   text = ''
     # jj-ticketize [options] <TICKET> [revset]
-    # Insert TICKET into each commit summary in a revset (revset defaults to '@'):
-    #   "type(scope): msg" -> "type(scope): TICKET - msg"
-    # Prepends "TICKET - " when there is no conventional-commit prefix, skips
-    # commits that already contain the ticket or have no description, preserves
-    # the body, and iterates by stable change_id (safe across rewrites).
+    # Inserts TICKET into each commit summary across a revset (default '@').
 
     pattern="''${JJ_TICKETIZE_PATTERN:-^[A-Z][A-Z0-9]+-[0-9]+$}"
 
@@ -104,7 +100,6 @@ writeShellApplication {
       exit 2
     fi
 
-    # Resolve target change_ids and the immutable subset up front.
     mapfile -t targets < <(jj log -r "$rs" --no-graph -T 'change_id.short() ++ "\n"')
     mapfile -t immutable < <(jj log -r "($rs) & immutable()" --no-graph -T 'change_id.short() ++ "\n"')
 
@@ -129,7 +124,7 @@ writeShellApplication {
       [ -n "$desc" ] || continue
       # shellcheck disable=SC2016
       new=$(printf '%s\n' "$desc" | awk -v tk="$tk" 'NR==1{if(index($0,tk)==0){if(match($0,/^[a-z]+(\([^)]*\))?!?: /)){$0=substr($0,1,RLENGTH) tk " - " substr($0,RLENGTH+1)}else{$0=tk " - " $0}}}{print}')
-      [ "$new" != "$desc" ] || continue # no-op: already ticketed
+      [ "$new" != "$desc" ] || continue
       if is_immutable "$c" && [ "$force" -eq 0 ]; then
         skipped_immutable+=("$c  ''${desc%%$'\n'*}")
         continue
