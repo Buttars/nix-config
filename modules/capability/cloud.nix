@@ -1,6 +1,6 @@
 {
   aegix.cloud.homeManager =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       programs.granted = {
         enable = true;
@@ -15,7 +15,8 @@
         ssm-session-manager-plugin
 
         # Kubernetes
-        minikube # bundles kubectl
+        (lib.hiPrio kubectl) # take priority over minikube's bundled kubectl
+        minikube
         kubernetes-helm
         k9s
         kubectx
