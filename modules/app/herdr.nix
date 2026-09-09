@@ -9,6 +9,9 @@
         ...
       }:
       let
+        # Injected into the server env below; the herdr server does not inherit
+        # login-shell session variables.
+        agentCmd = toString (config.home.sessionVariables.HERDR_AGENT or "claude");
         # Herdr plugins to install at activation time (owner/repo on GitHub).
         plugins = [
           "NathanFlurry/herdr-plugin-jj-workspace"
@@ -39,6 +42,7 @@
           };
           Service = {
             ExecStart = "${pkgs.herdr}/bin/herdr server";
+            Environment = [ "HERDR_AGENT=${agentCmd}" ];
             Restart = "always";
             RestartSec = 2;
           };
@@ -52,6 +56,9 @@
               "${pkgs.herdr}/bin/herdr"
               "server"
             ];
+            EnvironmentVariables = {
+              HERDR_AGENT = agentCmd;
+            };
             RunAtLoad = true;
             KeepAlive = true;
             StandardOutPath = "${config.home.homeDirectory}/.config/herdr/launchd-server.log";
