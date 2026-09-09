@@ -71,6 +71,7 @@
             "${stateDir}/Data:/SwarmUI/Data"
             "${stateDir}/Output:/SwarmUI/Output"
             "${stateDir}/dlbackend:/SwarmUI/dlbackend"
+            "${stateDir}/DLNodes:/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/DLNodes"
             "${modelsDir}:/SwarmUI/Models"
           ];
           environment.PYTORCH_CUDA_ALLOC_CONF = "expandable_segments:True";
