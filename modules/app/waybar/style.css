@@ -34,16 +34,35 @@ window#waybar {
   padding: 0;
 }
 
+#sysmon { border-top: 2px solid @cyan; }
+#conn { border-top: 2px solid @accent; }
+#power { border-top: 2px solid @caution; }
+#clock { border-top: 2px solid @urgent; }
+#workspaces { border-top: 2px solid @accent; }
+
 /* --- section headers: the dossier label cell --- */
 #custom-lbl-sys,
 #custom-lbl-net,
 #custom-lbl-pwr {
-  color: @dim;
-  background-color: alpha(@foreground, 0.05);
   border-right: 1px solid @border;
   padding: 0 7px;
   font-size: 10px;
   font-weight: 700;
+}
+
+#custom-lbl-sys {
+  color: @cyan;
+  background-color: alpha(@cyan, 0.13);
+}
+
+#custom-lbl-net {
+  color: @accent;
+  background-color: alpha(@accent, 0.13);
+}
+
+#custom-lbl-pwr {
+  color: @caution;
+  background-color: alpha(@caution, 0.13);
 }
 
 /* --- numeric readouts: monospace so digits never shift --- */

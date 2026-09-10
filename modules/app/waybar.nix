@@ -29,6 +29,7 @@
               @define-color dim        ${c.base03};
               @define-color foreground ${c.base05};
               @define-color accent     ${c.base0D};
+              @define-color cyan       ${c.base0C};
               @define-color urgent     ${c.base08};
               @define-color warning    ${c.base0A};
               @define-color caution    ${c.base09};
