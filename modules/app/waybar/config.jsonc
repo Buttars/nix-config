@@ -3,25 +3,23 @@
   "layer": "top",
   "position": "top",
   "spacing": 0,
-  "height": 26,
-  "modules-left": ["hyprland/workspaces"],
-  "modules-center": ["clock"],
+  "height": 30,
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "clock"
+  ],
   "modules-right": [
-    "group/tray-expander",
-    "bluetooth",
-    "network",
-    "pulseaudio",
-    "power-profiles-daemon",
-    "cpu",
-    "memory",
-    "temperature",
-    "battery"
+    "group/sysmon",
+    "group/conn",
+    "group/power",
+    "group/tray-expander"
   ],
   "hyprland/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
     "format-icons": {
-      "default": "",
       "1": "1",
       "2": "2",
       "3": "3",
@@ -30,8 +28,7 @@
       "6": "6",
       "7": "7",
       "8": "8",
-      "9": "9",
-      "active": "󱓻"
+      "9": "9"
     },
     "persistent-workspaces": {
       "1": [],
@@ -41,11 +38,15 @@
       "5": []
     }
   },
-
   "cpu": {
     "interval": 5,
-    "format": "󰍛",
-    "on-click": "$TERMINAL -e btop"
+    "format": "<span alpha=\"55%\">󰍛</span> {usage}%",
+    "on-click": "$TERMINAL -e btop",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    },
+    "tooltip-format": "CPU {usage}%   load {load}"
   },
   "power-profiles-daemon": {
     "format": "{icon}",
@@ -59,7 +60,7 @@
   },
   "memory": {
     "interval": 5,
-    "format": "󰾆",
+    "format": "<span alpha=\"55%\">󰾆</span> {percentage}%",
     "tooltip-format": "{used:0.1f}G / {total:0.1f}G  ({percentage}%)",
     "states": {
       "warning": 80,
@@ -69,13 +70,13 @@
   },
   "temperature": {
     "interval": 5,
-    "format": "",
-    "tooltip-format": "{temperatureC}°C",
+    "format": "<span alpha=\"55%\"></span> {temperatureC}°",
+    "tooltip-format": "Package {temperatureC}°C",
     "critical-threshold": 82,
     "on-click": "$TERMINAL -e btop"
   },
   "clock": {
-    "format": "{:L%A %H:%M}",
+    "format": "<span alpha=\"55%\">{0:%a %d %b}</span>  {0:%H:%M}",
     "format-alt": "{:L%d %B W%V %Y}",
     "tooltip": true,
     "tooltip-format": "<tt>{calendar}</tt>",
@@ -94,11 +95,17 @@
     }
   },
   "network": {
-    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
     "format": "{icon}",
-    "format-wifi": "{icon}",
-    "format-ethernet": "󰀂",
-    "format-disconnected": "󰤮",
+    "format-wifi": "<span alpha=\"55%\">{icon}</span> {signalStrength}%",
+    "format-ethernet": "<span alpha=\"55%\">󰀂</span> LAN",
+    "format-disconnected": "<span alpha=\"55%\">󰤮</span> OFF",
     "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "tooltip-format-disconnected": "Disconnected",
@@ -107,14 +114,22 @@
     "on-click": "$TERMINAL -e nmtui"
   },
   "battery": {
-    "format": "{capacity}% {icon}",
-    "format-discharging": "{icon}",
-    "format-charging": "{icon}",
+    "format": "<span alpha=\"55%\">{icon}</span> {capacity}%",
+    "format-discharging": "<span alpha=\"55%\">{icon}</span> {capacity}%",
+    "format-charging": "<span alpha=\"55%\">{icon}</span> {capacity}%",
     "format-plugged": "",
-    "format-icons": {
-      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
-    },
+    "format-icons": [
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ],
     "format-full": "󰂅",
     "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
     "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
@@ -126,21 +141,25 @@
     }
   },
   "bluetooth": {
-    "format": "",
-    "format-disabled": "󰂲",
-    "format-connected": "",
+    "format": "<span alpha=\"55%\"></span>",
+    "format-disabled": "<span alpha=\"55%\">󰂲</span>",
+    "format-connected": "<span alpha=\"55%\"></span> {num_connections}",
     "tooltip-format": "Devices connected: {num_connections}",
     "on-click": "blueman-manager"
   },
   "pulseaudio": {
-    "format": "{icon}",
+    "format": "<span alpha=\"55%\">{icon}</span> {volume}%",
     "on-click": "pavucontrol",
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,
-    "format-muted": "",
+    "format-muted": "<span alpha=\"55%\"></span> MUTE",
     "format-icons": {
-      "default": ["", "", ""]
+      "default": [
+        "",
+        "",
+        ""
+      ]
     }
   },
   "group/tray-expander": {
@@ -149,14 +168,55 @@
       "transition-duration": 600,
       "children-class": "tray-group-item"
     },
-    "modules": ["custom/expand-icon", "tray"]
+    "modules": [
+      "custom/expand-icon",
+      "tray"
+    ]
   },
   "custom/expand-icon": {
     "format": " ",
     "tooltip": false
   },
   "tray": {
-    "icon-size": 12,
+    "icon-size": 13,
     "spacing": 12
+  },
+  "group/sysmon": {
+    "orientation": "inherit",
+    "modules": [
+      "custom/lbl-sys",
+      "cpu",
+      "memory",
+      "temperature"
+    ]
+  },
+  "group/conn": {
+    "orientation": "inherit",
+    "modules": [
+      "custom/lbl-net",
+      "network",
+      "bluetooth"
+    ]
+  },
+  "group/power": {
+    "orientation": "inherit",
+    "modules": [
+      "custom/lbl-pwr",
+      "pulseaudio",
+      "power-profiles-daemon",
+      "battery"
+    ]
+  },
+  "custom/lbl-sys": {
+    "format": "SYS",
+    "tooltip": false
+  },
+  "custom/lbl-net": {
+    "format": "NET",
+    "tooltip": false
+  },
+  "custom/lbl-pwr": {
+    "format": "PWR",
+    "tooltip": false
   }
 }

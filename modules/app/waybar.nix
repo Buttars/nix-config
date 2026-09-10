@@ -24,10 +24,14 @@
             in
             ''
               @define-color background ${c.base00};
+              @define-color surface    ${c.base01};
+              @define-color border     ${c.base02};
+              @define-color dim        ${c.base03};
               @define-color foreground ${c.base05};
               @define-color accent     ${c.base0D};
               @define-color urgent     ${c.base08};
               @define-color warning    ${c.base0A};
+              @define-color caution    ${c.base09};
               @define-color good       ${c.base0B};
             '';
         };

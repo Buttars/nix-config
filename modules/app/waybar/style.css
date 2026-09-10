@@ -1,50 +1,166 @@
 @import "colors.css";
 
-* {
-  background-color: @background;
-  color: @foreground;
+/* Hard edges, exposed structure, instrument-grade readouts.
+   Nothing here is decorative: every rule carries state or hierarchy. */
 
+* {
   border: none;
   border-radius: 0;
   min-height: 0;
   font-family: "NebulaSans Nerd Font";
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.modules-left {
-  margin-left: 8px;
+window#waybar {
+  background-color: @background;
+  color: @foreground;
+  border-bottom: 1px solid @border;
 }
 
-.modules-right {
-  margin-right: 8px;
+.modules-left { margin-left: 4px; }
+.modules-right { margin-right: 4px; }
+
+/* --- instrument blocks: square, bordered, adjacent --- */
+#workspaces,
+#sysmon,
+#conn,
+#power,
+#clock,
+#tray-expander {
+  background-color: @surface;
+  border: 1px solid @border;
+  margin: 3px 3px;
+  padding: 0;
 }
 
-#workspaces button {
-  all: initial;
-  padding: 0 6px;
-  margin: 0 1.5px;
-  min-width: 9px;
+/* --- section headers: the dossier label cell --- */
+#custom-lbl-sys,
+#custom-lbl-net,
+#custom-lbl-pwr {
+  color: @dim;
+  background-color: alpha(@foreground, 0.05);
+  border-right: 1px solid @border;
+  padding: 0 7px;
+  font-size: 10px;
+  font-weight: 700;
 }
 
-#workspaces button.empty {
-  opacity: 0.5;
-}
-
-#tray,
+/* --- numeric readouts: monospace so digits never shift --- */
 #cpu,
-#battery,
+#memory,
+#temperature,
 #network,
 #bluetooth,
 #pulseaudio,
-#custom-omarchy,
-#custom-expand-icon {
-  margin-right: 7px;
+#power-profiles-daemon,
+#battery,
+#clock {
+  font-family: "CommitMono Nerd Font Mono";
+  font-size: 11px;
+  color: @foreground;
+  background-color: transparent;
+  padding: 0 6px;
 }
 
+#cpu { min-width: 44px; }
+#memory { min-width: 44px; }
+#temperature { min-width: 42px; }
+#pulseaudio { min-width: 44px; }
+#battery { min-width: 44px; }
+#network { min-width: 44px; }
+
+#cpu:hover,
+#memory:hover,
+#temperature:hover,
+#network:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#battery:hover {
+  background-color: alpha(@foreground, 0.08);
+}
+
+/* --- workspaces: HUD tick marks --- */
+#workspaces button {
+  all: initial;
+  font-family: "CommitMono Nerd Font Mono";
+  font-size: 11px;
+  font-weight: 700;
+  color: @dim;
+  background-color: transparent;
+  border-top: 2px solid transparent;
+  padding: 0 9px;
+  margin: 0;
+}
+
+#workspaces button:hover {
+  color: @foreground;
+  background-color: alpha(@foreground, 0.08);
+}
+
+#workspaces button.active {
+  color: @accent;
+  background-color: alpha(@accent, 0.14);
+  border-top: 2px solid @accent;
+}
+
+#workspaces button.empty {
+  color: alpha(@dim, 0.4);
+}
+
+#workspaces button.urgent {
+  color: @urgent;
+  background-color: alpha(@urgent, 0.18);
+  border-top: 2px solid @urgent;
+}
+
+#clock {
+  padding: 0 14px;
+  font-size: 12px;
+}
+
+/* --- state: hard tinted blocks, no gradients --- */
+#cpu.warning,
+#memory.warning,
+#temperature.warning {
+  color: @caution;
+  background-color: alpha(@caution, 0.14);
+}
+
+#cpu.critical,
+#memory.critical,
+#temperature.critical,
+#battery.critical {
+  color: @urgent;
+  background-color: alpha(@urgent, 0.18);
+}
+
+#battery.warning {
+  color: @warning;
+  background-color: alpha(@warning, 0.14);
+}
+
+#battery.charging {
+  color: @good;
+  background-color: alpha(@good, 0.14);
+}
+
+#network.disconnected,
+#bluetooth.disabled,
+#pulseaudio.muted {
+  color: @dim;
+}
+
+#custom-expand-icon {
+  color: @dim;
+  padding: 0 8px;
+}
+
+#tray { padding: 0 6px; }
+
 tooltip {
-  background-color: @background;
-  border: 1px solid @accent;
+  background-color: @surface;
+  border: 1px solid @border;
   border-radius: 0;
   padding: 8px;
 }
@@ -52,26 +168,7 @@ tooltip {
 tooltip label {
   color: @foreground;
   font-family: "CommitMono Nerd Font Mono", monospace;
+  font-weight: 500;
 }
 
-#custom-update {
-  font-size: 10px;
-}
-
-#clock {
-  margin-left: 8.75px;
-}
-
-.hidden {
-  opacity: 0;
-}
-
-#memory.warning,
-#temperature.critical {
-  color: @warning;
-}
-
-#memory.critical,
-#battery.critical {
-  color: @urgent;
-}
+.hidden { opacity: 0; }
