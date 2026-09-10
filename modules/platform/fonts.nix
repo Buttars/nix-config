@@ -23,6 +23,7 @@
         cantarell-fonts
         inter
         inter-nerdfont
+        nebula-sans-nerdfont
       ];
     };
 }
