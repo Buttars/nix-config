@@ -37,10 +37,6 @@
       flake = false;
     };
     mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
-    nix-auto-follow = {
-      url = "github:fzakaria/nix-auto-follow";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix2container = {
       url = "github:nlewo/nix2container";
       inputs.nixpkgs.follows = "nixpkgs";
