@@ -18,8 +18,6 @@ window#waybar {
   border-bottom: 1px solid @border;
 }
 
-.modules-left { margin-left: 4px; }
-.modules-right { margin-right: 4px; }
 
 /* --- instrument blocks: square, bordered, adjacent --- */
 #workspaces,
@@ -39,6 +37,10 @@ window#waybar {
 #power { border-top: 2px solid @caution; }
 #clock { border-top: 2px solid @urgent; }
 #workspaces { border-top: 2px solid @accent; }
+
+/* flush to the screen edges: no gap outside the first and last block */
+#workspaces { margin-left: 0; }
+#tray-expander { margin-right: 0; }
 
 /* --- section headers: the dossier label cell --- */
 #custom-lbl-sys,
