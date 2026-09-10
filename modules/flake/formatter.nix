@@ -2,7 +2,6 @@
 {
 
   imports = [
-    inputs.flake-file.flakeModules.nix-auto-follow
     inputs.treefmt-nix.flakeModule
   ];
 
