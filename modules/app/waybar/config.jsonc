@@ -70,7 +70,7 @@
   },
   "temperature": {
     "interval": 5,
-    "format": "<span alpha=\"55%\"></span> {temperatureC}°",
+    "format": "<span alpha=\"55%\">󰔏</span> {temperatureC}°",
     "tooltip-format": "Package {temperatureC}°C",
     "critical-threshold": 82,
     "on-click": "$TERMINAL -e btop"
