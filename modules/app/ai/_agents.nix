@@ -143,4 +143,13 @@
     };
     welcomeMessage = "Reviewer ready. Point me at the code or PR.";
   };
+
+  writer = {
+    description = "Writes, revises, and refines messages — email, Slack, text, casual";
+    prompt = "message-writing";
+    rules = [ ];
+    skills = [ ];
+    tools = [ "read" ];
+    welcomeMessage = "Message mode. Paste a draft to revise or refine, or tell me what to write.";
+  };
 }
