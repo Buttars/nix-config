@@ -39,6 +39,48 @@
       else
         prev.direnv;
 
+    # Kiro provider for opencode: graft the models.dev PR's Kiro provider TOMLs
+    # onto the nixpkgs models-dev source (its deps build/cache cleanly, whereas
+    # the PR branch's dev-based lockfile fails to bun-install aws-sdk). opencode
+    # is re-injected with this models-dev below (it bakes the _api.json path).
+    models-dev =
+      let
+        kiro = final.fetchFromGitHub {
+          owner = "NachoFLizaur";
+          repo = "models.dev";
+          rev = "d46a74bd028291ff3a540c91ac43a5b8b9989633";
+          hash = "sha256-6Hi7fr4oSvrSfXkcreywY7qpGC+DOEK9Dw9EnwBQhwM=";
+        };
+      in
+      prev.models-dev.overrideAttrs (
+        _finalAttrs: prevAttrs: {
+          postPatch = (prevAttrs.postPatch or "") + ''
+            cp -R ${kiro}/providers/kiro ./providers/kiro
+          '';
+        }
+      );
+
+    opencode =
+      let
+        src = final.fetchFromGitHub {
+          owner = "NachoFLizaur";
+          repo = "opencode";
+          rev = "79efd6955801c412851faf2509b6f4718e71c911";
+          hash = "sha256-fMTrraC2oFIT4C3s66z6lGaV89Cin8z/d8n2p6sJqFo=";
+        };
+      in
+      (prev.opencode.override { inherit (final) models-dev; }).overrideAttrs (
+        _finalAttrs: prevAttrs: {
+          inherit src;
+          passthru = prevAttrs.passthru // {
+            node_modules = prevAttrs.passthru.node_modules.overrideAttrs (_: {
+              inherit src;
+              outputHash = "sha256-3xw5C4rxvsm/BJuFeaNLKwA4oBcADm4z1WK++Xvfkxc=";
+            });
+          };
+        }
+      );
+
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });

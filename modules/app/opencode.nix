@@ -1,11 +1,20 @@
 {
   aegix.opencode.homeManager =
-    { lib, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       ai = import ../lib/_ai-models.nix;
+      rulesDir = ./ai/rules;
+      ruleFiles = builtins.attrNames (builtins.readDir rulesDir);
     in
     {
       home.packages = [ pkgs.opencode ];
+
+      xdg.configFile."opencode/rules".source = rulesDir;
 
       xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
         provider.ollama = {
@@ -18,6 +27,7 @@
           }) (lib.filterAttrs (_: m: m.tools) ai.models);
         };
         model = "ollama/${ai.default}";
+        instructions = map (f: "${config.xdg.configHome}/opencode/rules/${f}") ruleFiles;
       };
     };
 }
