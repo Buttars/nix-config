@@ -21,6 +21,7 @@
       <aegix/cloud>
       <aegix/toolsets/node>
       <aegix/toolsets/python>
+      <aegix/ai>
       <aegix/kiro>
       <aegix/skills>
       <aegix/omlx>
