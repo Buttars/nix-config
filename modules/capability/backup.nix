@@ -51,6 +51,17 @@
 
           nextcloud = commonOpts // {
             paths = [ "/var/lib/nextcloud" ];
+            # nextcloud shares the cluster that immich dumps, so its rows already
+            # ride along in that snapshot. Dump it here too, so restoring
+            # nextcloud never means reaching into an immich snapshot.
+            backupPrepareCommand = ''
+              mkdir -p /var/lib/nextcloud/database-backup
+              ${pkgs.sudo}/bin/sudo -u postgres \
+                ${config.services.postgresql.package}/bin/pg_dump \
+                  --clean --if-exists nextcloud \
+                  > /var/lib/nextcloud/database-backup/nextcloud-database.sql
+            '';
+            backupCleanupCommand = "rm -f /var/lib/nextcloud/database-backup/nextcloud-database.sql";
           };
 
           immich = commonOpts // {
