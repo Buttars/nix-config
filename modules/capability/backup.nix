@@ -13,6 +13,7 @@
         commonOpts = {
           repository = b2Repo;
           environmentFile = config.sops.secrets.restic-b2-env.path;
+          initialize = true;
           timerConfig = {
             OnCalendar = "daily";
             Persistent = true;
