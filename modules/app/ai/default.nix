@@ -3,6 +3,7 @@
   aegix.ai.homeManager =
     {
       lib,
+      pkgs,
       ...
     }:
     let
@@ -52,6 +53,8 @@
       ) agents;
     in
     {
+      home.packages = [ pkgs.github-mcp-server ];
+
       home.file = agentFiles // {
         ".kiro/steering".source = ./rules;
         ".kiro/prompts".source = ./prompts;
