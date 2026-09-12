@@ -37,7 +37,8 @@ sudo umount /var/lib/nextcloud && sudo mount /var/lib/nextcloud
 - [ ] **Step 4: Nextcloud** — ACL fixed; content check pending remount
 - [ ] **Step 5: Immich** — ACL fixed; DB dump configured in backup.nix; pending remount + deploy + restic init
 - [ ] **Step 6: Restic dry runs** — not yet run
-- [ ] **Step 0: Restic repo init** — post-deploy, not yet run
+- [x] **Step 0: Restic repo init** — no longer a manual step; `initialize = true`
+      creates the repository on the first run of each job
 - [ ] **Step 7: First real backup** — post-deploy, not yet run
 - [ ] **Step 8: Restore spot-check** — post-deploy, not yet run
 
@@ -65,10 +66,14 @@ sudo umount /var/lib/nextcloud && sudo mount /var/lib/nextcloud
      restic -r s3:s3.us-west-004.backblazeb2.com/buttars-backups check
      ```
 
-2. **Nextcloud Postgres DB**: Not backed up. Confirm whether the DB is accessible from
-   sentinel or lives entirely inside a TrueNAS container.
+2. **Nextcloud Postgres DB**: ✅ Resolved. It lives in the same local postgres
+   cluster as immich on sentinel (`ensureDatabases = [ "nextcloud" "immich" ]`),
+   so immich's `pg_dumpall` was already capturing it — inside the _immich_
+   snapshot, under a filename claiming to be immich's. The nextcloud job now
+   runs its own `pg_dump` into `/var/lib/nextcloud/database-backup/`, so the
+   snapshot stands alone.
 
-3. **backup.nix HA sqlite exclude direction**: ❌ Confirmed backwards — read
+3. **backup.nix HA sqlite exclude direction**: ✅ Fixed. Was backwards — read
    `modules/capability/backup.nix:32-39`. The job does all the work of making a
    consistent snapshot and then throws it away:
    - `paths = [ "/var/lib/hass" ]` — sweeps in the **live** `home-assistant_v2.db`
@@ -76,10 +81,9 @@ sudo umount /var/lib/nextcloud && sudo mount /var/lib/nextcloud
    - `exclude = [ "/var/lib/hass/db-backup.sqlite" ]` — **excludes that clean copy**
    - `backupCleanupCommand` deletes it
 
-   So every snapshot contains a live SQLite file that may be mid-write, and never
-   the consistent one. Invert it before deploy: exclude the live DB (and its
-   `-wal`/`-shm` sidecars, which are equally useless torn) and let
-   `db-backup.sqlite` into the snapshot.
+   Every snapshot therefore held a live SQLite file that may have been mid-write,
+   and never the consistent one. The exclude is now inverted — the live DB and
+   its `-wal`/`-shm` sidecars are excluded, and `db-backup.sqlite` is kept:
 
    ```nix
    exclude = [

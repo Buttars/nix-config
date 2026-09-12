@@ -14,7 +14,8 @@ Run restic from `sentinel` to back up all service data to Backblaze B2. Sentinel
 - [x] Create B2 application key (scoped to bucket)
 - [x] Add credentials to sops: `restic-b2-env` in `modules/app/sops/secrets.yaml`
 - [x] Generate restic repo password and store in sops + Bitwarden
-- [ ] Initialize restic repo: `restic -r s3:s3.us-west-004.backblazeb2.com/buttars-backups init`
+- [x] ~~Initialize restic repo~~ — automated: every job sets `initialize = true`,
+      so restic creates the repository on its first run.
 
 ## Implementation
 
@@ -53,10 +54,12 @@ These run as `backupPrepareCommand` in the restic module.
 >
 > - **immich** carries the `thumbs`/`encoded-video` excludes and a live
 >   `pg_dumpall` prepare/cleanup pair (the sketch left those commented out).
-> - **home-assistant** does the SQLite hot copy — but currently excludes the
->   copy and backs up the live DB. That is a real bug; see
->   [backup-validation-status.md](backup-validation-status.md) Open Issue 3.
-> - **nextcloud** has no database dump at all.
+> - **home-assistant** does the SQLite hot copy and excludes the live database
+>   plus its `-wal`/`-shm` sidecars, so the consistent copy is what gets stored.
+> - **nextcloud** runs its own `pg_dump`, so its snapshot is self-contained
+>   rather than depending on immich's cluster-wide dump.
+> - Every job sets `initialize = true`, so the repository is created on first
+>   run, and a weekly `restic-check` timer verifies it.
 > - The sketch's `/var/lib/jellyfin` exclude was dropped, correctly — jellyfin
 >   runs on theatrum and was never in sentinel's paths.
 >
@@ -141,8 +144,11 @@ includes = [
 
 ## Monitoring
 
-- [ ] Add systemd `OnFailure=` to send notification on backup failure
-- [ ] Periodic `restic check` via separate timer (weekly)
+- [ ] Add systemd `OnFailure=` to send notification on backup failure — blocked
+      on the notification destination in Open Questions; no ntfy/mail/gotify
+      exists anywhere in the repo yet.
+- [x] Periodic `restic check` via separate timer (weekly) — `restic-check`
+      service + timer in `modules/capability/backup.nix`.
 
 ## Restore procedure
 
@@ -163,7 +169,9 @@ restic restore latest --target /tmp/restore --include /var/lib/hass/db-backup.sq
       answered: `backup.nix:57-63` now runs `pg_dumpall` into
       `/var/lib/immich/database-backup/` before each snapshot and removes it
       after. See [backup-validation-status.md](backup-validation-status.md).
-- [ ] Nextcloud database — still unanswered, and the only remaining half of the
-      question above. Nothing in `backup.nix` dumps it.
+- [x] ~~Nextcloud database~~ — it lives in the same local postgres as immich
+      (`ensureDatabases = [ "nextcloud" "immich" ]`), so `pg_dumpall` was already
+      capturing it inside the _immich_ snapshot. It now gets its own `pg_dump`
+      in the nextcloud job so the snapshot is self-contained.
 - [ ] Do you want media backed up too (large cost on B2) or just service state?
 - [ ] Notification preference: email, ntfy, or something else?
