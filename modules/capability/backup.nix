@@ -10,6 +10,7 @@
       { config, pkgs, ... }:
       let
         b2Repo = "s3:s3.us-west-004.backblazeb2.com/buttars-backups";
+        dumpDir = "/var/backup";
         commonOpts = {
           repository = b2Repo;
           environmentFile = config.sops.secrets.restic-b2-env.path;
@@ -51,34 +52,39 @@
           };
 
           nextcloud = commonOpts // {
-            paths = [ "/var/lib/nextcloud" ];
-            # nextcloud shares the cluster that immich dumps, so its rows already
-            # ride along in that snapshot. Dump it here too, so restoring
-            # nextcloud never means reaching into an immich snapshot.
+            # The dump lands on local disk: /var/lib/nextcloud is an NFSv3 mount
+            # where root squashes to nobody and cannot write.
+            paths = [
+              "/var/lib/nextcloud"
+              "${dumpDir}/nextcloud"
+            ];
             backupPrepareCommand = ''
-              mkdir -p /var/lib/nextcloud/database-backup
+              mkdir -p ${dumpDir}/nextcloud
               ${pkgs.sudo}/bin/sudo -u postgres \
                 ${config.services.postgresql.package}/bin/pg_dump \
                   --clean --if-exists nextcloud \
-                  > /var/lib/nextcloud/database-backup/nextcloud-database.sql
+                  > ${dumpDir}/nextcloud/nextcloud-database.sql
             '';
-            backupCleanupCommand = "rm -f /var/lib/nextcloud/database-backup/nextcloud-database.sql";
+            backupCleanupCommand = "rm -f ${dumpDir}/nextcloud/nextcloud-database.sql";
           };
 
           immich = commonOpts // {
-            paths = [ "/var/lib/immich" ];
+            paths = [
+              "/var/lib/immich"
+              "${dumpDir}/immich"
+            ];
             exclude = [
               "/var/lib/immich/thumbs"
               "/var/lib/immich/encoded-video"
             ];
             backupPrepareCommand = ''
-              mkdir -p /var/lib/immich/database-backup
+              mkdir -p ${dumpDir}/immich
               ${pkgs.sudo}/bin/sudo -u postgres \
                 ${config.services.postgresql.package}/bin/pg_dumpall \
                   --clean --if-exists \
-                  > /var/lib/immich/database-backup/immich-database.sql
+                  > ${dumpDir}/immich/immich-database.sql
             '';
-            backupCleanupCommand = "rm -f /var/lib/immich/database-backup/immich-database.sql";
+            backupCleanupCommand = "rm -f ${dumpDir}/immich/immich-database.sql";
           };
         };
 
