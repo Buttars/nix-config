@@ -81,6 +81,24 @@
             backupCleanupCommand = "rm -f /var/lib/immich/database-backup/immich-database.sql";
           };
         };
+
+        systemd.services.restic-check = {
+          description = "Restic repository integrity check";
+          serviceConfig = {
+            Type = "oneshot";
+            EnvironmentFile = config.sops.secrets.restic-b2-env.path;
+          };
+          script = "${pkgs.restic}/bin/restic --repo ${b2Repo} check --with-cache";
+        };
+
+        systemd.timers.restic-check = {
+          wantedBy = [ "timers.target" ];
+          timerConfig = {
+            OnCalendar = "weekly";
+            Persistent = true;
+            RandomizedDelaySec = "1h";
+          };
+        };
       };
   };
 }
