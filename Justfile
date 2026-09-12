@@ -5,6 +5,7 @@ deploy host user='' +args='':
         --target-host "${_user:-{{host}}}@{{host}}.lan" \
         --sudo \
         --ask-sudo-password \
+        --use-substitutes \
         {{args}}
 
 aegis:
