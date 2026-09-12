@@ -31,7 +31,13 @@
         services.restic.backups = {
           home-assistant = commonOpts // {
             paths = [ "/var/lib/hass" ];
-            exclude = [ "/var/lib/hass/db-backup.sqlite" ];
+            # The live database can be captured mid-write; db-backup.sqlite is the
+            # consistent copy made below, so that is the one worth keeping.
+            exclude = [
+              "/var/lib/hass/home-assistant_v2.db"
+              "/var/lib/hass/home-assistant_v2.db-wal"
+              "/var/lib/hass/home-assistant_v2.db-shm"
+            ];
             backupPrepareCommand = ''
               ${pkgs.sqlite}/bin/sqlite3 /var/lib/hass/home-assistant_v2.db \
                 ".backup /var/lib/hass/db-backup.sqlite"
