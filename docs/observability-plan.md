@@ -1,16 +1,16 @@
 # Observability Plan: VictoriaLogs + Prometheus on Oculus
 
-> **Status: phase 1 built, running on sentinel, not on oculus.**
+> **Status: phase 1 built and running on sentinel.**
 >
-> `oculus` does not exist yet, so the aggregator was deployed to sentinel as an
-> interim step. That deliberately contradicts the rationale in the next section —
-> and the day it was built, a full disk on the hypervisor took sentinel down,
-> which is exactly the scenario the dedicated host is meant to survive. Treat
-> sentinel as a staging location, not the destination.
+> Co-locating on sentinel is a deliberate choice, not a shortcut pending
+> `oculus`. The immediate goal is visibility into the application and OS layers,
+> which co-location delivers in full; the dedicated host buys survivability of
+> the monitoring stack itself, which is a separate and later concern.
 >
-> Everything is built as a capability, so the move is a change of which host
-> includes `<aegix/observability>` plus its scrape list. See
-> [What is built](#what-is-built).
+> Everything is built as a capability, so moving it if and when `oculus` exists
+> is a change of which host includes `<aegix/observability>` plus its scrape
+> list. See [What is built](#what-is-built). The rationale in the next section is
+> kept as the argument for eventually doing so.
 
 ## Overview
 
@@ -39,16 +39,10 @@ and no per-service file tailing is needed. The exceptions are noted under
 
 ## Prerequisites
 
-> **Check `veritas` capacity first.** The hypervisor is provisioned 384 GiB of
-> virtual disk on a 238 GiB physical one, and filled completely on 2026-09-12,
-> which paused three VMs and took the fleet down. A 40 GB `oculus` claim takes
-> that to 424 GiB. Sparse allocation means a minimal NixOS consumes perhaps
-> 5–8 GiB in practice, but the overcommit is real.
->
-> It is also worth asking whether `oculus` belongs on `veritas` at all. The whole
-> argument for a dedicated host is that monitoring should not share fate with
-> what it monitors — and today every host in the fleet is a guest on this one
-> hypervisor.
+> Not started — phase 1 runs on sentinel instead. If `oculus` is revisited,
+> check `veritas` capacity first: it is provisioned 384 GiB of virtual disk on a
+> 238 GiB physical one and filled completely on 2026-09-12. Sparse allocation
+> means a minimal NixOS consumes perhaps 5–8 GiB in practice.
 
 - [ ] Create Proxmox VM: 2 vCPU, 4 GB RAM, 40 GB disk, `ens18`
 - [ ] Assign a **static DHCP lease** — the IP is the fallback access path
@@ -85,11 +79,11 @@ and no per-service file tailing is needed. The exceptions are noted under
 | `aegix.observability.scrapeTargets` | set in `modules/hosts/sentinel/`       | Host option, so the list moves with the aggregator.   |
 | `grafana.buttars.dev`               | `modules/hosts/sentinel/caddy.nix`     | Proxies `127.0.0.1:3000`.                             |
 
-Prometheus and grafana both bind `127.0.0.1`; caddy is the only way in. That is
-fine while the aggregator _is_ sentinel, but it violates
-[reachability measure 1](#4-reachability-without-sentinel) — on `oculus`,
-`http://<ip>:3000` must work with sentinel powered off, so the bind address and
-firewall need revisiting at migration, not just the include.
+Prometheus and grafana both bind `127.0.0.1`; caddy is the only way in. Correct
+while the aggregator is sentinel. If the stack ever moves to `oculus`, the bind
+address and firewall need revisiting alongside the include, so that
+`http://<ip>:3000` still works with sentinel powered off — see
+[reachability](#4-reachability-without-sentinel).
 
 Scrape targets today are sentinel, aegis, torrens, theatrum and
 buttars-desktop. `buttars-laptop` is excluded because it roams; `specula` and
