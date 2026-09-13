@@ -72,6 +72,21 @@
 
           provision = {
             enable = true;
+
+            # Dashboards are files in this repo, not state clicked into
+            # grafana's database, so a rebuilt host comes back with them.
+            dashboards.settings.providers = [
+              {
+                name = "aegix";
+                options.path = ./observability;
+                # The files are read-only in the store; let grafana say so
+                # rather than let someone edit a dashboard that will silently
+                # revert on the next deploy.
+                allowUiUpdates = false;
+                disableDeletion = true;
+              }
+            ];
+
             datasources.settings.datasources = [
               {
                 name = "Prometheus";
