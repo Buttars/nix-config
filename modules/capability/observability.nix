@@ -4,7 +4,7 @@
   # it. Kept host-agnostic so moving it off sentinel is a change of which host
   # includes it, not a rewrite.
   aegix.observability.nixos =
-    { config, ... }:
+    { config, pkgs, ... }:
     {
       options.aegix.observability.scrapeTargets = lib.mkOption {
         type = lib.types.listOf lib.types.str;
@@ -41,8 +41,20 @@
           ];
         };
 
+        services.victorialogs = {
+          enable = true;
+          # Reachable from the fleet so other hosts can push. No auth, same
+          # trust assumption as node-exporter: the LAN is trusted.
+          listenAddress = ":9428";
+          extraOptions = [ "-retentionPeriod=30d" ];
+        };
+
+        networking.firewall.allowedTCPPorts = [ 9428 ];
+
         services.grafana = {
           enable = true;
+          # VictoriaLogs speaks LogsQL, which core grafana does not know.
+          declarativePlugins = [ pkgs.grafanaPlugins.victoriametrics-logs-datasource ];
           settings = {
             server = {
               http_addr = "127.0.0.1";
@@ -67,6 +79,12 @@
                 access = "proxy";
                 url = "http://127.0.0.1:9090";
                 isDefault = true;
+              }
+              {
+                name = "VictoriaLogs";
+                type = "victoriametrics-logs-datasource";
+                access = "proxy";
+                url = "http://127.0.0.1:9428";
               }
             ];
           };
