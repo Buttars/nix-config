@@ -40,6 +40,8 @@
       { pkgs, config, ... }:
       {
 
+        aegix.vector.endpoint = "http://sentinel.lan:9428/insert/loki/api/v1/push";
+
         hardware.facter.reportPath = ./_facter.json;
         hardware.facter.detected.dhcp.interfaces = [ "ens18" ];
 

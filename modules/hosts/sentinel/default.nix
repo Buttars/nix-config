@@ -21,6 +21,8 @@
       {
         imports = [ ./_disko.nix ];
 
+        aegix.vector.endpoint = "http://127.0.0.1:9428/insert/loki/api/v1/push";
+
         aegix.observability.scrapeTargets = [
           "sentinel.lan:9100"
           "aegis.lan:9100"
