@@ -29,10 +29,15 @@
           # null means the module creates no timer; restic-backups.service
           # drives every job in sequence instead.
           timerConfig = null;
+          # Wait for the repository lock rather than dying on it, so a manual
+          # run and the nightly chain queue behind each other instead of one
+          # of them failing. Every job ends in a prune, which locks exclusively.
+          extraBackupArgs = [ "--retry-lock 15m" ];
           pruneOpts = [
             "--keep-daily 7"
             "--keep-weekly 4"
             "--keep-monthly 6"
+            "--retry-lock 15m"
           ];
         };
       in
@@ -127,7 +132,7 @@
             Type = "oneshot";
             EnvironmentFile = config.sops.secrets.restic-b2-env.path;
           };
-          script = "${pkgs.restic}/bin/restic --repo ${b2Repo} check --with-cache";
+          script = "${pkgs.restic}/bin/restic --repo ${b2Repo} check --with-cache --retry-lock 15m";
         };
 
         systemd.timers.restic-check = {
