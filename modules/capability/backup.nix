@@ -11,15 +11,24 @@
       let
         b2Repo = "s3:s3.us-west-004.backblazeb2.com/buttars-backups";
         dumpDir = "/var/backup";
+
+        # Smallest first, so a long immich run never delays the quick jobs.
+        # Order is fixed rather than scheduled: each job ends with a prune,
+        # which takes an exclusive repository lock, so they cannot overlap.
+        jobOrder = [
+          "home-assistant"
+          "dawarich"
+          "nextcloud"
+          "immich"
+        ];
+
         commonOpts = {
           repository = b2Repo;
           environmentFile = config.sops.secrets.restic-b2-env.path;
           initialize = true;
-          timerConfig = {
-            OnCalendar = "daily";
-            Persistent = true;
-            RandomizedDelaySec = "1h";
-          };
+          # null means the module creates no timer; restic-backups.service
+          # drives every job in sequence instead.
+          timerConfig = null;
           pruneOpts = [
             "--keep-daily 7"
             "--keep-weekly 4"
@@ -88,6 +97,30 @@
           };
         };
 
+        systemd.services.restic-backups = {
+          description = "Run every restic backup job in sequence";
+          serviceConfig.Type = "oneshot";
+          script = ''
+            status=0
+            for job in ${lib.concatStringsSep " " jobOrder}; do
+              echo "==> restic-backups-$job"
+              if ! ${pkgs.systemd}/bin/systemctl start --wait "restic-backups-$job.service"; then
+                echo "!!! restic-backups-$job failed" >&2
+                status=1
+              fi
+            done
+            exit $status
+          '';
+        };
+
+        systemd.timers.restic-backups = {
+          wantedBy = [ "timers.target" ];
+          timerConfig = {
+            OnCalendar = "*-*-* 01:00:00";
+            Persistent = true;
+          };
+        };
+
         systemd.services.restic-check = {
           description = "Restic repository integrity check";
           serviceConfig = {
@@ -100,9 +133,9 @@
         systemd.timers.restic-check = {
           wantedBy = [ "timers.target" ];
           timerConfig = {
-            OnCalendar = "weekly";
+            # Well clear of the 01:00 backup chain.
+            OnCalendar = "Sun *-*-* 06:00:00";
             Persistent = true;
-            RandomizedDelaySec = "1h";
           };
         };
       };
