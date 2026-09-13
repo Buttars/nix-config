@@ -46,7 +46,8 @@
           settings = {
             server = {
               http_addr = "127.0.0.1";
-              http_port = 3000;
+              # 3000 is taken by zwave-js-server for home-assistant.
+              http_port = 3001;
               root_url = "https://grafana.buttars.dev/";
             };
             # Read at runtime so the password never enters the nix store.
