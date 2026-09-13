@@ -48,6 +48,9 @@
         fileSystems =
           let
             nfsProvider = "truenas.lan";
+            # x-systemd.automount retries the mount on next access. Without it a
+            # single timeout -- truenas rebooting, say -- leaves the mount dead
+            # until someone notices and remounts it by hand.
             nfsOptions = [
               "defaults"
               "noatime"
@@ -62,7 +65,12 @@
               "auto"
               "_netdev"
               "nofail"
+              "x-systemd.automount"
+              "x-systemd.mount-timeout=30"
             ];
+            # x-systemd.automount retries the mount on next access. Without it a
+            # single timeout -- truenas rebooting, say -- leaves the mount dead
+            # until someone notices and remounts it by hand.
             serviceNfsOptions = [
               "defaults"
               "noatime"
@@ -77,6 +85,8 @@
               "auto"
               "_netdev"
               "nofail"
+              "x-systemd.automount"
+              "x-systemd.mount-timeout=30"
               "nolock"
             ];
           in
