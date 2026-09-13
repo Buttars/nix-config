@@ -15,6 +15,7 @@
       <aegix/devenv>
       <aegix/locale>
       <aegix/neovim>
+      <aegix/telemetry>
       (
         { host, ... }:
         {
