@@ -149,6 +149,22 @@
             cache-size = 1000;
             domain-needed = true;
             bogus-priv = true;
+
+            # Answer for our own machines rather than forwarding .lan to the
+            # router. Removes the router from the path for internal names, and
+            # a host that is briefly down no longer resolves to nothing.
+            host-record = [
+              "truenas.lan,10.0.40.2"
+              "theatrum.lan,10.0.40.3"
+              "torrens.lan,10.0.40.5"
+              "sentinel.lan,10.0.40.6"
+              "aegis.lan,10.0.45.2"
+              "veritas.lan,10.0.30.2"
+            ];
+
+            # A name looked up while its host is rebooting would otherwise be
+            # remembered as nonexistent until the cache is flushed by hand.
+            neg-ttl = 30;
           };
         };
 
