@@ -2,7 +2,12 @@
 {
   den.aspects.sentinel = {
     nixos =
-      { config, pkgs, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
       {
         sops.secrets."nextcloud/admin-password" = {
           owner = "nextcloud";
@@ -31,8 +36,10 @@
         # nginx owns nextcloud's PHP-FPM; move it off port 80 so caddy can proxy to it
         services.nginx.defaultHTTPListenPort = 8080;
 
-        users.users.nextcloud.uid = 994;
-        users.groups.nextcloud.gid = 992;
+        # Matches the on-disk ownership of the truenas dataset; see the uid notes
+        # in default.nix.
+        users.users.nextcloud.uid = lib.mkForce 3030;
+        users.groups.nextcloud.gid = lib.mkForce 1011;
 
         systemd.services."nextcloud-setup" = {
           after = [ "var-lib-nextcloud.mount" ];

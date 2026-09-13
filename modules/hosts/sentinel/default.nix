@@ -17,7 +17,12 @@
     ];
 
     nixos =
-      { config, pkgs, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
       {
         imports = [ ./_disko.nix ];
 
@@ -109,8 +114,15 @@
 
         nix.settings.trusted-users = [ "sentinel" ];
 
-        users.users.hass.uid = 286;
-        users.groups.hass.gid = 286;
+        # Must match the on-disk ownership of the truenas datasets, which these
+        # services read over NFS. NixOS refuses to renumber an existing user, so
+        # a wrong value here is invisible until the host is rebuilt.
+        users.users.hass.uid = lib.mkForce 3020;
+        # uid >= 1000 stops nixos inferring a system account, so say so.
+        users.users.hass.isSystemUser = true;
+        users.groups.hass.gid = lib.mkForce 1009;
+        users.users.immich.uid = lib.mkForce 3031;
+        users.groups.immich.gid = lib.mkForce 1012;
 
         services.openssh.enable = true;
 
