@@ -122,8 +122,6 @@
             "/var/lib/immich" = serviceMount "immich";
           };
 
-        nix.settings.trusted-users = [ "sentinel" ];
-
         # Must match the on-disk ownership of the truenas datasets, which these
         # services read over NFS. NixOS refuses to renumber an existing user, so
         # a wrong value here is invisible until the host is rebuilt.

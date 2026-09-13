@@ -22,6 +22,20 @@
           ${host.class}.networking.hostName = host.name;
         }
       )
+      (
+        { host, ... }:
+        {
+          nixos =
+            { config, lib, ... }:
+            {
+              # A deploy pushes locally-built paths that no cache has signed, and
+              # only a trusted user may add unsigned paths. The Justfile deploys
+              # as <host>@<host>.lan, so trust that user where it exists --
+              # workstations have no such account and need no entry.
+              nix.settings.trusted-users = lib.optional (config.users.users ? ${host.name}) host.name;
+            };
+        }
+      )
     ];
 
     nixos = {

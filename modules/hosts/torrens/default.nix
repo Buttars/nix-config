@@ -56,8 +56,6 @@
           };
         };
 
-        nix.settings.trusted-users = [ "torrens" ];
-
         users.users.radarr.uid = 275;
         users.groups.radarr.gid = 275;
         users.users.sonarr.uid = 274;
