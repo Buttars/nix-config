@@ -1,5 +1,17 @@
 # Observability Plan: VictoriaLogs + Prometheus on Oculus
 
+> **Status: phase 1 built, running on sentinel, not on oculus.**
+>
+> `oculus` does not exist yet, so the aggregator was deployed to sentinel as an
+> interim step. That deliberately contradicts the rationale in the next section —
+> and the day it was built, a full disk on the hypervisor took sentinel down,
+> which is exactly the scenario the dedicated host is meant to survive. Treat
+> sentinel as a staging location, not the destination.
+>
+> Everything is built as a capability, so the move is a change of which host
+> includes `<aegix/observability>` plus its scrape list. See
+> [What is built](#what-is-built).
+
 ## Overview
 
 Centralize logs, metrics, and alerting for the fleet on a dedicated Proxmox VM
@@ -18,7 +30,7 @@ unavailable exactly when it is needed.
 | External uptime | `gatus` on sentinel, 15 endpoints     | Dies with sentinel                       |
 | Backups         | `restic` → B2, 4 paths                | No alert on failure                      |
 | Logs            | journald, per-host, default retention | No aggregation, no cross-host search     |
-| Metrics         | none                                  | No resource history, no capacity warning |
+| Metrics         | node-exporter fleet-wide → prometheus | Lives on sentinel, not a dedicated host  |
 | Alerting        | none                                  | Failures are discovered by noticing them |
 
 Every host is NixOS and every service logs to journald, so collection is uniform
@@ -26,6 +38,17 @@ and no per-service file tailing is needed. The exceptions are noted under
 [Non-NixOS hosts](#non-nixos-hosts).
 
 ## Prerequisites
+
+> **Check `veritas` capacity first.** The hypervisor is provisioned 384 GiB of
+> virtual disk on a 238 GiB physical one, and filled completely on 2026-09-12,
+> which paused three VMs and took the fleet down. A 40 GB `oculus` claim takes
+> that to 424 GiB. Sparse allocation means a minimal NixOS consumes perhaps
+> 5–8 GiB in practice, but the overcommit is real.
+>
+> It is also worth asking whether `oculus` belongs on `veritas` at all. The whole
+> argument for a dedicated host is that monitoring should not share fate with
+> what it monitors — and today every host in the fleet is a guest on this one
+> hypervisor.
 
 - [ ] Create Proxmox VM: 2 vCPU, 4 GB RAM, 40 GB disk, `ens18`
 - [ ] Assign a **static DHCP lease** — the IP is the fallback access path
@@ -50,6 +73,41 @@ and no per-service file tailing is needed. The exceptions are noted under
 > recipe fails at evaluation. Verified present: `victorialogs`, `victoriametrics`,
 > `prometheus` (with `exporters` and `alertmanager`), `grafana`, `vector`,
 > `alloy`, `ntfy-sh`.
+
+## What is built
+
+| Piece                               | File                                   | Notes                                                 |
+| ----------------------------------- | -------------------------------------- | ----------------------------------------------------- |
+| `aegix.node-exporter`               | `modules/app/node-exporter.nix`        | Port 9100, `systemd` + `processes`, `openFirewall`.   |
+| `aegix.telemetry`                   | `modules/capability/telemetry.nix`     | Composes the exporter. Vector joins it in phase 2.    |
+| Default include                     | `modules/defaults.nix`                 | Every host is instrumented on creation.               |
+| `aegix.observability`               | `modules/capability/observability.nix` | Prometheus + grafana. Currently included by sentinel. |
+| `aegix.observability.scrapeTargets` | set in `modules/hosts/sentinel/`       | Host option, so the list moves with the aggregator.   |
+| `grafana.buttars.dev`               | `modules/hosts/sentinel/caddy.nix`     | Proxies `127.0.0.1:3000`.                             |
+
+Prometheus and grafana both bind `127.0.0.1`; caddy is the only way in. That is
+fine while the aggregator _is_ sentinel, but it violates
+[reachability measure 1](#4-reachability-without-sentinel) — on `oculus`,
+`http://<ip>:3000` must work with sentinel powered off, so the bind address and
+firewall need revisiting at migration, not just the include.
+
+Scrape targets today are sentinel, aegis, torrens, theatrum and
+buttars-desktop. `buttars-laptop` is excluded because it roams; `specula` and
+`DRHCDGTHGJ` per [what is not collected](#whats-not-collected-intentionally).
+
+### Two things that bit during implementation
+
+**Grafana's `secret_key` has no upstream default and cannot be rotated.** It
+encrypts datasource credentials in grafana's database; NixOS 26.05 removed the
+default and there is no official rotation path, so it must be set **before the
+first start** or the database has to be re-encrypted later. Both it and the admin
+password come from sops as `$__file{...}` so neither enters the nix store.
+
+**sops-nix validates secret names at build time**, not at activation. A
+referenced key that does not exist in `secrets.yaml` fails the _build_ of
+`system.build.toplevel`, so secrets have to be added before the config that uses
+them will compile. `sops set <file> '["key"]' '"value"'` edits in place without
+writing plaintext to disk.
 
 ## Implementation
 
@@ -239,8 +297,9 @@ part that matters.
 
 Ordered by dependency. Each is independently useful.
 
-- [ ] **Phase 1 — Metrics.** `oculus` VM, node-exporter fleet-wide, Prometheus +
-      Grafana, stock Node Exporter Full dashboard. Largest payoff per unit work.
+- [~] **Phase 1 — Metrics.** node-exporter fleet-wide ✅, Prometheus + Grafana ✅
+  (on sentinel, not `oculus`). Outstanding: the `oculus` VM, the migration,
+  and importing the stock Node Exporter Full dashboard (grafana ID 1860).
 - [ ] **Phase 2 — Logs.** VictoriaLogs on `oculus`, Vector in the telemetry
       capability, container log drivers, Grafana datasource.
 - [ ] **Phase 3 — Alerting.** Alertmanager + ntfy, the seven rules above, the
@@ -255,7 +314,9 @@ Ordered by dependency. Each is independently useful.
       fit the existing naming. Avoid `speculum`, too close to `specula`.
 - [ ] Alert destination — self-hosted ntfy, hosted ntfy.sh, or home-assistant?
       Note that routing through home-assistant reintroduces a sentinel
-      dependency in the alerting path.
+      dependency in the alerting path. **This also blocks backup alerting** —
+      `OnFailure=` in [backup-plan.md](backup-plan.md) is waiting on the same
+      decision, and restic jobs failed silently for days before anyone noticed.
 - [ ] Do workstations ship logs, or servers only? Laptops roam and need a
       buffering/offline story the servers do not.
 - [ ] Secondary dnsmasq on `oculus` — in scope, or separate work?
