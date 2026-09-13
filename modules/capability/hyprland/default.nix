@@ -15,6 +15,7 @@
       <aegix/mpd>
       <aegix/screenkey>
       <aegix/wlogout>
+      <aegix/keyd>
     ];
 
     nixos = {
@@ -31,6 +32,7 @@
 
       programs.hyprland.enable = true;
       programs.dconf.enable = true;
+
     };
 
     homeManager =
@@ -101,7 +103,6 @@
             waypaper
             wl-clipboard
             xdg-desktop-portal-hyprland
-            xremap
           ];
 
           wayland.windowManager.hyprland = {
@@ -141,7 +142,6 @@
 
                           hl.on("hyprland.start", function()
                               hl.exec_cmd("random-wallpaper")
-                              hl.exec_cmd("xremap ~/.config/xremap/xremap.config")
                               hl.exec_cmd("sh ~/.config/hypr/portal-launch.sh")
                               setup_cursor()
                           end)
@@ -152,7 +152,6 @@
                           hl.config({
                               input = {
                                   kb_layout     = "us",
-                                  kb_options    = "ctrl:nocaps",
                                   follow_mouse  = 0,
                                   sensitivity   = 0,
                                   accel_profile = "flat",
@@ -491,8 +490,6 @@
               source = ./keybinds.sh;
               executable = true;
             };
-
-            ".config/xremap/xremap.config".source = ./xremap.yaml;
 
             ".config/hypr/wallpaper.jpg".source = ./wallpaper.jpg;
 
