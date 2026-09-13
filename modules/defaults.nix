@@ -16,6 +16,7 @@
       <aegix/locale>
       <aegix/neovim>
       <aegix/telemetry>
+      <aegix/reboot>
       (
         { host, ... }:
         {
