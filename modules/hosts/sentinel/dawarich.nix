@@ -8,6 +8,9 @@
         config,
         ...
       }:
+      let
+        truenasDawarichUser = "3021:1010";
+      in
       {
         virtualisation.docker.enable = true;
 
@@ -65,7 +68,7 @@
               extraOptions = [
                 "--network=dawarich"
                 "--shm-size=1g"
-                "--user=70:70"
+                "--user=${truenasDawarichUser}"
               ];
             };
 
