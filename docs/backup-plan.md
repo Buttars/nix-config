@@ -3,6 +3,7 @@
 > Design and rationale. The step-by-step validation procedure is in
 > [backup-validation.md](backup-validation.md) and live progress in
 > [backup-validation-status.md](backup-validation-status.md).
+> Recovery procedures are in [restore-runbook.md](restore-runbook.md).
 
 ## Overview
 
