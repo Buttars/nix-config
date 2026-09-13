@@ -49,6 +49,11 @@
                 max_size = 268435488;
                 when_full = "drop_newest";
               };
+              # A template that is only a field reference is rejected by default:
+              # the guard exists to stop path traversal in sinks that write
+              # files. These are loki label values, so there is no path to
+              # confine, and a static prefix would corrupt the label.
+              dangerously_allow_unconfined_template_resolution = true;
               labels = {
                 host = "{{ host }}";
                 unit = "{{ _SYSTEMD_UNIT }}";
