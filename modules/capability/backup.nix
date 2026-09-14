@@ -6,6 +6,8 @@
 }:
 {
   aegix.backup = {
+    includes = [ <aegix/ntfy> ];
+
     nixos =
       { config, pkgs, ... }:
       let
@@ -104,6 +106,7 @@
 
         systemd.services.restic-backups = {
           description = "Run every restic backup job in sequence";
+          onFailure = [ "ntfy-failure@%n.service" ];
           serviceConfig.Type = "oneshot";
           script = ''
             status=0
@@ -128,6 +131,7 @@
 
         systemd.services.restic-check = {
           description = "Restic repository integrity check";
+          onFailure = [ "ntfy-failure@%n.service" ];
           serviceConfig = {
             Type = "oneshot";
             EnvironmentFile = config.sops.secrets.restic-b2-env.path;

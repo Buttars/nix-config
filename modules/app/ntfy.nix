@@ -4,6 +4,26 @@
     { config, pkgs, ... }:
     let
       cfg = config.aegix.ntfy;
+
+      failureNotify = pkgs.writeShellScript "ntfy-failure" ''
+        set -u
+        unit="$1"
+        # -u would put the password in the process list; a mode-600 curl
+        # config file does not.
+        conf=$(${pkgs.coreutils}/bin/mktemp)
+        ${pkgs.coreutils}/bin/chmod 600 "$conf"
+        ${pkgs.coreutils}/bin/printf 'user = "%s:%s"\n' \
+          '${cfg.username}' \
+          "$(${pkgs.coreutils}/bin/cat ${config.sops.secrets."ntfy/password".path})" > "$conf"
+        ${pkgs.systemd}/bin/journalctl -u "$unit" -n 15 --no-pager 2>/dev/null \
+          | ${pkgs.curl}/bin/curl -sS --max-time 20 -K "$conf" \
+              -H "Title: $unit failed on $(${pkgs.nettools}/bin/hostname -s)" \
+              -H "Priority: high" \
+              -H "Tags: rotating_light" \
+              --data-binary @- \
+              http://127.0.0.1:2586/fleet || true
+        ${pkgs.coreutils}/bin/rm -f "$conf"
+      '';
     in
     {
       options.aegix.ntfy = {
@@ -32,6 +52,16 @@
             # buttars.dev resolves publicly, so an open server would be a public
             # message board carrying host names and failure detail.
             auth-default-access = "deny-all";
+          };
+        };
+
+        # Any unit can report its own death with
+        #   onFailure = [ "ntfy-failure@%n.service" ];
+        systemd.services."ntfy-failure@" = {
+          description = "Report a failed %i to ntfy";
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = "${failureNotify} %i";
           };
         };
 
