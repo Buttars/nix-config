@@ -1,10 +1,71 @@
-{ lib, ... }:
+{
+  __findFile,
+  lib,
+  ...
+}:
 {
   # The aggregator side of telemetry: stores what every host exposes and draws
   # it. Kept host-agnostic so moving it off sentinel is a change of which host
   # includes it, not a rewrite.
+  aegix.observability.includes = [ <aegix/ntfy> ];
+
   aegix.observability.nixos =
     { config, pkgs, ... }:
+    let
+      mkAlert =
+        {
+          uid,
+          title,
+          expr,
+          duration,
+          severity,
+          summary,
+          description,
+        }:
+        {
+          inherit uid title;
+          condition = "B";
+          for = duration;
+          # No matching series means nothing is wrong for every rule here, so
+          # absence must not itself alert.
+          noDataState = "OK";
+          execErrState = "Error";
+          labels.severity = severity;
+          annotations = { inherit summary description; };
+          data = [
+            {
+              refId = "A";
+              relativeTimeRange = {
+                from = 600;
+                to = 0;
+              };
+              datasourceUid = "prometheus";
+              model = {
+                refId = "A";
+                inherit expr;
+                instant = true;
+              };
+            }
+            {
+              refId = "B";
+              datasourceUid = "__expr__";
+              model = {
+                refId = "B";
+                type = "threshold";
+                expression = "A";
+                conditions = [
+                  {
+                    evaluator = {
+                      type = "gt";
+                      params = [ 0 ];
+                    };
+                  }
+                ];
+              };
+            }
+          ];
+        };
+    in
     {
       options.aegix.observability.scrapeTargets = lib.mkOption {
         type = lib.types.listOf lib.types.str;
@@ -51,6 +112,21 @@
 
         networking.firewall.allowedTCPPorts = [ 9428 ];
 
+        # Grafana unified alerting rather than alertmanager: alertmanager 0.33.1
+        # neither builds in this nixpkgs pin nor is cached, and grafana is
+        # already here with the datasource wired up.
+        services.grafana-to-ntfy = {
+          enable = true;
+          settings = {
+            ntfyUrl = "http://127.0.0.1:2586/fleet";
+            ntfyBAuthUser = config.aegix.ntfy.username;
+            ntfyBAuthPass = config.sops.secrets."ntfy/password".path;
+            # 8080 is nextcloud.
+            port = 8099;
+            markdown = true;
+          };
+        };
+
         services.grafana = {
           enable = true;
           # VictoriaLogs speaks LogsQL, which core grafana does not know.
@@ -73,6 +149,103 @@
           provision = {
             enable = true;
 
+            alerting = {
+              contactPoints.settings = {
+                apiVersion = 1;
+                contactPoints = [
+                  {
+                    orgId = 1;
+                    name = "ntfy";
+                    receivers = [
+                      {
+                        uid = "ntfy-webhook";
+                        type = "webhook";
+                        settings.url = "http://127.0.0.1:8099/";
+                      }
+                    ];
+                  }
+                ];
+              };
+
+              policies.settings = {
+                apiVersion = 1;
+                policies = [
+                  {
+                    orgId = 1;
+                    receiver = "ntfy";
+                    group_by = [
+                      "alertname"
+                      "grafana_folder"
+                    ];
+                    group_wait = "30s";
+                    group_interval = "5m";
+                    # Re-notify twice a day: often enough not to forget, rare
+                    # enough not to train the reflex of dismissing it.
+                    repeat_interval = "12h";
+                  }
+                ];
+              };
+
+              rules.settings = {
+                apiVersion = 1;
+                groups = [
+                  {
+                    orgId = 1;
+                    name = "aegix";
+                    folder = "Alerts";
+                    interval = "1m";
+                    rules = [
+                      (mkAlert {
+                        uid = "aegix-host-down";
+                        title = "HostDown";
+                        expr = ''up{job="nodes"} == 0'';
+                        duration = "5m";
+                        severity = "critical";
+                        summary = "{{ $labels.instance }} is down";
+                        description = "Prometheus has not scraped it for five minutes.";
+                      })
+                      (mkAlert {
+                        uid = "aegix-disk-filling";
+                        title = "DiskFillingUp";
+                        expr = ''100 - (node_filesystem_avail_bytes{fstype!~"tmpfs|ramfs|nfs.*|autofs"} / node_filesystem_size_bytes{fstype!~"tmpfs|ramfs|nfs.*|autofs"} * 100) > 85'';
+                        duration = "30m";
+                        severity = "warning";
+                        summary = "{{ $labels.instance }} {{ $labels.mountpoint }} is over 85% full";
+                        description = "A full disk on the hypervisor paused three VMs once already.";
+                      })
+                      (mkAlert {
+                        uid = "aegix-unit-failed";
+                        title = "SystemdUnitFailed";
+                        expr = ''node_systemd_unit_state{state="failed",name!~"restic-.*"} == 1'';
+                        duration = "10m";
+                        severity = "warning";
+                        summary = "{{ $labels.name }} failed on {{ $labels.instance }}";
+                        description = "The unit has been in the failed state for ten minutes.";
+                      })
+                      (mkAlert {
+                        uid = "aegix-backup-failed";
+                        title = "BackupFailed";
+                        expr = ''node_systemd_unit_state{state="failed",name=~"restic-.*"} == 1'';
+                        duration = "5m";
+                        severity = "critical";
+                        summary = "Backup job {{ $labels.name }} failed";
+                        description = "Restic jobs failed silently for days before anyone noticed.";
+                      })
+                      (mkAlert {
+                        uid = "aegix-fs-unreachable";
+                        title = "FilesystemUnreachable";
+                        expr = "node_filesystem_device_error == 1";
+                        duration = "10m";
+                        severity = "critical";
+                        summary = "{{ $labels.instance }} cannot stat {{ $labels.mountpoint }}";
+                        description = "Usually a stale NFS mount after truenas restarted.";
+                      })
+                    ];
+                  }
+                ];
+              };
+            };
+
             # Dashboards are files in this repo, not state clicked into
             # grafana's database, so a rebuilt host comes back with them.
             dashboards.settings.providers = [
@@ -90,6 +263,7 @@
             datasources.settings.datasources = [
               {
                 name = "Prometheus";
+                uid = "prometheus";
                 type = "prometheus";
                 access = "proxy";
                 url = "http://127.0.0.1:9090";

@@ -14,7 +14,6 @@
       <aegix/fail2ban>
       <aegix/backup>
       <aegix/observability>
-      <aegix/ntfy>
     ];
 
     nixos =
