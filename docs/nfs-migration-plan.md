@@ -4,8 +4,9 @@
 > which moved service configs onto per-service datasets. This covers the separate
 > question of who each export maps to.
 >
-> **Status: done for every per-service share on torrens and theatrum, plus
-> dawarich.** Remaining: `home-assistant`, `nextcloud`, `immich`, and `cognito`.
+> **Status: done — every per-service share is mapped to its own service user.**
+> The only share left on `maproot` is `cognito`, deliberately; see the last
+> section.
 
 ## The rule
 
@@ -183,18 +184,17 @@ file descriptors keep working. It then dies at the next restart or reboot — a
 moment with no apparent connection to the cause. After converting a host, reboot
 it deliberately rather than discovering this later.
 
-## Remaining
+## Host restriction
 
-- [ ] **home-assistant** (3020, sentinel) — on `maproot=hass:hass`
-- [ ] **nextcloud** (3030) — on `maproot`, **and exported to every host**
-- [ ] **immich** (3031) — on `maproot`, **and exported to every host**
+- [ ] `nextcloud` and `immich` — confirm both export lines end in a hostname
 
-`nextcloud` and `immich` are the only shares with no host restriction. Every
-other line in `/etc/exports` ends in a hostname. Worth fixing independently of
-the mapping.
+Every other line in `/etc/exports` is restricted to the host that needs it.
+These two were exported to everyone, which is worth fixing independently of the
+mapping.
 
-`maproot=<service>:<service>` is a halfway state: it remaps only uid 0, so it
-works while the service runs as root and breaks quietly if that ever changes.
+A note on what was replaced: `maproot=<service>:<service>` looks like the same
+thing as mapall but is a halfway state. It remaps only uid 0, so it works while
+the service happens to run as root and breaks quietly if that ever changes.
 
 ## cognito — needs a decision
 
