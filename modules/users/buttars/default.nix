@@ -23,6 +23,7 @@
       <aegix/discord>
       <aegix/thunderbird>
       <aegix/protonmail-bridge>
+      <aegix/proton-vpn>
       <aegix/sops>
       <aegix/bitwarden>
       <aegix/printing3d>

@@ -27,6 +27,7 @@
       <aegix/gaming>
       <aegix/zsa>
       <aegix/syncthing>
+      <aegix/proton-vpn>
       <aegix/reticulum>
       <aegix/ollama>
       <aegix/open-webui>

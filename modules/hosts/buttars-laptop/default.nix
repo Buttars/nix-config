@@ -23,6 +23,7 @@
       <aegix/sops>
       <aegix/theming>
       <aegix/syncthing>
+      <aegix/proton-vpn>
     ];
     nixos = {
       imports = [
