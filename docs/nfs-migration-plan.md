@@ -186,11 +186,14 @@ it deliberately rather than discovering this later.
 
 ## Host restriction
 
-- [ ] `nextcloud` and `immich` — confirm both export lines end in a hostname
+Every line in `/etc/exports` is restricted to the host that needs it. `nextcloud`
+and `immich` were the last two exported to everyone; both are now pinned to
+`sentinel.lan`.
 
-Every other line in `/etc/exports` is restricted to the host that needs it.
-These two were exported to everyone, which is worth fixing independently of the
-mapping.
+This matters more once mapall is in place, not less. Mapall remaps every
+incoming uid to the service user, so an unrestricted share hands full read/write
+as that user to anything on the LAN that mounts it — the mapping that makes the
+service work also removes the need to guess a uid.
 
 A note on what was replaced: `maproot=<service>:<service>` looks like the same
 thing as mapall but is a halfway state. It remaps only uid 0, so it works while
