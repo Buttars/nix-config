@@ -24,6 +24,17 @@
         # Public weights, and large enough that encrypting them would dominate
         # the volume and every migration of it.
         modelsDir = "/var/lib/swarmui-models";
+        # ComfyUI-Manager refuses every install unless it is reached over
+        # loopback, and SwarmUI has to bind 0.0.0.0 for the port mapping.
+        pinNetworkMode = pkgs.writeShellScript "swarmui-manager-network-mode" ''
+          cfg=${stateDir}/dlbackend/ComfyUI/user/__manager/config.ini
+          [ -f "$cfg" ] || exit 0
+          if ${pkgs.gnugrep}/bin/grep -q '^network_mode = ' "$cfg"; then
+            ${pkgs.gnused}/bin/sed -i 's|^network_mode = .*|network_mode = personal_cloud|' "$cfg"
+          else
+            echo 'network_mode = personal_cloud' >>"$cfg"
+          fi
+        '';
       in
       lib.mkIf (lib.elem "nvidia" config.services.xserver.videoDrivers) {
         # The layer rules stop an app from pulling in another app, so the host
@@ -84,6 +95,7 @@
         systemd.services.docker-swarmui = {
           after = [ "swarmui-image.service" ];
           requires = [ "swarmui-image.service" ];
+          serviceConfig.ExecStartPre = lib.mkAfter [ "${pinNetworkMode}" ];
         };
 
         systemd.tmpfiles.rules = [ "d ${modelsDir} 0755 root root -" ];
