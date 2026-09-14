@@ -7,7 +7,8 @@
 >
 > The follow-on work — mapping each export to a per-service user instead of
 > `maproot: root/wheel` — is a **separate** plan:
-> [nfs-migration-plan.md](nfs-migration-plan.md). That one is not started.
+> [nfs-migration-plan.md](nfs-migration-plan.md), which has landed for torrens
+> and dawarich.
 
 ## Starting State (historical — superseded by the phases below)
 
