@@ -47,7 +47,9 @@
           enable = true;
           settings = {
             base-url = cfg.baseUrl;
-            listen-http = "127.0.0.1:2586";
+            # Reachable from aegis, which is the public edge. Exposure is safe
+            # because every topic requires auth.
+            listen-http = ":2586";
             behind-proxy = true;
             # buttars.dev resolves publicly, so an open server would be a public
             # message board carrying host names and failure detail.
@@ -57,6 +59,8 @@
 
         # Any unit can report its own death with
         #   onFailure = [ "ntfy-failure@%n.service" ];
+        networking.firewall.allowedTCPPorts = [ 2586 ];
+
         systemd.services."ntfy-failure@" = {
           description = "Report a failed %i to ntfy";
           serviceConfig = {

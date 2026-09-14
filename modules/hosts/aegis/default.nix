@@ -105,6 +105,15 @@
                 header_up Host {host}
               }
             '';
+
+            "ntfy.buttars.dev".extraConfig = ''
+              tls {
+                protocols tls1.2 tls1.3
+              }
+              reverse_proxy http://sentinel.lan:2586 {
+                header_up Host {host}
+              }
+            '';
           };
         };
 
