@@ -15,6 +15,23 @@
 
     nixos =
       { config, ... }:
+      let
+        # Proxying to sentinel's caddy rather than to a raw service port: one
+        # allowed port between the segments instead of a router rule per
+        # service, and it reaches services that bind loopback on sentinel.
+        viaCaddy = host: ''
+          tls {
+            protocols tls1.2 tls1.3
+          }
+          reverse_proxy https://sentinel.lan {
+            header_up Host {host}
+            transport http {
+              tls
+              tls_server_name ${host}
+            }
+          }
+        '';
+      in
       {
         imports = [ ./_disko.nix ];
 
@@ -70,14 +87,7 @@
               }
             '';
 
-            "home.buttars.dev".extraConfig = ''
-              tls {
-                protocols tls1.2 tls1.3
-              }
-              reverse_proxy http://sentinel.lan:8123 {
-                header_up Host {host}
-              }
-            '';
+            "home.buttars.dev".extraConfig = viaCaddy "home.buttars.dev";
 
             "dawarich.buttars.dev".extraConfig = ''
               tls {
@@ -106,14 +116,7 @@
               }
             '';
 
-            "ntfy.buttars.dev".extraConfig = ''
-              tls {
-                protocols tls1.2 tls1.3
-              }
-              reverse_proxy http://sentinel.lan:2586 {
-                header_up Host {host}
-              }
-            '';
+            "ntfy.buttars.dev".extraConfig = viaCaddy "ntfy.buttars.dev";
           };
         };
 
