@@ -260,6 +260,16 @@
               }
             ];
 
+            # Adding a uid to a datasource that grafana already stores fails
+            # provisioning with "data source not found"; deleting by name first
+            # lets it be recreated with the uid the alert rules reference.
+            datasources.settings.deleteDatasources = [
+              {
+                name = "Prometheus";
+                orgId = 1;
+              }
+            ];
+
             datasources.settings.datasources = [
               {
                 name = "Prometheus";
