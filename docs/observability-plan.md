@@ -1,6 +1,6 @@
 # Observability Plan: VictoriaLogs + Prometheus on Oculus
 
-> **Status: phase 1 built and running on sentinel.**
+> **Status: phases 1 and 2 built and running on sentinel.**
 >
 > Co-locating on sentinel is a deliberate choice, not a shortcut pending
 > `oculus`. The immediate goal is visibility into the application and OS layers,
@@ -29,9 +29,12 @@ unavailable exactly when it is needed.
 | --------------- | ------------------------------------- | ---------------------------------------- |
 | External uptime | `gatus` on sentinel, 15 endpoints     | Dies with sentinel                       |
 | Backups         | `restic` → B2, 4 paths                | No alert on failure                      |
-| Logs            | journald, per-host, default retention | No aggregation, no cross-host search     |
+| Logs            | vector -> victorialogs, 30d retention | Ships from NixOS hosts only              |
 | Metrics         | node-exporter fleet-wide → prometheus | Lives on sentinel, not a dedicated host  |
 | Alerting        | none                                  | Failures are discovered by noticing them |
+
+Alerting is the one remaining gap, and it is blocked on a single decision — see
+[Open Questions](#open-questions).
 
 Every host is NixOS and every service logs to journald, so collection is uniform
 and no per-service file tailing is needed. The exceptions are noted under
@@ -73,29 +76,37 @@ and no per-service file tailing is needed. The exceptions are noted under
 | Piece                               | File                                   | Notes                                                 |
 | ----------------------------------- | -------------------------------------- | ----------------------------------------------------- |
 | `aegix.node-exporter`               | `modules/app/node-exporter.nix`        | Port 9100, `systemd` + `processes`, `openFirewall`.   |
-| `aegix.telemetry`                   | `modules/capability/telemetry.nix`     | Composes the exporter. Vector joins it in phase 2.    |
+| `aegix.telemetry`                   | `modules/capability/telemetry.nix`     | Composes the exporter and vector.                     |
 | Default include                     | `modules/defaults.nix`                 | Every host is instrumented on creation.               |
 | `aegix.observability`               | `modules/capability/observability.nix` | Prometheus + grafana. Currently included by sentinel. |
 | `aegix.observability.scrapeTargets` | set in `modules/hosts/sentinel/`       | Host option, so the list moves with the aggregator.   |
-| `grafana.buttars.dev`               | `modules/hosts/sentinel/caddy.nix`     | Proxies `127.0.0.1:3000`.                             |
+| `aegix.vector`                      | `modules/app/vector.nix`               | journald -> victorialogs. Empty endpoint disables it. |
+| VictoriaLogs                        | `modules/capability/observability.nix` | Port 9428, 30d, open to the LAN so hosts can push.    |
+| Fleet dashboard                     | `modules/capability/observability/`    | Provisioned from the repo, `allowUiUpdates = false`.  |
+| `grafana.buttars.dev`               | `modules/hosts/sentinel/caddy.nix`     | Proxies `127.0.0.1:3001`.                             |
 
 Prometheus and grafana both bind `127.0.0.1`; caddy is the only way in. Correct
 while the aggregator is sentinel. If the stack ever moves to `oculus`, the bind
 address and firewall need revisiting alongside the include, so that
-`http://<ip>:3000` still works with sentinel powered off — see
+`http://<ip>:3001` still works with sentinel powered off — see
 [reachability](#4-reachability-without-sentinel).
 
 Scrape targets today are sentinel, aegis, torrens, theatrum and
 buttars-desktop. `buttars-laptop` is excluded because it roams; `specula` and
 `DRHCDGTHGJ` per [what is not collected](#whats-not-collected-intentionally).
 
-### Two things that bit during implementation
+### Three things that bit during implementation
 
 **Grafana's `secret_key` has no upstream default and cannot be rotated.** It
 encrypts datasource credentials in grafana's database; NixOS 26.05 removed the
 default and there is no official rotation path, so it must be set **before the
 first start** or the database has to be re-encrypted later. Both it and the admin
 password come from sops as `$__file{...}` so neither enters the nix store.
+
+**Port 3000 was already taken.** `zwave-js-server` binds it for home-assistant,
+so grafana runs on **3001**. Checking `networking.firewall.allowedTCPPorts` does
+not reveal this — both services bind loopback and neither opens a port. Check
+what is actually listening (`ss -ltn`) before assigning one.
 
 **sops-nix validates secret names at build time**, not at activation. A
 referenced key that does not exist in `secrets.yaml` fails the _build_ of
@@ -294,8 +305,10 @@ Ordered by dependency. Each is independently useful.
 - [~] **Phase 1 — Metrics.** node-exporter fleet-wide ✅, Prometheus + Grafana ✅
   (on sentinel, not `oculus`). Outstanding: the `oculus` VM, the migration,
   and importing the stock Node Exporter Full dashboard (grafana ID 1860).
-- [ ] **Phase 2 — Logs.** VictoriaLogs on `oculus`, Vector in the telemetry
-      capability, container log drivers, Grafana datasource.
+- [~] **Phase 2 — Logs.** VictoriaLogs ✅, Vector in the telemetry capability ✅,
+  Grafana datasource ✅ (on sentinel, not `oculus`). Outstanding: container
+  log drivers — docker/podman logs reach journald only where the unit is
+  managed by systemd.
 - [ ] **Phase 3 — Alerting.** Alertmanager + ntfy, the seven rules above, the
       external dead-man's switch. Move `gatus` here.
 - [ ] **Phase 4 — Depth.** Per-service exporters (Caddy already exposes metrics;
