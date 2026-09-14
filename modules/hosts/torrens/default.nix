@@ -17,7 +17,12 @@
     ];
 
     nixos =
-      { pkgs, config, ... }:
+      {
+        pkgs,
+        config,
+        lib,
+        ...
+      }:
       {
         imports = [ ./_disko.nix ];
 
@@ -64,10 +69,10 @@
         users.groups.lidarr.gid = 306;
         users.users.bazarr.uid = 995;
         users.groups.bazarr.gid = 992;
-        users.users.prowlarr.uid = 61654;
+        users.users.prowlarr.uid = lib.mkForce 3005;
         users.users.prowlarr.isSystemUser = true;
         users.users.prowlarr.group = "prowlarr";
-        users.groups.prowlarr.gid = 61654;
+        users.groups.prowlarr.gid = lib.mkForce 1005;
 
         services.openssh.enable = true;
         services.openssh.settings.PermitRootLogin = "yes";
@@ -176,6 +181,11 @@
           prowlarr = {
             after = [ "srv.mount" ];
             wants = [ "srv.mount" ];
+            serviceConfig = {
+              DynamicUser = lib.mkForce false;
+              User = "prowlarr";
+              Group = "prowlarr";
+            };
           };
           bazarr = {
             after = [ "srv.mount" ];
