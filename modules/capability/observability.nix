@@ -207,10 +207,10 @@
                       (mkAlert {
                         uid = "aegix-disk-filling";
                         title = "DiskFillingUp";
-                        expr = ''100 - (node_filesystem_avail_bytes{fstype!~"tmpfs|ramfs|nfs.*|autofs"} / node_filesystem_size_bytes{fstype!~"tmpfs|ramfs|nfs.*|autofs"} * 100) > 85'';
+                        expr = ''max by (instance, device) (100 - (node_filesystem_avail_bytes{fstype!~"tmpfs|ramfs|nfs.*|autofs"} / node_filesystem_size_bytes{fstype!~"tmpfs|ramfs|nfs.*|autofs"} * 100)) > 85'';
                         duration = "30m";
                         severity = "warning";
-                        summary = "{{ $labels.instance }} {{ $labels.mountpoint }} is over 85% full";
+                        summary = "{{ $labels.instance }} {{ $labels.device }} is over 85% full";
                         description = "A full disk on the hypervisor paused three VMs once already.";
                       })
                       (mkAlert {
@@ -234,10 +234,10 @@
                       (mkAlert {
                         uid = "aegix-fs-unreachable";
                         title = "FilesystemUnreachable";
-                        expr = "node_filesystem_device_error == 1";
+                        expr = ''node_filesystem_device_error{fstype!~"tmpfs|ramfs"} == 1'';
                         duration = "10m";
                         severity = "critical";
-                        summary = "{{ $labels.instance }} cannot stat {{ $labels.mountpoint }}";
+                        summary = "{{ $labels.instance }} cannot stat {{ $labels.mountpoint }} ({{ $labels.fstype }})";
                         description = "Usually a stale NFS mount after truenas restarted.";
                       })
                     ];
