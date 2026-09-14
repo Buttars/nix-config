@@ -14,6 +14,7 @@
       <aegix/fail2ban>
       <aegix/backup>
       <aegix/observability>
+      <aegix/ntfy>
     ];
 
     nixos =
@@ -27,6 +28,8 @@
         imports = [ ./_disko.nix ];
 
         aegix.vector.endpoint = "http://127.0.0.1:9428/insert/loki/api/v1/push";
+
+        aegix.ntfy.baseUrl = "https://ntfy.buttars.dev";
 
         aegix.observability.scrapeTargets = [
           "sentinel.lan:9100"
