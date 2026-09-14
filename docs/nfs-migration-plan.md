@@ -4,8 +4,8 @@
 > which moved service configs onto per-service datasets. This covers the separate
 > question of who each export maps to.
 >
-> **Status: done for torrens (all six services) and dawarich.** Remaining:
-> `gluetun`, `jellyfin`, `home-assistant`, `nextcloud`, `immich`, and `cognito`.
+> **Status: done for every per-service share on torrens and theatrum, plus
+> dawarich.** Remaining: `home-assistant`, `nextcloud`, `immich`, and `cognito`.
 
 ## The rule
 
@@ -148,6 +148,13 @@ a correct configuration look broken.
 If the service already hit its restart limit, `systemctl reset-failed <svc>`
 first, or systemd will not retry and the journal will show no new attempt.
 
+**Restart anything sharing the service's network namespace.** On torrens,
+`qbittorrent` and `byparr` use `networks = [ "container:gluetun" ]`. Restarting
+gluetun destroys that namespace and podman does not reattach them — stop them
+first, start them after. Gluetun also pushes its forwarded port into
+qbittorrent's API on startup, so if qbittorrent is not yet up that push fails
+and qbittorrent keeps a stale listen port.
+
 ## Verifying
 
 From an unprivileged account on the client:
@@ -178,8 +185,6 @@ it deliberately rather than discovering this later.
 
 ## Remaining
 
-- [ ] **gluetun** (3007, torrens) — on `maproot=root:wheel`
-- [ ] **jellyfin** (3010, theatrum) — on `maproot=jellyfin:jellyfin`
 - [ ] **home-assistant** (3020, sentinel) — on `maproot=hass:hass`
 - [ ] **nextcloud** (3030) — on `maproot`, **and exported to every host**
 - [ ] **immich** (3031) — on `maproot`, **and exported to every host**
