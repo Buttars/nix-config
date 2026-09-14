@@ -84,6 +84,10 @@ and no per-service file tailing is needed. The exceptions are noted under
 | VictoriaLogs                        | `modules/capability/observability.nix` | Port 9428, 30d, open to the LAN so hosts can push.    |
 | Fleet dashboard                     | `modules/capability/observability/`    | Provisioned from the repo, `allowUiUpdates = false`.  |
 | `grafana.buttars.dev`               | `modules/hosts/sentinel/caddy.nix`     | Proxies `127.0.0.1:3001`.                             |
+| `aegix.ntfy`                        | `modules/app/ntfy.nix`                 | Push server, deny-all auth, plus `ntfy-failure@`.     |
+| Alert rules + contact point         | `modules/capability/observability.nix` | Grafana unified alerting, five rules.                 |
+| `grafana-to-ntfy`                   | `modules/capability/observability.nix` | Bridges grafana webhooks to ntfy on `127.0.0.1:8099`. |
+| `ntfy.buttars.dev`                  | `modules/hosts/aegis/default.nix`      | Public edge, proxied through sentinel's caddy.        |
 
 Prometheus and grafana both bind `127.0.0.1`; caddy is the only way in. Correct
 while the aggregator is sentinel. If the stack ever moves to `oculus`, the bind
@@ -235,22 +239,65 @@ on the host most likely to be the thing that is down.
 ### 5. Alert rules
 
 Start deliberately small. An alerting system you have learned to ignore is worse
-than none.
+than none. Five rules are built, in
+`modules/capability/observability.nix`:
 
-| Alert               | Condition                                         | Why                                                  |
-| ------------------- | ------------------------------------------------- | ---------------------------------------------------- |
-| `DiskFillingUp`     | fs usage > 85%                                    | Would have caught the 96% root before it broke rsync |
-| `HostDown`          | `up == 0` for 5m                                  | Basic liveness                                       |
-| `SystemdUnitFailed` | `node_systemd_unit_state{state="failed"}`         | Catches silent service death                         |
-| `NFSMountStale`     | mount missing or I/O erroring on a `veritas` path | Stale NFS is a top failure mode here                 |
-| `BackupFailed`      | restic timer last-run non-zero                    | Backups currently fail silently                      |
-| `CertExpiringSoon`  | < 14 days                                         | Caddy renews, but confirm it did                     |
-| `DeadMansSwitch`    | always firing → external heartbeat                | See below                                            |
+| Alert                   | Condition                                   | Why                                                  |
+| ----------------------- | ------------------------------------------- | ---------------------------------------------------- |
+| `HostDown`              | `up == 0` for 5m                            | Basic liveness                                       |
+| `DiskFillingUp`         | device over 85% for 30m                     | Would have caught the 96% root before it broke rsync |
+| `SystemdUnitFailed`     | a non-restic unit failed for 10m            | Catches silent service death                         |
+| `BackupFailed`          | a restic unit failed for 5m                 | Backups failed silently for days                     |
+| `FilesystemUnreachable` | `node_filesystem_device_error == 1` for 10m | Stale NFS is a top failure mode here                 |
 
-**External dead-man's switch.** `oculus` can also fail, and if it and sentinel
-share a Proxmox node a hypervisor failure takes out both. Alertmanager should
-heartbeat an external endpoint (healthchecks.io free tier) that alerts when the
-pings stop. This is the only mechanism that survives the whole rack going down.
+Two of the originally planned rules are **not** built. `CertExpiringSoon` has no
+metric source — caddy exposes metrics but not certificate expiry — and
+`DeadMansSwitch` is waiting on the external endpoint below.
+
+#### Grafana, not alertmanager
+
+Alertmanager `0.33.1` does not build in the pinned nixpkgs (its Elm web UI fails
+to compile) and is not in the binary cache, so there is no way to install it
+without an override. Grafana was already running with the prometheus datasource
+wired up and supports the same rules through unified alerting, so the rules live
+there. One fewer service, same destination.
+
+Consequences worth knowing:
+
+- Rules are provisioned from nix as grafana's schema, not prometheus rule YAML.
+  They are verbose — a `mkAlert` helper in the capability hides most of it.
+- `noDataState = "OK"` on every rule. No matching series means nothing is wrong
+  for all five, and the default would alert on absence.
+- Alert rules reference the datasource by `uid = "prometheus"`. Adding a uid to
+  a datasource grafana already stores fails provisioning with `data source not
+found` and takes the alerting module down with it, so the datasource is listed
+  in `deleteDatasources` and recreated.
+
+#### Delivery
+
+`grafana-to-ntfy` bridges grafana's webhook schema to ntfy, because ntfy speaks
+plain text and grafana does not. It listens on `127.0.0.1:8099` — port 8080, its
+default, is nextcloud.
+
+ntfy itself is `modules/app/ntfy.nix`:
+
+- `auth-default-access: deny-all`. `buttars.dev` resolves publicly, so an open
+  server would be a public message board carrying host names and failure detail.
+- No declarative user database — it is a sqlite file the server creates on first
+  start, so `ntfy-seed-user` adds the account after the server is up.
+- Binds `:2586` rather than loopback, because the public edge is a different
+  host on a different segment. See
+  [network.md](architecture/network.md).
+
+Backups get a second, independent path that does not depend on prometheus
+scraping at all: `restic-backups` and `restic-check` carry
+`onFailure = [ "ntfy-failure@%n.service" ]`, which posts the last 15 journal
+lines straight to ntfy.
+
+**External dead-man's switch.** Not built. Everything above runs on sentinel, so
+none of it survives sentinel or its hypervisor failing — which has happened.
+A timer pinging healthchecks.io, alerting when the pings stop, is the only
+mechanism that covers that case. It needs a ping URL to exist.
 
 ## Non-NixOS hosts
 
@@ -309,8 +356,9 @@ Ordered by dependency. Each is independently useful.
   Grafana datasource ✅ (on sentinel, not `oculus`). Outstanding: container
   log drivers — docker/podman logs reach journald only where the unit is
   managed by systemd.
-- [ ] **Phase 3 — Alerting.** Alertmanager + ntfy, the seven rules above, the
-      external dead-man's switch. Move `gatus` here.
+- [~] **Phase 3 — Alerting.** ntfy ✅, five rules ✅, backup `OnFailure=` ✅
+  (through grafana, not alertmanager — see below). Outstanding: the external
+  dead-man's switch, and moving `gatus` here.
 - [ ] **Phase 4 — Depth.** Per-service exporters (Caddy already exposes metrics;
       exporters exist for qBittorrent, Jellyfin, the `*arr` stack). TrueNAS
       integration. Log-derived metrics. Treat as a backlog, not a milestone.
@@ -319,11 +367,10 @@ Ordered by dependency. Each is independently useful.
 
 - [ ] Host name — `oculus` throughout this document. `custos` and `memoria` also
       fit the existing naming. Avoid `speculum`, too close to `specula`.
-- [ ] Alert destination — self-hosted ntfy, hosted ntfy.sh, or home-assistant?
-      Note that routing through home-assistant reintroduces a sentinel
-      dependency in the alerting path. **This also blocks backup alerting** —
-      `OnFailure=` in [backup-plan.md](backup-plan.md) is waiting on the same
-      decision, and restic jobs failed silently for days before anyone noticed.
+- [x] Alert destination — **self-hosted ntfy**, plus an external dead-man's
+      switch for the case self-hosting cannot cover. home-assistant was rejected
+      because it runs on sentinel, which would put sentinel in the alerting path
+      for alerts that are usually about sentinel.
 - [ ] Do workstations ship logs, or servers only? Laptops roam and need a
       buffering/offline story the servers do not.
 - [ ] Secondary dnsmasq on `oculus` — in scope, or separate work?
