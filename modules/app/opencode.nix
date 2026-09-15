@@ -11,15 +11,14 @@
       rulesDir = ./ai/rules;
       ruleFiles = builtins.attrNames (builtins.readDir rulesDir);
 
-      # Render the canonical agents into opencode's agent format. The Kiro
-      # dispatcher is skipped (its routing/crew is Kiro-specific); agents with a
-      # prompt are switchable ("all"), the rest are subagents.
+      # Render the canonical agents into opencode's agent format (all switchable).
+      # The Kiro dispatcher is skipped (its routing/crew is Kiro-specific).
       agents = import ./ai/_agents.nix;
       ocAgent =
         name: a:
         {
           description = a.description or name;
-          mode = if a ? prompt then "all" else "subagent";
+          mode = "all";
         }
         // lib.optionalAttrs (a ? prompt) {
           prompt = builtins.readFile (./ai/prompts + "/${a.prompt}.md");

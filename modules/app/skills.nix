@@ -67,6 +67,10 @@
         targets.agents = {
           enable = true;
         };
+
+        targets.opencode = {
+          enable = true;
+        };
       };
     };
 }
