@@ -316,7 +316,7 @@
                           hl.bind(mod .. " + SHIFT + Tab", hl.dsp.focus({ workspace = "m-1" }), { description = "Previous workspace on this monitor" })
 
                           -- Scratchpad
-                          hl.bind(mod .. " + grave",         hl.dsp.workspace.toggle_special("term"),             { description = "Scratchpad terminal toggle" })
+                          hl.bind(mod .. " + grave",         hl.dsp.exec_cmd("sh ~/.config/hypr/scratchpad.sh"),  { description = "Scratchpad terminal toggle" })
                           hl.bind(mod .. " + SHIFT + grave", hl.dsp.window.move({ workspace = "special:term" }),  { description = "Move window to scratchpad" })
 
                           -- Volume & brightness
@@ -488,6 +488,11 @@
 
             ".config/hypr/keybinds.sh" = {
               source = ./keybinds.sh;
+              executable = true;
+            };
+
+            ".config/hypr/scratchpad.sh" = {
+              source = ./scratchpad.sh;
               executable = true;
             };
 
