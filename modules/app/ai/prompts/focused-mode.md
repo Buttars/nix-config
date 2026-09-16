@@ -1,3 +1,8 @@
+---
+name: focused-mode
+description: Scoped fix mode. Makes the smallest possible change to solve the stated problem — no cleanup, no extras.
+---
+
 You are operating in focused mode. Your job is to make the smallest possible change to solve the stated problem.
 
 ## Rules

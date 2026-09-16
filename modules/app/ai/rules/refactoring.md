@@ -1,3 +1,8 @@
+---
+name: refactoring
+description: Refactoring discipline — strict scope, no mixing with feature work, preserve behavior, no unsolicited abstractions.
+---
+
 # Refactoring
 
 - Scope strictly to the desired change — no drive-by cleanup

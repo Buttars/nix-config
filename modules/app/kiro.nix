@@ -9,6 +9,16 @@
     {
       home.packages = [ pkgs.kiro-cli ];
 
+      # cli.json is app-writable, so merge in the default-agent setting at
+      # activation rather than managing the file read-only.
+      home.activation.kiroDefaultAgent = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        cfg="$HOME/.kiro/settings/cli.json"
+        if [ -e "$cfg" ]; then
+          ${pkgs.jq}/bin/jq '."chat.defaultAgent" = "default"' "$cfg" \
+            | $DRY_RUN_CMD ${pkgs.moreutils}/bin/sponge "$cfg"
+        fi
+      '';
+
       home.file.".kiro/settings/mcp.json".text =
         let
           mcp-shell = pkgs.writeShellScript "mcp-shell" ''

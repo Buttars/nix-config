@@ -1,3 +1,8 @@
+---
+name: message-writing
+description: Interpersonal message writing. Three modes — Revise (minor edits), Refine (overhaul), Draft (from scratch) — for email, Slack, text, and casual formats.
+---
+
 # Message Writing
 
 Three modes: **Revise**, **Refine**, **Draft**. Figure out which one applies from what I give you — a draft with no instruction is Revise, a draft with "rewrite/overhaul this" is Refine, no draft at all is Draft. If it's unclear which I want, ask.

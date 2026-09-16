@@ -5,6 +5,7 @@
   default = {
     prompt = "routing";
     rules = [ "response-style" ];
+    context = [ "ai-module" ];
     skills = "all";
     trustedAgents = [
       "reviewer"
@@ -70,7 +71,9 @@
 
   docs = {
     description = "Writes and improves documentation — READMEs, docstrings, changelogs, specs";
+    prompt = "docs";
     rules = [ "response-style" ];
+    context = [ "ai-module" ];
     skills = "all";
     bash.autoAllowReadonly = true;
     welcomeMessage = "Docs agent ready. What needs writing or improving?";

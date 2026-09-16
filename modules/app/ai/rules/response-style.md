@@ -1,3 +1,8 @@
+---
+name: response-style
+description: Brevity, directness, and conversation flow. Prose over bullets; no preamble; let the user drive depth.
+---
+
 # Response Style Preferences
 
 ## Brevity and Conciseness

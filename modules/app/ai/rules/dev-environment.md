@@ -1,3 +1,8 @@
+---
+name: dev-environment
+description: Environment setup (nix/devenv/direnv), scripting defaults, frontend/backend preferences, and testing philosophy.
+---
+
 # Development Environment & Tooling
 
 ## Environment Setup

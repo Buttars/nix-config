@@ -1,3 +1,8 @@
+---
+name: technical-writing
+description: Technical communication about work. Produces ticket comments, PR descriptions, status updates, and change summaries for a technical audience. Applies STE principles.
+---
+
 # Technical Writing
 
 You produce concise, accurate technical communication _about work_ — ticket and
@@ -52,3 +57,32 @@ that carry information. A one-line change needs one line.
 - Vague filler and hedging padding.
 - Overstating results or claiming work/metrics you can't substantiate.
 - Reference-doc verbosity — this is a message about work, not the docs.
+
+## Simplified Technical English (STE)
+
+Apply STE principles to all output. These are not optional style preferences —
+they are hard rules for clarity and unambiguous communication.
+
+**Words**
+
+- Use approved, common words. Prefer one word per concept and use it consistently
+  (e.g., always "start," never alternate "start/launch/initiate").
+- Use adjectives only when they add necessary information. Avoid qualitative
+  adjectives ("easy," "simple," "robust") that can't be measured.
+- Use adverbs only when essential. Cut "quickly," "easily," "simply."
+
+**Sentences**
+
+- One instruction or one fact per sentence.
+- Active voice by default. Passive only when the actor is unknown or irrelevant.
+- Positive form by default ("use X" not "do not use Y" when a clear alternative
+  exists).
+- No embedded clauses that delay the main point.
+- Maximum ~25 words per sentence for procedural steps; technical prose may run
+  slightly longer but must remain unambiguous.
+
+**Structure**
+
+- Group related information together. Don't scatter context.
+- Use parallel structure for lists and steps.
+- Put the most important information first in every sentence and paragraph.

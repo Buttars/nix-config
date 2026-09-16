@@ -10,6 +10,9 @@ Today the only adapter targets Kiro CLI.
   tool-neutral.
 - `prompts/*.md` — agent system prompts: `routing.md` (dispatcher),
   `message-writing.md` (writer), `focused-mode.md`.
+- `context/*.md` — domain vocabulary and shared context documents. Not behavioral
+  rules — these define the terms and architecture so agents use consistent
+  language. Loaded per-agent via the `context` field in `_agents.nix`.
 - `_agents.nix` — agent definitions as data. Underscore-prefixed because
   flake-parts/den auto-imports every non-`_` `.nix` under `modules/` as an
   aspect; the prefix keeps this a plain data file, not an aspect.
@@ -33,6 +36,7 @@ Because the symlinks are in-store, edits take effect on rebuild, not live.
 The attribute key is the agent name and JSON filename (override with `name`).
 
 - `rules` — rule basenames, mapped to `file://~/.kiro/steering/<rule>.md`
+- `context` — context doc basenames, mapped to `file://~/.kiro/context/<name>.md`
 - `skills` — `"all"` (both skill globs) or a list of skill names; `[]` for none
 - `prompt` — prompt basename, mapped to `file://../prompts/<name>.md`
 - `tools` — tool list (defaults to `["*"]`)
@@ -66,6 +70,8 @@ resources.
 
 - Rule: add `rules/<name>.md`; reference it from an agent's `rules`, or rely on
   global inheritance.
+- Context doc: add `context/<name>.md`; reference it from an agent's `context`
+  list. Use for vocabulary and domain knowledge, not behavioral instructions.
 - Agent: add an entry to `_agents.nix`; put its prompt in `prompts/` if it needs
   one.
 - Activation: the module is included via `<aegix/ai>`; changes apply on rebuild

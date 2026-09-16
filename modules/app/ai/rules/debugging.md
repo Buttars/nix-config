@@ -1,3 +1,8 @@
+---
+name: debugging
+description: Debugging approach — work from what's provided, explain non-trivial fixes before applying, surface project-wide decisions, report-but-don't-fix unrelated issues.
+---
+
 # Debugging
 
 ## Approach

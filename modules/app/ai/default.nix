@@ -10,6 +10,7 @@
       agents = import ./_agents.nix;
 
       ruleUris = map (r: "file://~/.kiro/steering/${r}.md");
+      contextUris = map (c: "file://~/.kiro/context/${c}.md");
       skillUris =
         skills:
         if skills == "all" then
@@ -36,7 +37,8 @@
         }
         // (lib.optionalAttrs (a ? description) { inherit (a) description; })
         // {
-          resources = ruleUris (a.rules or [ ]) ++ skillUris (a.skills or "all");
+          resources =
+            ruleUris (a.rules or [ ]) ++ contextUris (a.context or [ ]) ++ skillUris (a.skills or "all");
         }
         // (lib.optionalAttrs (a ? prompt) { prompt = "file://../prompts/${a.prompt}.md"; })
         // {
@@ -58,6 +60,7 @@
       home.file = agentFiles // {
         ".kiro/steering".source = ./rules;
         ".kiro/prompts".source = ./prompts;
+        ".kiro/context".source = ./context;
       };
     };
 }

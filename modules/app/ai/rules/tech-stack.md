@@ -1,3 +1,8 @@
+---
+name: tech-stack
+description: Language, database, CI/CD, container, and package manager preferences by domain.
+---
+
 # Tech Stack Defaults
 
 These are personal preferences — always defer to what the project already uses.

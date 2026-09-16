@@ -1,3 +1,8 @@
+---
+name: git-workflow
+description: Commit discipline, branch naming, staging hygiene, merge strategy, and worktree conventions.
+---
+
 # Git Workflow
 
 ## Commits
