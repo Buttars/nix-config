@@ -11,3 +11,6 @@ result
 .sidecar-start.sh
 .sidecar-base
 .td-root
+
+# opencode-kiro (ACP) writes ephemeral project agents into .kiro/agents
+.kiro/agents/opencode-*.json
