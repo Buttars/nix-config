@@ -152,4 +152,25 @@
     tools = [ "read" ];
     welcomeMessage = "Message mode. Paste a draft to revise or refine, or tell me what to write.";
   };
+
+  technical-writer = {
+    description = "Writes concise, accurate technical communication — ticket/PR comments, status updates, and summaries of work";
+    prompt = "technical-writing";
+    rules = [ ];
+    skills = [ ];
+    bash = {
+      autoAllowReadonly = true;
+      allowedCommands = [
+        "jj log.*"
+        "jj diff.*"
+        "jj show.*"
+        "jj status.*"
+        "git log.*"
+        "git diff.*"
+        "git status.*"
+        "git show.*"
+      ];
+    };
+    welcomeMessage = "Technical writing mode. Point me at the work (or paste the details) and say the format — ticket comment, PR, status update, etc.";
+  };
 }
