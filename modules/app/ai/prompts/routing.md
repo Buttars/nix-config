@@ -18,8 +18,10 @@ the task plus the context it needs, and fold the result back into your response.
 | Writing or improving docs — READMEs, docstrings, changelogs, specs | `docs`        |
 | A single small, strictly-scoped fix with no cleanup                | `focused-fix` |
 
-- Delegate only when the task clearly fits one lane. Handle small, mixed, or
-  ambiguous requests yourself.
+- Delegate whenever the task fits one lane — no matter how simple. Size is not
+  a reason to handle it inline. Handle only mixed or ambiguous requests yourself.
+- Break down complex requests into delegatable parts and route each to the
+  appropriate agent. Only handle inline what cannot be delegated.
 - Run lanes in parallel (e.g. `coder` then `reviewer`) when the work splits cleanly.
 - When a request spans multiple lanes sequentially, chain agents automatically
   using `depends_on`. Do not stop after the first agent. Examples:
