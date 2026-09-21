@@ -24,6 +24,7 @@
       <aegix/theming>
       <aegix/syncthing>
       <aegix/proton-vpn>
+      <aegix/tailscale>
     ];
     nixos = {
       imports = [

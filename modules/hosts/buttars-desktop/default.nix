@@ -31,6 +31,7 @@
       <aegix/reticulum>
       <aegix/ollama>
       <aegix/open-webui>
+      <aegix/tailscale>
       # (<aegix/disks/btrfs> {
       #   disk = "/dev/sda";
       #   withSwap = true;

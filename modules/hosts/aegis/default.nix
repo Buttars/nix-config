@@ -11,6 +11,7 @@
       <aegix/networking>
       <aegix/sops>
       <aegix/fail2ban>
+      <aegix/tailscale>
     ];
 
     nixos =
@@ -117,6 +118,10 @@
             '';
 
             "ntfy.buttars.dev".extraConfig = viaCaddy "ntfy.buttars.dev";
+
+            # Public entry point for the tailnet -- this is what replaces
+            # reaching wireguard from off-LAN.
+            "headscale.buttars.dev".extraConfig = viaCaddy "headscale.buttars.dev";
           };
         };
 

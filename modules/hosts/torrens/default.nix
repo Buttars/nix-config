@@ -14,6 +14,7 @@
       <aegix/networking>
       <aegix/sops>
       <aegix/fail2ban>
+      <aegix/tailscale>
     ];
 
     nixos =

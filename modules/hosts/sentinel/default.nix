@@ -14,6 +14,8 @@
       <aegix/fail2ban>
       <aegix/backup>
       <aegix/observability>
+      <aegix/headscale>
+      <aegix/tailscale>
     ];
 
     nixos =
@@ -29,6 +31,14 @@
         aegix.vector.endpoint = "http://127.0.0.1:9428/insert/loki/api/v1/push";
 
         aegix.ntfy.baseUrl = "https://ntfy.buttars.dev";
+
+        # sentinel is the only fleet member natively on 10.0.40.0/24, so it is
+        # the subnet router: tailnet clients reach the whole LAN through it,
+        # the way the wireguard setup did.
+        services.tailscale = {
+          useRoutingFeatures = "server";
+          extraSetFlags = [ "--advertise-routes=10.0.40.0/24" ];
+        };
 
         aegix.observability.scrapeTargets = [
           "sentinel.lan:9100"
