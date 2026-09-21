@@ -16,12 +16,14 @@
           # <host>.ts.buttars.dev without needing a public DNS delegation --
           # resolution happens inside the tailnet, not over public DNS.
           base_domain = "ts.buttars.dev";
-          # Point tailnet clients at sentinel's own dnsmasq so *.buttars.dev
-          # and *.lan keep resolving to internal addresses while connected
-          # remotely, matching the split-horizon behavior the wireguard setup
-          # relied on.
-          override_local_dns = true;
-          nameservers.global = [ "10.0.40.6" ];
+          # Split DNS rather than a global override: only buttars.dev queries
+          # go to sentinel's dnsmasq (so *.buttars.dev resolves to internal
+          # addresses while connected, matching the split-horizon behavior
+          # the wireguard setup relied on). Everything else keeps using the
+          # client's own DNS, so a tunnel hiccup doesn't take down DNS for
+          # the whole device the way a global override would.
+          override_local_dns = false;
+          nameservers.split."buttars.dev" = [ "10.0.40.6" ];
         };
       };
     };
