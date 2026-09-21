@@ -23,7 +23,12 @@
           # client's own DNS, so a tunnel hiccup doesn't take down DNS for
           # the whole device the way a global override would.
           override_local_dns = false;
-          nameservers.split."buttars.dev" = [ "10.0.40.6" ];
+          nameservers.split = {
+            "buttars.dev" = [ "10.0.40.6" ];
+            # sentinel's dnsmasq also holds the host-record entries for
+            # every *.lan name (torrens.lan, truenas.lan, ...).
+            "lan" = [ "10.0.40.6" ];
+          };
         };
       };
     };

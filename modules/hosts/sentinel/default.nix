@@ -32,9 +32,11 @@
 
         aegix.ntfy.baseUrl = "https://ntfy.buttars.dev";
 
-        # sentinel is the only fleet member natively on 10.0.40.0/24, so it is
-        # the subnet router: tailnet clients reach the whole LAN through it,
-        # the way the wireguard setup did.
+        # sentinel is the subnet router: tailnet clients reach the whole LAN
+        # through it, the way the wireguard setup did. 10.0.0.0/16 covers
+        # every VLAN, not just the /24 sentinel itself sits on, via
+        # sentinel's default gateway; reachability across VLANs is still
+        # whatever the router's inter-VLAN ACLs allow.
         #
         # Must be an up-flag, not a set-flag: tailscaled-autoconnect calls
         # `tailscale up` on every boot until it reports Running, and `up`
@@ -43,7 +45,7 @@
         # the command line.
         services.tailscale = {
           useRoutingFeatures = "server";
-          extraUpFlags = [ "--advertise-routes=10.0.40.0/24" ];
+          extraUpFlags = [ "--advertise-routes=10.0.0.0/16" ];
         };
 
         aegix.observability.scrapeTargets = [
