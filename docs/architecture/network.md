@@ -5,12 +5,21 @@ LAN and return 502 from the internet.
 
 ## Segments
 
-| Segment        | Holds                              |
-| -------------- | ---------------------------------- |
-| `10.0.20.0/24` | Workstations and laptops           |
-| `10.0.30.0/24` | `veritas` — the proxmox hypervisor |
-| `10.0.40.0/24` | Servers and storage                |
-| `10.0.45.0/24` | `aegis` — the internet-facing edge |
+The full VLAN layout, per the router config. Not every VLAN has anything
+nix-managed on it yet; those rows are included so the numbering doesn't get
+re-guessed later.
+
+| VLAN | Segment        | Name     | Holds                                |
+| ---- | -------------- | -------- | ------------------------------------ |
+| 10   | `10.0.10.0/24` | MGMT     | network hardware                     |
+| 20   | `10.0.20.0/24` | LAN      | workstations and laptops             |
+| 25   | `10.0.25.0/24` | Work     | (nothing nix-managed)                |
+| 30   | `10.0.30.0/24` | Servers  | `veritas` — the proxmox hypervisor   |
+| 40   | `10.0.40.0/24` | Services | the VMs `veritas` hosts, and storage |
+| 45   | `10.0.45.0/24` | DMZ      | `aegis` — the internet-facing edge   |
+| 50   | `10.0.50.0/24` | IoT      | (nothing nix-managed)                |
+| 60   | `10.0.60.0/24` | Security | (nothing nix-managed)                |
+| 70   | `10.0.70.0/24` | Guest    | (nothing nix-managed)                |
 
 | Host       | Address     | Role                                                                           |
 | ---------- | ----------- | ------------------------------------------------------------------------------ |
