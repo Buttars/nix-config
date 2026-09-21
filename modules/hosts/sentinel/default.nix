@@ -35,9 +35,15 @@
         # sentinel is the only fleet member natively on 10.0.40.0/24, so it is
         # the subnet router: tailnet clients reach the whole LAN through it,
         # the way the wireguard setup did.
+        #
+        # Must be an up-flag, not a set-flag: tailscaled-autoconnect calls
+        # `tailscale up` on every boot until it reports Running, and `up`
+        # refuses to proceed unless every non-default setting already in
+        # effect (like an advertised route from a prior `set`) is repeated on
+        # the command line.
         services.tailscale = {
           useRoutingFeatures = "server";
-          extraSetFlags = [ "--advertise-routes=10.0.40.0/24" ];
+          extraUpFlags = [ "--advertise-routes=10.0.40.0/24" ];
         };
 
         aegix.observability.scrapeTargets = [
