@@ -112,6 +112,13 @@
               interval = "5m";
               conditions = [ "[STATUS] < 500" ];
             }
+            {
+              name = "Immich";
+              group = "Services";
+              url = "https://immich.buttars.dev";
+              interval = "5m";
+              conditions = [ "[STATUS] < 500" ];
+            }
           ];
         };
       };
