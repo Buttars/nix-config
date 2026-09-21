@@ -19,6 +19,13 @@
 
         services.caddy.globalConfig = ''
           acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+
+          # headscale's ts2021 control protocol upgrades the connection like a
+          # websocket, which has no equivalent in HTTP/2 -- caddy negotiates h2
+          # by default and rejects the upgrade before headscale ever sees it.
+          servers {
+            protocols h1
+          }
         '';
 
         systemd.services.caddy.serviceConfig.EnvironmentFile = config.sops.secrets."cloudflare/env".path;

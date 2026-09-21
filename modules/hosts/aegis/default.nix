@@ -93,6 +93,15 @@
         services.caddy = {
           enable = true;
           email = "admin@buttars.dev";
+          # headscale's ts2021 control protocol upgrades the connection like a
+          # websocket, which has no equivalent in HTTP/2 -- caddy negotiates
+          # h2 by default and rejects the upgrade before it ever reaches
+          # sentinel, let alone headscale.
+          globalConfig = ''
+            servers {
+              protocols h1
+            }
+          '';
           logFormat = ''
             output file /var/log/caddy/access.log {
               roll_size 100mb
