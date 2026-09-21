@@ -15,7 +15,7 @@
     ];
 
     nixos =
-      { config, ... }:
+      { config, pkgs, ... }:
       let
         # Proxying to sentinel's caddy rather than to a raw service port: one
         # allowed port between the segments instead of a router rule per
@@ -37,6 +37,37 @@
         imports = [ ./_disko.nix ];
 
         aegix.vector.endpoint = "http://sentinel.lan:9428/insert/loki/api/v1/push";
+
+        # aegis's own tailscale client would otherwise resolve
+        # headscale.buttars.dev over public DNS to aegis's own WAN address and
+        # hang trying to hairpin back through the router. This only affects
+        # aegis's own outbound lookups; the public vhost below is untouched.
+        #
+        # Rather than hardcode sentinel's LAN address here, resolve the name
+        # this file already trusts for the same purpose (sentinel.lan, used
+        # by viaCaddy above) at boot, and seed /etc/hosts with the result
+        # before tailscale tries to connect. mode = "0644" makes /etc/hosts a
+        # real, boot-persistent file instead of a symlink into the nix store,
+        # so the oneshot below is allowed to append to it.
+        environment.etc.hosts.mode = "0644";
+
+        systemd.services.headscale-hosts-override = {
+          description = "Point headscale.buttars.dev at sentinel.lan for aegis's own tailscale join";
+          wantedBy = [ "multi-user.target" ];
+          before = [ "tailscaled-autoconnect.service" ];
+          after = [ "network-online.target" ];
+          wants = [ "network-online.target" ];
+          serviceConfig.Type = "oneshot";
+          script = ''
+            ip=$(${pkgs.dnsutils}/bin/dig +short sentinel.lan | head -n1)
+            if [ -z "$ip" ]; then
+              echo "could not resolve sentinel.lan; headscale.buttars.dev falls back to public DNS" >&2
+              exit 1
+            fi
+            sed -i '/# headscale-lan-override$/d' /etc/hosts
+            echo "$ip headscale.buttars.dev # headscale-lan-override" >> /etc/hosts
+          '';
+        };
 
         hardware.facter.reportPath = ./facter.json;
         hardware.facter.detected.dhcp.interfaces = [ "ens18" ];
