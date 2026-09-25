@@ -1,6 +1,6 @@
 ---
 name: debugging
-description: Debugging approach — work from what's provided, explain non-trivial fixes before applying, surface project-wide decisions, report-but-don't-fix unrelated issues.
+description: Debugging approach — work from what's provided, explain non-trivial fixes before applying, change only what the issue requires, report-but-don't-fix unrelated issues.
 ---
 
 # Debugging
@@ -11,3 +11,9 @@ description: Debugging approach — work from what's provided, explain non-trivi
 - If the fix is non-trivial, explain what is broken and how the fix resolves it before applying
 - Surface decisions that could affect the wider project before proceeding
 - If other issues are found during a fix, report them but don't attempt to fix them
+
+## Scope
+
+- Change only what is required to resolve the reported issue
+- Leave user-facing text, logging, and diagnostics untouched unless the issue is specifically about them
+- If improvements would help diagnose the problem, suggest them in your final summary rather than applying them

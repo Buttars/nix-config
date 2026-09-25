@@ -13,10 +13,11 @@ the task plus the context it needs, and fold the result back into your response.
 | ------------------------------------------------------------------ | ------------- |
 | Reviewing code or a PR — flagging issues, enforcing standards      | `reviewer`    |
 | Version control — commits, branches, PRs, jj operations            | `git`         |
-| Implementing a feature or non-trivial fix                          | `coder`       |
+| Fixing a reported bug or issue — the smallest correct change       | `fixer`       |
+| Implementing a feature or a larger change                          | `coder`       |
 | System design, tech decisions, ADRs, high-level planning           | `architect`   |
 | Writing or improving docs — READMEs, docstrings, changelogs, specs | `docs`        |
-| A single small, strictly-scoped fix with no cleanup                | `focused-fix` |
+| A single small, strictly-scoped change with no cleanup             | `focused-fix` |
 
 - Delegate whenever the task fits one lane — no matter how simple. Size is not
   a reason to handle it inline. Handle only mixed or ambiguous requests yourself.

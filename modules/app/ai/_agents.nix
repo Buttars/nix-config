@@ -1,12 +1,19 @@
 # Canonical agent definitions. Tool-neutral: `rules` are steering basenames and
 # `skills` is "all" or a list of skill names; adapters map these to each tool's
 # resource URIs. Attr key is the agent file/name (override with `name`).
+#
+# response-style is kept only on user-facing agents (dispatcher, coder); agents
+# spawned as subagents report to a parent, so it is omitted for them. skills are
+# scoped per agent (not "all") so each spawned session loads less context.
 {
   default = {
     prompt = "routing";
     rules = [ "response-style" ];
     context = [ "ai-module" ];
-    skills = "all";
+    skills = [
+      "engineering/ask-matt"
+      "productivity/grill-me"
+    ];
     trustedAgents = [
       "reviewer"
       "git"
@@ -14,6 +21,7 @@
       "architect"
       "docs"
       "focused-fix"
+      "fixer"
     ];
     bash = {
       autoAllowReadonly = true;
@@ -38,7 +46,7 @@
     name = "focused-fix";
     description = "Scoped to a single fix or small feature — minimal changes, no cleanup, no extras";
     rules = [ ];
-    skills = "all";
+    skills = [ ];
     prompt = "focused-mode";
     welcomeMessage = "Focused mode active. What's the single thing we're fixing?";
   };
@@ -48,15 +56,20 @@
     rules = [
       "tech-stack"
       "dev-environment"
-      "response-style"
     ];
-    skills = "all";
+    skills = [
+      "engineering/codebase-design"
+      "engineering/domain-modeling"
+      "engineering/to-spec"
+      "engineering/wayfinder"
+      "engineering/research"
+    ];
     bash.autoAllowReadonly = true;
     welcomeMessage = "Architect ready. What are we designing?";
   };
 
   coder = {
-    description = "Implements features and fixes — focused on correct, complete, idiomatic code";
+    description = "Implements features and fixes — correct, idiomatic, and scoped to exactly what's asked";
     rules = [
       "tech-stack"
       "dev-environment"
@@ -64,7 +77,13 @@
       "debugging"
       "response-style"
     ];
-    skills = "all";
+    skills = [
+      "engineering/tdd"
+      "engineering/implement"
+      "engineering/codebase-design"
+      "engineering/diagnosing-bugs"
+      "engineering/resolving-merge-conflicts"
+    ];
     bash.autoAllowReadonly = true;
     welcomeMessage = "Coder ready. What are we building?";
   };
@@ -72,20 +91,21 @@
   docs = {
     description = "Writes and improves documentation — READMEs, docstrings, changelogs, specs";
     prompt = "docs";
-    rules = [ "response-style" ];
+    rules = [ ];
     context = [ "ai-module" ];
-    skills = "all";
+    skills = [ "productivity/writing-for-agents" ];
     bash.autoAllowReadonly = true;
     welcomeMessage = "Docs agent ready. What needs writing or improving?";
   };
 
   git = {
     description = "Manages version control — commits, branches, PRs, and jj operations";
-    rules = [
-      "git-workflow"
-      "response-style"
+    rules = [ "git-workflow" ];
+    skills = [
+      "jujutsu"
+      "engineering/resolving-merge-conflicts"
+      "misc/git-guardrails-claude-code"
     ];
-    skills = [ "jujutsu" ];
     bash = {
       autoAllowReadonly = true;
       allowedCommands = [
@@ -128,9 +148,12 @@
     rules = [
       "refactoring"
       "debugging"
-      "response-style"
     ];
-    skills = "all";
+    skills = [
+      "engineering/code-review"
+      "engineering/improve-codebase-architecture"
+      "engineering/codebase-design"
+    ];
     bash = {
       autoAllowReadonly = true;
       allowedCommands = [
@@ -175,5 +198,17 @@
       ];
     };
     welcomeMessage = "Technical writing mode. Point me at the work (or paste the details) and say the format — ticket comment, PR, status update, etc.";
+  };
+
+  fixer = {
+    description = "Delegated fixes — the smallest correct change to resolve a reported issue, nothing beyond it";
+    rules = [
+      "debugging"
+      "refactoring"
+      "editing"
+    ];
+    skills = [ "engineering/diagnosing-bugs" ];
+    bash.autoAllowReadonly = true;
+    welcomeMessage = "Fixer ready. What's the reported issue?";
   };
 }
