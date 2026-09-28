@@ -7,6 +7,7 @@
       <aegix/locale>
       <aegix/programming>
       <aegix/kitty>
+      <aegix/fonts>
       <aegix/taskwarrior>
       <aegix/git>
       <aegix/cli/tui>
