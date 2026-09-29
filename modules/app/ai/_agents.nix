@@ -10,6 +10,7 @@
     prompt = "routing";
     rules = [ "response-style" ];
     context = [ "ai-module" ];
+    mcpServers = "all";
     skills = [
       "engineering/ask-matt"
       "productivity/grill-me"

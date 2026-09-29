@@ -4,10 +4,12 @@
     {
       lib,
       pkgs,
+      config,
       ...
     }:
     let
       agents = import ./_agents.nix;
+      mcpServers = import ./_mcp.nix { inherit pkgs config; };
 
       ruleUris = map (r: "file://~/.kiro/steering/${r}.md");
       contextUris = map (c: "file://~/.kiro/context/${c}.md");
@@ -45,6 +47,9 @@
           tools = a.tools or [ "*" ];
         }
         // (lib.optionalAttrs (toolsSettings != { }) { inherit toolsSettings; })
+        // (lib.optionalAttrs (a ? mcpServers) {
+          mcpServers = if a.mcpServers == "all" then mcpServers else lib.getAttrs a.mcpServers mcpServers;
+        })
         // (lib.optionalAttrs (a ? welcomeMessage) { inherit (a) welcomeMessage; });
 
       agentFiles = lib.mapAttrs' (
