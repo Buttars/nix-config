@@ -29,15 +29,46 @@
         fi
 
         if [ "$installed_version" != "$marker_version" ]; then
+          # Detach any stale attachment of this exact image left by an earlier
+          # run. Home Manager activation runs under `set -e`, so a failure
+          # after attach used to abort before detach and leak the attachment;
+          # once leaked, `hdiutil attach` below fails with "Resource busy".
+          for dev in $(/usr/bin/hdiutil info 2>/dev/null | awk -v tgt="${dmg}" \
+            '/^image-path/ { cur = (index($0, tgt) > 0) } cur && /\/dev\/disk/ { print $1 }'); do
+            /usr/bin/hdiutil detach "$dev" -force >/dev/null 2>&1 || true
+          done
+
           mount_point=$(mktemp -d)
-          /usr/bin/hdiutil attach "${dmg}" -nobrowse -readonly -mountpoint "$mount_point" >/dev/null 2>&1
+          if /usr/bin/hdiutil attach "${dmg}" -nobrowse -readonly -mountpoint "$mount_point" >/dev/null 2>&1; then
+            if [ -d "$mount_point/$app_name" ]; then
+              # Remove any existing bundle best-effort. It can be owned by a
+              # different account (oMLX self-updates as another user), so this
+              # unprivileged activation must not abort the whole switch when it
+              # cannot delete foreign-owned files. Clear flags/perms we own,
+              # then fall back to moving the bundle aside — that only needs
+              # write on /Applications (admin-writable), not on the bundle's
+              # inner dirs.
+              if [ -e "$app_dir/$app_name" ]; then
+                /usr/bin/chflags -R nouchg "$app_dir/$app_name" 2>/dev/null || true
+                chmod -R u+w "$app_dir/$app_name" 2>/dev/null || true
+                rm -rf "$app_dir/$app_name" 2>/dev/null || true
+              fi
+              if [ -e "$app_dir/$app_name" ]; then
+                stash="$app_dir/.$app_name.old-$$"
+                mv "$app_dir/$app_name" "$stash" 2>/dev/null || true
+                rm -rf "$stash" 2>/dev/null || true
+              fi
 
-          if [ -d "$mount_point/$app_name" ]; then
-            rm -rf "$app_dir/$app_name"
-            cp -pR "$mount_point/$app_name" "$app_dir/$app_name"
+              # Copy without -p so the installed bundle is owned by us and
+              # writable, making future version bumps removable without sudo.
+              if [ ! -e "$app_dir/$app_name" ]; then
+                cp -R "$mount_point/$app_name" "$app_dir/$app_name" || true
+              fi
+            fi
+
+            /usr/bin/hdiutil detach "$mount_point" >/dev/null 2>&1 \
+              || /usr/bin/hdiutil detach "$mount_point" -force >/dev/null 2>&1 || true
           fi
-
-          /usr/bin/hdiutil detach "$mount_point" >/dev/null 2>&1
           rmdir "$mount_point" 2>/dev/null || true
         fi
       '';
