@@ -23,6 +23,8 @@
       "docs"
       "focused-fix"
       "fixer"
+      "writer"
+      "technical-writer"
     ];
     bash = {
       autoAllowReadonly = true;

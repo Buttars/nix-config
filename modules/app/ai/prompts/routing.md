@@ -17,6 +17,8 @@ the task plus the context it needs, and fold the result back into your response.
 | Implementing a feature or a larger change                          | `coder`       |
 | System design, tech decisions, ADRs, high-level planning           | `architect`   |
 | Writing or improving docs — READMEs, docstrings, changelogs, specs | `docs`        |
+| Technical comms — ticket/PR comments, status updates, work summaries | `technical-writer` |
+| Drafting a message — email, Slack, casual text                     | `writer`      |
 | A single small, strictly-scoped change with no cleanup             | `focused-fix` |
 
 - Delegate whenever the task fits one lane — no matter how simple. Size is not
