@@ -5,12 +5,15 @@
 # response-style is kept only on user-facing agents (dispatcher, coder); agents
 # spawned as subagents report to a parent, so it is omitted for them. skills are
 # scoped per agent (not "all") so each spawned session loads less context.
+#
+# Every agent inherits all MCP servers (from _mcp.nix) by default so subagents
+# have the dispatcher's tool access; narrow with `mcpServers = [ "name" ... ]`
+# or disable with `mcpServers = [ ]`.
 {
   default = {
     prompt = "routing";
     rules = [ "response-style" ];
     context = [ "ai-module" ];
-    mcpServers = "all";
     skills = [
       "engineering/ask-matt"
       "productivity/grill-me"

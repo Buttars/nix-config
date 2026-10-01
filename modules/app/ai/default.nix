@@ -47,9 +47,17 @@
           tools = a.tools or [ "*" ];
         }
         // (lib.optionalAttrs (toolsSettings != { }) { inherit toolsSettings; })
-        // (lib.optionalAttrs (a ? mcpServers) {
-          mcpServers = if a.mcpServers == "all" then mcpServers else lib.getAttrs a.mcpServers mcpServers;
-        })
+        // (
+          # Every agent gets all MCP servers by default so spawned subagents
+          # have the same tool access as the dispatcher. Opt out or narrow with
+          # `mcpServers = [ ... ]` (a list of server names, or [ ] for none).
+          let
+            sel = a.mcpServers or "all";
+          in
+          {
+            mcpServers = if sel == "all" then mcpServers else lib.getAttrs sel mcpServers;
+          }
+        )
         // (lib.optionalAttrs (a ? welcomeMessage) { inherit (a) welcomeMessage; });
 
       agentFiles = lib.mapAttrs' (
