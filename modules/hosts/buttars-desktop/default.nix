@@ -17,6 +17,7 @@
       <aegix/swarmui>
       <aegix/nvidia>
       <aegix/sops>
+      <aegix/telemetry>
       <aegix/fish>
       <aegix/hyprland>
       <aegix/desktop-services>

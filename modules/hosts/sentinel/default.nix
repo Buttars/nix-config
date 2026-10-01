@@ -13,6 +13,7 @@
       <aegix/sops>
       <aegix/fail2ban>
       <aegix/backup>
+      <aegix/telemetry>
       <aegix/observability>
     ];
 

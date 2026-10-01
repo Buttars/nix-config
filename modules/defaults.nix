@@ -10,12 +10,13 @@
   den.schema.host.includes = [ <aegix/nix-gc> ];
 
   den.default = {
+    # <aegix/telemetry> is deliberately absent: node-exporter opens a firewall
+    # port, so each host opts in rather than every host exposing metrics.
     includes = [
       <den/define-user>
       <aegix/devenv>
       <aegix/locale>
       <aegix/neovim>
-      <aegix/telemetry>
       <aegix/reboot>
       (
         { host, ... }:

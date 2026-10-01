@@ -29,6 +29,7 @@
       <aegix/networking>
       <aegix/sops>
       <aegix/fail2ban>
+      <aegix/telemetry>
       (<aegix/disks/btrfs> {
         disk = "/dev/sda";
         withSwap = true;
