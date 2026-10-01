@@ -22,6 +22,8 @@
         # WSL has no bootloader at all -- Windows' own init hands control
         # straight to /init inside the distro image.
         boot.loader.systemd-boot.enable = lib.mkForce false;
+
+        services.openssh.enable = true;
       };
   };
 
