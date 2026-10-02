@@ -11,6 +11,10 @@
       agents = import ./_agents.nix;
       mcpServers = import ./_mcp.nix { inherit pkgs config; };
 
+      # The default agent's rules are the universal baseline; every other agent
+      # declares only what it adds on top.
+      baselineRules = agents.default.rules or [ ];
+
       ruleUris = map (r: "file://~/.kiro/steering/${r}.md");
       contextUris = map (c: "file://~/.kiro/context/${c}.md");
       skillUris =
@@ -40,7 +44,9 @@
         // (lib.optionalAttrs (a ? description) { inherit (a) description; })
         // {
           resources =
-            ruleUris (a.rules or [ ]) ++ contextUris (a.context or [ ]) ++ skillUris (a.skills or "all");
+            ruleUris (lib.unique (baselineRules ++ (a.rules or [ ])))
+            ++ contextUris (a.context or [ ])
+            ++ skillUris (a.skills or "all");
         }
         // (lib.optionalAttrs (a ? prompt) { prompt = "file://../prompts/${a.prompt}.md"; })
         // {

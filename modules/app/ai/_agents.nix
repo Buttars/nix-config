@@ -2,9 +2,10 @@
 # `skills` is "all" or a list of skill names; adapters map these to each tool's
 # resource URIs. Attr key is the agent file/name (override with `name`).
 #
-# response-style is kept only on user-facing agents (dispatcher, coder); agents
-# spawned as subagents report to a parent, so it is omitted for them. skills are
-# scoped per agent (not "all") so each spawned session loads less context.
+# `default.rules` is the universal baseline — every agent receives it, so other
+# agents list only the rules they add on top. response-style is therefore
+# universal, including for agents spawned as subagents. skills are scoped per
+# agent (not "all") so each spawned session loads less context.
 #
 # Every agent inherits all MCP servers (from _mcp.nix) by default so subagents
 # have the dispatcher's tool access; narrow with `mcpServers = [ "name" ... ]`
@@ -82,7 +83,6 @@
       "refactoring"
       "debugging"
       "comments"
-      "response-style"
     ];
     skills = [
       "engineering/tdd"
@@ -107,7 +107,9 @@
 
   git = {
     description = "Manages version control — commits, branches, PRs, and jj operations";
-    rules = [ "git-workflow" ];
+    rules = [
+      "git-workflow"
+    ];
     skills = [
       "jujutsu"
       "engineering/resolving-merge-conflicts"
