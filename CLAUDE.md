@@ -203,4 +203,4 @@ Choosing between them:
 - One feature per commit, committed when that feature is done — not batched at the end.
 - A formatter run, a lockfile update, or an unrelated fix noticed along the way each get their own commit.
 - If a change has already mixed concerns, `jj split <paths>` separates it by file rather than redoing the work.
-- Verify before describing: `nix run .#fmt`, then `nix flake check --impure`.
+- Format before describing: `nix run .#fmt`. Ask before running `nix flake check --impure` — never run it unprompted.
