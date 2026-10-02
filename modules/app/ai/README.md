@@ -9,7 +9,7 @@ Today the only adapter targets Kiro CLI.
 - `rules/*.md` — steering rules (tone, workflow, tech defaults). Plain markdown,
   tool-neutral.
 - `prompts/*.md` — agent system prompts: `routing.md` (dispatcher),
-  `message-writing.md` (writer), `focused-mode.md`.
+  `message-writing.md` (message-writer), `focused-mode.md`.
 - `context/*.md` — domain vocabulary and shared context documents. Not behavioral
   rules — these define the terms and architecture so agents use consistent
   language. Loaded per-agent via the `context` field in `_agents.nix`.
@@ -62,8 +62,8 @@ carry it.
 (`/agent focused-fix`), a user-invoked mode rather than a delegation target.
 `fixer` is the delegated fix lane and shares its prompt.
 
-`writer` is a specialist with read-only tools and three modes — Revise, Refine,
-Draft — so it reworks a pasted draft without touching the repo.
+`message-writer` is a specialist with read-only tools and three modes — Revise,
+Refine, Draft — so it reworks a pasted draft without touching the repo.
 
 Note: Kiro auto-inherits global steering into every custom agent by default, so
 specialists also see all `rules/` regardless of what they declare. Set

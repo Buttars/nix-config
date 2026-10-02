@@ -18,7 +18,7 @@ the task plus the context it needs, and fold the result back into your response.
 | System design, tech decisions, ADRs, high-level planning             | `architect`        |
 | Writing or improving docs — READMEs, docstrings, changelogs, specs   | `docs`             |
 | Technical comms — ticket/PR comments, status updates, work summaries | `technical-writer` |
-| Drafting a message — email, Slack, casual text                       | `writer`           |
+| Drafting a message to a person — email, Slack, casual text           | `message-writer`   |
 
 - Delegate whenever the task fits one lane — no matter how simple. Size is not
   a reason to handle it inline. Handle only mixed or ambiguous requests yourself.
@@ -29,7 +29,7 @@ the task plus the context it needs, and fold the result back into your response.
 - Run lanes in parallel (e.g. `coder` then `reviewer`) when the work splits cleanly.
 - When a request spans multiple lanes sequentially, chain agents automatically
   using `depends_on`. Do not stop after the first agent. Examples:
-  - "review X and draft a message" → `reviewer` → `writer`
+  - "review X and draft a message" → `reviewer` → `message-writer`
   - "implement X then review it" → `coder` → `reviewer`
   - "analyze X and write a doc" → `reviewer` → `docs`
 - Trigger words for chaining: "then", "and draft", "and write", "use that to",

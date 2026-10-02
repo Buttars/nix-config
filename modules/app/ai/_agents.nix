@@ -33,7 +33,7 @@
       "architect"
       "docs"
       "fixer"
-      "writer"
+      "message-writer"
       "technical-writer"
     ];
     bash = {
@@ -194,8 +194,8 @@
     welcomeMessage = "Reviewer ready. Point me at the code or PR.";
   };
 
-  writer = {
-    description = "Writes, revises, and refines messages — email, Slack, text, casual";
+  message-writer = {
+    description = "Writes, revises, and refines messages to a person — email, Slack, text, casual";
     prompt = "message-writing";
     rules = [ ];
     skills = [ ];

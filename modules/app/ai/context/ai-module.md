@@ -47,7 +47,7 @@ _Avoid_: router, orchestrator, coordinator
 **Specialist**
 Any agent in the dispatch graph other than the dispatcher — the members of the
 dispatcher's `trustedAgents`: `reviewer`, `version-control`, `coder`,
-`architect`, `docs`, `fixer`, `writer`, `technical-writer`. Spawned by the
+`architect`, `docs`, `fixer`, `message-writer`, `technical-writer`. Spawned by the
 dispatcher as a subagent for clearly-scoped work; can also be switched to
 directly.
 _Avoid_: sub-agent (that's a runtime concept, not an agent type)
