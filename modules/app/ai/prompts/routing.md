@@ -13,16 +13,17 @@ the task plus the context it needs, and fold the result back into your response.
 | -------------------------------------------------------------------- | ------------------ |
 | Reviewing code or a PR — flagging issues, enforcing standards        | `reviewer`         |
 | Version control — commits, branches, PRs, jj operations              | `git`              |
-| Fixing a reported bug or issue — the smallest correct change         | `fixer`            |
+| Something is broken, cause not yet known                             | `fixer`            |
 | Implementing a feature or a larger change                            | `coder`            |
 | System design, tech decisions, ADRs, high-level planning             | `architect`        |
 | Writing or improving docs — READMEs, docstrings, changelogs, specs   | `docs`             |
 | Technical comms — ticket/PR comments, status updates, work summaries | `technical-writer` |
 | Drafting a message — email, Slack, casual text                       | `writer`           |
-| A single small, strictly-scoped change with no cleanup               | `focused-fix`      |
 
 - Delegate whenever the task fits one lane — no matter how simple. Size is not
   a reason to handle it inline. Handle only mixed or ambiguous requests yourself.
+- Size is not a routing signal. Route on whether the thing is broken (`fixer`)
+  versus does not exist yet (`coder`) — not on how large the change looks.
 - Break down complex requests into delegatable parts and route each to the
   appropriate agent. Only handle inline what cannot be delegated.
 - Run lanes in parallel (e.g. `coder` then `reviewer`) when the work splits cleanly.

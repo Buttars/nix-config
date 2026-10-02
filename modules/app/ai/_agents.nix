@@ -32,7 +32,6 @@
       "coder"
       "architect"
       "docs"
-      "focused-fix"
       "fixer"
       "writer"
       "technical-writer"
@@ -57,6 +56,8 @@
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
   };
 
+  # User-invoked mode (via `/agent`), not a delegation target — `fixer` is the
+  # delegated fix lane and shares this prompt.
   focused-mode = {
     name = "focused-fix";
     description = "Scoped to a single fix or small feature — minimal changes, no cleanup, no extras";
@@ -227,6 +228,7 @@
 
   fixer = {
     description = "Delegated fixes — the smallest correct change to resolve a reported issue, nothing beyond it";
+    prompt = "focused-mode";
     rules = [
       "debugging"
       "refactoring"
