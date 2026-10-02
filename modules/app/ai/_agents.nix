@@ -81,6 +81,7 @@
       "dev-environment"
       "refactoring"
       "debugging"
+      "comments"
       "response-style"
     ];
     skills = [
@@ -154,6 +155,7 @@
     rules = [
       "refactoring"
       "debugging"
+      "comments"
     ];
     skills = [
       "engineering/code-review"
@@ -212,6 +214,7 @@
       "debugging"
       "refactoring"
       "editing"
+      "comments"
     ];
     skills = [ "engineering/diagnosing-bugs" ];
     bash.autoAllowReadonly = true;
