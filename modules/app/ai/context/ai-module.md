@@ -47,9 +47,9 @@ _Avoid_: router, orchestrator, coordinator
 **Specialist**
 Any agent in the dispatch graph other than the dispatcher — the members of the
 dispatcher's `trustedAgents`: `reviewer`, `version-control`, `coder`,
-`architect`, `docs`, `fixer`, `message-writer`, `technical-writer`. Spawned by the
-dispatcher as a subagent for clearly-scoped work; can also be switched to
-directly.
+`architect`, `docs`, `fixer`, `message-writer`, `writing`, `technical-writer`.
+Spawned by the dispatcher as a subagent for clearly-scoped work; can also be
+switched to directly.
 _Avoid_: sub-agent (that's a runtime concept, not an agent type)
 
 **Switch-to agent**
@@ -57,6 +57,28 @@ An agent outside the dispatch graph — invoked only by explicit `/agent <name>`
 Not spawnable by the dispatcher. Currently: `focused-fix`, the user-invoked
 counterpart to the delegated `fixer` lane.
 _Avoid_: standalone agent, direct agent
+
+**Grounding**
+Whether the work has an external source of truth to verify against — code, a
+diff, a running system — or whether the user is the only source. Grounded output
+can be checked against the thing it describes; ungrounded output can only be
+confirmed with the user, which is why voice preservation and flagging missing
+facts matter there.
+_Avoid_: factual, sourced, accurate
+
+**Durability**
+Whether output is re-read later or consumed once. Durable output (a README, an
+essay) must stand alone for a reader who was not in the room. Ephemeral output
+(a ticket comment, a Slack message) is read once, in a context both parties
+already share.
+_Avoid_: permanence, longevity, lifespan
+
+Grounding crossed with durability names the four writing agents:
+
+|            | durable   | ephemeral          |
+| ---------- | --------- | ------------------ |
+| grounded   | `docs`    | `technical-writer` |
+| ungrounded | `writing` | `message-writer`   |
 
 ---
 
@@ -153,3 +175,7 @@ skill names. `[]` means no skills.
   path (`~/.kiro/steering/`).
 - **"prompt" vs "system prompt"**: some docs say system prompt. Resolved: always
   **prompt** here; "system prompt" is implementation detail.
+- **`docs` vs `writing`**: both produce durable documents, so the name alone does
+  not separate them. Resolved: they differ only by **grounding** — `docs` writes
+  against code or a system it can read and verify; `writing` writes where the
+  user is the only source and the thing to protect is their voice.
