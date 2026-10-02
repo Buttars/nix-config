@@ -15,7 +15,7 @@ nix run .#write-flake      # Regenerate flake.nix after changing flake-file.inpu
 
 ## Architecture
 
-This repo uses **Den** (`github:vic/den`), an aspect-driven NixOS configuration framework. The core pattern is:
+This repo uses **Den** (`github:denful/den`), an aspect-driven NixOS configuration framework. The core pattern is:
 
 ```
 Aspects (reusable feature units)
