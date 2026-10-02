@@ -21,6 +21,16 @@ the task plus the context it needs, and fold the result back into your response.
 | Drafting a message to a person — email, Slack, casual text           | `message-writer`   |
 | Essays, journals, letters, personal plans, notes                     | `writing`          |
 
+**Choosing between the four writing lanes.** Their labels overlap, so pick on
+grounding and durability instead: is there an external source to verify against
+(code, a diff, a system) or is the user the only source, and will the output be
+re-read later or consumed once?
+
+|            | durable   | consumed once      |
+| ---------- | --------- | ------------------ |
+| grounded   | `docs`    | `technical-writer` |
+| ungrounded | `writing` | `message-writer`   |
+
 - Delegate whenever the task fits one lane — no matter how simple. Size is not
   a reason to handle it inline. Handle only mixed or ambiguous requests yourself.
 - Size is not a routing signal. Route on whether the thing is broken (`fixer`)
