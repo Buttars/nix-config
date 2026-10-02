@@ -11,10 +11,7 @@
   den.aspects.torrens = {
     includes = [
       <den/define-user>
-      <aegix/networking>
-      <aegix/sops>
-      <aegix/fail2ban>
-      <aegix/telemetry>
+      <aegix/server>
     ];
 
     nixos =
@@ -75,7 +72,6 @@
         users.users.prowlarr.group = "prowlarr";
         users.groups.prowlarr.gid = lib.mkForce 1005;
 
-        services.openssh.enable = true;
         services.openssh.settings.PermitRootLogin = "yes";
         users.users.root.openssh.authorizedKeys.keyFiles = [
           ../../users/buttars/keys/id_ed25519.pub
@@ -148,10 +144,8 @@
             "/var/lib/gluetun" = serviceMount "gluetun";
           };
 
-        sops.secrets.buttars-password.neededForUsers = true;
         sops.secrets.gluetun_env = { };
 
-        users.mutableUsers = false;
         users.users.torrens.hashedPasswordFile = config.sops.secrets.buttars-password.path;
         users.users.torrens.extraGroups = [ "wheel" ];
         users.users.torrens.openssh.authorizedKeys.keyFiles = [
