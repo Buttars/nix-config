@@ -16,7 +16,6 @@
       <aegix/zsh/prompt>
       <aegix/zsh/fzf-nav>
       <aegix/yazi>
-      <aegix/workstation>
       <aegix/omniwm>
       <aegix/theming>
       <aegix/cloud>
