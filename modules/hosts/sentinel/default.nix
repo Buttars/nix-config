@@ -9,11 +9,8 @@
   den.aspects.sentinel = {
     includes = [
       <den/define-user>
-      <aegix/networking>
-      <aegix/sops>
-      <aegix/fail2ban>
+      <aegix/server>
       <aegix/backup>
-      <aegix/telemetry>
       <aegix/observability>
     ];
 
@@ -42,9 +39,6 @@
         hardware.facter.reportPath = ./facter.json;
         hardware.facter.detected.dhcp.interfaces = [ "ens18" ];
 
-        sops.secrets.buttars-password.neededForUsers = true;
-
-        users.mutableUsers = false;
         users.users.sentinel.hashedPasswordFile = config.sops.secrets.buttars-password.path;
         users.users.sentinel.extraGroups = [
           "wheel"
@@ -113,8 +107,6 @@
         users.groups.hass.gid = lib.mkForce 1009;
         users.users.immich.uid = lib.mkForce 3031;
         users.groups.immich.gid = lib.mkForce 1012;
-
-        services.openssh.enable = true;
 
         services.dnsmasq = {
           enable = true;
