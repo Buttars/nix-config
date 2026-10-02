@@ -8,8 +8,9 @@ Today the only adapter targets Kiro CLI.
 
 - `rules/*.md` — steering rules (tone, workflow, tech defaults). Plain markdown,
   tool-neutral.
-- `prompts/*.md` — agent system prompts: `routing.md` (dispatcher),
-  `message-writing.md` (message-writer), `focused-mode.md`.
+- `prompts/*.md` — agent system prompts: `routing.md` (dispatcher), `docs.md`,
+  `technical-writing.md`, `message-writing.md`, `writing.md`, `focused-mode.md`
+  (shared by `focused-fix` and `fixer`).
 - `context/*.md` — domain vocabulary and shared context documents. Not behavioral
   rules — these define the terms and architecture so agents use consistent
   language. Loaded per-agent via the `context` field in `_agents.nix`.
@@ -35,13 +36,19 @@ Because the symlinks are in-store, edits take effect on rebuild, not live.
 
 The attribute key is the agent name and JSON filename (override with `name`).
 
-- `rules` — rule basenames, mapped to `file://~/.kiro/steering/<rule>.md`
+- `name` — overrides the agent name when it must differ from the attribute key
+- `rules` — rule basenames, mapped to `file://~/.kiro/steering/<rule>.md`.
+  `default.rules` is the universal baseline: the adapter merges it into every
+  agent, so each agent lists only the rules it adds on top.
 - `context` — context doc basenames, mapped to `file://~/.kiro/context/<name>.md`
 - `skills` — `"all"` (both skill globs) or a list of skill names; `[]` for none
 - `prompt` — prompt basename, mapped to `file://../prompts/<name>.md`
 - `tools` — tool list (defaults to `["*"]`)
 - `bash` — `{ autoAllowReadonly; allowedCommands; }` → `toolsSettings.execute_bash`
 - `trustedAgents` — agents this one may spawn → `toolsSettings.crew.trustedAgents`
+- `mcpServers` — server names from `_mcp.nix`; defaults to all of them, `[]` for
+  none
+- `hooks` — Kiro hooks, e.g. `agentSpawn` to seed `.kiro/notes.md` into context
 - `description`, `welcomeMessage` — optional
 
 ## Dispatcher pattern
@@ -53,7 +60,7 @@ ambiguous requests it handles itself. Delegation is model-driven and best-effort
 not a hard router.
 
 Specialists (`reviewer`, `version-control`, `coder`, `architect`, `docs`,
-`focused-fix`) each
+`fixer`, `message-writer`, `writing`, `technical-writer`) each
 declare a curated subset of rules, their own tools, and where relevant a bash
 allow-list. Routing lives only on the dispatcher's prompt, so specialists do not
 carry it.
