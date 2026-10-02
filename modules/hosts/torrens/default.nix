@@ -72,7 +72,6 @@
         users.users.prowlarr.group = "prowlarr";
         users.groups.prowlarr.gid = lib.mkForce 1005;
 
-        services.openssh.settings.PermitRootLogin = "yes";
         users.users.root.openssh.authorizedKeys.keyFiles = [
           ../../users/buttars/keys/id_ed25519.pub
         ];
