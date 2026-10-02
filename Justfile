@@ -1,10 +1,6 @@
-deploy host user='' +args='':
-    #!/usr/bin/env sh
-    _user="{{user}}"
+deploy host +args='':
     nixos-rebuild switch --flake .#{{host}} \
-        --target-host "${_user:-{{host}}}@{{host}}.lan" \
-        --sudo \
-        --ask-sudo-password \
+        --target-host root@{{host}}.lan \
         --use-substitutes \
         {{args}}
 
