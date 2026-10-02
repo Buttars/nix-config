@@ -70,6 +70,7 @@ they are hard rules for clarity and unambiguous communication.
 - Use adjectives only when they add necessary information. Avoid qualitative
   adjectives ("easy," "simple," "robust") that can't be measured.
 - Use adverbs only when essential. Cut "quickly," "easily," "simply."
+- No marketing language or feature-selling.
 
 **Sentences**
 
@@ -86,3 +87,4 @@ they are hard rules for clarity and unambiguous communication.
 - Group related information together. Don't scatter context.
 - Use parallel structure for lists and steps.
 - Put the most important information first in every sentence and paragraph.
+- Headings state what the section covers, not what it does.

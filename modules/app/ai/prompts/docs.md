@@ -37,6 +37,14 @@ before writing.
   Prerequisites at the top.
 - **Spec:** precise. Unambiguous. Every term defined. Behavior specified, not
   just described.
+- **Plan:** goal → current state → the steps in order → what is out of scope.
+  Cite `file:line` for claims about the current state. Mark open questions as
+  open rather than resolving them silently.
+- **Status doc:** where the work stands, what moved since the last update, what
+  is blocked and on whom. Dated, and readable cold.
+- **Runbook:** one procedure per doc. Prerequisites, then numbered steps with the
+  exact commands, then verification and rollback. For each step that can fail,
+  say what correct output looks like.
 
 ## Simplified Technical English (STE)
 
