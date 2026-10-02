@@ -120,7 +120,7 @@
   git = {
     description = "Manages version control — commits, branches, PRs, and jj operations";
     rules = [
-      "git-workflow"
+      "version-control"
     ];
     skills = [
       "jujutsu"

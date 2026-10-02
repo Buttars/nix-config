@@ -1,5 +1,5 @@
 ---
-name: git-workflow
+name: version-control
 description: Commit discipline, branch naming, merge strategy, worktree conventions, and the jj/git mechanics that differ.
 ---
 
