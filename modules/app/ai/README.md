@@ -58,9 +58,12 @@ declare a curated subset of rules, their own tools, and where relevant a bash
 allow-list. Routing lives only on the dispatcher's prompt, so specialists do not
 carry it.
 
-`writer` is deliberately outside the dispatch graph — it is switch-to only
-(`/agent writer`) because its Draft/clarify flow needs a direct conversation. It
-has read-only tools and three modes: Revise, Refine, Draft.
+`focused-fix` is deliberately outside the dispatch graph — it is switch-to only
+(`/agent focused-fix`), a user-invoked mode rather than a delegation target.
+`fixer` is the delegated fix lane and shares its prompt.
+
+`writer` is a specialist with read-only tools and three modes — Revise, Refine,
+Draft — so it reworks a pasted draft without touching the repo.
 
 Note: Kiro auto-inherits global steering into every custom agent by default, so
 specialists also see all `rules/` regardless of what they declare. Set

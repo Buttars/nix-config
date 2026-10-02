@@ -45,15 +45,17 @@ prompt (`routing.md`). There is exactly one dispatcher.
 _Avoid_: router, orchestrator, coordinator
 
 **Specialist**
-Any agent in the dispatch graph other than the dispatcher: `reviewer`,
-`version-control`, `coder`, `architect`, `docs`, `focused-fix`. Spawned by the
+Any agent in the dispatch graph other than the dispatcher — the members of the
+dispatcher's `trustedAgents`: `reviewer`, `version-control`, `coder`,
+`architect`, `docs`, `fixer`, `writer`, `technical-writer`. Spawned by the
 dispatcher as a subagent for clearly-scoped work; can also be switched to
 directly.
 _Avoid_: sub-agent (that's a runtime concept, not an agent type)
 
 **Switch-to agent**
 An agent outside the dispatch graph — invoked only by explicit `/agent <name>`.
-Not spawnable by the dispatcher. Currently: `writer`, `technical-writer`.
+Not spawnable by the dispatcher. Currently: `focused-fix`, the user-invoked
+counterpart to the delegated `fixer` lane.
 _Avoid_: standalone agent, direct agent
 
 ---
