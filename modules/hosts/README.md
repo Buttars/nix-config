@@ -14,6 +14,10 @@ host-owned data files:
 A host may include **any** layer (`profile`/`capability`/`app`/`platform`) plus the
 siblings (`hardware/`, `lib/`).
 
+**Fleet-group exception:** `k8s-nodes/` breaks the one-directory-per-machine rule
+— it declares several interchangeable machines from one directory because they
+run identical specs and share a single `facter.json`.
+
 **`_` prefix caveat:** import-tree skips any path containing `/_`, so `_`-files
 are imported explicitly. `hardware-configuration.nix` is deliberately **not**
 prefixed — it declares `den.aspects.<host>.nixos` and must stay auto-imported.
