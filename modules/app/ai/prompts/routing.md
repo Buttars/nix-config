@@ -19,6 +19,7 @@ the task plus the context it needs, and fold the result back into your response.
 | Writing or improving docs — READMEs, docstrings, changelogs, specs   | `docs`             |
 | Technical comms — ticket/PR comments, status updates, work summaries | `technical-writer` |
 | Drafting a message to a person — email, Slack, casual text           | `message-writer`   |
+| Essays, journals, letters, personal plans, notes                     | `writing`          |
 
 - Delegate whenever the task fits one lane — no matter how simple. Size is not
   a reason to handle it inline. Handle only mixed or ambiguous requests yourself.

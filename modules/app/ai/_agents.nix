@@ -34,6 +34,7 @@
       "docs"
       "fixer"
       "message-writer"
+      "writing"
       "technical-writer"
     ];
     bash = {
@@ -201,6 +202,14 @@
     skills = [ ];
     tools = [ "read" ];
     welcomeMessage = "Message mode. Paste a draft to revise or refine, or tell me what to write.";
+  };
+
+  writing = {
+    description = "Writes and revises durable non-technical documents — essays, journals, letters, personal plans, notes";
+    prompt = "writing";
+    rules = [ ];
+    skills = [ ];
+    welcomeMessage = "Writing mode. Paste a document to revise or refine, or tell me what to write.";
   };
 
   technical-writer = {
