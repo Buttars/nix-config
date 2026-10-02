@@ -8,10 +8,7 @@
   den.aspects.aegis = {
     includes = [
       <den/define-user>
-      <aegix/networking>
-      <aegix/sops>
-      <aegix/fail2ban>
-      <aegix/telemetry>
+      <aegix/server>
     ];
 
     nixos =
@@ -41,9 +38,6 @@
         hardware.facter.reportPath = ./facter.json;
         hardware.facter.detected.dhcp.interfaces = [ "ens18" ];
 
-        sops.secrets.buttars-password.neededForUsers = true;
-
-        users.mutableUsers = false;
         users.users.aegis.hashedPasswordFile = config.sops.secrets.buttars-password.path;
         users.users.aegis.extraGroups = [ "wheel" ];
         users.users.aegis.createHome = true;
@@ -56,8 +50,6 @@
           mode = "0600";
         };
         users.users.aegis.openssh.authorizedKeys.keyFiles = [ ../../users/buttars/keys/id_ed25519.pub ];
-
-        services.openssh.enable = true;
 
         services.caddy = {
           enable = true;
