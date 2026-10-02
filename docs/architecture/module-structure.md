@@ -98,7 +98,7 @@ Non-`.nix` files are never imported, so `_` on them means nothing. Don't use it 
 
 **`profile/`** — workstation, laptop, desktop, server
 
-**`capability/`** — terminal-emulator, virtualization, toolsets, ai, cli, programming, hyprland, niri, gaming, printing3d, theming, backup, reticulum, cloud
+**`capability/`** — terminal-emulator, virtualization, toolsets, ai, cli, programming, hyprland, niri, gaming, printing3d, theming, backup, reticulum, cloud, server-baseline, desktop-session, personal-network, battery
 
 **`app/`** — fish, zsh, neovim, tmux, yazi, taskwarrior, slack, discord, element-desktop, syncthing, fail2ban, github-mcp-server, herdr, paneru, aerospace, nfs-utils, sops, devenv, and the alternatives promoted out of `_.`: kitty, alacritty, brave, google-chrome, keepassxc, bitwarden, docker, libvirtd, claude, chatgpt, kiro, omlx, skills, git, jj
 
@@ -107,6 +107,28 @@ Non-`.nix` files are never imported, so `_` on them means nothing. Don't use it 
 **`hardware/`** — nvidia, audio, zsa
 
 **`lib/`** — disks
+
+### The profile layer is load-bearing
+
+All four profiles are populated, and `server` is included by `aegis`,
+`sentinel`, `torrens` and `theatrum`. `modules/profile/server.nix` holds the SSH
+and sudo access policy for the whole server fleet — see
+[server-access.md](server-access.md) — so the layer now carries behavior rather
+than just a name. `laptop` and `desktop` are populated but not yet included by
+any host.
+
+This is where the dependency rule bites hardest. `profile -> app` and
+`profile -> platform` are forbidden, so a profile cannot reach an app- or
+platform-layer aspect directly. The sanctioned move is to **interpose a
+capability named for a coherent concern**, which is what `server-baseline`,
+`desktop-session`, `personal-network` and `battery` are. The check was
+deliberately not relaxed. Relaxing it would let profiles accumulate arbitrary
+app includes, which is the flat-bag problem this layout exists to prevent.
+
+> The check resolves bare `aegix.<name>` references as dependency edges, not
+> only `<aegix/name>` brackets. Setting another aspect's option from inside a
+> profile — `aegix.vector.endpoint = ...`, say — registers as an edge to that
+> aspect's layer and fails. Host config is the place for that.
 
 ### Judgement calls worth revisiting
 
@@ -119,7 +141,7 @@ These are opinions, not facts:
 - **`toolsets._.{node,python}`** — left nested. They are generated dev-shell binaries sharing a `mkToolset` builder, so they are facets of one mechanism rather than independent apps. Promoting them would mean extracting the builder into `lib/` first.
 - **`browser` and `password-manager`** — deleted as capabilities. Nothing included them bare, only their alternatives, so nothing remained after promotion. `virtualization` and `terminal-emulator` were included bare and survive as thin capabilities.
 - **`devenv`** — in `app/` (direnv + the devenv package); could be `capability/`.
-- **`power-management`** — included by nobody. Dead code; delete rather than classify.
+- **`power-management`** — in `platform/`, reached through `capability/battery.nix` and also included directly by `buttars-laptop`. It enables upower, thermald and power-profiles-daemon, so it is arguably three services and thus `app/`-shaped; left in `platform/` because no one would look for a binary named after it.
 
 ## Naming rationale
 
@@ -187,7 +209,7 @@ nix eval --impure --json --expr '
 diff <(jq -S . before.json) <(jq -S . after.json)
 ```
 
-All 9 hosts must match: `aegis`, `buttars-desktop`, `buttars-laptop`, `sentinel`, `specula`, `theatrum`, `torrens`, `vm`, `DRHCDGTHGJ`. Cross-platform _evaluation_ works locally, and identical drv hashes prove identical builds, so no remote builder is needed.
+All 10 hosts must match: `aegis`, `buttars-desktop`, `buttars-laptop`, `sentinel`, `specula`, `theatrum`, `torrens`, `vm`, `wgu-wsl`, `DRHCDGTHGJ`. Cross-platform _evaluation_ works locally, and identical drv hashes prove identical builds, so no remote builder is needed.
 
 Two diffs are expected and should be confirmed rather than assumed: step 2 changes `formatter`/`packages.fmt`/`checks.treefmt` via the treefmt exclude string, and step 3 changes the `aegix` attribute-name list. Hosts must stay identical through both.
 
@@ -203,4 +225,4 @@ Checks that drv-hashing cannot cover:
 - **Split the layers into separate den namespaces** — `<profile/laptop>`, `<capability/browser>`, `<app/kitty>`, `<platform/locale>`, registered via `inputs.den.namespace` in `den.nix`. With no `aegix/` parent directory this is _purely_ registering namespaces and rewriting brackets, with zero file movement. It would make the layer visible at every use site and let the direction check become structural rather than grep-based.
 - **Decompose `capability/hyprland`** into `app/{waybar,rofi,hyprlock,swaync,wlogout,hyprpaper}` so `niri` can share them instead of redeclaring. Excluded from the migration above to keep it a provable no-op.
 - **Clear den's deprecated `provides` fallback** for the remaining nested facets — `aegix.zsh.prompt` rather than `aegix.zsh._.prompt`. Den warns: `bracket path uses 'provides.X' — migrate to direct nesting`.
-- **Delete unincluded aspects** — `power-management`, `discord`, `element-desktop`, `locale`, `niri`, `nix-ls`, `paneru`, `tmux`, `xdg`, and the unused `laptop`/`desktop`/`server` profiles. Needs its own audit.
+- **Delete unincluded aspects** — `discord`, `element-desktop`, `locale`, `niri`, `nix-ls`, `paneru`, `tmux`, `xdg`. Needs its own audit. The `laptop`/`desktop`/`server` profiles and `power-management` were on this list and have come off it: all three profiles are populated, `server` is included by four hosts, and `power-management` is reached through `capability/battery.nix`.
