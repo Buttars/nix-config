@@ -1,9 +1,14 @@
 ---
 name: git-workflow
-description: Commit discipline, branch naming, staging hygiene, merge strategy, and worktree conventions.
+description: Commit discipline, branch naming, merge strategy, worktree conventions, and the jj/git mechanics that differ.
 ---
 
-# Git Workflow
+# Version Control
+
+## Identify the tool first
+
+A `.jj` directory means Jujutsu — use `jj`, not `git`. In a colocated repo git
+sits in permanently detached HEAD; that is normal, not a problem to fix.
 
 ## Commits
 
@@ -15,33 +20,40 @@ description: Commit discipline, branch naming, staging hygiene, merge strategy, 
   - Types: feat, fix, docs, style, refactor, test, chore
   - Scope: optional component name
 
-## Branches
+## Branches and merging
 
 - Use flat names — no prefixes (`oauth-flow` not `feat/oauth-flow`)
 - Keep names short and descriptive
-
-## Staging
-
-- Review what's being staged — don't blindly `git add .`
-- Stage related changes together, unrelated changes separately
-
-## Merging
-
 - Prefer rebase when commits are atomic
 - Use PRs for all collaborative or shared branches
 - Personal projects may skip PRs and push directly to `master`
 
 ## Worktrees
 
-- Each worktree is its own working directory — treat it as its own project (install deps, etc.)
-- Create a new worktree per feature
-- Stable worktrees to keep around: `master`, `review`, `hotfix`
-- Be aware of which worktree is active when running git commands
-- When a worktree is removed, ask if the branch should also be deleted
+- `git worktree` under git, `jj workspace` under jj
+- Each is its own working directory — treat it as its own project (install deps, etc.)
+- One per feature; keep `master`, `review`, `hotfix` around
+- Be aware of which one is active when running commands
+- When one is removed, ask if the branch should also be deleted
+
+## jj mechanics
+
+- There is no staging area — the working copy is a commit. Describe the change
+  you already have rather than choosing what to include.
+- The cycle is `jj describe -m "..."` then `jj new`. Skipping `jj new` folds the
+  next piece of work into the previous commit, whose message then no longer
+  describes its contents.
+- Separate unrelated work after the fact with `jj split <paths>`.
+- Bookmarks do not advance on their own — `jj bookmark set <name> -r @`.
+
+## git mechanics
+
+- Review what's being staged — don't blindly `git add .`
+- Stage related changes together, unrelated changes separately
 
 ## When I ask you to commit
 
-1. Run `git status` to determine what's new, modified, or deleted
-2. Stage relevant files
+1. Run `jj st` or `git status` to determine what's new, modified, or deleted
+2. jj: describe the current change, then `jj new`. git: stage the relevant files, then commit.
 3. Show the generated commit message
 4. Execute — no confirmation needed
