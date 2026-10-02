@@ -7,6 +7,9 @@
 # therefore universal: no agent runs tests, builds, or checks unprompted. skills
 # are scoped per agent (not "all") so each spawned session loads less context.
 #
+# task-notes plus the agentSpawn hook let work share findings through
+# `.kiro/notes.md` instead of rediscovering them.
+#
 # Every agent inherits all MCP servers (from _mcp.nix) by default so subagents
 # have the dispatcher's tool access; narrow with `mcpServers = [ "name" ... ]`
 # or disable with `mcpServers = [ ]`.
@@ -16,6 +19,7 @@
     rules = [
       "response-style"
       "verification"
+      "task-notes"
     ];
     context = [ "ai-module" ];
     skills = [
@@ -50,6 +54,7 @@
         "git stash list.*"
       ];
     };
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
   };
 
   focused-mode = {
@@ -58,6 +63,7 @@
     rules = [ ];
     skills = [ ];
     prompt = "focused-mode";
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Focused mode active. What's the single thing we're fixing?";
   };
 
@@ -75,6 +81,7 @@
       "engineering/research"
     ];
     bash.autoAllowReadonly = true;
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Architect ready. What are we designing?";
   };
 
@@ -95,6 +102,7 @@
       "engineering/resolving-merge-conflicts"
     ];
     bash.autoAllowReadonly = true;
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Coder ready. What are we building?";
   };
 
@@ -105,6 +113,7 @@
     context = [ "ai-module" ];
     skills = [ "productivity/writing-for-agents" ];
     bash.autoAllowReadonly = true;
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Docs agent ready. What needs writing or improving?";
   };
 
@@ -152,6 +161,7 @@
         "gh pr view.*"
       ];
     };
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Git/jj agent ready. What needs committing, branching, or pushing?";
   };
 
@@ -180,6 +190,7 @@
         "git show.*"
       ];
     };
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Reviewer ready. Point me at the code or PR.";
   };
 
@@ -210,6 +221,7 @@
         "git show.*"
       ];
     };
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Technical writing mode. Point me at the work (or paste the details) and say the format — ticket comment, PR, status update, etc.";
   };
 
@@ -223,6 +235,7 @@
     ];
     skills = [ "engineering/diagnosing-bugs" ];
     bash.autoAllowReadonly = true;
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Fixer ready. What's the reported issue?";
   };
 }

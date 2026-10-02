@@ -14,3 +14,6 @@ result
 
 # opencode-kiro (ACP) writes ephemeral project agents into .kiro/agents
 .kiro/agents/opencode-*.json
+
+# per-task shared notes, read into context when an agent spawns
+.kiro/notes.md

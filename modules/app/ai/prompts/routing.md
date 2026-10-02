@@ -47,3 +47,7 @@ pipeline — N stages means N runs of the same slow check.
   build. Say what the stages asked for and let the user choose.
 - Never re-run a check a stage already ran just to confirm it. Read the report.
 - Report what stayed unverified instead of quietly resolving it.
+- When passing context to a spawned stage, pass pointers (paths to read) rather
+  than transcribed prose. Record cross-stage findings in `.kiro/notes.md` with
+  `file:line` and verified/inferred markers instead of restating them in each
+  prompt.

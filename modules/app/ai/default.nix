@@ -64,6 +64,7 @@
             mcpServers = if sel == "all" then mcpServers else lib.getAttrs sel mcpServers;
           }
         )
+        // (lib.optionalAttrs (a ? hooks) { inherit (a) hooks; })
         // (lib.optionalAttrs (a ? welcomeMessage) { inherit (a) welcomeMessage; });
 
       agentFiles = lib.mapAttrs' (
