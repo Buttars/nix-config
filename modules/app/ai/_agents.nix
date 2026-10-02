@@ -100,7 +100,6 @@
       "engineering/implement"
       "engineering/codebase-design"
       "engineering/diagnosing-bugs"
-      "engineering/resolving-merge-conflicts"
     ];
     bash.autoAllowReadonly = true;
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
