@@ -52,7 +52,8 @@ spawns the matching specialist as a subagent and folds the result back; small or
 ambiguous requests it handles itself. Delegation is model-driven and best-effort,
 not a hard router.
 
-Specialists (`reviewer`, `git`, `coder`, `architect`, `docs`, `focused-fix`) each
+Specialists (`reviewer`, `version-control`, `coder`, `architect`, `docs`,
+`focused-fix`) each
 declare a curated subset of rules, their own tools, and where relevant a bash
 allow-list. Routing lives only on the dispatcher's prompt, so specialists do not
 carry it.

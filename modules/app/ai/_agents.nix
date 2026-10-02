@@ -28,7 +28,7 @@
     ];
     trustedAgents = [
       "reviewer"
-      "git"
+      "version-control"
       "coder"
       "architect"
       "docs"
@@ -117,8 +117,8 @@
     welcomeMessage = "Docs agent ready. What needs writing or improving?";
   };
 
-  git = {
-    description = "Manages version control — commits, branches, PRs, and jj operations";
+  version-control = {
+    description = "Manages version control — commits, branches, history, and PRs";
     rules = [
       "version-control"
     ];
@@ -162,7 +162,7 @@
       ];
     };
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
-    welcomeMessage = "Git/jj agent ready. What needs committing, branching, or pushing?";
+    welcomeMessage = "Version control ready. What needs committing, branching, or pushing?";
   };
 
   reviewer = {

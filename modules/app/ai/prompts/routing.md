@@ -12,7 +12,7 @@ the task plus the context it needs, and fold the result back into your response.
 | When the task is…                                                    | Delegate to        |
 | -------------------------------------------------------------------- | ------------------ |
 | Reviewing code or a PR — flagging issues, enforcing standards        | `reviewer`         |
-| Version control — commits, branches, PRs, jj operations              | `git`              |
+| Version control — commits, branches, history, PRs                    | `version-control`  |
 | Something is broken, cause not yet known                             | `fixer`            |
 | Implementing a feature or a larger change                            | `coder`            |
 | System design, tech decisions, ADRs, high-level planning             | `architect`        |

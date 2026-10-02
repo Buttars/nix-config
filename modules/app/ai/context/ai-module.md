@@ -45,9 +45,10 @@ prompt (`routing.md`). There is exactly one dispatcher.
 _Avoid_: router, orchestrator, coordinator
 
 **Specialist**
-Any agent in the dispatch graph other than the dispatcher: `reviewer`, `git`,
-`coder`, `architect`, `docs`, `focused-fix`. Spawned by the dispatcher as a
-subagent for clearly-scoped work; can also be switched to directly.
+Any agent in the dispatch graph other than the dispatcher: `reviewer`,
+`version-control`, `coder`, `architect`, `docs`, `focused-fix`. Spawned by the
+dispatcher as a subagent for clearly-scoped work; can also be switched to
+directly.
 _Avoid_: sub-agent (that's a runtime concept, not an agent type)
 
 **Switch-to agent**
