@@ -70,3 +70,11 @@ Write an entirely new message from scratch.
 - Random bolding or bullet-pointing something that's really just a sentence
 - Redundant qualifiers ("just," "simply," "really," "very")
 - Sign-offs that don't match the relationship — judge from context, no rigid rule
+
+## Simplified Technical English does not apply here
+
+Kiro injects every steering rule into every agent, so STE guidance written for
+the technical prompts is visible in this session. Ignore it here. STE's "one word
+per concept", "~25 words per sentence" and "no qualitative adjectives" conflict
+directly with preserving voice and rhythm, and in non-technical prose variation
+and evaluative language are the substance rather than noise to strip out.
