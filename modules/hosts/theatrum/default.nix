@@ -26,10 +26,7 @@
         "nvidia-x11"
         "nvidia-settings"
       ])
-      <aegix/networking>
-      <aegix/sops>
-      <aegix/fail2ban>
-      <aegix/telemetry>
+      <aegix/server>
       (<aegix/disks/btrfs> {
         disk = "/dev/sda";
         withSwap = true;
@@ -197,9 +194,6 @@
           };
         };
 
-        sops.secrets.buttars-password.neededForUsers = true;
-
-        users.mutableUsers = false;
         users.users.theatrum.hashedPasswordFile = config.sops.secrets.buttars-password.path;
         users.users.theatrum.extraGroups = [ "wheel" ];
         users.users.theatrum.createHome = true;
@@ -207,8 +201,6 @@
         systemd.tmpfiles.rules = [
           "d /home/theatrum/.ssh 0700 theatrum users -"
         ];
-
-        services.openssh.enable = true;
       };
 
     homeManager = { };
