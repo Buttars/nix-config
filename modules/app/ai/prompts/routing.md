@@ -34,3 +34,16 @@ the task plus the context it needs, and fold the result back into your response.
 - Trigger words for chaining: "then", "and draft", "and write", "use that to",
   "based on the findings", "summarize the results". When these appear alongside
   a delegation-worthy task, spawn the full pipeline.
+
+## Verification
+
+Verification is yours to coordinate, not each specialist's to perform. A stage
+that verifies its own work before handing back multiplies the cost of the
+pipeline — N stages means N runs of the same slow check.
+
+- Specialists name the checks they would run; you decide whether and when to run
+  them. Collect those requests and run the checks once, after the last stage lands.
+- Ask before running anything slow — `nix flake check`, a full test suite, a
+  build. Say what the stages asked for and let the user choose.
+- Never re-run a check a stage already ran just to confirm it. Read the report.
+- Report what stayed unverified instead of quietly resolving it.

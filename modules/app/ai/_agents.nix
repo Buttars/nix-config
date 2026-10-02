@@ -3,9 +3,9 @@
 # resource URIs. Attr key is the agent file/name (override with `name`).
 #
 # `default.rules` is the universal baseline — every agent receives it, so other
-# agents list only the rules they add on top. response-style is therefore
-# universal, including for agents spawned as subagents. skills are scoped per
-# agent (not "all") so each spawned session loads less context.
+# agents list only the rules they add on top. response-style and verification are
+# therefore universal: no agent runs tests, builds, or checks unprompted. skills
+# are scoped per agent (not "all") so each spawned session loads less context.
 #
 # Every agent inherits all MCP servers (from _mcp.nix) by default so subagents
 # have the dispatcher's tool access; narrow with `mcpServers = [ "name" ... ]`
@@ -13,7 +13,10 @@
 {
   default = {
     prompt = "routing";
-    rules = [ "response-style" ];
+    rules = [
+      "response-style"
+      "verification"
+    ];
     context = [ "ai-module" ];
     skills = [
       "engineering/ask-matt"
