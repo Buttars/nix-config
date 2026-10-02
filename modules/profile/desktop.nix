@@ -1,9 +1,7 @@
 { __findFile, ... }:
 {
-  # A workstation that never moves. Nothing distinguishes it from
-  # <aegix/workstation> at the role level -- the difference is what `laptop`
-  # adds, not what `desktop` does -- so this name exists to say "mains-powered,
-  # fixed displays" at a host's include site rather than to carry config.
+  # Intentionally carries no config: the name exists to mark "mains-powered,
+  # fixed displays" at a host's include site.
   aegix.desktop = {
     includes = [
       <aegix/workstation>
