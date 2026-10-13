@@ -5,26 +5,13 @@
       lib,
       ...
     }:
+    # Guard rather than rely on the module: its platform assertion hard-fails on
+    # linux, and this aspect is included from a user aspect that may evaluate there.
     lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
-      home.packages = [ pkgs.omniwm ];
-
-      launchd.agents.omniwm = {
+      programs.omniwm = {
         enable = true;
-        config = {
-          Program = "${pkgs.omniwm}/Applications/OmniWM.app/Contents/MacOS/OmniWM";
-          KeepAlive = true;
-          RunAtLoad = true;
-          StandardOutPath = "/tmp/omniwm.log";
-          StandardErrorPath = "/tmp/omniwm.err.log";
-        };
-      };
-
-      # OmniWM rewrites this file from its GUI (monitor routing, app rules, …),
-      # so Nix owns it: `force` re-links the template on every switch. Mirror
-      # any GUI change you want to keep back into settings.toml.
-      xdg.configFile."omniwm/settings.toml" = {
-        source = ./settings.toml;
-        force = true;
+        # OmniWM rewrites this from its GUI; Nix owns it, so mirror GUI changes back.
+        settings = ./settings.toml;
       };
     };
 }
