@@ -75,7 +75,7 @@
           passthru = prevAttrs.passthru // {
             node_modules = prevAttrs.passthru.node_modules.overrideAttrs (_: {
               inherit src;
-              outputHash = "sha256-3xw5C4rxvsm/BJuFeaNLKwA4oBcADm4z1WK++Xvfkxc=";
+              outputHash = "sha256-BOmoWYQYBDShh8KNQKBu9Z/Lv6R6szH55kw0o9s929Q=";
             });
           };
         }
