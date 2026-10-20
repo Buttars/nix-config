@@ -72,10 +72,10 @@ carry it.
 `message-writer` is a specialist with read-only tools and three modes — Revise,
 Refine, Draft — so it reworks a pasted draft without touching the repo.
 
-Note: Kiro auto-inherits global steering into every custom agent by default, so
-specialists also see all `rules/` regardless of what they declare. Set
-`chat.disableInheritingDefaultResources` to limit each agent to only its declared
-resources.
+Note: Kiro auto-inherits global steering into every custom agent by default,
+which would make these per-agent `rules` lists cosmetic. `modules/app/kiro.nix`
+sets `chat.disableInheritingDefaultResources` at activation, so each agent loads
+only `default.rules` plus what it declares.
 
 ## Adding things
 

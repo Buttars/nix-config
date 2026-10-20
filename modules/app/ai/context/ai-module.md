@@ -125,9 +125,9 @@ _Avoid_: tool (overloaded — use "target" for the destination AI tool)
 
 **Rule scope**
 Which rules an agent loads. Declared as a list of rule basenames in
-`_agents.nix`. Kiro's global inheritance also injects all rules into every
-agent; set `chat.disableInheritingDefaultResources true` to restrict to declared
-rules only.
+`_agents.nix`, and enforced: `modules/app/kiro.nix` sets
+`chat.disableInheritingDefaultResources`, which turns off Kiro's global
+inheritance so an agent receives only `default.rules` plus its own declarations.
 
 **Skill scope**
 Which skills an agent loads. Either `"all"` (both the bundle globs) or a list of
