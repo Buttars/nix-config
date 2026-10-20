@@ -17,11 +17,16 @@
 # granted where the role needs it rather than everywhere. An omitted `mcp` means
 # no servers, not all of them.
 #
+# `tier` is strong where the work is reasoning about systems — design,
+# implementation, diagnosis, routing — and fast where it is articulating or
+# checking something already decided.
+#
 # `approvedCommands` has no effect on headless runs — kiro-cli denies shell
 # non-interactively regardless. See ~/.config/ai-knowledge, kiro-cli-internals.
 {
   default = {
     prompt = "routing";
+    tier = "strong";
     standards = [
       "core"
       "handoff"
@@ -93,6 +98,7 @@
   focused-mode = {
     name = "focused-fix";
     description = "Scoped to a single fix or small feature — minimal changes, no cleanup, no extras";
+    tier = "strong";
     rules = [ ];
     skills = [ ];
     prompt = "focused-mode";
@@ -114,6 +120,7 @@
 
   architect = {
     description = "System design, tech decisions, ADRs, and high-level planning";
+    tier = "strong";
     rules = [
       "tech-stack"
       "dev-environment"
@@ -156,6 +163,7 @@
 
   coder = {
     description = "Implements features and fixes — correct, idiomatic, and scoped to exactly what's asked";
+    tier = "strong";
     rules = [
       "tech-stack"
       "dev-environment"
@@ -190,6 +198,7 @@
 
   docs = {
     description = "Writes and improves documentation — READMEs, docstrings, changelogs, specs";
+    tier = "fast";
     prompt = "docs";
     rules = [ ];
     context = [ "ai-module" ];
@@ -213,6 +222,7 @@
 
   version-control = {
     description = "Manages version control — commits, branches, history, and PRs";
+    tier = "fast";
     rules = [
       "version-control"
     ];
@@ -266,6 +276,7 @@
 
   reviewer = {
     description = "Reviews code and PRs — flags issues, suggests improvements, enforces standards";
+    tier = "fast";
     rules = [
       "refactoring"
       "debugging"
@@ -305,6 +316,7 @@
 
   message-writer = {
     description = "Writes, revises, and refines messages to a person — email, Slack, text, casual";
+    tier = "fast";
     prompt = "message-writing";
     rules = [ ];
     skills = [ ];
@@ -315,6 +327,7 @@
 
   writing = {
     description = "Writes and revises durable non-technical documents — essays, journals, letters, personal plans, notes";
+    tier = "fast";
     prompt = "writing";
     rules = [ ];
     skills = [ ];
@@ -328,6 +341,7 @@
 
   technical-writer = {
     description = "Writes concise, accurate technical communication — ticket/PR comments, status updates, and summaries of work";
+    tier = "fast";
     prompt = "technical-writing";
     rules = [ ];
     skills = [ ];
@@ -357,6 +371,7 @@
 
   fixer = {
     description = "Delegated fixes — the smallest correct change to resolve a reported issue, nothing beyond it";
+    tier = "strong";
     prompt = "focused-mode";
     rules = [
       "debugging"
@@ -384,6 +399,7 @@
 
   researcher = {
     description = "Gathers evidence broadly and returns narrowly — read-only, every claim carries a source, verified kept separate from inferred";
+    tier = "fast";
     prompt = "research";
     rules = [ ];
     skills = [ ];
@@ -408,6 +424,7 @@
 
   ticketer = {
     description = "Converts approved plans into tickets — mechanical, never changes scope";
+    tier = "fast";
     prompt = "ticketing";
     rules = [ ];
     skills = [ ];
