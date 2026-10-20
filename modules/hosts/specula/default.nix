@@ -40,6 +40,11 @@
         # which the raspberry-pi-3 profile already enables.
         boot.loader.systemd-boot.enable = lib.mkForce false;
 
+        # The sd-image installer module enables every filesystem it might need
+        # to install onto. This Pi runs ext4 on / and vfat on /boot/firmware, so
+        # the zfs kernel module is dead weight on an aarch64 build.
+        boot.supportedFilesystems.zfs = false;
+
         services.openssh.enable = true;
 
         systemd.tmpfiles.rules = [
