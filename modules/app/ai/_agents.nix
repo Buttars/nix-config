@@ -67,6 +67,8 @@
       "message-writer"
       "writing"
       "technical-writer"
+      "researcher"
+      "ticketer"
     ];
     approveReadonlyShell = true;
     approvedCommands = [
@@ -144,6 +146,7 @@
     # works if the agent holding the decision can spawn the critics.
     trustedAgents = [
       "reviewer"
+      "researcher"
       "docs"
     ];
     approveReadonlyShell = true;
@@ -379,4 +382,47 @@
     welcomeMessage = "Fixer ready. What's the reported issue?";
   };
 
+  # Placeholder: capabilities and scope are set, but with no prompt there is no
+  # behavioral definition beyond the description and the baseline. Kept out of
+  # routing.md until one exists — the dispatcher should not prefer an agent whose
+  # behavior is undefined.
+  researcher = {
+    description = "Gathers evidence broadly and returns narrowly — read-only, every claim carries a source, verified kept separate from inferred";
+    rules = [ ];
+    skills = [ ];
+    tools = [
+      "read"
+      "search"
+      "code"
+      "shell"
+      "web"
+    ];
+    mcp = [
+      "docs"
+      "forge"
+      "tickets"
+      "infra"
+      "flags"
+    ];
+    approveReadonlyShell = true;
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
+    welcomeMessage = "Researcher ready. What question am I answering?";
+  };
+
+  # Placeholder. See researcher.
+  ticketer = {
+    description = "Converts approved plans into tickets — mechanical, never changes scope";
+    rules = [ ];
+    skills = [ ];
+    tools = [
+      "read"
+      "search"
+    ];
+    mcp = [
+      "tickets"
+      "forge"
+    ];
+    hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
+    welcomeMessage = "Ticketer ready. Point me at the approved plan.";
+  };
 }

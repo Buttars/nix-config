@@ -61,11 +61,17 @@ _Avoid_: router, orchestrator, coordinator
 **Specialist**
 Any agent in the dispatch graph other than the dispatcher — the members of the
 dispatcher's `trustedAgents`: `reviewer`, `version-control`, `coder`,
-`architect`, `docs`, `fixer`, `message-writer`, `writing`,
-`technical-writer`. Spawned by the dispatcher as a subagent for clearly-scoped
-work; can also be switched to directly. `architect` additionally holds its own
+`architect`, `docs`, `fixer`, `message-writer`, `writing`, `technical-writer`,
+`researcher`, `ticketer`. Spawned by the dispatcher as a subagent for
+clearly-scoped work; can also be switched to directly. `architect` additionally holds its own
 `trustedAgents`, so the graph is not a single layer.
 _Avoid_: sub-agent (that's a runtime concept, not an agent type)
+
+**Placeholder agent**
+A specialist whose capabilities, scope, and description are defined but which
+has no prompt yet, so it has no behavioral definition beyond the baseline.
+Spawnable, but absent from the routing table until a prompt exists. Currently
+`researcher` and `ticketer`.
 
 **Switch-to agent**
 An agent outside the dispatch graph — invoked only by explicit `/agent <name>`.

@@ -115,9 +115,16 @@ ambiguous requests it handles itself. Delegation is model-driven and best-effort
 not a hard router.
 
 Specialists (`reviewer`, `version-control`, `coder`, `architect`, `docs`,
-`fixer`, `message-writer`, `writing`, `technical-writer`) each declare a curated
-subset of rules, their own capabilities, and where relevant a shell allow-list.
-Routing lives only on the dispatcher's prompt, so specialists do not carry it.
+`fixer`, `message-writer`, `writing`, `technical-writer`, `researcher`,
+`ticketer`) each declare a curated subset of rules, their own capabilities, and
+where relevant a shell allow-list. Routing lives only on the dispatcher's prompt,
+so specialists do not carry it.
+
+`researcher` and `ticketer` are placeholders: capabilities and scope are set and
+they are spawnable, but neither has a prompt yet, so neither has a behavioral
+definition beyond its description. Both are deliberately absent from
+`routing.md` — the dispatcher should not prefer an agent that cannot yet be
+relied on to behave a particular way.
 
 `focused-fix` is deliberately outside the dispatch graph — it is switch-to only
 (`/agent focused-fix`), a user-invoked mode rather than a delegation target.
