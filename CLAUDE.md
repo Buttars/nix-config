@@ -102,7 +102,7 @@ Disk config goes in a separate `_disko.nix` (manually imported via `nixos.import
 
 Each file exports `aegix.<name>` with `nixos` and/or `homeManager` keys, under whichever layer it belongs to. Including an aspect in both a host and a user is intentional — the host include applies the `nixos` class config, the user include applies the `homeManager` class config.
 
-OS-specific logic (darwin vs linux) belongs in the aspect itself, not in host or user definitions. Use `pkgs.stdenv.isDarwin` / `pkgs.stdenv.isLinux` and `lib.mkIf` within the aspect to branch behavior per platform unless told otherwise.
+OS-specific logic (darwin vs linux) belongs in the aspect itself, not in host or user definitions. Use `pkgs.stdenv.hostPlatform.isDarwin` / `pkgs.stdenv.hostPlatform.isLinux` and `lib.mkIf` within the aspect to branch behavior per platform unless told otherwise. (The shorter `pkgs.stdenv.isDarwin` is deprecated and warns during evaluation.)
 
 A capability composes apps rather than nesting them: `capability/terminal-emulator.nix` does `includes = [ <aegix/kitty> ]`, and `app/kitty.nix` stands on its own. Reserve `_.<name>` sub-aspects for internal facets of a single aspect (`zsh._.vi-mode`, `tmux._.gitmux`).
 

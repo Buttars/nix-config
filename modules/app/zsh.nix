@@ -92,10 +92,10 @@
             e = "$EDITOR";
             v = "$EDITOR";
           }
-          // lib.optionalAttrs pkgs.stdenv.isDarwin {
+          // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
             ls = "ls -hG";
           }
-          // lib.optionalAttrs pkgs.stdenv.isLinux {
+          // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
             ls = "ls -hN --color=auto --group-directories-first";
             ip = "ip -color=auto";
             sdn = "shutdown -h now";

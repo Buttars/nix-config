@@ -12,7 +12,7 @@
             taskwarrior3
             taskwarrior-tui
           ]
-          ++ (lib.optionals pkgs.stdenv.isLinux [ taskopen ]);
+          ++ (lib.optionals pkgs.stdenv.hostPlatform.isLinux [ taskopen ]);
       };
   };
 }

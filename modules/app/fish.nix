@@ -51,7 +51,7 @@
               e = "$EDITOR";
               v = "$EDITOR";
             }
-            // lib.optionalAttrs pkgs.stdenv.isLinux {
+            // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
               sdn = "shutdown -h now";
             };
 

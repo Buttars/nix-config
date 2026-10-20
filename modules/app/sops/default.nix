@@ -10,7 +10,7 @@
       }:
       let
         keyFile =
-          if pkgs.stdenv.isDarwin then
+          if pkgs.stdenv.hostPlatform.isDarwin then
             "${config.home.homeDirectory}/.config/sops/age/keys.txt"
           else
             "/var/lib/secrets/sops/age/keys.txt";
@@ -23,11 +23,11 @@
           age = {
             inherit keyFile;
             sshKeyPaths =
-              if pkgs.stdenv.isDarwin then
+              if pkgs.stdenv.hostPlatform.isDarwin then
                 [ "${config.home.homeDirectory}/.ssh/id_ed25519" ]
               else
                 [ "/etc/ssh/ssh_host_ed25519_key" ];
-            generateKey = !pkgs.stdenv.isDarwin;
+            generateKey = !pkgs.stdenv.hostPlatform.isDarwin;
           };
         };
         home.sessionVariables.SOPS_AGE_KEY_FILE = keyFile;
@@ -39,7 +39,7 @@
         # agent unloaded after a switch. home-manager's setupLaunchAgents
         # already (re)loads the agent whenever the plist changes, so neutralize
         # the redundant, flaky step on Darwin only (leave it intact on Linux).
-        home.activation.sops-nix = lib.mkIf pkgs.stdenv.isDarwin (
+        home.activation.sops-nix = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin (
           lib.mkForce (lib.hm.dag.entryAfter [ "linkGeneration" ] "")
         );
       };

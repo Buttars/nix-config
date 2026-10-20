@@ -34,7 +34,7 @@
           pkgs.herdr-sessionizer
         ];
 
-        systemd.user.services.herdr = lib.mkIf pkgs.stdenv.isLinux {
+        systemd.user.services.herdr = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
           Unit = {
             Description = "Herdr terminal workspace server";
             PartOf = [ "graphical-session.target" ];
@@ -49,7 +49,7 @@
           Install.WantedBy = [ "graphical-session.target" ];
         };
 
-        launchd.agents.herdr = lib.mkIf pkgs.stdenv.isDarwin {
+        launchd.agents.herdr = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
           enable = true;
           config = {
             ProgramArguments = [
@@ -163,7 +163,7 @@
           bundle="${config.home.homeDirectory}/.config/herdr/ca-bundle.crt"
           mkdir -p "$(dirname "$bundle")"
           cat "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" > "$bundle"
-          ${lib.optionalString pkgs.stdenv.isDarwin ''
+          ${lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
             # Append corporate TLS-inspection roots from the System keychain.
             for cn in "Zscaler Root CA"; do
               /usr/bin/security find-certificate -a -c "$cn" -p \
@@ -186,7 +186,7 @@
           # must be on PATH or cargo/cgo builds fail with "linker `cc` not
           # found".
           (
-            export PATH="${pkgs.herdr}/bin:${pkgs.cargo}/bin:${pkgs.rustc}/bin:${pkgs.git}/bin:${pkgs.curl}/bin:${pkgs.gnutar}/bin:${pkgs.gzip}/bin:${pkgs.go}/bin:${pkgs.bun}/bin:${pkgs.gawk}/bin:${lib.optionalString pkgs.stdenv.isLinux "${pkgs.gcc}/bin:"}/usr/bin:/bin:$PATH"
+            export PATH="${pkgs.herdr}/bin:${pkgs.cargo}/bin:${pkgs.rustc}/bin:${pkgs.git}/bin:${pkgs.curl}/bin:${pkgs.gnutar}/bin:${pkgs.gzip}/bin:${pkgs.go}/bin:${pkgs.bun}/bin:${pkgs.gawk}/bin:${lib.optionalString pkgs.stdenv.hostPlatform.isLinux "${pkgs.gcc}/bin:"}/usr/bin:/bin:$PATH"
             export CARGO_HTTP_CAINFO="${config.home.homeDirectory}/.config/herdr/ca-bundle.crt"
             export NIX_SSL_CERT_FILE="$CARGO_HTTP_CAINFO"
             for plugin in ${lib.concatStringsSep " " plugins}; do
