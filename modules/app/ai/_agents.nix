@@ -21,6 +21,7 @@
       "verification"
       "task-notes"
       "comments"
+      "editing"
     ];
     context = [ "ai-module" ];
     skills = [
@@ -171,6 +172,7 @@
     rules = [
       "refactoring"
       "debugging"
+      "tech-stack"
     ];
     skills = [
       "engineering/code-review"
@@ -239,7 +241,6 @@
     rules = [
       "debugging"
       "refactoring"
-      "editing"
     ];
     skills = [ "engineering/diagnosing-bugs" ];
     bash.autoAllowReadonly = true;
