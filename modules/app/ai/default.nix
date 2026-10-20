@@ -82,5 +82,11 @@
         ".kiro/prompts".source = ./prompts;
         ".kiro/context".source = ./context;
       };
+
+      # Contents are a separate repo, intentionally unmanaged here; only the
+      # directory is created so a fresh machine has somewhere to clone into.
+      home.activation.aiKnowledgeDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        $DRY_RUN_CMD mkdir -p "${config.xdg.configHome}/ai-knowledge"
+      '';
     };
 }

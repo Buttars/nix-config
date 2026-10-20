@@ -23,6 +23,18 @@ Today the only adapter targets Kiro CLI.
   `<category>/<name>/SKILL.md` convention. Installed skills currently come from
   the external `agent-skills-nix` bundle, not this module.
 
+## Knowledge lives elsewhere
+
+This module covers how agents _behave_. What they _know_ about a given domain —
+briefs, orientation maps, decision logs, research threads — lives in a separate
+repo at `~/.config/ai-knowledge`, outside this config. It is data rather than
+configuration: it changes constantly, has no bearing on machine state, and is
+not versioned with the system.
+
+`default.nix` creates that directory at activation and manages nothing inside
+it, so edits take effect immediately instead of on rebuild. See the README there
+for what makes a domain and what the three per-domain files are for.
+
 ## What the adapter renders (Kiro)
 
 - `rules/` → `~/.kiro/steering/` (in-store symlink; always-on context)
