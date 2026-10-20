@@ -2,7 +2,6 @@
   aegix.kiro.homeManager =
     {
       pkgs,
-      config,
       lib,
       ...
     }:
@@ -25,10 +24,6 @@
             | $DRY_RUN_CMD ${pkgs.moreutils}/bin/sponge "$cfg"
         fi
       '';
-
-      home.file.".kiro/settings/mcp.json".text = builtins.toJSON {
-        mcpServers = import ./ai/_mcp.nix { inherit pkgs config; };
-      };
 
       programs.zsh.shellAliases.kc = "kiro-cli chat";
 

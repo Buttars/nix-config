@@ -29,7 +29,7 @@
       <aegix/printing3d>
       <aegix/reticulum>
       <aegix/theming>
-      <aegix/opencode>
+      <aegix/ai>
       <aegix/battery-notify>
       <aegix/desktop-apps>
       <aegix/mpv>

@@ -1,7 +1,6 @@
-# Shared MCP server definitions. Single source of truth consumed by both
-# modules/app/kiro.nix (global ~/.kiro/settings/mcp.json for kiro_default) and
-# modules/app/ai/default.nix (per-agent mcpServers). Import with pkgs+config and
-# select the whole set or a subset by name.
+# MCP server definitions. Consumed by ./_kiro.nix for both the global
+# ~/.kiro/settings/mcp.json and each agent's own mcpServers. Import with
+# pkgs+config and select the whole set or a subset by name.
 { pkgs, config }:
 let
   mcp-shell = pkgs.writeShellScript "mcp-shell" ''

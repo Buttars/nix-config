@@ -1,6 +1,6 @@
 # Kiro CLI renderer. Everything that knows Kiro's file layout, config schema, and
-# tool vocabulary lives here or in ./mappings.nix; the canonical data in
-# ../_agents.nix knows none of it. Adding a target means a sibling of this file,
+# tool vocabulary lives here or in ./_mappings.nix; the canonical data in
+# ./_agents.nix knows none of it. Adding a target means a sibling of this file,
 # not an edit to any agent.
 {
   lib,
@@ -72,9 +72,10 @@ let
 in
 {
   home.file = agentFiles // {
-    ".kiro/steering".source = ../rules;
-    ".kiro/standards".source = ../standards;
-    ".kiro/prompts".source = ../prompts;
-    ".kiro/context".source = ../context;
+    ".kiro/steering".source = ./rules;
+    ".kiro/standards".source = ./standards;
+    ".kiro/prompts".source = ./prompts;
+    ".kiro/context".source = ./context;
+    ".kiro/settings/mcp.json".text = builtins.toJSON { inherit mcpServers; };
   };
 }

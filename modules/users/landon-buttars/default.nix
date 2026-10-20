@@ -22,9 +22,6 @@
       <aegix/toolsets/node>
       <aegix/toolsets/python>
       <aegix/ai>
-      <aegix/kiro>
-      <aegix/skills>
-      <aegix/opencode>
       <aegix/omlx>
       <aegix/herdr>
       <aegix/jj>
