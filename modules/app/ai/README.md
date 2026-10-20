@@ -25,6 +25,10 @@ Today the only adapter targets Kiro CLI.
 - `_agents.nix` — agent definitions as data. Underscore-prefixed because
   flake-parts/den auto-imports every non-`_` `.nix` under `modules/` as an
   aspect; the prefix keeps this a plain data file, not an aspect.
+- `_mappings.nix` — translates the abstract capability, MCP group, and tier names
+  used in `_agents.nix` into Kiro tool names, `_mcp.nix` server names, and model
+  ids. The only file that holds a harness's vocabulary.
+- `_mcp.nix` — MCP server definitions, shared with `modules/app/kiro.nix`.
 - `default.nix` — the `aegix.ai` adapter. Reads `_agents.nix` and renders the
   Kiro files.
 - `skills/` — placeholder for first-party skills in the
@@ -70,13 +74,37 @@ The attribute key is the agent name and JSON filename (override with `name`).
 - `context` — context doc basenames, mapped to `file://~/.kiro/context/<name>.md`
 - `skills` — `"all"` (both skill globs) or a list of skill names; `[]` for none
 - `prompt` — prompt basename, mapped to `file://../prompts/<name>.md`
-- `tools` — tool list (defaults to `["*"]`)
-- `bash` — `{ autoAllowReadonly; allowedCommands; }` → `toolsSettings.execute_bash`
+- `tier` — `"strong"` or `"fast"`; resolved to a model id. Omit to inherit
+  `chat.defaultModel`.
+- `tools` — abstract capabilities: `read`, `search`, `code`, `edit`, `shell`,
+  `web`, `spawn`, `aws`. Resolved to concrete tool names, plus `baseTools` which
+  every agent gets. Omit for `baseTools` only.
+- `mcp` — abstract server groups: `forge`, `docs`, `tickets`, `infra`, `flags`,
+  `terminal`, `files`. Omit for none.
+- `approveReadonlyShell`, `approvedCommands` → `toolsSettings.execute_bash`.
+  Note that `approvedCommands` has no effect headlessly; kiro-cli denies shell
+  non-interactively whatever the allowlist says.
 - `trustedAgents` — agents this one may spawn → `toolsSettings.crew.trustedAgents`
-- `mcpServers` — server names from `_mcp.nix`; defaults to all of them, `[]` for
-  none
 - `hooks` — Kiro hooks, e.g. `agentSpawn` to seed `.kiro/notes.md` into context
 - `description`, `welcomeMessage` — optional
+
+Capability and tier names mean nothing on their own; `_mappings.nix` is the only
+place they become Kiro tool names, model ids, and `_mcp.nix` server names.
+Retargeting is a sibling mapping plus a sibling renderer, not an edit to any
+agent.
+
+## Capability scoping
+
+Capabilities are granted where a role needs them, not everywhere, because tool
+and MCP server definitions dominate an agent's starting context. Two of the
+narrowings carry meaning beyond cost:
+
+- `reviewer` has no `edit`. `standards/core.md` requires review and authorship to
+  live in different agents, and withholding the tool is what enforces it rather
+  than asking the agent not to.
+- `architect` has `spawn` and its own `trustedAgents`. Parallel critique under a
+  single decision-maker only works if the agent holding the decision can spawn
+  the critics.
 
 ## Dispatcher pattern
 
@@ -87,10 +115,9 @@ ambiguous requests it handles itself. Delegation is model-driven and best-effort
 not a hard router.
 
 Specialists (`reviewer`, `version-control`, `coder`, `architect`, `docs`,
-`fixer`, `message-writer`, `writing`, `technical-writer`) each
-declare a curated subset of rules, their own tools, and where relevant a bash
-allow-list. Routing lives only on the dispatcher's prompt, so specialists do not
-carry it.
+`fixer`, `message-writer`, `writing`, `technical-writer`) each declare a curated
+subset of rules, their own capabilities, and where relevant a shell allow-list.
+Routing lives only on the dispatcher's prompt, so specialists do not carry it.
 
 `focused-fix` is deliberately outside the dispatch graph — it is switch-to only
 (`/agent focused-fix`), a user-invoked mode rather than a delegation target.

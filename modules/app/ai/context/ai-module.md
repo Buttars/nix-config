@@ -61,9 +61,10 @@ _Avoid_: router, orchestrator, coordinator
 **Specialist**
 Any agent in the dispatch graph other than the dispatcher — the members of the
 dispatcher's `trustedAgents`: `reviewer`, `version-control`, `coder`,
-`architect`, `docs`, `fixer`, `message-writer`, `writing`, `technical-writer`.
-Spawned by the dispatcher as a subagent for clearly-scoped work; can also be
-switched to directly.
+`architect`, `docs`, `fixer`, `message-writer`, `writing`,
+`technical-writer`. Spawned by the dispatcher as a subagent for clearly-scoped
+work; can also be switched to directly. `architect` additionally holds its own
+`trustedAgents`, so the graph is not a single layer.
 _Avoid_: sub-agent (that's a runtime concept, not an agent type)
 
 **Switch-to agent**
@@ -125,11 +126,31 @@ The canonical agent data file. Underscore-prefixed so flake-parts/den does not
 auto-import it as an aspect. The single source of truth for all agent
 definitions; adapters read this and render into tool-specific formats.
 
+**Capability**
+An abstract permission an agent holds, named for what it does rather than for
+the tool that does it: `read`, `search`, `code`, `edit`, `shell`, `web`, `spawn`,
+`aws` for tools, and `forge`, `docs`, `tickets`, `infra`, `flags`, `terminal`,
+`files` for MCP server groups. Declared in `_agents.nix`, resolved by
+`_mappings.nix`. Agents never name a concrete tool.
+_Avoid_: permission, tool (a capability may map to several tools)
+
+**Tier**
+A model class rather than a model: `strong` or `fast`. Declared per agent,
+resolved to a model id by `_mappings.nix`, so changing which model backs a tier
+is one edit in one file.
+_Avoid_: model (reserve for the concrete id)
+
+**`_mappings.nix`**
+The translation layer. Maps capabilities to concrete tool names, tiers to model
+ids, and MCP groups to `_mcp.nix` server names. The only file that knows a
+harness's vocabulary, which is what keeps `_agents.nix` neutral.
+
 **Adapter**
-A Nix module that reads the canonical data (`_agents.nix`, `rules/`, `prompts/`)
-and renders it into the format a specific AI tool expects. The Kiro adapter
-(`default.nix`) is the only adapter currently implemented. Adding a tool means
-writing a new adapter; the canonical data does not change.
+A Nix module that reads the canonical data (`_agents.nix`, `rules/`,
+`standards/`, `prompts/`) and renders it into the format a specific AI tool
+expects, using `_mappings.nix` to resolve abstract names. The Kiro adapter
+(`default.nix`) is the only adapter currently implemented. Adding a tool means a
+new adapter and a new mapping; the canonical data does not change.
 _Avoid_: renderer, plugin, integration
 
 **Target**

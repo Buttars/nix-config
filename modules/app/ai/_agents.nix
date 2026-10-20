@@ -1,6 +1,7 @@
-# Canonical agent definitions. Tool-neutral: `rules` are steering basenames and
-# `skills` is "all" or a list of skill names; adapters map these to each tool's
-# resource URIs. Attr key is the agent file/name (override with `name`).
+# Canonical agent definitions. Tool-neutral: `tools` and `mcp` are abstract
+# capability names, `tier` is a model class, `rules`/`standards`/`skills` are
+# basenames. _mappings.nix translates all of them into one harness's concrete
+# names. Attr key is the agent file/name (override with `name`).
 #
 # `default.rules` and `default.standards` are the universal baseline — every
 # agent receives both, so other agents list only what they add on top. skills
@@ -11,9 +12,13 @@
 # hands off to. `session` plus the agentSpawn hook let work share findings
 # through `.kiro/notes.md` instead of rediscovering them.
 #
-# Every agent inherits all MCP servers (from _mcp.nix) by default so subagents
-# have the dispatcher's tool access; narrow with `mcpServers = [ "name" ... ]`
-# or disable with `mcpServers = [ ]`.
+# `tools` and `mcp` are deliberately narrow per agent. Tool and MCP server
+# definitions are the bulk of an agent's starting context, so a capability is
+# granted where the role needs it rather than everywhere. An omitted `mcp` means
+# no servers, not all of them.
+#
+# `approvedCommands` has no effect on headless runs — kiro-cli denies shell
+# non-interactively regardless. See ~/.config/ai-knowledge, kiro-cli-internals.
 {
   default = {
     prompt = "routing";
@@ -33,6 +38,25 @@
       "engineering/ask-matt"
       "productivity/grill-me"
     ];
+    tools = [
+      "read"
+      "search"
+      "code"
+      "edit"
+      "shell"
+      "web"
+      "spawn"
+      "aws"
+    ];
+    mcp = [
+      "forge"
+      "docs"
+      "tickets"
+      "infra"
+      "flags"
+      "terminal"
+      "files"
+    ];
     trustedAgents = [
       "reviewer"
       "version-control"
@@ -44,23 +68,21 @@
       "writing"
       "technical-writer"
     ];
-    bash = {
-      autoAllowReadonly = true;
-      allowedCommands = [
-        "jj log.*"
-        "jj diff.*"
-        "jj show.*"
-        "jj status.*"
-        "jj config.*"
-        "jj bookmark list.*"
-        "git log.*"
-        "git diff.*"
-        "git status.*"
-        "git branch.*"
-        "git remote.*"
-        "git stash list.*"
-      ];
-    };
+    approveReadonlyShell = true;
+    approvedCommands = [
+      "jj log.*"
+      "jj diff.*"
+      "jj show.*"
+      "jj status.*"
+      "jj config.*"
+      "jj bookmark list.*"
+      "git log.*"
+      "git diff.*"
+      "git status.*"
+      "git branch.*"
+      "git remote.*"
+      "git stash list.*"
+    ];
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
   };
 
@@ -72,6 +94,18 @@
     rules = [ ];
     skills = [ ];
     prompt = "focused-mode";
+    tools = [
+      "read"
+      "search"
+      "code"
+      "edit"
+      "shell"
+    ];
+    mcp = [
+      "docs"
+      "forge"
+      "terminal"
+    ];
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Focused mode active. What's the single thing we're fixing?";
   };
@@ -89,7 +123,30 @@
       "engineering/wayfinder"
       "engineering/research"
     ];
-    bash.autoAllowReadonly = true;
+    tools = [
+      "read"
+      "search"
+      "code"
+      "edit"
+      "shell"
+      "web"
+      "spawn"
+      "aws"
+    ];
+    mcp = [
+      "docs"
+      "tickets"
+      "infra"
+      "flags"
+      "forge"
+    ];
+    # core.md puts critique in parallel under one decision-maker, which only
+    # works if the agent holding the decision can spawn the critics.
+    trustedAgents = [
+      "reviewer"
+      "docs"
+    ];
+    approveReadonlyShell = true;
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Architect ready. What are we designing?";
   };
@@ -108,7 +165,22 @@
       "engineering/codebase-design"
       "engineering/diagnosing-bugs"
     ];
-    bash.autoAllowReadonly = true;
+    tools = [
+      "read"
+      "search"
+      "code"
+      "edit"
+      "shell"
+      "aws"
+    ];
+    mcp = [
+      "docs"
+      "forge"
+      "infra"
+      "flags"
+      "terminal"
+    ];
+    approveReadonlyShell = true;
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Coder ready. What are we building?";
   };
@@ -119,7 +191,19 @@
     rules = [ ];
     context = [ "ai-module" ];
     skills = [ "productivity/writing-for-agents" ];
-    bash.autoAllowReadonly = true;
+    tools = [
+      "read"
+      "search"
+      "code"
+      "edit"
+      "shell"
+      "web"
+    ];
+    mcp = [
+      "docs"
+      "forge"
+    ];
+    approveReadonlyShell = true;
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Docs agent ready. What needs writing or improving?";
   };
@@ -134,40 +218,45 @@
       "engineering/resolving-merge-conflicts"
       "misc/git-guardrails-claude-code"
     ];
-    bash = {
-      autoAllowReadonly = true;
-      allowedCommands = [
-        "jj log.*"
-        "jj diff.*"
-        "jj show.*"
-        "jj status.*"
-        "jj config.*"
-        "jj bookmark list.*"
-        "jj bookmark create.*"
-        "jj bookmark set.*"
-        "jj new.*"
-        "jj describe.*"
-        "jj squash.*"
-        "jj rebase.*"
-        "jj git push.*"
-        "jj git fetch.*"
-        "jj git remote.*"
-        "git log.*"
-        "git diff.*"
-        "git status.*"
-        "git branch.*"
-        "git remote.*"
-        "git stash.*"
-        "git add.*"
-        "git commit.*"
-        "git push.*"
-        "git fetch.*"
-        "git pull.*"
-        "gh pr create.*"
-        "gh pr list.*"
-        "gh pr view.*"
-      ];
-    };
+    tools = [
+      "read"
+      "search"
+      "edit"
+      "shell"
+    ];
+    mcp = [ "forge" ];
+    approveReadonlyShell = true;
+    approvedCommands = [
+      "jj log.*"
+      "jj diff.*"
+      "jj show.*"
+      "jj status.*"
+      "jj config.*"
+      "jj bookmark list.*"
+      "jj bookmark create.*"
+      "jj bookmark set.*"
+      "jj new.*"
+      "jj describe.*"
+      "jj squash.*"
+      "jj rebase.*"
+      "jj git push.*"
+      "jj git fetch.*"
+      "jj git remote.*"
+      "git log.*"
+      "git diff.*"
+      "git status.*"
+      "git branch.*"
+      "git remote.*"
+      "git stash.*"
+      "git add.*"
+      "git commit.*"
+      "git push.*"
+      "git fetch.*"
+      "git pull.*"
+      "gh pr create.*"
+      "gh pr list.*"
+      "gh pr view.*"
+    ];
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Version control ready. What needs committing, branching, or pushing?";
   };
@@ -184,19 +273,29 @@
       "engineering/improve-codebase-architecture"
       "engineering/codebase-design"
     ];
-    bash = {
-      autoAllowReadonly = true;
-      allowedCommands = [
-        "jj log.*"
-        "jj diff.*"
-        "jj show.*"
-        "jj status.*"
-        "git log.*"
-        "git diff.*"
-        "git status.*"
-        "git show.*"
-      ];
-    };
+    # No edit capability: core.md requires that review and authorship stay in
+    # separate agents, and withholding the tool is what enforces it.
+    tools = [
+      "read"
+      "search"
+      "code"
+      "shell"
+    ];
+    mcp = [
+      "forge"
+      "docs"
+    ];
+    approveReadonlyShell = true;
+    approvedCommands = [
+      "jj log.*"
+      "jj diff.*"
+      "jj show.*"
+      "jj status.*"
+      "git log.*"
+      "git diff.*"
+      "git status.*"
+      "git show.*"
+    ];
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Reviewer ready. Point me at the code or PR.";
   };
@@ -207,6 +306,7 @@
     rules = [ ];
     skills = [ ];
     tools = [ "read" ];
+    mcp = [ ];
     welcomeMessage = "Message mode. Paste a draft to revise or refine, or tell me what to write.";
   };
 
@@ -215,6 +315,11 @@
     prompt = "writing";
     rules = [ ];
     skills = [ ];
+    tools = [
+      "read"
+      "edit"
+    ];
+    mcp = [ ];
     welcomeMessage = "Writing mode. Paste a document to revise or refine, or tell me what to write.";
   };
 
@@ -223,19 +328,26 @@
     prompt = "technical-writing";
     rules = [ ];
     skills = [ ];
-    bash = {
-      autoAllowReadonly = true;
-      allowedCommands = [
-        "jj log.*"
-        "jj diff.*"
-        "jj show.*"
-        "jj status.*"
-        "git log.*"
-        "git diff.*"
-        "git status.*"
-        "git show.*"
-      ];
-    };
+    tools = [
+      "read"
+      "search"
+      "shell"
+    ];
+    mcp = [
+      "tickets"
+      "forge"
+    ];
+    approveReadonlyShell = true;
+    approvedCommands = [
+      "jj log.*"
+      "jj diff.*"
+      "jj show.*"
+      "jj status.*"
+      "git log.*"
+      "git diff.*"
+      "git status.*"
+      "git show.*"
+    ];
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Technical writing mode. Point me at the work (or paste the details) and say the format — ticket comment, PR, status update, etc.";
   };
@@ -248,8 +360,23 @@
       "refactoring"
     ];
     skills = [ "engineering/diagnosing-bugs" ];
-    bash.autoAllowReadonly = true;
+    tools = [
+      "read"
+      "search"
+      "code"
+      "edit"
+      "shell"
+      "aws"
+    ];
+    mcp = [
+      "docs"
+      "forge"
+      "infra"
+      "terminal"
+    ];
+    approveReadonlyShell = true;
     hooks.agentSpawn = [ { command = "cat .kiro/notes.md 2>/dev/null || true"; } ];
     welcomeMessage = "Fixer ready. What's the reported issue?";
   };
+
 }

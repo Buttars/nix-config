@@ -10,6 +10,11 @@
     let
       agents = import ./_agents.nix;
       mcpServers = import ./_mcp.nix { inherit pkgs config; };
+      map' = import ./_mappings.nix;
+
+      resolveTools = caps: lib.unique (map'.baseTools ++ lib.concatMap (c: map'.tools.${c}) caps);
+
+      resolveMcp = groups: lib.getAttrs (lib.unique (lib.concatMap (g: map'.mcp.${g}) groups)) mcpServers;
 
       # The default agent's rules are the universal baseline; every other agent
       # declares only what it adds on top.
@@ -32,8 +37,15 @@
       mkKiroAgent =
         key: a:
         let
+          shell = lib.optionalAttrs (a ? approveReadonlyShell || a ? approvedCommands) {
+            execute_bash =
+              (lib.optionalAttrs (a ? approveReadonlyShell) {
+                autoAllowReadonly = a.approveReadonlyShell;
+              })
+              // (lib.optionalAttrs (a ? approvedCommands) { allowedCommands = a.approvedCommands; });
+          };
           toolsSettings =
-            (lib.optionalAttrs (a ? bash) { execute_bash = a.bash; })
+            shell
             // (lib.optionalAttrs (a ? trustedAgents) {
               crew = {
                 trustedAgents = a.trustedAgents;
@@ -54,21 +66,12 @@
             ++ skillUris (a.skills or "all");
         }
         // (lib.optionalAttrs (a ? prompt) { prompt = "file://../prompts/${a.prompt}.md"; })
+        // (lib.optionalAttrs (a ? tier) { model = map'.models.${a.tier}; })
         // {
-          tools = a.tools or [ "*" ];
+          tools = resolveTools (a.tools or [ ]);
+          mcpServers = resolveMcp (a.mcp or [ ]);
         }
         // (lib.optionalAttrs (toolsSettings != { }) { inherit toolsSettings; })
-        // (
-          # Every agent gets all MCP servers by default so spawned subagents
-          # have the same tool access as the dispatcher. Opt out or narrow with
-          # `mcpServers = [ ... ]` (a list of server names, or [ ] for none).
-          let
-            sel = a.mcpServers or "all";
-          in
-          {
-            mcpServers = if sel == "all" then mcpServers else lib.getAttrs sel mcpServers;
-          }
-        )
         // (lib.optionalAttrs (a ? hooks) { inherit (a) hooks; })
         // (lib.optionalAttrs (a ? welcomeMessage) { inherit (a) welcomeMessage; });
 
