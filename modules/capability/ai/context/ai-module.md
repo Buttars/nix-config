@@ -67,12 +67,6 @@ clearly-scoped work; can also be switched to directly. `architect` additionally 
 `trustedAgents`, so the graph is not a single layer.
 _Avoid_: sub-agent (that's a runtime concept, not an agent type)
 
-**Placeholder agent**
-A specialist whose capabilities, scope, and description are defined but which
-has no prompt yet, so it has no behavioral definition beyond the baseline.
-Spawnable, but absent from the routing table until a prompt exists. Currently
-`researcher` and `ticketer`.
-
 **Switch-to agent**
 An agent outside the dispatch graph — invoked only by explicit `/agent <name>`.
 Not spawnable by the dispatcher. Currently: `focused-fix`, the user-invoked

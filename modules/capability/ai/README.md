@@ -17,8 +17,8 @@ Today the only adapter targets Kiro CLI.
   to: brief, map, decisions, ADR, findings. Referenced on demand, never loaded as
   context.
 - `prompts/*.md` — agent system prompts: `routing.md` (dispatcher), `docs.md`,
-  `technical-writing.md`, `message-writing.md`, `writing.md`, `focused-mode.md`
-  (shared by `focused-fix` and `fixer`).
+  `technical-writing.md`, `message-writing.md`, `writing.md`, `research.md`,
+  `ticketing.md`, `focused-mode.md` (shared by `focused-fix` and `fixer`).
 - `context/*.md` — domain vocabulary and shared context documents. Not behavioral
   rules — these define the terms and architecture so agents use consistent
   language. Loaded per-agent via the `context` field in `_agents.nix`.
@@ -120,11 +120,10 @@ Specialists (`reviewer`, `version-control`, `coder`, `architect`, `docs`,
 where relevant a shell allow-list. Routing lives only on the dispatcher's prompt,
 so specialists do not carry it.
 
-`researcher` and `ticketer` are placeholders: capabilities and scope are set and
-they are spawnable, but neither has a prompt yet, so neither has a behavioral
-definition beyond its description. Both are deliberately absent from
-`routing.md` — the dispatcher should not prefer an agent that cannot yet be
-relied on to behave a particular way.
+`researcher` is read-only by capability, not just by instruction — it has no
+`edit`, so "gathers evidence, does not change things" is enforced rather than
+asked for. `ticketer` works only from an approved plan and preserves its scope
+exactly; its prompt is mostly a list of things it must not change.
 
 `focused-fix` is deliberately outside the dispatch graph — it is switch-to only
 (`/agent focused-fix`), a user-invoked mode rather than a delegation target.

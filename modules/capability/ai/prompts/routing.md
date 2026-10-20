@@ -16,10 +16,21 @@ the task plus the context it needs, and fold the result back into your response.
 | Something is broken, cause not yet known                             | `fixer`            |
 | Implementing a feature or a larger change                            | `coder`            |
 | System design, tech decisions, ADRs, high-level planning             | `architect`        |
+| Answering a question from evidence — read-only, sourced findings     | `researcher`       |
 | Writing or improving docs — READMEs, docstrings, changelogs, specs   | `docs`             |
 | Technical comms — ticket/PR comments, status updates, work summaries | `technical-writer` |
 | Drafting a message to a person — email, Slack, casual text           | `message-writer`   |
 | Essays, journals, letters, personal plans, notes                     | `writing`          |
+| Turning an approved plan into tickets — mechanical, scope-preserving | `ticketer`         |
+
+**`researcher` versus doing it yourself.** Delegate when the question needs
+breadth — several files, repos, or sources — and the answer is what matters
+rather than the search. Read it yourself when you need the context in your own
+window to act on next.
+
+**`ticketer` requires an approved plan.** It transcribes; it does not design. If
+there is no plan the user has signed off on, the work belongs in `architect`
+first.
 
 **Choosing between the four writing lanes.** Their labels overlap, so pick on
 grounding and durability instead: is there an external source to verify against
