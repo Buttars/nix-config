@@ -16,6 +16,20 @@ Kiro adapter. Agents declare which rules they load by name; global inheritance
 also makes all rules visible to every agent unless disabled.
 _Avoid_: guideline, instruction, policy, constraint
 
+**Standard**
+Protocol every agent follows, as distinct from a rule, which is scoped. Stored
+as `standards/<name>.md`; rendered to `~/.kiro/standards/<name>.md`. Three exist:
+`core` (approval gates, independent verification, bounded loops), `handoff` (the
+delegation and return contract), `session` (orient, checkpoint, retire). The test
+for whether something is a standard rather than a rule: if one agent opting out
+would break another agent, it is a standard.
+_Avoid_: protocol (use for the thing a standard describes, not the file), rule
+
+**Template**
+A skeleton for an artifact a standard refers to — brief, map, decisions, ADR,
+findings. Stored as `standards/templates/<name>.md`. Referenced on demand by
+whoever is writing the artifact; never loaded as context.
+
 **Prompt**
 A system prompt that defines an agent's identity and behavioral mode. Stored as
 `prompts/<name>.md`. Each agent has at most one prompt; agents without a prompt
@@ -129,6 +143,9 @@ Which rules an agent loads. Declared as a list of rule basenames in
 `chat.disableInheritingDefaultResources`, which turns off Kiro's global
 inheritance so an agent receives only `default.rules` plus its own declarations.
 
+Standards have no equivalent scope. Every agent gets `default.standards`,
+because a standard only one side of a handoff follows is not a protocol.
+
 **Skill scope**
 Which skills an agent loads. Either `"all"` (both the bundle globs) or a list of
 skill names. `[]` means no skills.
@@ -137,13 +154,16 @@ skill names. `[]` means no skills.
 
 ## Source locations
 
-| Concept             | Source path                    | Rendered to (Kiro)                     |
-| ------------------- | ------------------------------ | -------------------------------------- |
-| Rule                | `rules/<name>.md`              | `~/.kiro/steering/<name>.md`           |
-| Prompt              | `prompts/<name>.md`            | `~/.kiro/prompts/<name>.md`            |
-| Agent               | `_agents.nix` entry            | `~/.kiro/agents/<name>.json`           |
-| Skill (first-party) | `skills/<cat>/<name>/SKILL.md` | `~/.kiro/skills/<cat>/<name>/SKILL.md` |
-| Skill (bundle)      | `agent-skills-nix` flake       | `~/.kiro/skills/<cat>/<name>/SKILL.md` |
+| Concept             | Source path                         | Rendered to (Kiro)                     |
+| ------------------- | ----------------------------------- | -------------------------------------- |
+| Rule                | `rules/<name>.md`                   | `~/.kiro/steering/<name>.md`           |
+| Standard            | `standards/<name>.md`               | `~/.kiro/standards/<name>.md`          |
+| Template            | `standards/templates/<name>.md`     | not rendered; read on demand           |
+| Prompt              | `prompts/<name>.md`                 | `~/.kiro/prompts/<name>.md`            |
+| Agent               | `_agents.nix` entry                 | `~/.kiro/agents/<name>.json`           |
+| Skill (first-party) | `skills/<cat>/<name>/SKILL.md`      | `~/.kiro/skills/<cat>/<name>/SKILL.md` |
+| Skill (bundle)      | `agent-skills-nix` flake            | `~/.kiro/skills/<cat>/<name>/SKILL.md` |
+| Knowledge           | `~/.config/ai-knowledge` (own repo) | read in place, not nix-managed         |
 
 ---
 

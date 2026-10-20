@@ -14,8 +14,10 @@
       # The default agent's rules are the universal baseline; every other agent
       # declares only what it adds on top.
       baselineRules = agents.default.rules or [ ];
+      baselineStandards = agents.default.standards or [ ];
 
       ruleUris = map (r: "file://~/.kiro/steering/${r}.md");
+      standardUris = map (s: "file://~/.kiro/standards/${s}.md");
       contextUris = map (c: "file://~/.kiro/context/${c}.md");
       skillUris =
         skills:
@@ -43,8 +45,11 @@
         }
         // (lib.optionalAttrs (a ? description) { inherit (a) description; })
         // {
+          # Ordered stable-first so the prompt cache survives task-specific
+          # content changing underneath it.
           resources =
-            ruleUris (lib.unique (baselineRules ++ (a.rules or [ ])))
+            standardUris (lib.unique (baselineStandards ++ (a.standards or [ ])))
+            ++ ruleUris (lib.unique (baselineRules ++ (a.rules or [ ])))
             ++ contextUris (a.context or [ ])
             ++ skillUris (a.skills or "all");
         }
@@ -79,6 +84,7 @@
 
       home.file = agentFiles // {
         ".kiro/steering".source = ./rules;
+        ".kiro/standards".source = ./standards;
         ".kiro/prompts".source = ./prompts;
         ".kiro/context".source = ./context;
       };

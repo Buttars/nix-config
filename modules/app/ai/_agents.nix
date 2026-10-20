@@ -2,13 +2,14 @@
 # `skills` is "all" or a list of skill names; adapters map these to each tool's
 # resource URIs. Attr key is the agent file/name (override with `name`).
 #
-# `default.rules` is the universal baseline — every agent receives it, so other
-# agents list only the rules they add on top. response-style and verification are
-# therefore universal: no agent runs tests, builds, or checks unprompted. skills
+# `default.rules` and `default.standards` are the universal baseline — every
+# agent receives both, so other agents list only what they add on top. skills
 # are scoped per agent (not "all") so each spawned session loads less context.
 #
-# task-notes plus the agentSpawn hook let work share findings through
-# `.kiro/notes.md` instead of rediscovering them.
+# Standards are protocol rather than preference, which is why they are not
+# scoped: an agent that opts out of the handoff contract breaks the agents it
+# hands off to. `session` plus the agentSpawn hook let work share findings
+# through `.kiro/notes.md` instead of rediscovering them.
 #
 # Every agent inherits all MCP servers (from _mcp.nix) by default so subagents
 # have the dispatcher's tool access; narrow with `mcpServers = [ "name" ... ]`
@@ -16,10 +17,14 @@
 {
   default = {
     prompt = "routing";
+    standards = [
+      "core"
+      "handoff"
+      "session"
+    ];
     rules = [
       "response-style"
       "verification"
-      "task-notes"
       "comments"
       "editing"
     ];

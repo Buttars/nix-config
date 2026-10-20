@@ -6,8 +6,16 @@ Today the only adapter targets Kiro CLI.
 
 ## Layout
 
-- `rules/*.md` — steering rules (tone, workflow, tech defaults). Plain markdown,
-  tool-neutral.
+- `rules/*.md` — steering rules (tone, workflow, tech defaults). Scoped per
+  agent. Plain markdown, tool-neutral.
+- `standards/*.md` — protocol every agent follows: `core.md` (approval gates,
+  independent verification, bounded loops), `handoff.md` (the delegation and
+  return contract), `session.md` (orient, checkpoint, retire). Unlike rules these
+  are not scoped — an agent that opts out of the handoff contract breaks the
+  agents it hands off to.
+- `standards/templates/*.md` — skeletons for the artifacts the standards refer
+  to: brief, map, decisions, ADR, findings. Referenced on demand, never loaded as
+  context.
 - `prompts/*.md` — agent system prompts: `routing.md` (dispatcher), `docs.md`,
   `technical-writing.md`, `message-writing.md`, `writing.md`, `focused-mode.md`
   (shared by `focused-fix` and `fixer`).
@@ -38,17 +46,24 @@ for what makes a domain and what the three per-domain files are for.
 ## What the adapter renders (Kiro)
 
 - `rules/` → `~/.kiro/steering/` (in-store symlink; always-on context)
+- `standards/` → `~/.kiro/standards/` (in-store symlink)
 - `prompts/` → `~/.kiro/prompts/` (in-store symlink)
 - each agent in `_agents.nix` → `~/.kiro/agents/<name>.json`
 - `~/.kiro/skills/` is provided by `agent-skills-nix`, independent of this module
 
 Because the symlinks are in-store, edits take effect on rebuild, not live.
 
+Resources are emitted standards-first, then rules, context, and skills, so the
+stable part of the context window sits ahead of the parts most likely to change.
+
 ## Agent data model (`_agents.nix`)
 
 The attribute key is the agent name and JSON filename (override with `name`).
 
 - `name` — overrides the agent name when it must differ from the attribute key
+- `standards` — standard basenames, mapped to
+  `file://~/.kiro/standards/<name>.md`. `default.standards` is the universal
+  baseline, merged into every agent.
 - `rules` — rule basenames, mapped to `file://~/.kiro/steering/<rule>.md`.
   `default.rules` is the universal baseline: the adapter merges it into every
   agent, so each agent lists only the rules it adds on top.
@@ -87,12 +102,16 @@ Refine, Draft — so it reworks a pasted draft without touching the repo.
 Note: Kiro auto-inherits global steering into every custom agent by default,
 which would make these per-agent `rules` lists cosmetic. `modules/app/kiro.nix`
 sets `chat.disableInheritingDefaultResources` at activation, so each agent loads
-only `default.rules` plus what it declares.
+only the baseline plus what it declares.
 
 ## Adding things
 
-- Rule: add `rules/<name>.md`; reference it from an agent's `rules`, or rely on
-  global inheritance.
+- Rule: add `rules/<name>.md` and reference it from an agent's `rules`, or from
+  `default.rules` if every agent needs it. Nothing is inherited implicitly.
+- Standard: add `standards/<name>.md` and add it to `default.standards`. A
+  standard that only some agents follow is a rule, not a standard.
+- Template: add `standards/templates/<name>.md` and reference it from whichever
+  standard calls for the artifact. Templates are not loaded as context.
 - Context doc: add `context/<name>.md`; reference it from an agent's `context`
   list. Use for vocabulary and domain knowledge, not behavioral instructions.
 - Agent: add an entry to `_agents.nix`; put its prompt in `prompts/` if it needs
