@@ -208,49 +208,22 @@
             serviceConfig = {
               Type = "oneshot";
               User = "root";
+              ExecStart = lib.getExe (
+                pkgs.writeShellApplication {
+                  name = "pgs-to-srt";
+                  # pgsrip shells out to tesseract (via pytesseract) and
+                  # mkvtoolnix rather than carrying them in its closure.
+                  runtimeInputs = [
+                    pkgs.mkvtoolnix
+                    pkgs.jq
+                    pkgs.pgsrip
+                    pkgs.tesseract
+                  ];
+                  inheritPath = false;
+                  text = builtins.readFile ./pgs-to-srt.sh;
+                }
+              );
             };
-            # pgsrip shells out to tesseract (via pytesseract) and mkvtoolnix
-            # rather than depending on them in the closure, so they have to be
-            # on PATH explicitly.
-            path = [
-              pkgs.tesseract
-              pkgs.mkvtoolnix
-            ];
-            script = ''
-              set -euo pipefail
-              tmpdir=$(mktemp -d)
-              trap 'rm -rf "$tmpdir"' EXIT
-
-              find /srv/media/movies /srv/media/shows -name "*.mkv" | while read -r mkv; do
-                dir=$(dirname "$mkv")
-                base=$(basename "$mkv" .mkv)
-
-                ${pkgs.mkvtoolnix}/bin/mkvmerge -J "$mkv" \
-                  | ${pkgs.jq}/bin/jq -r '
-                      .tracks[]
-                      | select(.type == "subtitles"
-                          and (.properties.codec_id | startswith("S_HDMV/PGS")))
-                      | "\(.id) \(.properties.language // "und")"
-                    ' \
-                  | while read -r track_id lang; do
-                      srt="$dir/$base.$lang.srt"
-                      [ -f "$srt" ] && continue
-
-                      sup="$tmpdir/$base.$track_id.sup"
-                      echo "pgs-to-srt: extracting track $track_id ($lang) from $mkv"
-                      ${pkgs.mkvtoolnix}/bin/mkvextract "$mkv" tracks "$track_id:$sup"
-
-                      echo "pgs-to-srt: converting $sup"
-                      ${pkgs.pgsrip}/bin/pgsrip --language "$lang" "$sup"
-
-                      # pgsrip names its output after the input, sometimes with a
-                      # language tag; match on the stem rather than guessing.
-                      generated=$(find "$tmpdir" -maxdepth 1 -name "$base.$track_id*.srt" -print -quit)
-                      [ -n "$generated" ] && mv "$generated" "$srt"
-                      rm -f "$sup"
-                    done
-              done
-            '';
           };
         };
 
