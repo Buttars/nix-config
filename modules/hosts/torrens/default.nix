@@ -209,6 +209,13 @@
               Type = "oneshot";
               User = "root";
             };
+            # pgsrip shells out to tesseract (via pytesseract) and mkvtoolnix
+            # rather than depending on them in the closure, so they have to be
+            # on PATH explicitly.
+            path = [
+              pkgs.tesseract
+              pkgs.mkvtoolnix
+            ];
             script = ''
               set -euo pipefail
               tmpdir=$(mktemp -d)
@@ -234,13 +241,12 @@
                       ${pkgs.mkvtoolnix}/bin/mkvextract "$mkv" tracks "$track_id:$sup"
 
                       echo "pgs-to-srt: converting $sup"
-                      ${pkgs.subtitleedit}/bin/SubtitleEdit \
-                        /convert "$sup" srt \
-                        /ocrengine:tesseract \
-                        /targetfolder:"$dir"
+                      ${pkgs.pgsrip}/bin/pgsrip --language "$lang" "$sup"
 
-                      generated="$dir/$base.$track_id.srt"
-                      [ -f "$generated" ] && mv "$generated" "$srt"
+                      # pgsrip names its output after the input, sometimes with a
+                      # language tag; match on the stem rather than guessing.
+                      generated=$(find "$tmpdir" -maxdepth 1 -name "$base.$track_id*.srt" -print -quit)
+                      [ -n "$generated" ] && mv "$generated" "$srt"
                       rm -f "$sup"
                     done
               done
