@@ -71,6 +71,8 @@
     };
 
     darwin = {
+      imports = [ inputs.determinate.darwinModules.default ];
+
       home-manager.useUserPackages = true;
       home-manager.useGlobalPkgs = true;
 
@@ -80,7 +82,7 @@
         self.overlays.modifications
       ];
 
-      nix.enable = false;
+      determinateNix.enable = true;
       system.stateVersion = 5;
       nixpkgs.config.allowUnfree = true;
       nixpkgs.config.permittedInsecurePackages = [
@@ -111,6 +113,10 @@
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # No nixpkgs follows: upstream pins its own nixpkgs and advises against
+    # overriding it.
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
 
     srvos = {
       url = "github:nix-community/srvos";
