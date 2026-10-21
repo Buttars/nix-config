@@ -6,24 +6,24 @@
 }:
 
 let
-  version = "0.86.0";
+  version = "1.17.1";
 
   sources = {
     x86_64-linux = {
       url = "https://github.com/marcus/sidecar/releases/download/v${version}/sidecar_${version}_linux_amd64.tar.gz";
-      hash = "sha256-COX1jPiVgDolTMHvUC9ds92OTIRsuCqciyY1ClqNccE=";
+      hash = "sha256-8BItAOHpkerrSnVHiT2oBZMthTkyE7S+GA73F6I+oOg=";
     };
     aarch64-linux = {
       url = "https://github.com/marcus/sidecar/releases/download/v${version}/sidecar_${version}_linux_arm64.tar.gz";
-      hash = "sha256-Uho7FyBkU7fBy5tlpEYWsYjkQEc1wtiruhIy3vdwQo4=";
+      hash = "sha256-8fljDVLsAt9H/iX1/yHf6v++ZRK8Oqum5nTJj6hB+p4=";
     };
     x86_64-darwin = {
       url = "https://github.com/marcus/sidecar/releases/download/v${version}/sidecar_${version}_darwin_amd64.tar.gz";
-      hash = "sha256-fbat4G2//9zVZXVnnZ0hUoLSipWQHGqUbnjkAL7waG8=";
+      hash = "sha256-LL2wNK7+hvU2CbauQ2soQNdlSa6XuHkVA6q1RtkY4/g=";
     };
     aarch64-darwin = {
       url = "https://github.com/marcus/sidecar/releases/download/v${version}/sidecar_${version}_darwin_arm64.tar.gz";
-      hash = "sha256-2CMa1eFOtWqyWuaDaJwZ7FRJoD2LCVyA6BnxdJzQKeo=";
+      hash = "sha256-GN2nM0YKJgP/hQ4C5S8t7RsdWCbE45K4RmyAuPdvl68=";
     };
   };
 
