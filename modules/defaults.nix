@@ -26,15 +26,34 @@
       )
       (
         { host, ... }:
+        let
+          # A deploy pushes locally-built paths that no cache has signed, and
+          # only a trusted user may add unsigned paths. The Justfile deploys as
+          # <host>@<host>.lan, so trust that user where it exists -- hosts
+          # without the account need no entry. The interactive accounts carry
+          # the same trust so that substituters they configure are not ignored.
+          candidates = [
+            host.name
+            "buttars"
+            "landon.buttars"
+          ];
+          present = config: lib.filter (name: config.users.users ? ${name}) candidates;
+        in
         {
           nixos =
-            { config, lib, ... }:
+            { config, ... }:
             {
-              # A deploy pushes locally-built paths that no cache has signed, and
-              # only a trusted user may add unsigned paths. The Justfile deploys
-              # as <host>@<host>.lan, so trust that user where it exists --
-              # workstations have no such account and need no entry.
-              nix.settings.trusted-users = lib.optional (config.users.users ? ${host.name}) host.name;
+              nix.settings.trusted-users = present config;
+            };
+
+          darwin =
+            { config, ... }:
+            {
+              # Determinate owns /etc/nix/nix.conf, so nix-darwin writes none and
+              # nix.settings is inert; customSettings renders nix.custom.conf,
+              # which that file !includes. The key replaces Nix's built-in
+              # default instead of extending it, hence root.
+              determinateNix.customSettings.trusted-users = [ "root" ] ++ present config;
             };
         }
       )
