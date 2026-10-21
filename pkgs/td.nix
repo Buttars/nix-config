@@ -6,24 +6,24 @@
 }:
 
 let
-  version = "0.51.0";
+  version = "0.69.0";
 
   sources = {
     x86_64-linux = {
       url = "https://github.com/marcus/td/releases/download/v${version}/td_${version}_linux_amd64.tar.gz";
-      hash = "sha256-//HqJ9Emmd3Jm6KeXiHEZKDnjtsvVX33ReUtE2QbHaU=";
+      hash = "sha256-wMp45Z93iH6MZU7NNLbSqRQmmZ74Gd0CjX68x4Cp09A=";
     };
     aarch64-linux = {
       url = "https://github.com/marcus/td/releases/download/v${version}/td_${version}_linux_arm64.tar.gz";
-      hash = "sha256-nDy4isyNgO9ZRI2DlQT7TD9ukYkZ134rK5mOPgpjZXw=";
+      hash = "sha256-mYmeNR4YEQ1jNX7YvgN44gCmaZAvwHtqnH/mXkp0ou0=";
     };
     x86_64-darwin = {
       url = "https://github.com/marcus/td/releases/download/v${version}/td_${version}_darwin_amd64.tar.gz";
-      hash = "sha256-m7dVQWrJJaimpFdi7qr0OXHn8WIK3wZ8772PU8h3CfE=";
+      hash = "sha256-wY7vAbDEtP/ICzK6YyPVFmcquD3yj2uFQppz8yoMXgQ=";
     };
     aarch64-darwin = {
       url = "https://github.com/marcus/td/releases/download/v${version}/td_${version}_darwin_arm64.tar.gz";
-      hash = "sha256-wJsKTIQDmYK3m6LTAB1BItBdyOV9hbfN6crIQ9iU3Kk=";
+      hash = "sha256-DBDWqx5xhI12II/wWMPYgj/wxmDaQj3OjCocC00fupI=";
     };
   };
 
