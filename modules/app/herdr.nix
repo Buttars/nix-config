@@ -85,14 +85,14 @@
           prefix = "ctrl+a"
 
           # Workspace management (defaults leave these unset).
-          previous_workspace = "prefix+shift+left"
-          next_workspace = "prefix+shift+right"
+          previous_workspace = "prefix+shift+h"
+          next_workspace = "prefix+shift+l"
           switch_workspace = "prefix+shift+1..9"
           close_workspace = "prefix+shift+d"
 
           # Agent session navigation (direct, sidebar-independent).
-          previous_agent = "prefix+shift+up"
-          next_agent = "prefix+shift+down"
+          previous_agent = "prefix+shift+k"
+          next_agent = "prefix+shift+j"
 
           navigate_workspace_up = "k"
           navigate_workspace_down = "j"
