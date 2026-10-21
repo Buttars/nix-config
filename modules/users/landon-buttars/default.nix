@@ -41,6 +41,7 @@
           pkgs.claude-code
           pkgs.github-mcp-server
           pkgs.mergiraf
+          pkgs.tmux
         ];
         home.sessionVariables.HERDR_AGENT = "kiro-cli chat";
       };
