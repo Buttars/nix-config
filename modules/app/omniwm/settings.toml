@@ -93,6 +93,7 @@ containerPrimarySpanPresets = [
   0.6666666666666666,
   0.75,
 ]
+defaultContainerPrimarySpan = 0.6666666666666666
 infiniteLoop = true
 singleWindowFit = "fill"
 visibleContainerCount = 2
@@ -127,7 +128,7 @@ green = 0.8
 red = 0.3
 
 [quakeTerminal]
-animationDuration = 0.2
+animationDuration = 0.12
 autoHide = false
 backgroundBlurRadius = 0
 backgroundEffect = "standardBlur"
