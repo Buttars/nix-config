@@ -15,6 +15,8 @@
         # where the DynamicUser service left it rather than being copied.
         stateDir = "/var/lib/private/open-webui";
 
+        port = 8080;
+
         # A dedicated bridge is what makes the kill switch targetable: filtering
         # docker0 instead would also cut swarmui off from the model downloads it
         # needs.
@@ -70,7 +72,7 @@
 
         virtualisation.oci-containers.containers.open-webui = {
           image = "ghcr.io/open-webui/open-webui:${version}";
-          ports = [ "8080:8080" ];
+          ports = [ "${toString port}:8080" ];
 
           volumes = [
             "${stateDir}/data:/app/backend/data"
@@ -99,6 +101,20 @@
             ENABLE_WEB_SEARCH = "False";
             ENABLE_DIRECT_CONNECTIONS = "False";
             ENABLE_PIP_INSTALL_FRONTMATTER_REQUIREMENTS = "False";
+
+            # Every flag above is mirrored into a PersistentConfig row in webui.db
+            # and the row wins on the next start, which left openai.enable and
+            # community sharing switched on in the database whatever the
+            # environment said. This makes the environment the only source.
+            ENABLE_PERSISTENT_CONFIG = "False";
+
+            # Held only in the database until now, and its env default is True, so
+            # dropping the database as a source would have reopened public signup.
+            ENABLE_SIGNUP = "False";
+
+            # Also database-only until now. Kept as the old service set it rather
+            # than pointed at chat.buttars.dev, so no link behaviour changes here.
+            WEBUI_URL = "http://localhost:${toString port}";
 
             HF_HOME = "/hf_home";
             SENTENCE_TRANSFORMERS_HOME = "/transformers_home";
@@ -139,7 +155,7 @@
           '';
         };
 
-        networking.firewall.allowedTCPPorts = [ 8080 ];
+        networking.firewall.allowedTCPPorts = [ port ];
 
         aegix.luks-volumes.open-webui = {
           mountPoint = stateDir;
