@@ -19,14 +19,22 @@
 
         # A dedicated bridge is what makes the kill switch targetable: filtering
         # docker0 instead would also cut swarmui off from the model downloads it
-        # needs.
+        # needs. The gateway is pinned so ollama can be named by ip, which is
+        # what lets the container run with no working resolver at all.
         network = "open-webui";
         bridge = "owui0";
         subnet = "172.30.0.0/16";
+        gateway = "172.30.0.1";
 
         # Matches the nixpkgs package this replaces. Moving hosts and migrating
         # the schema at the same time would leave no way to tell which one broke.
         version = "0.11.4";
+
+        # Reaching the host is an input-hook packet rather than a forwarded one,
+        # so this is the one destination the kill switch cannot cover. It is also
+        # unavoidable: inference has to happen somewhere, and ollama holds the
+        # gpu on the host.
+        ollamaUrl = "http://${gateway}:${toString config.services.ollama.port}";
 
         # The image reads the key from inside DATA_DIR, but the service that
         # wrote this volume kept it one level up, so without this every existing
@@ -65,6 +73,7 @@
             ${pkgs.docker}/bin/docker network create \
               --driver bridge \
               --subnet ${subnet} \
+              --gateway ${gateway} \
               --opt com.docker.network.bridge.name=${bridge} \
               ${network}
           '';
@@ -119,17 +128,22 @@
             HF_HOME = "/hf_home";
             SENTENCE_TRANSFORMERS_HOME = "/transformers_home";
 
-            # 127.0.0.1 is the container itself once this is no longer a host
-            # service, so ollama has to be named via the bridge gateway.
-            OLLAMA_BASE_URLS = lib.concatStringsSep ";" [
-              "http://host.docker.internal:${toString config.services.ollama.port}"
-              "http://buttars-desktop.lan:${toString config.services.ollama.port}"
-            ];
+            OLLAMA_BASE_URLS = ollamaUrl;
+            RAG_OLLAMA_BASE_URL = ollamaUrl;
           };
 
           extraOptions = [
             "--network=${network}"
             "--add-host=host.docker.internal:host-gateway"
+
+            # Docker's embedded resolver answers from the host's network
+            # namespace, so a lookup is the one way out that never crosses the
+            # bridge and so never meets the kill switch -- a prompt encoded into
+            # query names would leave. Nothing here needs to resolve a name, so
+            # the forwarder is pointed into reserved space and given no patience.
+            "--dns=240.0.0.1"
+            "--dns-option=timeout:1"
+            "--dns-option=attempts:1"
           ];
         };
 
@@ -139,18 +153,22 @@
           serviceConfig.ExecStartPre = lib.mkAfter [ "${seedSecretKey}" ];
         };
 
-        # Every setting above is only a default: a row written by the admin UI
-        # wins over the environment, so none of them are a guarantee. Dropping
-        # every non-private destination is, and it holds whatever the database
-        # says. The unqualified drop covers v6 as well, so enabling ipv6 on the
-        # bridge later cannot open a way out.
+        # ENABLE_PERSISTENT_CONFIG makes the flags above authoritative, but they
+        # are still only the app deciding where it may connect. This is enforced
+        # outside it, so it holds even for a release that ignores one of them.
+        # Accepting only established flows lets the reverse proxy keep reaching
+        # the port while leaving the container unable to open anything itself --
+        # the lan included, which a prompt could otherwise be posted to. The
+        # unqualified drop covers v6 and icmp too, so enabling ipv6 on the bridge
+        # later cannot open a way out, and the counters make a drop visible
+        # without reproducing it from inside the container.
         networking.nftables.tables.open-webui-kill-switch = {
           family = "inet";
           content = ''
             chain forward {
               type filter hook forward priority filter - 10; policy accept;
-              iifname "${bridge}" ip daddr { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 } accept
-              iifname "${bridge}" drop
+              iifname "${bridge}" ct state established,related counter accept
+              iifname "${bridge}" counter drop
             }
           '';
         };
