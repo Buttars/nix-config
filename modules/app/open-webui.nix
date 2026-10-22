@@ -167,11 +167,24 @@
         # unqualified drop covers v6 and icmp too, so enabling ipv6 on the bridge
         # later cannot open a way out, and the counters make a drop visible
         # without reproducing it from inside the container.
+        #
+        # Reaching the host itself is an input-hook packet that the forward chain
+        # never sees, which left every port on the machine in range. Inference is
+        # the only reason to leave the bridge, so the input chain allows just
+        # ollama; its established rule is what lets replies reach the published
+        # port.
         networking.nftables.tables.open-webui-kill-switch = {
           family = "inet";
           content = ''
             chain forward {
               type filter hook forward priority filter - 10; policy accept;
+              iifname "${bridge}" ct state established,related counter accept
+              iifname "${bridge}" counter drop
+            }
+
+            chain input {
+              type filter hook input priority filter - 10; policy accept;
+              iifname "${bridge}" tcp dport ${toString config.services.ollama.port} counter accept
               iifname "${bridge}" ct state established,related counter accept
               iifname "${bridge}" counter drop
             }
