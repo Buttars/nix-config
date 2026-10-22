@@ -33,7 +33,6 @@
           "aegis.lan:9100"
           "torrens.lan:9100"
           "theatrum.lan:9100"
-          "buttars-desktop.lan:9100"
         ];
 
         hardware.facter.reportPath = ./facter.json;
