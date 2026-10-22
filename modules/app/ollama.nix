@@ -33,32 +33,63 @@
       '';
     in
     {
-      services.ollama = lib.mkIf (lib.elem "nvidia" config.services.xserver.videoDrivers) {
-        enable = true;
-        package = pkgs.ollama-vulkan;
-        host = "0.0.0.0";
-        port = 11434;
-        openFirewall = true;
-        loadModels = builtins.attrNames registryModels;
-        environmentVariables.OLLAMA_CONTEXT_LENGTH = toString ai.models.${ai.default}.contextLength;
+      options.aegix.ollama.offline = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = ''
+          Drop every non-private destination for ollama.service, so a prompt
+          cannot leave the machine even if a model or a later release tries to
+          send one. Pulling needs this off: ollama performs the download itself,
+          so loadModels and `ollama pull` both fail while it is set.
+        '';
       };
 
-      systemd.services.ollama-local-models = lib.mkIf config.services.ollama.enable {
-        description = "Register locally built ollama models";
-        wantedBy = [ "multi-user.target" ];
-        after = [ "ollama.service" ];
-        bindsTo = [ "ollama.service" ];
-        environment = config.systemd.services.ollama.environment;
-        serviceConfig = {
-          Type = "oneshot";
-          DynamicUser = true;
-          RemainAfterExit = true;
-          Restart = "on-failure";
-          RestartSec = "10s";
+      config = {
+        services.ollama = lib.mkIf (lib.elem "nvidia" config.services.xserver.videoDrivers) {
+          enable = true;
+          package = pkgs.ollama-vulkan;
+          host = "0.0.0.0";
+          port = 11434;
+          openFirewall = true;
+          # ollama does the download inside its own cgroup, so with offline set
+          # every pull fails and the loader unit fails with it at each boot.
+          loadModels = lib.mkIf (!config.aegix.ollama.offline) (builtins.attrNames registryModels);
+          environmentVariables.OLLAMA_CONTEXT_LENGTH = toString ai.models.${ai.default}.contextLength;
         };
-        script = ''
-          ${lib.getExe config.services.ollama.package} create gemma3-abliterated:4b -f ${gemma3Modelfile}
-        '';
+
+        # Enforced rather than trusted: ollama is where the prompts actually go
+        # and it has no kill switch of its own. This binds where the same trick
+        # failed for open-webui, because a plain service keeps its processes in
+        # the unit's own cgroup instead of a docker scope.
+        systemd.services.ollama.serviceConfig =
+          lib.mkIf (config.services.ollama.enable && config.aegix.ollama.offline)
+            {
+              IPAddressDeny = "any";
+              IPAddressAllow = [
+                "localhost"
+                "10.0.0.0/8"
+                "172.16.0.0/12"
+                "192.168.0.0/16"
+              ];
+            };
+
+        systemd.services.ollama-local-models = lib.mkIf config.services.ollama.enable {
+          description = "Register locally built ollama models";
+          wantedBy = [ "multi-user.target" ];
+          after = [ "ollama.service" ];
+          bindsTo = [ "ollama.service" ];
+          environment = config.systemd.services.ollama.environment;
+          serviceConfig = {
+            Type = "oneshot";
+            DynamicUser = true;
+            RemainAfterExit = true;
+            Restart = "on-failure";
+            RestartSec = "10s";
+          };
+          script = ''
+            ${lib.getExe config.services.ollama.package} create gemma3-abliterated:4b -f ${gemma3Modelfile}
+          '';
+        };
       };
     };
 }
