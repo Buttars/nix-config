@@ -36,9 +36,10 @@
         # gpu on the host.
         ollamaUrl = "http://${gateway}:${toString config.services.ollama.port}";
 
-        # The image reads the key from inside DATA_DIR, but the service that
-        # wrote this volume kept it one level up, so without this every existing
-        # session is signed by a key the container never sees.
+        # start.sh reads WEBUI_SECRET_KEY_FILE, which defaults to a file beside
+        # itself rather than one inside DATA_DIR. This copy is what the variable
+        # below points at; without both, a new key is generated into the
+        # container layer on every recreate and every session is signed out.
         seedSecretKey = pkgs.writeShellScript "open-webui-seed-secret-key" ''
           src=${stateDir}/.webui_secret_key
           dst=${stateDir}/data/.webui_secret_key
@@ -124,6 +125,10 @@
             # Also database-only until now. Kept as the old service set it rather
             # than pointed at chat.buttars.dev, so no link behaviour changes here.
             WEBUI_URL = "http://localhost:${toString port}";
+
+            # Without this the key lands in the container writable layer, where a
+            # recreate loses it -- and outside the luks volume the rest sits on.
+            WEBUI_SECRET_KEY_FILE = "/app/backend/data/.webui_secret_key";
 
             HF_HOME = "/hf_home";
             SENTENCE_TRANSFORMERS_HOME = "/transformers_home";
