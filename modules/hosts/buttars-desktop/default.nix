@@ -91,6 +91,12 @@
         };
 
         services.openssh.enable = true;
+
+        # Deploys arrive as root@ over ssh, the way the server profile does it.
+        # This host takes no profile, so the key is enrolled here instead.
+        users.users.root.openssh.authorizedKeys.keyFiles = [
+          ../../users/buttars/keys/id_ed25519.pub
+        ];
         services.syncthing.user = "buttars";
 
         home-manager.users.buttars = {
