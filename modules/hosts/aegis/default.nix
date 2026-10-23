@@ -33,6 +33,8 @@
       {
         imports = [ ./_disko.nix ];
 
+        aegix.attic.push = true;
+
         aegix.deploy = {
           targetHost = "aegis.lan";
           tags = [

@@ -24,6 +24,8 @@
       {
         imports = [ ./_disko.nix ];
 
+        aegix.attic.push = true;
+
         aegix.deploy = {
           targetHost = "torrens.lan";
           tags = [ "server" ];

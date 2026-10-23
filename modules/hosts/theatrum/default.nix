@@ -38,6 +38,8 @@
       { pkgs, config, ... }:
       {
 
+        aegix.attic.push = true;
+
         aegix.deploy = {
           targetHost = "theatrum.lan";
           tags = [ "server" ];
