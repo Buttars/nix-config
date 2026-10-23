@@ -207,9 +207,11 @@ fleet-wide in `<aegix/attic>` so a roaming laptop does not stall on either.
 
 ## Follow-ups
 
-- [ ] Add `k8s-1/2/3` age keys to `.sops.yaml` and flip their
-      `aegix.attic.push`. They are already missing `buttars-password` and
-      `k3s-token` for the same reason.
+- [ ] `k8s-1/2/3` cannot build at all: `modules/profile/k3s-node.nix` reads a
+      `k3s-token` secret that has never existed in `secrets.yaml`. They are
+      tagged `k8s` rather than `server` so `@server` does not drag them into a
+      colmena run. Their age keys are also missing from `.sops.yaml`, which is
+      why `aegix.attic.push` stays off for them.
 - [ ] Decide whether atticd's storage should move off sentinel's root disk onto
       the truenas NFS mount. The sqlite DB must stay local either way — sqlite
       over NFS locks badly.

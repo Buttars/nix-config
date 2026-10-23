@@ -145,7 +145,10 @@ Anything already learned the hard way, which a migration could quietly undo:
 - [ ] **2 — One host.** `colmena apply --on aegis` — least critical machine, and
       the one that already needed a console this week.
 - [ ] **3 — The fleet.** Tags for `server`, and `colmena apply --on @server`.
-      Keep `just deploy` working throughout.
+      Keep `just deploy` working throughout. `@server` is the four real servers
+      only; `k8s-1/2/3` are tagged `k8s` because they cannot build until
+      `k3s-token` exists, and colmena builds every selected node before
+      deploying any of them — one unbuildable node would block the whole run.
 - [ ] **4 — Retire the old path** only once a full rollout has succeeded twice.
 
 ## Open questions
