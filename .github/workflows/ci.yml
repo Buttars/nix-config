@@ -2,11 +2,14 @@ on:
   pull_request:
   push:
 
-# Never cancel a run that may be mid-deploy. Superseded pull request checks are
-# safe to drop; a push to master is not.
+# master debounces rather than cancels. With cancel-in-progress false GitHub
+# keeps at most one run pending per group and replaces it when a newer one
+# arrives, so a burst of pushes applies once, at the newest commit, and a
+# colmena apply already running is never interrupted. Every other ref cancels
+# outright -- nothing is deploying there, so superseded checks are just waste.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 jobs:
   flake-check:
