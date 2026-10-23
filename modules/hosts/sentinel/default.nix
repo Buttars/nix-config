@@ -24,6 +24,8 @@
       {
         imports = [ ./_disko.nix ];
 
+        aegix.attic.push = true;
+
         aegix.deploy = {
           targetHost = "sentinel.lan";
           tags = [ "server" ];

@@ -42,6 +42,8 @@
     nixos =
       { pkgs, ... }:
       {
+        aegix.attic.push = true;
+
         aegix.deploy = {
           targetHost = "buttars-desktop.lan";
           tags = [ "workstation" ];
