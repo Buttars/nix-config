@@ -37,10 +37,7 @@ in
           {
             aegix.deploy = {
               targetHost = "${name}.lan";
-              tags = [
-                "server"
-                "k8s"
-              ];
+              tags = [ "k8s" ];
             };
 
             aegix.vector.endpoint = "http://sentinel.lan:9428/insert/loki/api/v1/push";
