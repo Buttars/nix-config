@@ -10,6 +10,12 @@ aegis:
 sentinel:
     just deploy sentinel
 
+build-hive +args='':
+    colmena build {{args}}
+
+apply +args='':
+    colmena apply {{args}}
+
 check:
     nix flake check --impure
 
