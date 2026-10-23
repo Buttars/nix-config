@@ -38,6 +38,11 @@
       { pkgs, config, ... }:
       {
 
+        aegix.deploy = {
+          targetHost = "theatrum.lan";
+          tags = [ "server" ];
+        };
+
         aegix.vector.endpoint = "http://sentinel.lan:9428/insert/loki/api/v1/push";
 
         hardware.facter.reportPath = ./_facter.json;

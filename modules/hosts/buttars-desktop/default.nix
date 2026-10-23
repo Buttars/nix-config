@@ -42,6 +42,11 @@
     nixos =
       { pkgs, ... }:
       {
+        aegix.deploy = {
+          targetHost = "buttars-desktop.lan";
+          tags = [ "workstation" ];
+        };
+
         environment.systemPackages = [ pkgs.nfs-utils ];
 
         hardware.enableRedistributableFirmware = true;

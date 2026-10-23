@@ -35,6 +35,14 @@ in
 
         config = lib.mkMerge [
           {
+            aegix.deploy = {
+              targetHost = "${name}.lan";
+              tags = [
+                "server"
+                "k8s"
+              ];
+            };
+
             aegix.vector.endpoint = "http://sentinel.lan:9428/insert/loki/api/v1/push";
 
             hardware.facter.reportPath = ./facter.json;

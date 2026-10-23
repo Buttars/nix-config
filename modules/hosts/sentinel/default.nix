@@ -24,6 +24,11 @@
       {
         imports = [ ./_disko.nix ];
 
+        aegix.deploy = {
+          targetHost = "sentinel.lan";
+          tags = [ "server" ];
+        };
+
         aegix.vector.endpoint = "http://127.0.0.1:9428/insert/loki/api/v1/push";
 
         aegix.ntfy.baseUrl = "https://ntfy.buttars.dev";
