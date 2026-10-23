@@ -106,9 +106,14 @@ On sentinel:
 ```sh
 atticd-atticadm make-token \
   --sub buttars --validity 10y \
-  --pull 'lan' --push 'lan' --delete 'lan' \
-  --create-cache 'lan' --configure-cache 'lan'
+  --pull lan --push lan --delete lan \
+  --create-cache lan --configure-cache lan --configure-cache-retention lan
 ```
+
+`--configure-cache-retention` is not optional despite `--public` having nothing
+to do with retention: `attic cache configure` sends the whole cache config, and
+the server checks the retention permission whenever those fields are present.
+Without it `--public` fails with a bare `AccessError`.
 
 Then from any machine, using that token:
 
@@ -203,6 +208,6 @@ fleet-wide in `<aegix/attic>` so a roaming laptop does not stall on either.
 - [ ] Decide whether atticd's storage should move off sentinel's root disk onto
       the truenas NFS mount. The sqlite DB must stay local either way — sqlite
       over NFS locks badly.
-- [ ] `require-proof-of-possession = false` makes the cache world-readable to
-      anything on the LAN. That is the intent; revisit if the LAN stops being
-      trusted.
+- [ ] The cache is **public**: anything on the LAN can pull from it without a
+      token. That is deliberate — it is what lets `k8s-1/2/3` benefit despite
+      having no sops. Revisit if the LAN stops being trusted.
