@@ -8,7 +8,7 @@ not polling, and it does not depend on `buttars-desktop` being online.
 | Piece                        | Where                                        |
 | ---------------------------- | -------------------------------------------- |
 | self-hosted runner           | `modules/app/github-runner.nix`, on sentinel |
-| workflow                     | `.github/workflows/deploy.yml`               |
+| workflow                     | `.github/workflows/ci.yml`                   |
 | which hosts deploy           | `aegix.deploy.tags` containing `auto`        |
 | deploy key enrolled for root | `modules/profile/server.nix`                 |
 
@@ -21,16 +21,34 @@ evaluates and orchestrates, and each target builds itself, pulling shared
 dependencies from the attic cache. That keeps heavy builds off the host that
 serves LAN DNS.
 
+## Checks gate the deploy
+
+`.github/workflows/ci.yml` holds both jobs. `deploy` declares
+`needs: flake-check`, so every matrix leg of `nix flake check --impure` must
+pass, against that same commit, before anything is applied. A failing check
+leaves `deploy` skipped rather than failed.
+
+They live in one file because that is the only way to enforce it: `needs`
+cannot reach across workflow files. The obvious alternative — chaining two
+workflows with `workflow_run` — is worse than useless here. `workflow_run` is a
+privileged trigger that runs with repository secrets even when the run it
+follows came from a fork, which would hand fork activity a path to the
+self-hosted runner. That is the hole the `push`-only trigger exists to close.
+
 ## Why the trigger is `push` only
 
-`.github/workflows/deploy.yml` fires on `push` to `master` and nothing else.
-This repository is **public**, and a self-hosted runner that could be reached by
-`pull_request` from a fork would let anyone run code inside the LAN on a machine
-holding root keys to the fleet. Only accounts with write access can push to
-`master`, so a fork cannot reach the runner.
+The `deploy` job is `if: github.event_name == 'push' && github.ref ==
+'refs/heads/master'`. This repository is **public**, and a self-hosted runner
+reachable by `pull_request` from a fork would let anyone run code inside the LAN
+on a machine holding root keys to the fleet. Only accounts with write access can
+push to `master`, so a fork cannot reach the runner.
 
-Keep `test.yml` (which does run on `pull_request`) on GitHub-hosted runners. If
-a workflow ever needs `runs-on: self-hosted`, check its triggers first.
+`flake-check` still runs on `pull_request`, on GitHub-hosted runners. If a
+workflow ever needs `runs-on: self-hosted`, check its triggers first.
+
+Concurrency cancels superseded `pull_request` runs only. A push to `master` is
+never cancelled, so a second push cannot interrupt a `colmena apply` already in
+flight.
 
 ## Known risk
 
