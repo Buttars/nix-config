@@ -16,6 +16,7 @@
 
       users.users.root.openssh.authorizedKeys.keyFiles = [
         ../users/buttars/keys/id_ed25519.pub
+        ../users/buttars/keys/deploy.pub
       ];
 
       security.sudo.wheelNeedsPassword = false;
