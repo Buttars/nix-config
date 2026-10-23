@@ -42,7 +42,11 @@
 
         aegix.deploy = {
           targetHost = "theatrum.lan";
-          tags = [ "server" ];
+          tags = [
+            "server"
+            "auto"
+          ];
+          buildOnTarget = true;
         };
 
         aegix.vector.endpoint = "http://sentinel.lan:9428/insert/loki/api/v1/push";

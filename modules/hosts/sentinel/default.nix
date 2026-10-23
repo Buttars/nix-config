@@ -12,6 +12,7 @@
       <aegix/server>
       <aegix/backup>
       <aegix/observability>
+      <aegix/github-runner>
     ];
 
     nixos =
