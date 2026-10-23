@@ -46,9 +46,18 @@ push to `master`, so a fork cannot reach the runner.
 `flake-check` still runs on `pull_request`, on GitHub-hosted runners. If a
 workflow ever needs `runs-on: self-hosted`, check its triggers first.
 
-Concurrency cancels superseded `pull_request` runs only. A push to `master` is
-never cancelled, so a second push cannot interrupt a `colmena apply` already in
-flight.
+## Rapid pushes debounce
+
+`master` runs with `cancel-in-progress: false`, which is a debounce rather than
+a queue. GitHub keeps at most one run pending per concurrency group and cancels
+the previously pending one when a newer arrives, while never touching the run
+already in progress. So pushing five times in a minute applies twice at most —
+whatever was already running, then once more at the newest commit — and a
+`colmena apply` mid-flight is never interrupted.
+
+Every other ref cancels outright. Nothing deploys from a feature branch, so
+superseded checks there are pure waste, and this applies whether the work
+arrives as a pull request or as a direct push.
 
 ## Known risk
 
