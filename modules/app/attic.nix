@@ -41,7 +41,7 @@
           assertions = [
             {
               assertion = cfg.push -> options ? sops;
-              message = "aegix.attic.push needs <aegix/sops>: the client token is a sops secret.";
+              message = "aegix.attic.push needs the sops aspect: the client token is a secret.";
             }
           ];
         }
