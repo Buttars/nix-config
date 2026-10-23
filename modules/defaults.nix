@@ -10,6 +10,7 @@
   den.schema.host.includes = [
     <aegix/nix-gc>
     <aegix/deploy>
+    <aegix/attic>
   ];
 
   den.default = {
