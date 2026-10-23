@@ -142,16 +142,9 @@ sudo nixos-rebuild switch --flake .#buttars-laptop
 
 ### 6. Seed it from what is already built
 
-`attic watch-store` only notices paths added after it starts, so everything
-`buttars-desktop` has built up to now is invisible to it. Push that store once,
-by hand, from the desktop:
-
-```sh
-attic push --jobs 8 lan /nix/store/*/
-```
-
-Narrower, if that is more than you want to upload — just the closures the fleet
-actually needs:
+The hook only fires on future builds, so everything `buttars-desktop` has
+already built is invisible to the cache. Seed it once, from the desktop, with
+the closures the fleet actually needs:
 
 ```sh
 nix eval --impure --raw --expr '
@@ -162,9 +155,21 @@ nix eval --impure --raw --expr '
 | xargs attic push --jobs 8 lan
 ```
 
-That second form only works for closures the desktop has actually realised; it
-builds anything missing rather than failing, so run it where the builds already
-exist.
+Only works for closures the desktop has actually realised — it builds anything
+missing rather than failing, so run it where the builds already exist.
+
+**Do not push the whole store.** `buttars-desktop` holds 53k paths across
+115 GB; `attic push lan /nix/store/*/` expands to roughly 3 MB of argv and dies
+on `ARG_MAX` before it starts. If a full sweep is ever wanted it has to go
+through `xargs`:
+
+```sh
+ls -d /nix/store/*/ | grep -v '\.drv$' | xargs -n 500 attic push --jobs 8 lan
+```
+
+That is still hours of upstream-filter queries for little gain. Attic refuses
+to store anything `cache.nixos.org` already has, so the fraction worth
+uploading is small and the targeted form above captures nearly all of it.
 
 ## Checks
 
