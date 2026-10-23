@@ -7,7 +7,10 @@
 {
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
 
-  den.schema.host.includes = [ <aegix/nix-gc> ];
+  den.schema.host.includes = [
+    <aegix/nix-gc>
+    <aegix/deploy>
+  ];
 
   den.default = {
     # <aegix/telemetry> is deliberately absent: node-exporter opens a firewall
