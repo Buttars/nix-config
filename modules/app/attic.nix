@@ -59,7 +59,7 @@
 
           nix.settings.post-build-hook = pkgs.writeShellScript "attic-push" ''
             export XDG_CONFIG_HOME=${stateDir}
-            exec ${lib.getExe pkgs.attic-client} push ${cache} $OUT_PATHS
+            exec ${lib.getExe pkgs.attic-client} push --no-closure ${cache} $OUT_PATHS
           '';
         })
 
