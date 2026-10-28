@@ -17,6 +17,7 @@
       <aegix/file-chooser>
       <aegix/greeter>
       <aegix/plymouth>
+      <aegix/secure-boot>
       <aegix/power-management>
       <aegix/fonts>
       <aegix/zsa>
