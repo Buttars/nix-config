@@ -24,6 +24,7 @@
       <aegix/file-chooser>
       <aegix/greeter>
       <aegix/plymouth>
+      <aegix/secure-boot>
       <aegix/fonts>
       <aegix/gaming>
       <aegix/zsa>
