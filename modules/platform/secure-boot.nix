@@ -14,6 +14,7 @@
       boot.lanzaboote = {
         enable = true;
         pkiBundle = "/var/lib/sbctl";
+        configurationLimit = 3;
         autoGenerateKeys.enable = true;
       };
 
