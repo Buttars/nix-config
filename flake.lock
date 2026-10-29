@@ -1384,11 +1384,11 @@
     "swarmui": {
       "flake": false,
       "locked": {
-        "lastModified": 1789609636,
-        "narHash": "sha256-XxB07jgVojCOGH6wL7jXuXFrCf91yhkXBiSZ+vAKL1A=",
+        "lastModified": 1793079516,
+        "narHash": "sha256-0WAGH256aFgil8kGPExGgAl3SaTGQcRik7omJorZ2Ac=",
         "owner": "mcmonkeyprojects",
         "repo": "SwarmUI",
-        "rev": "80f0f902d23872b52ce3265b53d2d6b25829fecc",
+        "rev": "e7f38c31382491c1669b7a2aeb604765c0ca0a34",
         "type": "github"
       },
       "original": {
